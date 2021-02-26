@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class MySQL {
 
-	public static int Connect() {
+	public static Connection Connect() {
 		final String DRIVER_NAME = "org.gjt.mm.mysql.Driver";
 		final String SERVERNAME = "localhost";
 		final String DATABASENAME = "payroll";
@@ -14,13 +14,8 @@ public class MySQL {
 		String username = "root";
 		String password = "anatominen1399";
 		
-		try(
-				
-			Connection connection = DriverManager.getConnection(DATABASE_URL,username,password);
-				
-				
-				){
-			
+		try(Connection connection = DriverManager.getConnection(DATABASE_URL,username,password);){
+			return connection;
 		}
 		catch (SQLException sqlException) {
 			sqlException.printStackTrace();
@@ -35,6 +30,18 @@ public class MySQL {
 //	         e.printStackTrace();
 //	      }
 		
+		return null;
+	}
+	
+	public static int CloseConnection(Connection conn) {
+		
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return 0;
 	}
 	
@@ -42,7 +49,9 @@ public class MySQL {
 	public static int LoadEmployeeTable() {
 		
 		
+		
 		return 0;
 	}
+
 	
 }
