@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author natha
- *
- */
-package macros;
