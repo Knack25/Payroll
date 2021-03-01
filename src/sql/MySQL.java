@@ -6,7 +6,7 @@ import java.sql.*;
 public class MySQL {
 
 	public static Connection Connect() {
-		final String DRIVER_NAME = "org.gjt.mm.mysql.Driver";
+		//final String DRIVER_NAME = "org.gjt.mm.mysql.Driver";
 		final String SERVERNAME = "localhost";
 		final String DATABASENAME = "payroll";
 		final String DATABASE_URL = "jdbc:mysql://" + SERVERNAME + "/" + DATABASENAME;
@@ -41,7 +41,7 @@ public class MySQL {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		System.out.println("Successfully Closed Connection to Database.");
 		return 0;
 	}
 	

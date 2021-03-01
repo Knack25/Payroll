@@ -2,7 +2,10 @@ package main;
 
 import java.sql.Connection;
 
+import javax.swing.JFrame;
+
 import sql.*;
+import gui.MainMenu;
 
 public class Main {
 
@@ -14,7 +17,11 @@ public class Main {
 		
 		System.out.println("Successful Connectin to DB!");
 		
+		JFrame mm = MainMenu.createMainMenu();
 		
+		while (mm.isActive()) {
+			
+		}
 		
 		
 		//Close the connection
