@@ -7,6 +7,9 @@ public class MySQL {
 
 	public static Connection Connect() {
 		//final String DRIVER_NAME = "org.gjt.mm.mysql.Driver";
+		//Array Of Connection Data
+		
+		//Driver, IP,DB Name
 		final String SERVERNAME = "localhost";
 		final String DATABASENAME = "payroll";
 		final String DATABASE_URL = "jdbc:mysql://" + SERVERNAME + "/" + DATABASENAME;
@@ -21,14 +24,6 @@ public class MySQL {
 			sqlException.printStackTrace();
 		}
 		
-//		Connection con = null;
-//	      try {
-//	         con = DriverManager.
-//	         getConnection("jdbc:mysql://localhost:3306/payroll?useSSL=false", "Knack25", "Night_Streak25");
-//	         System.out.println("Connection is successful !!!!!");
-//	      } catch(Exception e) {
-//	         e.printStackTrace();
-//	      }
 		
 		return null;
 	}
