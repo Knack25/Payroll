@@ -13,18 +13,15 @@ import sql.MySQL;
 
 public class MainMenu extends JFrame implements ActionListener{
 
-	/**
+
+	 /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8356941478722720686L;
 
+	
+	
 	public static void createMainMenu() {
-		
-		
-		//Connect to the database
-		Connection conn = MySQL.Connect();
-				
-		System.out.println("Successful Connectin to DB!");
 		
 		JFrame MainMenu = new JFrame("ACI Payroll");
 		MainMenu.setLayout(new BorderLayout());
@@ -82,15 +79,6 @@ public class MainMenu extends JFrame implements ActionListener{
 		
 		MainMenu.setVisible(true);
 		
-		MainMenu.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.out.println("Main Window Clossed...");
-				System.out.println("Disconnecting from Database...");
-				//Close the connection
-				MySQL.CloseConnection(conn);
-			}
-		});
-		
 		return;
 		}
 
@@ -100,13 +88,21 @@ public class MainMenu extends JFrame implements ActionListener{
 		
 	}	
 	
+	//When the Config/Settings button is Pressed
 	static ActionListener configBListener = new ActionListener() {
 		public void actionPerformed(ActionEvent event) {
 			String str = event.getActionCommand();
 			System.out.println("Clicked = " + str);
+			try {
+				ConfigMenu.createConfigScreen();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	};
 	
+	//When the Process Payroll Button is Pressed
 	static ActionListener processPayrollBListener = new ActionListener() {
 		public void actionPerformed(ActionEvent event) {
 			String str = event.getActionCommand();
@@ -114,6 +110,7 @@ public class MainMenu extends JFrame implements ActionListener{
 		}
 	};
 	
+	//When the View Payroll History Button is Pressed
 	static ActionListener historyPayrollBListener = new ActionListener() {
 		public void actionPerformed(ActionEvent event) {
 			String str = event.getActionCommand();

@@ -48,5 +48,35 @@ public class MySQL {
 		return 0;
 	}
 
+	//If the input value is a String
+	public static int SQLModify(Connection conn, String table,String Column,String value,String Where,int WhereValue) throws Exception {
+		
+		Statement stmt = conn.createStatement();
+		
+		int result = stmt.executeUpdate("update" + table + "set" + Column + "='" + value + "'");
+		System.out.println(result + "Records affected.");
+		
+		return 0;
+	}
+	
+	//If the input value is a Double
+	public static int SQLModify(Connection conn, String table,String Column,double value,String Where, int WhereValue) throws Exception {
+		
+		Statement stmt = conn.createStatement();
+		
+		int result = stmt.executeUpdate("update" + table + "set" + Column + "='" + value + "' where " + Where + "=" + WhereValue);
+		System.out.println(result + "Records affected.");
+		
+		return 0;
+	}
+	
+	public static int QuerryResult(Connection conn,String str) {
+		
+		
+		
+		
+		return 0;
+	}
+
 	
 }
