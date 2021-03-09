@@ -1,25 +1,17 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDesktopPane;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
-
-import data.Employee;
 
 public class MainMenu extends JFrame implements ActionListener{
 
@@ -40,7 +32,7 @@ public class MainMenu extends JFrame implements ActionListener{
 		setBounds(inset,inset,screenSize.width - inset*2,screenSize.height - inset*2);
 		
 		MainMenu = new JDesktopPane();
-		createFrame();
+		//place the default frame here
 		setContentPane(MainMenu);
 		setJMenuBar(createMenuBar());
 		
@@ -164,10 +156,18 @@ public class MainMenu extends JFrame implements ActionListener{
         	//createFrame();
         } 
         else if("edit_employee".equals(e.getActionCommand())){
-        	createFrame();
+        	JInternalFrame frame = Frame_Template.createFrame();
+        	MainMenu.add(frame);
         }
         else if("terminate_employee".equals(e.getActionCommand())){
-        	
+        	JDialog termDia;
+			try {
+				termDia = Terminate_Employee.createEmployeeTerminateDialog();
+				termDia.setVisible(true);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
         }
         else if("dept_employee".equals(e.getActionCommand())){
         	
@@ -205,15 +205,16 @@ public class MainMenu extends JFrame implements ActionListener{
 		
 
 	
-	
+	// Change this to the default frame
 	 //Create a new internal frame.
-    protected void createFrame() {
+    protected JInternalFrame createFrame() {
         JInternalFrame frame = new JInternalFrame();
         frame.setVisible(true); //necessary as of 1.3
         MainMenu.add(frame);
         try {
         	frame.setSelected(true);
         } catch (java.beans.PropertyVetoException e) {}
+		return frame;
     }
 
     //Quit the application.
@@ -230,135 +231,4 @@ public class MainMenu extends JFrame implements ActionListener{
 		
 		frame.setVisible(true);
 	}
-	
-/*	public static void createMainMenu() throws Exception {
-		
-		
-		
-		MainMenu.setLayout(new BorderLayout());
-		ImageIcon icon = new ImageIcon("lib/ACI.png");
-		JLabel optionL = new JLabel("Options");
-		JPanel panelOption = new JPanel(new BorderLayout());
-		JPanel panelPayroll = new JPanel(new BorderLayout());
-		JPanel panelEmployee = new JPanel(new BorderLayout());
-		
-		JButton configB = new JButton("View Configuration");
-		configB.addActionListener(configBListener);
-		
-		JLabel payrollL = new JLabel("Payroll");
-		JButton processPayroll = new JButton("Process Payroll");
-		processPayroll.addActionListener(processPayrollBListener);
-		JButton historyPayroll = new JButton("View Payroll History");
-		historyPayroll.addActionListener(historyPayrollBListener);
-		JButton voidPayroll = new JButton("Void a Check");
-		voidPayroll.addActionListener(voidPayrollBListener);
-		JButton printReports = new JButton("Print Reports");
-		printReports.addActionListener(printReportsBListener);
-		
-		
-		JLabel empL = new JLabel("Employee History");
-		JButton createEmployee = new JButton("Create Employee");
-		createEmployee.addActionListener(createEmpBListener);
-		JButton editEmployee = new JButton("Edit existing Employee");
-		editEmployee.addActionListener(editEmpBListener);
-		JButton removeEmployee = new JButton("Remove existing Employee");
-		removeEmployee.addActionListener(removeEmpBListener);
-		
-		
-		
-		panelOption.add(optionL,BorderLayout.NORTH);
-		panelOption.add(configB,BorderLayout.EAST);
-		panelPayroll.add(payrollL,BorderLayout.NORTH);
-		panelPayroll.add(processPayroll,BorderLayout.WEST);
-		panelPayroll.add(historyPayroll,BorderLayout.CENTER);
-		panelPayroll.add(voidPayroll,BorderLayout.EAST);
-		panelPayroll.add(printReports,BorderLayout.SOUTH);
-		panelEmployee.add(empL,BorderLayout.NORTH);
-		panelEmployee.add(createEmployee,BorderLayout.WEST);
-		panelEmployee.add(editEmployee,BorderLayout.CENTER);
-		panelEmployee.add(removeEmployee,BorderLayout.EAST);
-		
-		MainMenu.add(panelOption,BorderLayout.NORTH);
-		MainMenu.add(panelPayroll,BorderLayout.CENTER);
-		MainMenu.add(panelEmployee,BorderLayout.SOUTH);
-		MainMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		MainMenu.setSize(800,800);
-		MainMenu.setIconImage(icon.getImage());
-		
-		
-		
-		
-		MainMenu.setVisible(true);
-		
-		return;
-		}
-
-
-	
-	//When the Config/Settings button is Pressed
-	static ActionListener configBListener = new ActionListener() {
-		public void actionPerformed(ActionEvent event) {
-			String str = event.getActionCommand();
-			System.out.println("Clicked = " + str);
-			try {
-			
-				//ConfigMenu.createConfigScreen();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	};
-	
-	//When the Process Payroll Button is Pressed
-	static ActionListener processPayrollBListener = new ActionListener() {
-		public void actionPerformed(ActionEvent event) {
-			String str = event.getActionCommand();
-			System.out.println("Clicked = " + str);
-		}
-	};
-	
-	//When the View Payroll History Button is Pressed
-	static ActionListener historyPayrollBListener = new ActionListener() {
-		public void actionPerformed(ActionEvent event) {
-			String str = event.getActionCommand();
-			System.out.println("Clicked = " + str);
-		}
-	};
-	
-	static ActionListener voidPayrollBListener = new ActionListener() {
-		public void actionPerformed(ActionEvent event) {
-			String str = event.getActionCommand();
-			System.out.println("Clicked = " + str);
-		}
-	};
-	
-	static ActionListener printReportsBListener = new ActionListener() {
-		public void actionPerformed(ActionEvent event) {
-			String str = event.getActionCommand();
-			System.out.println("Clicked = " + str);
-		}
-	};
-	
-	static ActionListener createEmpBListener = new ActionListener() {
-		public void actionPerformed(ActionEvent event) {
-			String str = event.getActionCommand();
-			System.out.println("Clicked = " + str);
-		}
-	};
-	
-	static ActionListener editEmpBListener = new ActionListener() {
-		public void actionPerformed(ActionEvent event) {
-			String str = event.getActionCommand();
-			System.out.println("Clicked = " + str);
-		}
-	};
-	
-	static ActionListener removeEmpBListener = new ActionListener() {
-		public void actionPerformed(ActionEvent event) {
-			String str = event.getActionCommand();
-			System.out.println("Clicked = " + str);
-		}
-	};
-	*/
 }

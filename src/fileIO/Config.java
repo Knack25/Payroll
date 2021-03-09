@@ -9,17 +9,22 @@ import java.util.Scanner;
 
 public class Config {
 
-	public static int SQLConfig() throws Exception {
+	public static String[] SQLConfig() throws Exception {
 		
-		File file = new File("/Payroll/lib/SQLConfig");
+		File file = new File("lib/SQLConfig.txt");
 		Scanner sc = new Scanner(file);
 		
+		String[] output = {null,null,null,null,null};
+		int i = 0;
+		
 		while (sc.hasNextLine()) {
-			System.out.println(sc.nextLine());
+			output[i] = sc.nextLine();
+			i++;
+			//System.out.println(sc.nextLine());
 		}
 		
 		sc.close();
-		return 0;
+		return output;
 	}
 	
 	public static int PayrollConfig() throws FileNotFoundException {
