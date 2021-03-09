@@ -12,19 +12,30 @@ package gui;
  import sql.MySQL;
  
  
- public class CreateEmployee extends JFrame  {
+ public class CreateEmployee extends JDialog implements ActionListener{
 	 
 	 
 	 public static void CreateMenu() {
-		 JFrame Create = new JFrame("Create");
-		 
+		 JDialog create = new JDialog();
+		 create.setLayout(new GroupLayout(null));
 		 JLabel create_EmployeeL = new JLabel("Create Employee");
+		 JLabel employeeName = new JLabel("Employee Name:");
 		 JButton createB = new JButton("Create");
-		 JButton deleteB = new JButton("Create");
+		 JButton deleteB = new JButton("Delete");
+		 JTextField enterHere = new JTextField(" ");
 		 
 		 
 		 
+		 
+		 
+		 return;
 	 }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 	 
 	 
 	 
