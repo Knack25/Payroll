@@ -50,7 +50,7 @@ public class ConfigMenu extends JFrame implements ActionListener {
 	
 	
 	
-	public static void createConfigScreen() throws Exception {
+	public static JLayeredPane createConfigScreen() throws Exception {
 		
 		
 		
@@ -101,6 +101,7 @@ public class ConfigMenu extends JFrame implements ActionListener {
 		
 		
 		Config.setVisible(true);
+		return Config;
 	}
 
 
