@@ -154,16 +154,25 @@ public class MainMenu extends JFrame implements ActionListener{
         if ("create_employee".equals(e.getActionCommand())) { //new
             //Open A Dialogue To Make a new Employee
         	//createFrame();
+			JDialog createDia;
+			try{
+				createDia = CreateEmployee.CreateMenu();
+			
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
         } 
         else if("edit_employee".equals(e.getActionCommand())){
-        	JInternalFrame frame = Frame_Template.createFrame();
-        	MainMenu.add(frame);
+        	//JInternalFrame frame = Frame_Template.createFrame();
+        	//MainMenu.add(frame);
         }
         else if("terminate_employee".equals(e.getActionCommand())){
         	JDialog termDia;
 			try {
 				termDia = Terminate_Employee.createEmployeeTerminateDialog();
 				termDia.setVisible(true);
+				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
