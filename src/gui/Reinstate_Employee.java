@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -16,18 +17,20 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
+import com.mysql.cj.xdevapi.PreparableStatement;
+
 import fileIO.Config;
 
-public class Terminate_Employee {
+
+public class Reinstate_Employee {
 
 	static JComboBox<String> employee;
 	static JDialog dialog;
-
 	static String fName,mName,lName,fullName;
 	
 	
-	 protected static JDialog createEmployeeTerminateDialog()  throws Exception {
-	    	
+	
+	 protected static JDialog createEmployeeReinsateDialog()  throws Exception {
 		 	dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 	    	dialog.addWindowListener(DialogListener);
 	    	
@@ -36,7 +39,7 @@ public class Terminate_Employee {
 	    	JButton submitB = new JButton("Submit");
 	    	//submitB.setActionCommand("TermSubmit");
 			submitB.addActionListener(submit);
-	    	JLabel name = new JLabel("Employee To Remove");
+	    	JLabel name = new JLabel("Employee To Reinstate");
 	    	
 	    	System.out.println("Querrying DB...");
 	    	
@@ -49,7 +52,7 @@ public class Terminate_Employee {
 			
 			Statement stmt = conn.createStatement();
 				
-			ResultSet rs = stmt.executeQuery("select * from employee where enabled = true");
+			ResultSet rs = stmt.executeQuery("select * from employee where enabled = false");
 			
 			
 			
@@ -65,11 +68,10 @@ public class Terminate_Employee {
 				i++;
 			}
 			
+			stmt.close();
+			conn.close();
 			
 			System.out.println("Data Retreived Successfull for " + i + " entries.");
-			
-			rs.close();
-			conn.close();
 			
 			System.out.println("Creating Dialog Box");
 	    	
@@ -79,10 +81,13 @@ public class Terminate_Employee {
 	    	dialog.add(employee);
 	    	dialog.add(submitB);
 	    	dialog.repaint();
-	    	dialog.setVisible(true);
 	    	
 	    	
 	    	System.out.println("Created Dialog");
+	    	
+	    	dialog.setVisible(true);
+	    	
+	    	
 	    	
 			return dialog;
 	    }
@@ -94,38 +99,46 @@ public class Terminate_Employee {
 				//Connect to SQL and save new column in employee
 	        	
 	        	fullName = (String) employee.getSelectedItem();
-	        	int Index = employee.getSelectedIndex() + 1;
+	        	int selindex = employee.getSelectedIndex();
 	        	System.out.println("The value of fullName is: " + fullName);
-	        	/* String[] name = fullName.split(" ");
+	        	 String[] name = fullName.split(" ");
 	        	for(int i = 0; i < name.length; i++) {
 	        		System.out.println(name[i]);
-	        	}*/
+	        	}
 	        	
 	        	String[] SQL;
 				try {
+					System.out.println("Executing Update");
+					
 					SQL = Config.SQLConfig();
 					
 					final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			    	
 			    	Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 					
+					String updateStatement = "update employee " + "set enabled = true "+ "WHERE firstname = ? AND lastname = ?";
 					
-					Statement stmt = conn.createStatement();
+					PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 				
+					if(name.length == 3) {
+						pstmt.setString(1,name[0]);
+						pstmt.setString(2, name[2]);
+					}
+					if(name.length == 2) {
+						pstmt.setString(1,name[0]);
+						pstmt.setString(2, name[1]);
+					}
 					
-					int rs = stmt.executeUpdate("update employee set enabled = false where id = " + Index);
-				
-					System.out.println("Affected " + rs + " rows.");
+					int output = pstmt.executeUpdate();
 					
-					stmt.close();
+					System.out.println("Affected " + output + " rows.");
+					
+					pstmt.close();
 					conn.close();
-					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-		    	
-				System.out.println("Disposing of Dialog box");
 				dialog.setVisible(false);
 				dialog.dispose();
 			}

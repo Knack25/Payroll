@@ -1,17 +1,28 @@
 package gui;
 
+import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import fileIO.Config;
 
 public class MainMenu extends JFrame implements ActionListener{
 
@@ -67,6 +78,11 @@ public class MainMenu extends JFrame implements ActionListener{
 		//menuItem.setMnemonic(KeyEvent.VK_E);
 		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("terminate_employee");
+		menuItem.addActionListener(this);
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem("Reinstate Employee");
+		menuItem.setActionCommand("reinstate_employee");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
 		
@@ -151,32 +167,34 @@ public class MainMenu extends JFrame implements ActionListener{
 	//React to menu selections.
     public void actionPerformed(ActionEvent e) {
     	 System.out.println(e.getActionCommand() + " JMenuItem clicked.");
-        if ("create_employee".equals(e.getActionCommand())) { //new
-            //Open A Dialogue To Make a new Employee
-        	//createFrame();
-			JDialog createDia;
+        if ("create_employee".equals(e.getActionCommand())) { 
 			try{
-				createDia = CreateEmployee.CreateMenu();
-			
+				CreateEmployee.CreateMenu();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
         } 
         else if("edit_employee".equals(e.getActionCommand())){
-        	//JInternalFrame frame = Frame_Template.createFrame();
-        	//MainMenu.add(frame);
+   
         }
-        else if("terminate_employee".equals(e.getActionCommand())){
-        	JDialog termDia;
+        else if("terminate_employee".equals(e.getActionCommand())) {
 			try {
-				termDia = Terminate_Employee.createEmployeeTerminateDialog();
-				termDia.setVisible(true);
-				
+				Terminate_Employee.createEmployeeTerminateDialog();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+        }
+        else if("reinstate_employee".equals(e.getActionCommand())) {
+        	//JDialog reinEmp = new JDialog();
+			try {
+			Reinstate_Employee.createEmployeeReinsateDialog();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			//reinEmp.setVisible(true);
         }
         else if("dept_employee".equals(e.getActionCommand())){
         	
@@ -202,7 +220,6 @@ public class MainMenu extends JFrame implements ActionListener{
         else if("sql_settings".equals(e.getActionCommand())){
         	
         }
-        
         else { //quit
             quit();
         }
@@ -211,8 +228,6 @@ public class MainMenu extends JFrame implements ActionListener{
     
     
 	
-		
-
 	
 	// Change this to the default frame
 	 //Create a new internal frame.
