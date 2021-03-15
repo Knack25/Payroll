@@ -5,7 +5,7 @@ public class Employee {
 	
 	
 	
-	public Employee(int iD, Name name, String status, Address address, String telnum, String email, char sex,
+	public Employee(int iD, Name name, String status, Address address, String telnum, String email, String sex,
 		String ssn, String jobTitle, String dOB, String dOH, String dOT, double salary, double regPay,
 		double regHour, double otPay, double otHour, double ptoPay, double ptoHour, double localTaxCode,
 		double addStateTax, double addFedTax, double vacationTimeUsed, double vacationTimeRemaining,
@@ -50,7 +50,7 @@ public class Employee {
 	private Address address = new Address();
 	private String telnum;
 	private String email;
-	private char sex;
+	private String sex;
 	private String ssn;
 	private String jobTitle;
 	private String DOB;
@@ -108,11 +108,11 @@ public class Employee {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public char getSex() {
+	public String getSex() {
 		return sex;
 	}
-	public void setSex(char sex) {
-		this.sex = sex;
+	public void setSex(String string) {
+		this.sex = string;
 	}
 	public String getSsn() {
 		return ssn;

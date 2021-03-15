@@ -1,0 +1,36 @@
+Create Employee:
+	Backend:Done
+	Frontend:In Progress
+Edit Employee:
+	Backend: Not Started
+	Frontend: Not Started
+Terminate Employee:
+	Backend: Done
+	Frontend: Done
+Reinstate Employee:
+	Backend: Done 
+	Frontend:Done
+View Employees:
+	Backend: Not Started
+	Frontend: Not Started
+Process Payroll:
+	Backend: Not Started
+	Frontend: Not Started
+Payroll History:
+	Backend: Not Started
+	Frontend: Not Started
+Print Reports:
+	Backend: Not Started
+	Frontend: Not Started
+Void Check:
+	Backend: Not Started
+	Frontend: Not Started
+SQL Settings:
+Backend: Not Started
+	Frontend: Not Started
+System Settings:
+	Backend: Not Started
+	Frontend: Not Started
+Payroll Settings:
+Backend: Not Started
+	Frontend: Not Started

@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
@@ -43,33 +44,7 @@ public class Reinstate_Employee {
 	    	
 	    	System.out.println("Querrying DB...");
 	    	
-	    	String[] SQL = Config.SQLConfig();
-	    	
-	    	final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-	    	
-	    	Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-			
-			
-			Statement stmt = conn.createStatement();
-				
-			ResultSet rs = stmt.executeQuery("select * from employee where enabled = false");
-			
-			
-			
-			int i = 0;
-			
-			
-			while(rs.next()) {
-				fName = rs.getString("firstname");
-				mName = rs.getString("middlename");
-				lName = rs.getString("lastname");
-				fullName = fName + " " + mName + " " + lName;
-				employee.addItem(fullName);
-				i++;
-			}
-			
-			stmt.close();
-			conn.close();
+	    	int i = sqlPullRequest();
 			
 			System.out.println("Data Retreived Successfull for " + i + " entries.");
 			
@@ -92,6 +67,37 @@ public class Reinstate_Employee {
 			return dialog;
 	    }
 
+	private static int sqlPullRequest() throws Exception, SQLException {
+		String[] SQL = Config.SQLConfig();
+		
+		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+		
+		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+		
+		
+		Statement stmt = conn.createStatement();
+			
+		ResultSet rs = stmt.executeQuery("select * from employee where enabled = false");
+		
+		
+		
+		int i = 0;
+		
+		
+		while(rs.next()) {
+			fName = rs.getString("firstname");
+			mName = rs.getString("middlename");
+			lName = rs.getString("lastname");
+			fullName = fName + " " + mName + " " + lName;
+			employee.addItem(fullName);
+			i++;
+		}
+		
+		stmt.close();
+		conn.close();
+		return i;
+	}
+
 	 static ActionListener submit = new ActionListener() {
 			
 			@Override
@@ -105,42 +111,46 @@ public class Reinstate_Employee {
 	        	for(int i = 0; i < name.length; i++) {
 	        		System.out.println(name[i]);
 	        	}
-	        	
-	        	String[] SQL;
+	      
 				try {
-					System.out.println("Executing Update");
-					
-					SQL = Config.SQLConfig();
-					
-					final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-			    	
-			    	Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-					
-					String updateStatement = "update employee " + "set enabled = true "+ "WHERE firstname = ? AND lastname = ?";
-					
-					PreparedStatement pstmt = conn.prepareStatement(updateStatement);
-				
-					if(name.length == 3) {
-						pstmt.setString(1,name[0]);
-						pstmt.setString(2, name[2]);
-					}
-					if(name.length == 2) {
-						pstmt.setString(1,name[0]);
-						pstmt.setString(2, name[1]);
-					}
-					
-					int output = pstmt.executeUpdate();
-					
-					System.out.println("Affected " + output + " rows.");
-					
-					pstmt.close();
-					conn.close();
+					sqlPushRequest(name);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				dialog.setVisible(false);
 				dialog.dispose();
+			}
+
+			private void sqlPushRequest(String[] name) throws Exception, SQLException {
+				String[] SQL;
+				System.out.println("Executing Update");
+				
+				SQL = Config.SQLConfig();
+				
+				final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+				
+				Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+				
+				String updateStatement = "update employee " + "set enabled = true "+ "WHERE firstname = ? AND lastname = ?";
+				
+				PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+
+				if(name.length == 3) {
+					pstmt.setString(1,name[0]);
+					pstmt.setString(2, name[2]);
+				}
+				if(name.length == 2) {
+					pstmt.setString(1,name[0]);
+					pstmt.setString(2, name[1]);
+				}
+				
+				int output = pstmt.executeUpdate();
+				
+				System.out.println("Affected " + output + " rows.");
+				
+				pstmt.close();
+				conn.close();
 			}
 		};
 

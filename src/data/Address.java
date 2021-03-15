@@ -5,7 +5,7 @@ public class Address {
 	private String street;
 	private String City;
 	private String State;
-	private double Zip;
+	private String Zip;
 	
 	public String getStreet() {
 		return street;
@@ -25,10 +25,10 @@ public class Address {
 	public void setState(String state) {
 		State = state;
 	}
-	public double getZip() {
+	public String getZip() {
 		return Zip;
 	}
-	public void setZip(double zip) {
+	public void setZip(String zip) {
 		Zip = zip;
 	}
 	

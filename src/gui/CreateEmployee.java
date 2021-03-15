@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
@@ -82,50 +83,8 @@ import fileIO.Config;
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//Connect to SQL and save new column in employee
-        	String[] SQL;
 			try {
-				SQL = Config.SQLConfig();
-				
-				final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-		    	
-		    	Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-				
-				
-				
-				String statement = "insert into employee(firstname,lastname,middlename,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
-						+ "otPay,otHour,ptoPay,ptoHour,localTaxCode,addStateTax,addFedTax,vacationtimeAvail,vacationtimeUsed,Department,enabled) "
-						+ "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-				
-				PreparedStatement pstmt = conn.prepareStatement(statement,Statement.RETURN_GENERATED_KEYS);
-				
-				pstmt.setString(1, fName);
-				pstmt.setString(2, mName);
-				pstmt.setString(3, lName);
-				pstmt.setString(4, "Phone Number");
-				pstmt.setString(5, "Email");
-				pstmt.setString(6, "Sex");
-				pstmt.setString(7, "SSN");
-				pstmt.setString(8, "Job Title");
-				pstmt.setString(9, "Date Of Birth");
-				pstmt.setString(10, "Date of Hire");
-				pstmt.setNull(11, ABORT);
-				pstmt.setDouble(12, 00.00);
-				pstmt.setDouble(13, 12.00);
-				pstmt.setDouble(14, 00.00);
-				pstmt.setDouble(15, 12.00);
-				pstmt.setDouble(16, 00.00);
-				pstmt.setDouble(17, 12.00);
-				pstmt.setDouble(18, 00.00);
-				pstmt.setInt(19, 44545);
-				pstmt.setDouble(20, 00.00);
-				pstmt.setDouble(21, 00.00);
-				pstmt.setDouble(22, 60.00);
-				pstmt.setDouble(23, 00.00);
-				pstmt.setString(24, "Department");
-				pstmt.setBoolean(25, true);
-					
-				
-				int rs = pstmt.executeUpdate();
+				sqlPushRequest();
 				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -133,6 +92,52 @@ import fileIO.Config;
 			}
 	    	
 			
+		}
+
+		private void sqlPushRequest() throws Exception, SQLException {
+			String[] SQL;
+			SQL = Config.SQLConfig();
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			
+			
+			String statement = "insert into employee(firstname,lastname,middlename,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
+					+ "otPay,otHour,ptoPay,ptoHour,localTaxCode,addStateTax,addFedTax,vacationtimeAvail,vacationtimeUsed,Department,enabled) "
+					+ "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			
+			PreparedStatement pstmt = conn.prepareStatement(statement,Statement.RETURN_GENERATED_KEYS);
+			
+			pstmt.setString(1, fName);
+			pstmt.setString(2, mName);
+			pstmt.setString(3, lName);
+			pstmt.setString(4, "Phone Number");
+			pstmt.setString(5, "Email");
+			pstmt.setString(6, "Sex");
+			pstmt.setString(7, "SSN");
+			pstmt.setString(8, "Job Title");
+			pstmt.setString(9, "Date Of Birth");
+			pstmt.setString(10, "Date of Hire");
+			pstmt.setNull(11, ABORT);
+			pstmt.setDouble(12, 00.00);
+			pstmt.setDouble(13, 12.00);
+			pstmt.setDouble(14, 00.00);
+			pstmt.setDouble(15, 12.00);
+			pstmt.setDouble(16, 00.00);
+			pstmt.setDouble(17, 12.00);
+			pstmt.setDouble(18, 00.00);
+			pstmt.setInt(19, 44545);
+			pstmt.setDouble(20, 00.00);
+			pstmt.setDouble(21, 00.00);
+			pstmt.setDouble(22, 60.00);
+			pstmt.setDouble(23, 00.00);
+			pstmt.setString(24, "Department");
+			pstmt.setBoolean(25, true);
+				
+			
+			int rs = pstmt.executeUpdate();
 		}
 		
 	};	 

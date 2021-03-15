@@ -1,28 +1,16 @@
 package gui;
 
-import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
-import fileIO.Config;
 
 public class MainMenu extends JFrame implements ActionListener{
 
@@ -167,63 +155,71 @@ public class MainMenu extends JFrame implements ActionListener{
 	//React to menu selections.
     public void actionPerformed(ActionEvent e) {
     	 System.out.println(e.getActionCommand() + " JMenuItem clicked.");
-        if ("create_employee".equals(e.getActionCommand())) { 
-			try{
-				CreateEmployee.CreateMenu();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        } 
-        else if("edit_employee".equals(e.getActionCommand())){
-   
-        }
-        else if("terminate_employee".equals(e.getActionCommand())) {
-			try {
-				Terminate_Employee.createEmployeeTerminateDialog();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        }
-        else if("reinstate_employee".equals(e.getActionCommand())) {
-        	//JDialog reinEmp = new JDialog();
-			try {
-			Reinstate_Employee.createEmployeeReinsateDialog();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			//reinEmp.setVisible(true);
-        }
-        else if("dept_employee".equals(e.getActionCommand())){
-        	
-        }
-        else if("process_payroll".equals(e.getActionCommand())){
-        	
-        }
-        else if("history_payroll".equals(e.getActionCommand())){
-        	
-        }
-        else if("print_reports".equals(e.getActionCommand())){
-        	
-        }
-        else if("void_check".equals(e.getActionCommand())){
-        	
-        }
-        else if("payroll_settings".equals(e.getActionCommand())){
-        	
-        }
-        else if("program_settings".equals(e.getActionCommand())){
-        	
-        }
-        else if("sql_settings".equals(e.getActionCommand())){
-        	
-        }
-        else { //quit
-            quit();
-        }
+    	switch(e.getActionCommand()) {
+    	case("create_employee"):
+    		createEmployeeWindow();
+    		break;
+    	case("edit_employee"):
+    		
+    		break;
+    	case("terminate_employee"):
+    		terminateEmployeeDialog();
+    		break;
+    	case("reinstate_employee"):
+    		reinstateEmployeeDialog();
+    		break;
+    	case("dept_employee"):
+    		break;
+    	case("process_payroll"):
+    		break;
+    	case("history_payroll"):
+    		break;
+    	case("print_reports"):
+    		break;
+    	case("void_check"):
+    		break;
+    	case("payroll_settings"):
+    		break;
+    	case("program_settings"):
+    		break;
+    	case("sql_settings"):
+    		break;
+    	default:
+    		quit();
+    	}
     }
+
+
+	private void reinstateEmployeeDialog() {
+		//JDialog reinEmp = new JDialog();
+		try {
+		Reinstate_Employee.createEmployeeReinsateDialog();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//reinEmp.setVisible(true);
+	}
+
+
+	private void terminateEmployeeDialog() {
+		try {
+			Terminate_Employee.createEmployeeTerminateDialog();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+
+	private void createEmployeeWindow() {
+		try{
+			CreateEmployee.CreateMenu();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
     
     
     
