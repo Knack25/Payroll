@@ -156,7 +156,7 @@ public class EditEmployee {
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
 			
-			String updateStatement = "select * " + "from employee "+ "inner join address on employee.id = address.employee_id " + "WHERE firstname = ? AND lastname = ?";
+			String updateStatement = "select * " + "from employee "+ "inner join address on employee.id = address.employee_id " + "WHERE firstname = ? and lastname = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
@@ -176,6 +176,7 @@ public class EditEmployee {
 			empAddress = new Address();
 			empName = new Name();
 			
+			rs.next();
 			empName.setFirst(rs.getString("firstname"));
 			empName.setMiddle(rs.getString("middlename"));
 			empName.setLast(rs.getString("lastname"));
@@ -191,9 +192,9 @@ public class EditEmployee {
 			emp.setSex(rs.getString("sex"));
 			emp.setSsn(rs.getString("ssn"));
 			emp.setJobTitle(rs.getString("jobTitle"));
-			emp.setDOB(rs.getDate("dob").toString());
-			emp.setDOH(rs.getDate("doh").toString());
-			emp.setDOT(rs.getDate("dot").toString());
+			emp.setDOB(rs.getString("dob"));
+			emp.setDOH(rs.getString("doh"));
+			emp.setDOT(rs.getString("dot"));
 			emp.setSalary(rs.getDouble("salary"));
 			emp.setRegPay(rs.getDouble("regularPay"));
 			emp.setRegHour(rs.getDouble("regularHour"));
