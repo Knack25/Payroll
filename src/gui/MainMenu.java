@@ -160,7 +160,7 @@ public class MainMenu extends JFrame implements ActionListener{
     		createEmployeeWindow();
     		break;
     	case("edit_employee"):
-    		
+    		editEmployeeFrame();
     		break;
     	case("terminate_employee"):
     		terminateEmployeeDialog();
@@ -189,6 +189,13 @@ public class MainMenu extends JFrame implements ActionListener{
     	}
     }
 
+    private void editEmployeeFrame() {
+    	try {
+    		EditEmployee.createFrame();
+    	}catch(Exception e1) {
+    		e1.printStackTrace();
+    	}
+    }
 
 	private void reinstateEmployeeDialog() {
 		//JDialog reinEmp = new JDialog();

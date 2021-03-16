@@ -156,7 +156,7 @@ public class EditEmployee {
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
 			
-			String updateStatement = "select * " + "from employee "+ "WHERE firstname = ? AND lastname = ?" + "join address on employee.id = address.employee_id";
+			String updateStatement = "select * " + "from employee "+ "inner join address on employee.id = address.employee_id " + "WHERE firstname = ? AND lastname = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
@@ -226,13 +226,13 @@ public class EditEmployee {
 			dobT = new JTextField(emp.getDOB());
 			dohT = new JTextField(emp.getDOH());
 			dotT = new JTextField(emp.getDOT());
-			localtaxcodeT = new JTextField(emp.getLocalTaxCode());
-			addstatetaxT = new JTextField(emp.getAddStateTax());
-			addfedtaxT = new JTextField(emp.getAddFedTax());
-			salaryT = new JTextField(emp.getSalary());
-			regpayT = new JTextField(emp.getRegPay());
-			otpayT = new JTextField(emp.getOtPay());
-			ptopayT = new JTextField(emp.getPtoPay());
+			localtaxcodeT = new JTextField(String.valueOf(emp.getLocalTaxCode()));
+			addstatetaxT = new JTextField( String.valueOf(emp.getAddStateTax()));
+			addfedtaxT = new JTextField(String.valueOf(emp.getAddFedTax()));
+			salaryT = new JTextField(String.valueOf(emp.getSalary()));
+			regpayT = new JTextField(String.valueOf(emp.getRegPay()));
+			otpayT = new JTextField(String.valueOf(emp.getOtPay()));
+			ptopayT = new JTextField(String.valueOf(emp.getPtoPay()));
 			departmentT = new JTextField(emp.getDepartment());
 		}
 	};
