@@ -1,7 +1,7 @@
 package gui;
 
- import java.awt.BorderLayout;
 import java.awt.Dialog;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -12,6 +12,7 @@ import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -34,42 +35,39 @@ import fileIO.Config;
 	 public static JDialog CreateMenu() {
 		 createMenu = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		 createMenu.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		 createMenu.setSize(300, 300);	
+		 createMenu.setSize(400, 150);	
 		 
 		 
-		 JPanel labels = new JPanel();
+		
 		 JPanel fields = new JPanel();
 		 
-		 createMenu.setLayout(new BorderLayout());
-		 JLabel create_EmployeeL = new JLabel("Create Employee");
-		 JLabel employeeName = new JLabel("Employee Name:");
-		 JLabel employeeFirst = new JLabel("First");
-		 JLabel employeeMiddle = new JLabel("Middle");
-		 JLabel employeeLast = new JLabel("Last");	
-		 
+		 createMenu.setLayout(new FlowLayout());
+		 JLabel employeeName = new JLabel(" Enter Employee Name (First, Middle, Last):");
+	
 		 
 		 JButton createB = new JButton("Create"); 
 		 createB.addActionListener(CreateListener);
 		
-		 JTextField enterFirst = new JTextField("First");
-		 JTextField enterMiddle = new JTextField("Middle");
-		 JTextField enterLast = new JTextField("Last");
+		 JTextField enterFirst = new JFormattedTextField("");
+		 JTextField enterMiddle = new JFormattedTextField("");
+		 JTextField enterLast = new JFormattedTextField("");
 		 
-	
-		 
+		 enterFirst.setColumns(10);
 		 fName = enterFirst.getText();
+		 enterMiddle.setColumns(10);
 		 mName = enterMiddle.getText();
+		 enterLast.setColumns(10);
 		 lName = enterLast.getText();
 		 
-		 
+
 	
-		 
+		 createMenu.add(employeeName);
 		 fields.add(enterFirst);
 		 fields.add(enterMiddle);
 		 fields.add(enterLast);
+		 createMenu.add(createB);
 		 
-		// createMenu.add(labels,BorderLayout.WEST);
-		 createMenu.add(fields,BorderLayout.EAST);
+		 createMenu.add(fields,FlowLayout.CENTER);
 		
 		 
 		 //https://docs.oracle.com/javase/tutorial/uiswing/layout/group.html
