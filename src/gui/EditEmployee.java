@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +38,12 @@ public class EditEmployee {
 	static Address empAddress;
 	static String fName,mName,lName,fullName;
 
+	//where are we going to put the Y.T.D in the program.
+	//will this be visible for the user or will it in the back-end only?
+	//if we put YTD here, what I had in mind was the totals for both wages and expenses (taxes)
+	//Box Layout would be the best layout for this frame
+	
+	
 	 //Create a new internal frame.
     protected static JInternalFrame createFrame() throws Exception{
         frame = new JInternalFrame();
@@ -63,13 +70,31 @@ public class EditEmployee {
 		System.out.println("Creating Edit Frame");
     	
     	frame.setSize(200, 200);
-    	frame.setLayout(new FlowLayout());
+    	frame.setLayout(new BorderLayout());
     	frame.add(name);
     	frame.add(employee);
-    	frame.add(saveB);
+    	frame.add(saveB,BorderLayout.PAGE_END);
     	frame.repaint();
     	frame.setVisible(true);
+    	
+    
+    	
         
+    	/* need the following features,
+    	-tax tables for the employees
+    	-YTDs 
+    	-function to create one check for the individual employee.
+    	do we have tax tables for the employees?
+    	
+    	
+    	*/
+    	
+    	
+    	
+    	
+    	
+    	
+    	
         
 		return frame;
     }

@@ -120,7 +120,7 @@ public class MainMenu extends JFrame implements ActionListener{
 		menuBar.add(menu);
 		
 		
-		menu = new JMenu("Setup");
+		menu = new JMenu("Settings");
 		//menu.setMnemonic(KeyEvent.VK_D);
 		
 		
@@ -169,20 +169,28 @@ public class MainMenu extends JFrame implements ActionListener{
     		reinstateEmployeeDialog();
     		break;
     	case("dept_employee"):
+    		
     		break;
     	case("process_payroll"):
+    		
     		break;
     	case("history_payroll"):
+    		
     		break;
     	case("print_reports"):
+    		
     		break;
     	case("void_check"):
+    		
     		break;
     	case("payroll_settings"):
+    		
     		break;
     	case("program_settings"):
+    		
     		break;
     	case("sql_settings"):
+    		
     		break;
     	default:
     		quit();

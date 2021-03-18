@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +35,7 @@ public class Terminate_Employee {
 	    	dialog.addWindowListener(DialogListener);
 	    	
 	    	employee = new JComboBox<String>();
-	    	
+	    	employee.setPreferredSize(new Dimension(150,30));
 	    	JButton submitB = new JButton("Submit");
 	    	//submitB.setActionCommand("TermSubmit");
 			submitB.addActionListener(submit);
@@ -43,10 +44,9 @@ public class Terminate_Employee {
 	    	System.out.println("Querrying DB...");
 	    	
 	    	sqlPullRequest();
-			
 			System.out.println("Creating Dialog Box");
 	    	
-	    	dialog.setSize(200, 200);
+	    	dialog.setSize(400, 100);
 	    	dialog.setLayout(new FlowLayout());
 	    	dialog.add(name);
 	    	dialog.add(employee);
@@ -54,7 +54,12 @@ public class Terminate_Employee {
 	    	dialog.repaint();
 	    	dialog.setVisible(true);
 	    	
+	    	//for the submit button, should we have a warning before terminating the employee?
 	    	
+	  
+	    	 
+	    	 
+	    	 
 	    	System.out.println("Created Dialog");
 	    	
 			return dialog;
