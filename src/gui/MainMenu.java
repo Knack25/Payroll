@@ -43,28 +43,21 @@ public class MainMenu extends JFrame implements ActionListener{
 	protected JMenuBar createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("Employee");
-		//menu.setMnemonic(KeyEvent.VK_D);
 		
 		
 		JMenuItem menuItem = new JMenuItem("Create Employee");
-		//menuItem.setMnemonic(KeyEvent.VK_E);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("create_employee");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
 		
 		
 		menuItem = new JMenuItem("Edit Employee");
-		//menuItem.setMnemonic(KeyEvent.VK_E);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("edit_employee");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
 		
 		
 		menuItem = new JMenuItem("Terminate Employee");
-		//menuItem.setMnemonic(KeyEvent.VK_E);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("terminate_employee");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
@@ -76,8 +69,6 @@ public class MainMenu extends JFrame implements ActionListener{
 		
 		
 		menuItem = new JMenuItem("View Employees by Department");
-		//menuItem.setMnemonic(KeyEvent.VK_E);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("dept_employee");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
@@ -87,33 +78,24 @@ public class MainMenu extends JFrame implements ActionListener{
 		
 		
 		menu = new JMenu("Payroll");
-		//menu.setMnemonic(KeyEvent.VK_D);
 		
 		
 		menuItem = new JMenuItem("Process Payroll");
-		//menuItem.setMnemonic(KeyEvent.VK_E);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("process_payroll");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Payroll History");
-		//menuItem.setMnemonic(KeyEvent.VK_E);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("history_payroll");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Print Reports");
-		//menuItem.setMnemonic(KeyEvent.VK_E);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("print_reports");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Void Check");
-		//menuItem.setMnemonic(KeyEvent.VK_E);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("void_check");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
@@ -121,26 +103,19 @@ public class MainMenu extends JFrame implements ActionListener{
 		
 		
 		menu = new JMenu("Settings");
-		//menu.setMnemonic(KeyEvent.VK_D);
 		
 		
 		menuItem = new JMenuItem("Payroll Settings");
-		//menuItem.setMnemonic(KeyEvent.VK_E);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("payroll_settings");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Program Settings");
-		//menuItem.setMnemonic(KeyEvent.VK_E);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("program_settings");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("MySQL Settings");
-		//menuItem.setMnemonic(KeyEvent.VK_E);
-		//menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.ALT_MASK));
 		menuItem.setActionCommand("sql_settings");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
@@ -199,7 +174,8 @@ public class MainMenu extends JFrame implements ActionListener{
 
     private void editEmployeeFrame() {
     	try {
-    		EditEmployee.createFrame();
+    		JInternalFrame edit_emp = EditEmployee.createFrame();
+    		MainMenu.add(edit_emp);
     	}catch(Exception e1) {
     		e1.printStackTrace();
     	}

@@ -69,12 +69,16 @@ public class EditEmployee {
 		
 		System.out.println("Creating Edit Frame");
     	
-    	frame.setSize(200, 200);
+    	frame.setSize(300, 300);
     	frame.setLayout(new BorderLayout());
     	frame.add(name);
     	frame.add(employee);
     	frame.add(saveB,BorderLayout.PAGE_END);
-    	frame.repaint();
+    	frame.setClosable(true);
+    	frame.setMaximizable(true);
+    	frame.setLocation(500, 250);
+    	
+    	//frame.repaint();
     	frame.setVisible(true);
     	
     
