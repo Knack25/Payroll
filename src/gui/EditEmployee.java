@@ -16,6 +16,7 @@ import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -30,6 +31,7 @@ public class EditEmployee {
 	
 	static JComboBox<String> employee;
 	static JInternalFrame frame;
+	static JInternalFrame subSetframe1;
 	static JLabel empNumL,statusL,nameL,addressL,cityL,stateL,zipL,emailL,ssnL,jobtitleL,dobL,dohL,dotL,localtaxcodeL,addstatetaxL,addfedtaxL,salaryL,reghourL,
 	regpayL,othourL,otpayL,ptohourL,ptopayL,departmentL;
 	static JTextField empNumT,statusT,nameT,addressT,cityT,stateT,zipT,emailT,ssnT,jobtitleT,dobT,dohT,dotT,localtaxcodeT,addstatetaxT,addfedtaxT,salaryT,reghourT,
@@ -54,6 +56,16 @@ public class EditEmployee {
         	frame.setSelected(true);
         } catch (java.beans.PropertyVetoException exceptSelected) {}
         
+        subSetframe1 = new JInternalFrame();
+        subSetframe1.setVisible(true); //necessary as of 1.3
+       
+        try {
+        	subSetframe1.setSelected(true);
+        } catch (java.beans.PropertyVetoException exceptSelected) {}
+        
+        
+        
+        
         employee = new JComboBox<String>();
         employee.addItemListener(employeeSel);
       
@@ -66,21 +78,32 @@ public class EditEmployee {
     	
     	System.out.println("Querrying DB...");
     	
-    	sqlPullEmpListRequest();
+    	//sqlPullEmpListRequest();
 		
 		System.out.println("Creating Edit Frame");
     	
 		
     	frame.setSize(1535, 820);
     	frame.setLayout(new BorderLayout());
+    	subSetframe1.setLayout(new FlowLayout());
     	
-    	
-    	
-    	
-    	
+    	/* using this to make blank text fields that don't link to the database
+    	JTextField enterFirst = new JFormattedTextField("");
+    	enterFirst.setColumns(10);
+		 fName = enterFirst.getText();
+    	 *///end of test code
+		 
     	//frame.add(name,BorderLayout.NORTH);
     	frame.add(employee,BorderLayout.PAGE_START);
     	frame.add(saveB,BorderLayout.PAGE_END);
+    	frame.add(subSetframe1,BorderLayout.WEST);
+    	
+    	
+    	subSetframe1.add(empNumL);
+    	subSetframe1.add(nameL);
+    	subSetframe1.add(statusL);
+    	subSetframe1.add(departmentL);
+    	
     	frame.setClosable(true);
     	frame.setMaximizable(true);
     	frame.setLocation(0, 0);
