@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,7 +56,7 @@ public class EditEmployee {
         
         employee = new JComboBox<String>();
         employee.addItemListener(employeeSel);
-        
+      
         setLabels();
     	
     	JButton saveB = new JButton("Save");
@@ -69,14 +70,20 @@ public class EditEmployee {
 		
 		System.out.println("Creating Edit Frame");
     	
-    	frame.setSize(300, 300);
+		
+    	frame.setSize(1535, 820);
     	frame.setLayout(new BorderLayout());
-    	frame.add(name);
-    	frame.add(employee);
+    	
+    	
+    	
+    	
+    	
+    	//frame.add(name,BorderLayout.NORTH);
+    	frame.add(employee,BorderLayout.PAGE_START);
     	frame.add(saveB,BorderLayout.PAGE_END);
     	frame.setClosable(true);
     	frame.setMaximizable(true);
-    	frame.setLocation(500, 250);
+    	frame.setLocation(0, 0);
     	
     	//frame.repaint();
     	frame.setVisible(true);
