@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -30,6 +31,9 @@ import fileIO.Config;
 	static String mName;
 	static String lName;
 	static JDialog createMenu;
+	static JTextField enterFirst;
+	static JTextField enterMiddle;
+	static JTextField enterLast;
 	
 	 
 	 public static JDialog CreateMenu() {
@@ -48,17 +52,13 @@ import fileIO.Config;
 		 JButton createB = new JButton("Create"); 
 		 createB.addActionListener(CreateListener);
 		
-		 JTextField enterFirst = new JFormattedTextField("");
-		 JTextField enterMiddle = new JFormattedTextField("");
-		 JTextField enterLast = new JFormattedTextField("");
+		 enterFirst = new JFormattedTextField("");
+		 enterMiddle = new JFormattedTextField("");
+		 enterLast = new JFormattedTextField("");
 		 
 		 enterFirst.setColumns(10);
-		 fName = enterFirst.getText();
 		 enterMiddle.setColumns(10);
-		 mName = enterMiddle.getText();
 		 enterLast.setColumns(10);
-		 lName = enterLast.getText();
-		 
 
 	
 		 createMenu.add(employeeName);
@@ -88,8 +88,6 @@ import fileIO.Config;
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-	    	
-			
 		}
 
 		private void sqlPushRequest() throws Exception, SQLException {
@@ -100,13 +98,18 @@ import fileIO.Config;
 			
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
+			conn.setAutoCommit(false);
 			
 			
-			String statement = "insert into employee(firstname,lastname,middlename,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
-					+ "otPay,otHour,ptoPay,ptoHour,localTaxCode,addStateTax,addFedTax,vacationtimeAvail,vacationtimeUsed,Department,enabled) "
-					+ "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			 fName = enterFirst.getText();
+			 mName = enterMiddle.getText();
+			 lName = enterLast.getText();
 			
-			PreparedStatement pstmt = conn.prepareStatement(statement,Statement.RETURN_GENERATED_KEYS);
+/*			String statement = "INSERT INTO employee(firstname,middlename,lastname,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
+						+ "otPay,otHour,ptoPay,ptoHour,localTaxCode,addStateTax,addFedTax,vacationtimeAvail,vacationtimeUsed,Department,enabled) "
+						+ "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			 
+			PreparedStatement pstmt = conn.prepareStatement(statement);
 			
 			pstmt.setString(1, fName);
 			pstmt.setString(2, mName);
@@ -134,8 +137,25 @@ import fileIO.Config;
 			pstmt.setString(24, "Department");
 			pstmt.setBoolean(25, true);
 				
+			System.out.println(pstmt);
 			
+			java.util.Date now = new java.util.Date();
+			
+			Timestamp ts = new Timestamp(now.getTime());
+			
+			pstmt.setTimestamp(3, ts);
 			int rs = pstmt.executeUpdate();
+			conn.commit();
+		
+			conn.setAutoCommit(true);
+			System.out.println(rs + " Rows updated."); */
+			 
+			 Statement statement = conn.createStatement();
+			 statement.
+			 statement.executeUpdate("INSERT INTO employee(firstname,middlename,lastname,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
+						+ "otPay,otHour,ptoPay,ptoHour,localTaxCode,addStateTax,addFedTax,vacationtimeAvail,vacationtimeUsed,Department,enabled) "
+						+ "Values('dfsd','dsf','dsfds','Phone Number','Email','Sex','SSN','Job Title','Date Of Birth','Date of Hire','null',00.00,12.00,00.00,12.00,00.00,12.00,00.00,44541,00.00,00.00,60.00,00.00,'?')");
+			createMenu.dispose();
 		}
 		
 	};	 
