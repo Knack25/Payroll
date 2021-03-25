@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -19,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -31,7 +33,6 @@ public class EditEmployee {
 	
 	static JComboBox<String> employee;
 	static JInternalFrame frame;
-	static JInternalFrame subSetframe1;
 	static JLabel empNumL,statusL,nameL,addressL,cityL,stateL,zipL,emailL,ssnL,jobtitleL,dobL,dohL,dotL,localtaxcodeL,addstatetaxL,addfedtaxL,salaryL,reghourL,
 	regpayL,othourL,otpayL,ptohourL,ptopayL,departmentL;
 	static JTextField empNumT,statusT,nameT,addressT,cityT,stateT,zipT,emailT,ssnT,jobtitleT,dobT,dohT,dotT,localtaxcodeT,addstatetaxT,addfedtaxT,salaryT,reghourT,
@@ -41,10 +42,8 @@ public class EditEmployee {
 	static Address empAddress;
 	static String fName,mName,lName,fullName;
 
-	//where are we going to put the Y.T.D in the program.
-	//will this be visible for the user or will it in the back-end only?
-	//if we put YTD here, what I had in mind was the totals for both wages and expenses (taxes)
-	//Box Layout would be the best layout for this frame
+		
+	//Will use the GridBagLayout as the layout manager before nesting panels
 	
 	
 	 //Create a new internal frame.
@@ -56,15 +55,18 @@ public class EditEmployee {
         	frame.setSelected(true);
         } catch (java.beans.PropertyVetoException exceptSelected) {}
         
-        subSetframe1 = new JInternalFrame();
-        subSetframe1.setVisible(true); //necessary as of 1.3
-       
-        try {
-        	subSetframe1.setSelected(true);
-        } catch (java.beans.PropertyVetoException exceptSelected) {}
+      /*
+        //main panel to put the elements in
+        JPanel mainToppane = new JPanel();
+        JPanel mainLeftpane = new JPanel();
+        JPanel mainCenterpane = new JPanel();
+        JPanel mainRightpane = new JPanel();
         
-        
-        
+    
+        //sub-panels to put the elements in for the left main panel
+        JPanel empNoP = new JPanel(new FlowLayout(FlowLayout.LEADING));
+        JPanel nameP = new JPanel(new FlowLayout(FlowLayout.LEADING));
+        */
         
         employee = new JComboBox<String>();
         employee.addItemListener(employeeSel);
@@ -84,25 +86,33 @@ public class EditEmployee {
     	
 		
     	frame.setSize(1535, 820);
-    	frame.setLayout(new BorderLayout());
-    	subSetframe1.setLayout(new FlowLayout());
     	
-    	/* using this to make blank text fields that don't link to the database
-    	JTextField enterFirst = new JFormattedTextField("");
-    	enterFirst.setColumns(10);
-		 fName = enterFirst.getText();
-    	 *///end of test code
-		 
-    	//frame.add(name,BorderLayout.NORTH);
-    	frame.add(employee,BorderLayout.PAGE_START);
+    	frame.setLayout(new GridBagLayout());
+    	//mainToppane.setLayout(new FlowLayout(FlowLayout.CENTER));
+    	//mainLeftpane.setLayout(new FlowLayout());
+    	//mainCenterpane.setLayout(null);
+    	//mainRightpane.setLayout(null);
+    	
+ /*
+    	frame.add(mainToppane,BorderLayout.NORTH);
     	frame.add(saveB,BorderLayout.PAGE_END);
-    	frame.add(subSetframe1,BorderLayout.WEST);
+    	frame.add(mainLeftpane,BorderLayout.WEST);
+    	frame.add(mainCenterpane,BorderLayout.CENTER);
+    	frame.add(mainRightpane,BorderLayout.EAST);
     	
     	
-    	subSetframe1.add(empNumL);
-    	subSetframe1.add(nameL);
-    	subSetframe1.add(statusL);
-    	subSetframe1.add(departmentL);
+    	mainToppane.add(name);
+    	mainToppane.add(employee);
+    	
+    	
+    	mainLeftpane.add(empNoP);
+    		empNoP.add(empNumL);
+    	mainLeftpane.add(nameP);
+    		nameP.add(nameL);
+    	//leftPanel.add(nameL);
+    	//leftPanel.add(statusL);
+    	//leftPanel.add(departmentL);
+    	*/
     	
     	frame.setClosable(true);
     	frame.setMaximizable(true);
@@ -118,9 +128,6 @@ public class EditEmployee {
     	-tax tables for the employees
     	-YTDs 
     	-function to create one check for the individual employee.
-    	do we have tax tables for the employees?
-    	
-    	
     	*/
     	
     	
