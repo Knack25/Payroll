@@ -6,10 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -151,11 +149,12 @@ import fileIO.Config;
 			System.out.println(rs + " Rows updated."); */
 			 
 			 Statement statement = conn.createStatement();
-			 statement.
-			 statement.executeUpdate("INSERT INTO employee(firstname,middlename,lastname,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
+			 
+			/* statement.executeUpdate("INSERT INTO employee(firstname,middlename,lastname,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
 						+ "otPay,otHour,ptoPay,ptoHour,localTaxCode,addStateTax,addFedTax,vacationtimeAvail,vacationtimeUsed,Department,enabled) "
 						+ "Values('dfsd','dsf','dsfds','Phone Number','Email','Sex','SSN','Job Title','Date Of Birth','Date of Hire','null',00.00,12.00,00.00,12.00,00.00,12.00,00.00,44541,00.00,00.00,60.00,00.00,'?')");
-			createMenu.dispose();
+			*/
+			 createMenu.dispose();
 		}
 		
 	};	 
