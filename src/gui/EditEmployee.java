@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +42,7 @@ public class EditEmployee {
 	static Name empName;
 	static Address empAddress;
 	static String fName,mName,lName,fullName;
+	private static JLabel teleL;
 
 		
 	//Will use the GridBagLayout as the layout manager before nesting panels
@@ -88,6 +90,22 @@ public class EditEmployee {
     	frame.setSize(1535, 820);
     	
     	frame.setLayout(new GridBagLayout());
+    	GridBagConstraints c = new GridBagConstraints();
+    	c.gridx = 12;
+    	c.gridy = 14;
+    	frame.add(name);
+    	frame.add(employee);
+    	frame.add(empNumL);
+    	frame.add(nameL);
+    	frame.add(statusL);
+    	frame.add(departmentL);
+    	frame.add(addressL);
+    	frame.add(cityL);
+    	frame.add(stateL);
+    	frame.add(zipL);
+    	frame.add(dobL);
+    	
+    	
     	//mainToppane.setLayout(new FlowLayout(FlowLayout.CENTER));
     	//mainLeftpane.setLayout(new FlowLayout());
     	//mainCenterpane.setLayout(null);
@@ -162,6 +180,7 @@ public class EditEmployee {
     	otpayL = new JLabel("Overtime: ");
     	ptopayL = new JLabel("P.T.O Time: ");
     	departmentL = new JLabel("Department: ");
+    	teleL = new JLabel("Telephone: ");
 	}
     
     private static void sqlPullEmpListRequest() throws Exception, SQLException {
