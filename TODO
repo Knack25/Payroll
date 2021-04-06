@@ -1,9 +1,9 @@
 Create Employee:
 	Backend:Done
-	Frontend:In Progress
+	Frontend:Done
 Edit Employee:
-	Backend: In Progress
-	Frontend: Not Started
+	Backend: Done
+	Frontend: Done
 Terminate Employee:
 	Backend: Done
 	Frontend: Done
@@ -11,8 +11,8 @@ Reinstate Employee:
 	Backend: Done 
 	Frontend:Done
 View Employees:
-	Backend: Not Started
-	Frontend: Not Started
+	Backend: In Progress
+	Frontend: In Progress
 Process Payroll:
 	Backend: Not Started
 	Frontend: Not Started

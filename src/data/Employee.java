@@ -9,7 +9,7 @@ public class Employee {
 		String ssn, String jobTitle, String dOB, String dOH, String dOT, double salary, double regPay,
 		double regHour, double otPay, double otHour, double ptoPay, double ptoHour, double localTaxCode,
 		double addStateTax, double addFedTax, double vacationTimeUsed, double vacationTimeRemaining,
-		String department, double[] yTD, Tax[] tax) {
+		int department, double[] yTD, Tax[] tax) {
 	super();
 	ID = iD;
 	this.name = name;
@@ -68,7 +68,7 @@ public class Employee {
 	private double addFedTax;
 	private double vacationTimeUsed;
 	private double vacationTimeRemaining;
-	private String department;
+	private int department;
 	private double YTD[] = new double[27];
 	private Tax tax[] = new Tax[27];
 	
@@ -216,10 +216,10 @@ public class Employee {
 	public void setVacationTimeRemaining(double vacationTimeRemaining) {
 		this.vacationTimeRemaining = vacationTimeRemaining;
 	}
-	public String getDepartment() {
+	public int getDepartment() {
 		return department;
 	}
-	public void setDepartment(String department) {
+	public void setDepartment(int department) {
 		this.department = department;
 	}
 	public double[] getYTD() {

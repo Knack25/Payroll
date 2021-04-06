@@ -1,10 +1,7 @@
 package gui;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -18,11 +15,8 @@ import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import data.Address;
@@ -33,6 +27,7 @@ import fileIO.Config;
 public class EditEmployee {
 	
 	static JComboBox<String> employee;
+	static JComboBox<String> department;
 	static JInternalFrame frame;
 	static JLabel empNumL,statusL,nameL,addressL,cityL,stateL,zipL,emailL,ssnL,jobtitleL,dobL,dohL,dotL,localtaxcodeL,addstatetaxL,addfedtaxL,salaryL,reghourL,
 	regpayL,othourL,otpayL,ptohourL,ptopayL,departmentL,teleL,sexL;
@@ -41,7 +36,7 @@ public class EditEmployee {
 	static Employee emp;
 	static Name empName;
 	static Address empAddress;
-	static String fName,mName,lName,fullName;
+	static String fName,mName,lName,fullName,dept;
 	static GridBagConstraints g1,h1,b2c2,
 							  a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,
 							  b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,
@@ -64,6 +59,11 @@ public class EditEmployee {
         
         employee = new JComboBox<String>();
         employee.addItemListener(employeeSel);
+        
+        department = new JComboBox<String>();
+        //department.addItemListener(departmentSel);
+        
+        sqlPullDeptListRequest();
       
         setLabels();
        
@@ -80,13 +80,11 @@ public class EditEmployee {
 		
 		System.out.println("Creating Edit Frame");
 		
-		JTextField test = new JTextField("Dante G. Parente");
-		
-    	frame.setSize(1535, 820);
+		frame.setSize(1535, 820);
     	
     	
     	frame.setLayout(new GridBagLayout());
-    
+   
     	//need to figure out if this can be moved to a separate class
     	GridBagConstraints g1 = new GridBagConstraints();
     	g1.gridx = 6;
@@ -248,6 +246,7 @@ public class EditEmployee {
     	d13.gridx = 3;
     	d13.gridy = 12;
 
+    	
     	frame.add(name,g1);
     	frame.add(employee,h1);
     	frame.add(saveB,m15);
@@ -260,7 +259,7 @@ public class EditEmployee {
     	frame.add(nameL,a4);
     	frame.add(nameT,b4);
     	frame.add(statusL,a5);
-    	frame.add(statusT,a5);
+    	frame.add(statusT,b5);
     	frame.add(departmentL,a6);
     	frame.add(departmentL,b6);
     	frame.add(addressL,a7);
@@ -384,9 +383,39 @@ public class EditEmployee {
 		conn.close();
 	}
     
+    private static void sqlPullDeptListRequest() throws Exception,SQLException{
+    	String[] SQL = Config.SQLConfig();
+		
+		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+		
+		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+		
+		
+		Statement stmt = conn.createStatement();
+			
+		ResultSet rs = stmt.executeQuery("select * from departments");
+		
+		
+		
+		int i = 0;
+		
+		while(rs.next()) {
+			dept = rs.getString("name");
+			department.addItem(dept);
+			i++;
+		}
+		
+		
+		System.out.println("Data Retreived Successfull for " + i + " entries.");
+		
+		rs.close();
+		conn.close();
+		
+    }
+    
     static ItemListener employeeSel = new ItemListener() {
 		
-		private 
+		
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
