@@ -260,7 +260,7 @@ public class EditEmployee {
     	frame.add(nameL,a4);
     	frame.add(nameT,b4);
     	frame.add(statusL,a5);
-    	frame.add(statusT,a5);
+    	frame.add(statusT,b5);
     	frame.add(departmentL,a6);
     	frame.add(departmentL,b6);
     	frame.add(addressL,a7);
@@ -385,8 +385,7 @@ public class EditEmployee {
 	}
     
     static ItemListener employeeSel = new ItemListener() {
-		
-		private 
+		 
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
