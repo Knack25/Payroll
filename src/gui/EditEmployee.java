@@ -37,7 +37,7 @@ public class EditEmployee {
 	static JLabel empNumL,statusL,nameL,addressL,cityL,stateL,zipL,emailL,ssnL,jobtitleL,dobL,dohL,dotL,localtaxcodeL,addstatetaxL,addfedtaxL,salaryL,reghourL,
 	regpayL,othourL,otpayL,ptohourL,ptopayL,departmentL,teleL,sexL;
 	static JTextField empNumT,statusT,nameT,addressT,cityT,stateT,zipT,emailT,ssnT,jobtitleT,dobT,dohT,dotT,localtaxcodeT,addstatetaxT,addfedtaxT,salaryT,reghourT,
-	regpayT,othourT,otpayT,ptohourT,ptopayT,departmentT;
+	regpayT,othourT,otpayT,ptohourT,ptopayT,departmentT,teleT,sexT;
 	static Employee emp;
 	static Name empName;
 	static Address empAddress;
@@ -49,7 +49,7 @@ public class EditEmployee {
 							  d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,
 							  m15;
 	
-		
+	
 	//GridBagLayout works very well for what needs to be done here
 	
 	 //Create a new internal frame.
@@ -76,7 +76,7 @@ public class EditEmployee {
     	
     	System.out.println("Querrying DB...");
     	
-    	//sqlPullEmpListRequest();
+    	sqlPullEmpListRequest();
 		
 		System.out.println("Creating Edit Frame");
 		
@@ -255,52 +255,52 @@ public class EditEmployee {
     	frame.add(employeeDataL,b2c2);
     
     	frame.add(empNumL,a3);
-    	frame.add(test,b3); //testing the looks with text fields
-    //	frame.add(empNumT,b3);
+    	//frame.add(test,b3); //testing the looks with text fields
+    	frame.add(empNumT,b3);
     	frame.add(nameL,a4);
-    //	frame.add(nameT,b4);
+    	frame.add(nameT,b4);
     	frame.add(statusL,a5);
-    //	frame.add(statusT,a5);
+    	frame.add(statusT,a5);
     	frame.add(departmentL,a6);
-    //	frame.add(departmentL,b6);
+    	frame.add(departmentL,b6);
     	frame.add(addressL,a7);
-    //	frame.add(addressT,b7);
+    	frame.add(addressT,b7);
     	frame.add(cityL,a8);
-    //	frame.add(cityT,b8);
+    	frame.add(cityT,b8);
     	frame.add(stateL,a9);
-   // 	frame.add(stateT,b9);
+    	frame.add(stateT,b9);
     	frame.add(zipL,a10);
-    //	frame.add(zipT);
+    	frame.add(zipT);
     	frame.add(teleL,a11);
-    	//frame.add(teleT,b11);  //telephone needs to be part of the database
+    	frame.add(teleT,b11); 
     	frame.add(emailL,a12);
-  //  	frame.add(emailT,b12);
+    	frame.add(emailT,b12);
     	frame.add(sexL,a13);
-    	//frame.add(sexT,b13);  //sex needs to be part of the database
+    	frame.add(sexT,b13);
     	frame.add(ssnL,a14);
- //   	frame.add(ssnT,b14);
+    	frame.add(ssnT,b14);
     	frame.add(jobtitleL,c3);
-   // 	frame.add(jobtitleT,d4);
+    	frame.add(jobtitleT,d4);
     	frame.add(dobL,c4);
-  //  	frame.add(dobT,d4);
+    	frame.add(dobT,d4);
     	frame.add(dohL,c5);
- //   	frame.add(dohT,d5);
+    	frame.add(dohT,d5);
     	frame.add(dotL,c6);
- //   	frame.add(dotT,d6);
+    	frame.add(dotT,d6);
     	frame.add(localtaxcodeL,c7);
-   // 	frame.add(localtaxcodeT,d7);
+    	frame.add(localtaxcodeT,d7);
     	frame.add(addstatetaxL,c8);
-    //	frame.add(addstatetaxT,d8);
+    	frame.add(addstatetaxT,d8);
     	frame.add(addfedtaxL,c9);
-   // 	frame.add(addfedtaxT,d9);
+    	frame.add(addfedtaxT,d9);
     	frame.add(salaryL,c10);
-  //  	frame.add(salaryT,d10);
+    	frame.add(salaryT,d10);
     	frame.add(regpayL,c11);
-   // 	frame.add(regpayT,d11);
+    	frame.add(regpayT,d11);
     	frame.add(otpayL,c12);
-   // 	frame.add(otpayT,d12);
+    	frame.add(otpayT,d12);
     	frame.add(ptopayL,c13);
-   // 	frame.add(ptopayT,d13);
+    	frame.add(ptopayT,d13);
     	
     
     	
@@ -386,6 +386,8 @@ public class EditEmployee {
     
     static ItemListener employeeSel = new ItemListener() {
 		
+		private 
+
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			fullName = (String) employee.getSelectedItem();
@@ -488,6 +490,9 @@ public class EditEmployee {
 			otpayT = new JTextField(String.valueOf(emp.getOtPay()));
 			ptopayT = new JTextField(String.valueOf(emp.getPtoPay()));
 			departmentT = new JTextField(emp.getDepartment());
+			teleT = new JTextField(emp.getTelnum());
+			sexT = new JTextField(emp.getSex());
+			
 		}
 	};
 
