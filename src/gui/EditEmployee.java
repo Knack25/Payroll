@@ -414,8 +414,12 @@ public class EditEmployee {
     }
     
     static ItemListener employeeSel = new ItemListener() {
+<<<<<<< HEAD
 		
 		
+=======
+		 
+>>>>>>> b2849a25b5ef00ed2f53d83b6d60409861d0437b
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
