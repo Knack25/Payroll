@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,6 +20,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import fileIO.Config;
@@ -35,7 +38,7 @@ import fileIO.Config;
 
 public class View_Employees {
 
-	static JComboBox<String> employee,deptD,titleD,sexD,stateD;
+	static JComboBox<String> deptD,titleD,sexD,stateD;
 	static JDialog dialog;
 	static String fName,mName,lName;
 	static String fullName;
@@ -44,12 +47,19 @@ public class View_Employees {
 	static JTextField enterMiddle;
 	static JTextField enterLast;
 	static JLabel deptL,jobtitleL,sexL,stateL;
+	static JList employee;
 	
 	 protected static JDialog createViewemployeeMenu()  throws Exception {
 		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		 dialog.addWindowListener(DialogListener);
 	    	
-	    	employee = new JComboBox<String>();
+		 
+		 String labels[] = { "Dante G. Parente", "B", "C", "D","E", "F", "G", "H","I", "J" };
+	    	
+		 JList employee = new JList(/* insert full name strings here */  labels );
+	    	
+	    	JScrollPane scrollPane = new JScrollPane(employee);
+	    	scrollPane.setPreferredSize(new Dimension(150,150));
 	    	
 	    	JButton loadB = new JButton("Load");
 	    	//loadB.setActionCommand("TermSubmit");
@@ -67,7 +77,7 @@ public class View_Employees {
 			
 			setLabels();
 	    	
-	    	dialog.setSize(300, 300);
+	    	dialog.setSize(400, 350);
 	    	dialog.setLayout(new GridBagLayout());
 	    	
 	    	JLabel viewEmployeesL = new JLabel("View Employees"); 
@@ -84,23 +94,59 @@ public class View_Employees {
 	    	GridBagConstraints d2d5 = new GridBagConstraints();
 	    	d2d5.gridx = 3;
 	    	d2d5.gridy = 1;
-	    	d2d5.gridheight= 4;
+	    	d2d5.gridheight = 4;
 	    	
 	    	GridBagConstraints a6b6 = new GridBagConstraints();
 	    	a6b6.gridx = 0;
 	    	a6b6.gridy = 5;
 	    	a6b6.gridwidth = 2;
 	    	
+	    	GridBagConstraints a2 = new GridBagConstraints();
+	    	a2.gridx = 0;
+	    	a2.gridy = 1;
 	    	
+	    	GridBagConstraints a3 = new GridBagConstraints();
+	    	a3.gridx = 0;
+	    	a3.gridy = 2;
 	    	
+	    	GridBagConstraints a4 = new GridBagConstraints();
+	    	a4.gridx = 0;
+	    	a4.gridy = 3;
+
+	    	GridBagConstraints a5 = new GridBagConstraints();
+	    	a5.gridx = 0;
+	    	a5.gridy = 4;
 	    	
+	    	GridBagConstraints b2 = new GridBagConstraints();
+	    	b2.gridx = 1;
+	    	b2.gridy = 1;
 	    	
+	    	GridBagConstraints b3 = new GridBagConstraints();
+	    	b3.gridx = 1;
+	    	b3.gridy = 2;
+	    	
+	    	GridBagConstraints b4 = new GridBagConstraints();
+	    	b4.gridx = 1;
+	    	b4.gridy = 3;
+	    	
+	    	GridBagConstraints b5 = new GridBagConstraints();
+	    	b5.gridx = 1;
+	    	b5.gridy = 4;
 	    	
 	    	
 	    	dialog.add(viewEmployeesL,b1c1);
 	    	dialog.add(name,c2);
-	    	dialog.add(employee,d2d5);
+	    	dialog.add(scrollPane,d2d5);
 	    	dialog.add(loadB,a6b6);
+	    	
+	    	dialog.add(deptL,a2);
+	    	dialog.add(deptD,b2);
+	    	dialog.add(jobtitleL,a3);
+	    	dialog.add(titleD,b3);
+	    	dialog.add(sexL,a4);
+	    	dialog.add(sexD,b4);
+	    	dialog.add(stateL,a5);
+	    	dialog.add(stateD,b5);
 	    	dialog.repaint();
 	    	
 	    	
