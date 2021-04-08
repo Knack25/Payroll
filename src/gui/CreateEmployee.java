@@ -44,7 +44,7 @@ import fileIO.Config;
 		 JPanel fields = new JPanel();
 		 
 		 createMenu.setLayout(new FlowLayout());
-		 JLabel employeeName = new JLabel(" Enter Employee Name (First, Middle, Last):");
+		 JLabel employeeName = new JLabel("Enter Employee Name (First, Middle, Last):");
 	
 		 
 		 JButton createB = new JButton("Create"); 

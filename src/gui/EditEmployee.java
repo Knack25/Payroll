@@ -37,12 +37,7 @@ public class EditEmployee {
 	static Name empName;
 	static Address empAddress;
 	static String fName,mName,lName,fullName,dept;
-	static GridBagConstraints g1,h1,b2c2,
-							  a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,
-							  b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,
-							  c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,
-							  d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,
-							  m15;
+
 	
 	
 	//GridBagLayout works very well for what needs to be done here
@@ -100,7 +95,7 @@ public class EditEmployee {
     	saveB.addActionListener(saveEmp);
     	
     	JLabel name = new JLabel("Selected Employee:");
-    	JLabel employeeDataL = new JLabel("Employee Data"); 
+    	JLabel employeeDataL = new JLabel("<HTML><U> Employee Data </U></HTML>"); 
     	
     	System.out.println("Querrying DB...");
     	
@@ -290,7 +285,7 @@ public class EditEmployee {
     	frame.add(statusL,a5);
     	frame.add(statusT,b5);
     	frame.add(departmentL,a6);
-    	frame.add(departmentL,b6);
+    	frame.add(departmentT,b6);
     	frame.add(addressL,a7);
     	frame.add(addressT,b7);
     	frame.add(cityL,a8);
@@ -298,7 +293,7 @@ public class EditEmployee {
     	frame.add(stateL,a9);
     	frame.add(stateT,b9);
     	frame.add(zipL,a10);
-    	frame.add(zipT);
+    	frame.add(zipT,b10);
     	frame.add(teleL,a11);
     	frame.add(teleT,b11); 
     	frame.add(emailL,a12);
@@ -308,7 +303,7 @@ public class EditEmployee {
     	frame.add(ssnL,a14);
     	frame.add(ssnT,b14);
     	frame.add(jobtitleL,c3);
-    	frame.add(jobtitleT,d4);
+    	frame.add(jobtitleT,d3);
     	frame.add(dobL,c4);
     	frame.add(dobT,d4);
     	frame.add(dohL,c5);
