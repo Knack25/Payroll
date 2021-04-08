@@ -50,6 +50,34 @@ public class EditEmployee {
 	 //Create a new internal frame.
     protected static JInternalFrame createFrame() throws Exception{
         frame = new JInternalFrame();
+        emp = new Employee();
+		empAddress = new Address();
+		empName = new Name();
+		
+		empNumT = new JTextField();
+		statusT  = new JTextField();
+		nameT = new JTextField();
+		addressT = new JTextField();
+		cityT = new JTextField();
+		stateT = new JTextField();
+		zipT = new JTextField();
+		emailT = new JTextField();
+		ssnT = new JTextField();
+		jobtitleT = new JTextField();
+		dobT = new JTextField();
+		dohT = new JTextField();
+		dotT = new JTextField();
+		localtaxcodeT = new JTextField();
+		addstatetaxT = new JTextField();
+		addfedtaxT = new JTextField();
+		salaryT = new JTextField();
+		regpayT = new JTextField();
+		otpayT = new JTextField();
+		ptopayT = new JTextField();
+		departmentT = new JTextField();
+		teleT = new JTextField();
+		sexT = new JTextField();
+		
         frame.setVisible(true); //necessary as of 1.3
        
         try {
@@ -247,6 +275,7 @@ public class EditEmployee {
     	d13.gridy = 12;
 
     	
+    	
     	frame.add(name,g1);
     	frame.add(employee,h1);
     	frame.add(saveB,m15);
@@ -400,7 +429,7 @@ public class EditEmployee {
 		int i = 0;
 		
 		while(rs.next()) {
-			dept = rs.getString("name");
+			dept = rs.getString("depName");
 			department.addItem(dept);
 			i++;
 		}
@@ -414,17 +443,13 @@ public class EditEmployee {
     }
     
     static ItemListener employeeSel = new ItemListener() {
-<<<<<<< HEAD
-		
-		
-=======
-		 
->>>>>>> b2849a25b5ef00ed2f53d83b6d60409861d0437b
+
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			fullName = (String) employee.getSelectedItem();
         	String[] name = fullName.split(" ");
+        	System.out.println("New Employee Selected...");
         	System.out.println("The value of fullName is: " + fullName);
         	
         	try {
@@ -432,6 +457,7 @@ public class EditEmployee {
         	}catch (Exception SelEmpPull) {
         		SelEmpPull.printStackTrace();
         	}
+        	frame.updateUI();
 			
 		}
 
@@ -439,12 +465,17 @@ public class EditEmployee {
 			String[] SQL;
 			SQL = Config.SQLConfig();
 			
+			System.out.println("Querrying DB for selected Employee");
+			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
 			
-			String updateStatement = "select * " + "from employee "+ "inner join address on employee.id = address.employee_id " + "WHERE firstname = ? and lastname = ?";
+			String updateStatement = "select * " + "from employee " + 
+			"inner join address on employee.id = address.employee_id " +
+			//"inner join departments on employee.Department = departments.id" + 
+			"WHERE firstname = ? and lastname = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
@@ -460,9 +491,7 @@ public class EditEmployee {
 			//int output = pstmt.executeUpdate();
 			ResultSet rs = pstmt.executeQuery();
 			
-			emp = new Employee();
-			empAddress = new Address();
-			empName = new Name();
+			
 			
 			rs.next();
 			empName.setFirst(rs.getString("firstname"));
@@ -495,6 +524,7 @@ public class EditEmployee {
 			emp.setAddFedTax(rs.getDouble("addFedTax"));
 			emp.setVacationTimeRemaining(rs.getDouble("vacationtimeAvail"));
 			emp.setVacationTimeUsed(rs.getDouble("vacationtimeUsed"));
+			emp.setDepartment(rs.getInt("Department"));
 			emp.setStatus("Active");
 			emp.setName(empName);
 			emp.setAddress(empAddress);
@@ -502,30 +532,35 @@ public class EditEmployee {
 			pstmt.close();
 			conn.close();
 			
-			empNumT = new JTextField(emp.getID());
-			statusT  = new JTextField(emp.getStatus());
-			nameT = new JTextField(emp.getName().getFirst() + " " + emp.getName().getMiddle() + " " + emp.getName().getLast());
-			addressT = new JTextField(emp.getAddress().getStreet());
-			cityT = new JTextField(emp.getAddress().getCity());
-			stateT = new JTextField(emp.getAddress().getState());
-			zipT = new JTextField(emp.getAddress().getZip());
-			emailT = new JTextField(emp.getEmail());
-			ssnT = new JTextField(emp.getSsn());
-			jobtitleT = new JTextField(emp.getJobTitle());
-			dobT = new JTextField(emp.getDOB());
-			dohT = new JTextField(emp.getDOH());
-			dotT = new JTextField(emp.getDOT());
-			localtaxcodeT = new JTextField(String.valueOf(emp.getLocalTaxCode()));
-			addstatetaxT = new JTextField( String.valueOf(emp.getAddStateTax()));
-			addfedtaxT = new JTextField(String.valueOf(emp.getAddFedTax()));
-			salaryT = new JTextField(String.valueOf(emp.getSalary()));
-			regpayT = new JTextField(String.valueOf(emp.getRegPay()));
-			otpayT = new JTextField(String.valueOf(emp.getOtPay()));
-			ptopayT = new JTextField(String.valueOf(emp.getPtoPay()));
-			departmentT = new JTextField(emp.getDepartment());
-			teleT = new JTextField(emp.getTelnum());
-			sexT = new JTextField(emp.getSex());
 			
+			empNumT.setText(String.valueOf(emp.getID()));
+			statusT.setText(emp.getStatus());
+			nameT.setText(emp.getName().getFirst() + " " + emp.getName().getMiddle() + " " + emp.getName().getLast());
+			addressT.setText(emp.getAddress().getStreet());
+			cityT.setText(emp.getAddress().getCity());
+			stateT.setText(emp.getAddress().getState());
+			zipT.setText(emp.getAddress().getZip());
+			emailT.setText(emp.getEmail());
+			ssnT.setText(emp.getSsn());
+			jobtitleT.setText(emp.getJobTitle());
+			dobT.setText(emp.getDOB());
+			dohT.setText(emp.getDOH());
+			dotT.setText(emp.getDOT());
+			localtaxcodeT.setText(String.valueOf(emp.getLocalTaxCode()));
+			addstatetaxT.setText( String.valueOf(emp.getAddStateTax()));
+			addfedtaxT.setText(String.valueOf(emp.getAddFedTax()));
+			salaryT.setText(String.valueOf(emp.getSalary()));
+			regpayT.setText(String.valueOf(emp.getRegPay()));
+			otpayT.setText(String.valueOf(emp.getOtPay()));
+			ptopayT.setText(String.valueOf(emp.getPtoPay()));
+			//departmentT.setText(String.valueOf(emp.getDepartment()));
+			department.setSelectedIndex(emp.getDepartment());
+			teleT.setText(emp.getTelnum());
+			sexT.setText(emp.getSex());
+			
+			
+			
+			frame.repaint();
 		}
 	};
 
@@ -533,7 +568,33 @@ public class EditEmployee {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//Push the updated file to here
+			fullName = (String) employee.getSelectedItem();
+        	String[] name = fullName.split(" ");
+        	System.out.println("Employee Save Requested...");
+        	System.out.println("The value of fullName is: " + fullName);
+        	
+        	try {
+        		sqlPushRequest(name);
+        	}catch (Exception UpdateEmpPush) {
+        		UpdateEmpPush.printStackTrace();
+        	}
+		}
+		
+		private void sqlPushRequest(String name[]) throws Exception {
+			String[] SQL;
+			System.out.println("Executing Update");
+			
+			SQL = Config.SQLConfig();
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			String updateStatement = "select * " + "from employee "+ "inner join address on employee.id = address.employee_id " + "WHERE firstname = ? and lastname = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+
+			
 		}
 	};
 }
