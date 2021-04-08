@@ -31,7 +31,7 @@ import fileIO.Config;
 public class Process_Check {
 	static JLabel regularL,ptoL,overtimeL,salaryL,advanceL,royaltiesL;
 	static JTextField regHoursT,regRateT,ptoHoursT,ptoRateT,salHoursT,salRateT,advHoursT,advRateT,royalHoursT,royalRateT;
-	static JComboBox<String> hr_or_dol;
+	static JComboBox<String> hr_or_sdol;
 	/*
 	 * needed for the process check
 	 * default rates from employees
