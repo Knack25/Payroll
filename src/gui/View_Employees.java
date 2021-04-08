@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.Dialog;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -33,43 +35,72 @@ import fileIO.Config;
 
 public class View_Employees {
 
-	static JComboBox<String> employee;
+	static JComboBox<String> employee,deptD,titleD,sexD,stateD;
 	static JDialog dialog;
-	static String fName;
-	static String mName;
-	static String lName;
+	static String fName,mName,lName;
 	static String fullName;
 	static String department;
 	static JTextField enterFirst;
 	static JTextField enterMiddle;
 	static JTextField enterLast;
+	static JLabel deptL,jobtitleL,sexL,stateL;
 	
-	
-	 protected static JDialog createEmployeeReinsateDialog()  throws Exception {
+	 protected static JDialog createViewemployeeMenu()  throws Exception {
 		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		 dialog.addWindowListener(DialogListener);
 	    	
 	    	employee = new JComboBox<String>();
 	    	
-	    	JButton submitB = new JButton("Submit");
-	    	//submitB.setActionCommand("TermSubmit");
-			submitB.addActionListener(submit);
+	    	JButton loadB = new JButton("Load");
+	    	//loadB.setActionCommand("TermSubmit");
+			loadB.addActionListener(submit);
 			
 			JLabel name = new JLabel("Employees:");
 	    	
 	    	System.out.println("Querrying DB...");
 	    	
-	    	int i = sqlPullRequest();
+	    	//int i = sqlPullRequest();
 			
-			System.out.println("Data Retreived Successfull for " + i + " entries.");
+			//System.out.println("Data Retreived Successfull for " + i + " entries.");
 			
 			System.out.println("Creating Dialog Box");
+			
+			setLabels();
 	    	
-	    	dialog.setSize(200, 200);
-	    	dialog.setLayout(new FlowLayout());
-	    	dialog.add(name);
-	    	dialog.add(employee);
-	    	dialog.add(submitB);
+	    	dialog.setSize(300, 300);
+	    	dialog.setLayout(new GridBagLayout());
+	    	
+	    	JLabel viewEmployeesL = new JLabel("View Employees"); 
+	    	
+	    	GridBagConstraints b1c1 = new GridBagConstraints();
+	    	b1c1.gridx = 1;
+	    	b1c1.gridy = 0;
+	    	b1c1.gridwidth = 2;
+	    	
+	    	GridBagConstraints c2 = new GridBagConstraints();
+	    	c2.gridx = 2;
+	    	c2.gridy = 1;
+	    	
+	    	GridBagConstraints d2d5 = new GridBagConstraints();
+	    	d2d5.gridx = 3;
+	    	d2d5.gridy = 1;
+	    	d2d5.gridheight= 4;
+	    	
+	    	GridBagConstraints a6b6 = new GridBagConstraints();
+	    	a6b6.gridx = 0;
+	    	a6b6.gridy = 5;
+	    	a6b6.gridwidth = 2;
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	dialog.add(viewEmployeesL,b1c1);
+	    	dialog.add(name,c2);
+	    	dialog.add(employee,d2d5);
+	    	dialog.add(loadB,a6b6);
 	    	dialog.repaint();
 	    	
 	    	
@@ -78,6 +109,19 @@ public class View_Employees {
 	    	dialog.setVisible(true);
 			return dialog;
 	 }
+	 
+	 private static void setLabels() {
+		 	deptL = new JLabel("Department: ");
+	        stateL = new JLabel("State: ");
+	        jobtitleL = new JLabel("Job Title: ");
+	    	sexL = new JLabel("Sex: ");
+		}
+	 
+	 
+	 
+	 
+	 
+	 
 	 
 	 
 	 private static int sqlPullRequest() throws Exception, SQLException {

@@ -144,7 +144,7 @@ public class MainMenu extends JFrame implements ActionListener{
     		reinstateEmployeeDialog();
     		break;
     	case("dept_employee"):
-    		
+    		viewEmployeeWindow();
     		break;
     	case("process_payroll"):
     		
@@ -212,6 +212,14 @@ public class MainMenu extends JFrame implements ActionListener{
 		}
 	}
     
+	private void viewEmployeeWindow() {
+		try{
+			View_Employees.createViewemployeeMenu();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
     
     
 	

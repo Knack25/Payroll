@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,6 +37,7 @@ public class Reinstate_Employee {
 	    	dialog.addWindowListener(DialogListener);
 	    	
 	    	employee = new JComboBox<String>();
+	    	employee.setPreferredSize(new Dimension(150,30));
 	    	
 	    	JButton submitB = new JButton("Submit");
 	    	//submitB.setActionCommand("TermSubmit");
@@ -45,12 +47,12 @@ public class Reinstate_Employee {
 	    	System.out.println("Querrying DB...");
 	    	
 	    	int i = sqlPullRequest();
-			
-			System.out.println("Data Retreived Successfull for " + i + " entries.");
+		
+		System.out.println("Data Retreived Successfull for " + i + " entries.");
 			
 			System.out.println("Creating Dialog Box");
 	    	
-	    	dialog.setSize(200, 200);
+	    	dialog.setSize(400, 90);
 	    	dialog.setLayout(new FlowLayout());
 	    	dialog.add(name);
 	    	dialog.add(employee);
