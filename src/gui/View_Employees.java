@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -20,7 +19,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -38,40 +36,58 @@ import fileIO.Config;
 
 public class View_Employees {
 
-	static JComboBox<String> deptD,titleD,sexD,stateD;
+	static JComboBox<String> deptD,titleD,sexD,stateD,enabledD, employee;
 	static JDialog dialog;
 	static String fName,mName,lName;
 	static String fullName;
 	static String department;
+	static String selDep,selTitle,selSex,selState,selEnabled;
 	static JTextField enterFirst;
 	static JTextField enterMiddle;
 	static JTextField enterLast;
-	static JLabel deptL,jobtitleL,sexL,stateL;
-	static JList employee;
+	static JLabel deptL,jobtitleL,sexL,stateL,enabledL;
+	static JButton searchB, loadB;
+
 	
 	 protected static JDialog createViewemployeeMenu()  throws Exception {
 		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		 dialog.addWindowListener(DialogListener);
+		 
+		 deptD = new JComboBox<String>();
+		 deptD.addItem("*");
+		 titleD = new JComboBox<String>();
+		 titleD.addItem("*");
+		 sexD = new JComboBox<String>();
+		 sexD.addItem("*");
+		 sexD.addItem("M");
+		 sexD.addItem("F");
+		 stateD = new JComboBox<String>();
+		 stateD.addItem("*");
+		 enabledD = new JComboBox<String>();
+		 enabledD.addItem("*");
+		 enabledD.addItem("T");
+		 enabledD.addItem("F");
+		 
 	    	
 		 
-		 String labels[] = { "Dante G. Parente", "B", "C", "D","E", "F", "G", "H","I", "J" };
-	    	
-		 JList employee = new JList(/* insert full name strings here */  labels );
 	    	
 	    	JScrollPane scrollPane = new JScrollPane(employee);
 	    	scrollPane.setPreferredSize(new Dimension(150,150));
 	    	
-	    	JButton loadB = new JButton("Load");
-	    	//loadB.setActionCommand("TermSubmit");
+	    	searchB = new JButton("Search");
+	    	searchB.addActionListener(search);
+	    	
+	    	loadB = new JButton("Load");
 			loadB.addActionListener(submit);
 			
 			JLabel name = new JLabel("Employees:");
 	    	
 	    	System.out.println("Querrying DB...");
 	    	
-	    	//int i = sqlPullRequest();
-			
-			//System.out.println("Data Retreived Successfull for " + i + " entries.");
+	    	sqlPullDeptListRequest();
+	    	sqlPullTitleListRequest();
+	    	sqlPullStateListRequest();
+	    	
 			
 			System.out.println("Creating Dialog Box");
 			
@@ -81,6 +97,8 @@ public class View_Employees {
 	    	dialog.setLayout(new GridBagLayout());
 	    	
 	    	JLabel viewEmployeesL = new JLabel("View Employees"); 
+	    	
+	    	//sqlPullRequest();
 	    	
 	    	GridBagConstraints b1c1 = new GridBagConstraints();
 	    	b1c1.gridx = 1;
@@ -161,12 +179,104 @@ public class View_Employees {
 	        stateL = new JLabel("State: ");
 	        jobtitleL = new JLabel("Job Title: ");
 	    	sexL = new JLabel("Sex: ");
+	    	enabledL = new JLabel("Enabled: ");
+	    	
+	    	System.out.println("Labels Created...");
 		}
 	 
 	 
 	 
 	 
+	 private static void sqlPullDeptListRequest() throws Exception,SQLException{
+	    	String[] SQL = Config.SQLConfig();
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			
+			Statement stmt = conn.createStatement();
+				
+			ResultSet rs = stmt.executeQuery("select * from departments");
+			
+			
+			
+			int i = 0;
+			
+			while(rs.next()) {
+				String temp = rs.getString("depName");
+				deptD.addItem(temp);
+				i++;
+			}
+			
+			
+			System.out.println("Data Retreived Successfull for " + i + " entries.");
+			
+			rs.close();
+			conn.close();
+			
+	    }
 	 
+	 
+	 private static void sqlPullTitleListRequest() throws Exception,SQLException{
+	    	String[] SQL = Config.SQLConfig();
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			
+			Statement stmt = conn.createStatement();
+				
+			ResultSet rs = stmt.executeQuery("select * from employee");
+			
+			
+			
+			int i = 0;
+			
+			while(rs.next()) {
+				String temp = rs.getString("jobTitle");
+				titleD.addItem(temp);
+				i++;
+			}
+			
+			
+			System.out.println("Data Retreived Successfull for " + i + " entries.");
+			
+			rs.close();
+			conn.close();
+			
+	    }
+	 
+	 
+	 private static void sqlPullStateListRequest() throws Exception,SQLException{
+	    	String[] SQL = Config.SQLConfig();
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			Statement stmt = conn.createStatement();
+				
+			ResultSet rs = stmt.executeQuery("select distinct state from address");
+			
+			
+			
+			int i = 0;
+			
+			while(rs.next()) {
+				String temp = rs.getString("state");
+				stateD.addItem(temp);
+				i++;
+			}
+			
+			
+			System.out.println("Data Retreived Successfull for " + i + " entries.");
+			
+			rs.close();
+			conn.close();
+			
+	    }
 	 
 	 
 	 
@@ -177,10 +287,13 @@ public class View_Employees {
 			
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
+			String statement = "select * from employee " + "where " + 
+								"enabled = ? " + "department = ? " + "state = ? " + 
+								"jobTitle = ?" + "sex = ?";
 			
-			Statement stmt = conn.createStatement();
+			PreparedStatement pstmt = conn.prepareStatement(statement);
 				
-			ResultSet rs = stmt.executeQuery("select * from employee where enabled = true");
+			ResultSet rs = pstmt.executeQuery();
 			
 			
 			
@@ -196,7 +309,7 @@ public class View_Employees {
 				i++;
 			}
 			
-			stmt.close();
+			pstmt.close();
 			conn.close();
 			return i;
 		}
@@ -209,7 +322,8 @@ public class View_Employees {
 				//Connect to SQL and save new column in employee
 	        	
 	        	fullName = (String) employee.getSelectedItem();
-	        	int selindex = employee.getSelectedIndex();
+	        	@SuppressWarnings("unused")
+				int selindex = employee.getSelectedIndex();
 	        	System.out.println("The value of fullName is: " + fullName);
 	        	 String[] name = fullName.split(" ");
 	        	for(int i = 0; i < name.length; i++) {
@@ -219,7 +333,6 @@ public class View_Employees {
 				try {
 					sqlPushRequest(name);
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				dialog.setVisible(false);
@@ -257,49 +370,111 @@ public class View_Employees {
 				conn.close();
 			}
 		};
+	 
+	 static ActionListener search = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Connect to SQL and save new column in employee
+	        	selDep = (String) deptD.getSelectedItem();
+	        	selEnabled = (String) enabledD.getSelectedItem();
+	        	selSex = (String) sexD.getSelectedItem();
+	        	selState = (String) stateD.getSelectedItem();
+	        	selTitle = (String) titleD.getSelectedItem();
+	      
+				try {
+					sqlPullRequest();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				dialog.setVisible(false);
+				dialog.dispose();
+			}
+			
+			private int sqlPullRequest() throws Exception, SQLException {
+				String[] SQL = Config.SQLConfig();
+				
+				final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+				
+				Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+				
+				String statement = "select * from employee " + "where " + 
+									"enabled = ? " + "department = ? " + "state = ? " + 
+									"jobTitle = ?" + "sex = ?";
+				
+				PreparedStatement pstmt = conn.prepareStatement(statement);
+				
+				pstmt.setString(0, selEnabled);
+				pstmt.setString(1, selDep);
+				pstmt.setString(2, selState);
+				pstmt.setString(3, selTitle);
+				pstmt.setString(4, selSex);
+				
+				ResultSet rs = pstmt.executeQuery();
+				
+				
+				
+				int i = 0;
+				
+				
+				while(rs.next()) {
+					fName = rs.getString("firstname");
+					mName = rs.getString("middlename");
+					lName = rs.getString("lastname");
+					fullName = fName + " " + mName + " " + lName;
+					employee.addItem(fullName);
+					i++;
+				}
+				
+				pstmt.close();
+				conn.close();
+				return i;
+			}
+			
+		};
 		
-static WindowListener DialogListener = new WindowListener() {
+	 static WindowListener DialogListener = new WindowListener() {
 			
 			@Override
 			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
+				
 				dialog.setVisible(false);
 				dialog.dispose();
 			}
 			
 			@Override
 			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 		};
