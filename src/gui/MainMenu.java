@@ -156,7 +156,7 @@ public class MainMenu extends JFrame implements ActionListener{
     		
     		break;
     	case("void_check"):
-    		
+    		voidCheckDialog();
     		break;
     	case("payroll_settings"):
     		
@@ -221,7 +221,14 @@ public class MainMenu extends JFrame implements ActionListener{
 		}
 	}
     
-    
+	private void voidCheckDialog() {
+		try {
+			Void_Check.createVoidcheckMenu();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 	
 	
 	// Change this to the default frame
