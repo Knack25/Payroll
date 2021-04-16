@@ -1,5 +1,0 @@
-org.gjt.mm.mysql.Driver
-localhost
-payroll
-root
-anatominen1399
