@@ -134,7 +134,6 @@ public class ConfigMenu extends JFrame implements ActionListener {
 							rs.updateRow();
 						}
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -154,8 +153,6 @@ public class ConfigMenu extends JFrame implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
 		}
 
 }

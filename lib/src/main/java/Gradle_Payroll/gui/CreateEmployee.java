@@ -7,8 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -84,7 +85,6 @@ import Gradle_Payroll.fileIO.Config;
 				sqlPushRequest();
 				
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -93,22 +93,28 @@ import Gradle_Payroll.fileIO.Config;
 			String[] SQL;
 			SQL = Config.SQLConfig();
 			
+			int id = 0;
+			
+			System.out.println("Connecting to DB...");
+			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-			
 			conn.setAutoCommit(false);
 			
+			System.out.println("Connected.");
 			
 			 fName = enterFirst.getText();
 			 mName = enterMiddle.getText();
 			 lName = enterLast.getText();
-			
-/*			String statement = "INSERT INTO employee(firstname,middlename,lastname,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
+			 
+			String statement = "INSERT INTO employee(firstname,middlename,lastname,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
 						+ "otPay,otHour,ptoPay,ptoHour,localTaxCode,addStateTax,addFedTax,vacationtimeAvail,vacationtimeUsed,Department,enabled) "
 						+ "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			 
+
 			PreparedStatement pstmt = conn.prepareStatement(statement);
+			
+			System.out.println("Created Prepared Statement");
 			
 			pstmt.setString(1, fName);
 			pstmt.setString(2, mName);
@@ -120,7 +126,7 @@ import Gradle_Payroll.fileIO.Config;
 			pstmt.setString(8, "Job Title");
 			pstmt.setString(9, "Date Of Birth");
 			pstmt.setString(10, "Date of Hire");
-			pstmt.setNull(11, ABORT);
+			pstmt.setString(11, "N/A");
 			pstmt.setDouble(12, 00.00);
 			pstmt.setDouble(13, 12.00);
 			pstmt.setDouble(14, 00.00);
@@ -133,29 +139,117 @@ import Gradle_Payroll.fileIO.Config;
 			pstmt.setDouble(21, 00.00);
 			pstmt.setDouble(22, 60.00);
 			pstmt.setDouble(23, 00.00);
-			pstmt.setString(24, "Department");
+			pstmt.setDouble(24, 1);
 			pstmt.setBoolean(25, true);
 				
 			System.out.println(pstmt);
-			
-			java.util.Date now = new java.util.Date();
-			
-			Timestamp ts = new Timestamp(now.getTime());
-			
-			pstmt.setTimestamp(3, ts);
+
+			try {
 			int rs = pstmt.executeUpdate();
 			conn.commit();
-		
+			
+			System.out.println("Update Sent");
+			
+			System.out.println(rs + " rows updated");
+			}
+			catch(SQLException e){
+				System.out.println(e);
+			}
+			
 			conn.setAutoCommit(true);
-			System.out.println(rs + " Rows updated."); */
+			
+			 conn.close();
 			 
-			 Statement statement = conn.createStatement();
-			 
-			/* statement.executeUpdate("INSERT INTO employee(firstname,middlename,lastname,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
-						+ "otPay,otHour,ptoPay,ptoHour,localTaxCode,addStateTax,addFedTax,vacationtimeAvail,vacationtimeUsed,Department,enabled) "
-						+ "Values('dfsd','dsf','dsfds','Phone Number','Email','Sex','SSN','Job Title','Date Of Birth','Date of Hire','null',00.00,12.00,00.00,12.00,00.00,12.00,00.00,44541,00.00,00.00,60.00,00.00,'?')");
-			*/
+			id = sqlIDPullRequest(fName, mName, lName);
+			
+			sqlNewEmpAddreessRequest(id);
+			
+			
 			 createMenu.dispose();
+		}
+		
+		private int sqlIDPullRequest(String fName,String mName,String lName) throws Exception, SQLException {
+			
+			int ID = 0;
+			String[] SQL;
+			SQL = Config.SQLConfig();
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("Querring for new employee ID.");
+			System.out.println("");
+			System.out.println("Connecting to DB...");
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			conn.setAutoCommit(false);
+			
+			System.out.println("Connected.");
+			
+			String querry = "select * from employee " + "where " + "firstname = ? and " + "middlename = ? and " + "lastname = ?";
+			
+			
+			PreparedStatement pstmt = conn.prepareStatement(querry);
+			
+			pstmt.setString(1, fName);
+			pstmt.setString(2, mName);
+			pstmt.setString(3, lName);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			
+			
+			while(rs.next()) {
+				ID = rs.getInt("id");
+			}
+			System.out.println("ID is: " + ID);
+			return ID;
+			
+			
+			
+		}
+		
+		private int sqlNewEmpAddreessRequest(int ID) throws Exception, SQLException {
+			
+			//TODO: Fix issue inserting new entry into Address Table
+			
+			String[] SQL;
+			SQL = Config.SQLConfig();
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("Creating new entry in address table.");
+		
+			System.out.println("Connecting to DB...");
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			conn.setAutoCommit(false);
+			
+			System.out.println("Connected.");
+			
+			String statement = "INSERT INTO address(street,city,state,zip,employee_id) "
+					+ "Values(?,?,?,?,?)";
+			
+			
+			PreparedStatement pstmt = conn.prepareStatement(statement);
+			
+			pstmt.setString(1, "Street");
+			pstmt.setString(2, "City");
+			pstmt.setString(3, "State");
+			pstmt.setInt(4, 12345);
+			pstmt.setInt(5, ID);
+			
+			System.out.println(pstmt);
+			
+			int rs = pstmt.executeUpdate();
+			
+			System.out.println("Inserted " + rs + " rows into address table.");
+			
+			
+			return rs;
 		}
 		
 	};	 

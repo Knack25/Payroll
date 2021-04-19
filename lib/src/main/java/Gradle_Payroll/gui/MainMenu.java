@@ -188,7 +188,6 @@ public class MainMenu extends JFrame implements ActionListener{
 		try {
 		Reinstate_Employee.createEmployeeReinsateDialog();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		//reinEmp.setVisible(true);
@@ -199,7 +198,6 @@ public class MainMenu extends JFrame implements ActionListener{
 		try {
 			Terminate_Employee.createEmployeeTerminateDialog();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -209,7 +207,6 @@ public class MainMenu extends JFrame implements ActionListener{
 		try{
 			CreateEmployee.CreateMenu();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -218,7 +215,6 @@ public class MainMenu extends JFrame implements ActionListener{
 		try{
 			View_Employees.createViewemployeeMenu();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -227,7 +223,6 @@ public class MainMenu extends JFrame implements ActionListener{
 		try {
 			Void_Check.createVoidcheckMenu();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}

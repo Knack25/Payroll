@@ -34,7 +34,6 @@ public class MySQL {
 		try {
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("Successfully Closed Connection to Database.");

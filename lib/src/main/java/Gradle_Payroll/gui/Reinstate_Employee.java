@@ -117,7 +117,6 @@ public class Reinstate_Employee {
 				try {
 					sqlPushRequest(name);
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				dialog.setVisible(false);
@@ -160,44 +159,37 @@ public class Reinstate_Employee {
 			
 			@Override
 			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
 				dialog.setVisible(false);
 				dialog.dispose();
 			}
 			
 			@Override
 			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 		};
