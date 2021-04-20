@@ -91,7 +91,7 @@ import Gradle_Payroll.fileIO.Config;
 
 		private void sqlPushRequest() throws Exception, SQLException {
 			String[] SQL;
-			SQL = Config.SQLConfig();
+			SQL = Config.PullSQLConfig();
 			
 			int id = 0;
 			
@@ -172,7 +172,7 @@ import Gradle_Payroll.fileIO.Config;
 			
 			int ID = 0;
 			String[] SQL;
-			SQL = Config.SQLConfig();
+			SQL = Config.PullSQLConfig();
 			System.out.println("");
 			System.out.println("");
 			System.out.println("");
@@ -215,7 +215,7 @@ import Gradle_Payroll.fileIO.Config;
 			//TODO: Fix issue inserting new entry into Address Table
 			
 			String[] SQL;
-			SQL = Config.SQLConfig();
+			SQL = Config.PullSQLConfig();
 			System.out.println("");
 			System.out.println("");
 			System.out.println("");

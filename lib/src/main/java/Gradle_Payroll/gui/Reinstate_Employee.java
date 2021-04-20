@@ -70,7 +70,7 @@ public class Reinstate_Employee {
 	    }
 
 	private static int sqlPullRequest() throws Exception, SQLException {
-		String[] SQL = Config.SQLConfig();
+		String[] SQL = Config.PullSQLConfig();
 		
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 		
@@ -127,7 +127,7 @@ public class Reinstate_Employee {
 				String[] SQL;
 				System.out.println("Executing Update");
 				
-				SQL = Config.SQLConfig();
+				SQL = Config.PullSQLConfig();
 				
 				final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 				

@@ -68,7 +68,7 @@ public class Terminate_Employee {
 	    }
 
 	private static void sqlPullRequest() throws Exception, SQLException {
-		String[] SQL = Config.SQLConfig();
+		String[] SQL = Config.PullSQLConfig();
 		
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 		
@@ -125,7 +125,7 @@ public class Terminate_Employee {
 
 			private void sqlPushRequest(String[] name) throws Exception, SQLException {
 				String[] SQL;
-				SQL = Config.SQLConfig();
+				SQL = Config.PullSQLConfig();
 				
 				final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 				

@@ -181,7 +181,7 @@ public class View_Employees {
 	 
 	 
 	 private static void sqlPullDeptListRequest() throws Exception,SQLException{
-	    	String[] SQL = Config.SQLConfig();
+	    	String[] SQL = Config.PullSQLConfig();
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -212,7 +212,7 @@ public class View_Employees {
 	 
 	 
 	 private static void sqlPullTitleListRequest() throws Exception,SQLException{
-	    	String[] SQL = Config.SQLConfig();
+	    	String[] SQL = Config.PullSQLConfig();
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -243,7 +243,7 @@ public class View_Employees {
 	 
 	 
 	 private static void sqlPullStateListRequest() throws Exception,SQLException{
-	    	String[] SQL = Config.SQLConfig();
+	    	String[] SQL = Config.PullSQLConfig();
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -274,7 +274,7 @@ public class View_Employees {
 	 
 	 
 	 private static int sqlPullRequest() throws Exception, SQLException {
-			String[] SQL = Config.SQLConfig();
+			String[] SQL = Config.PullSQLConfig();
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -336,7 +336,7 @@ public class View_Employees {
 				String[] SQL;
 				System.out.println("Executing Update");
 				
-				SQL = Config.SQLConfig();
+				SQL = Config.PullSQLConfig();
 				
 				final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 				
@@ -385,7 +385,7 @@ public class View_Employees {
 			}
 			
 			private int sqlPullRequest() throws Exception, SQLException {
-				String[] SQL = Config.SQLConfig();
+				String[] SQL = Config.PullSQLConfig();
 				
 				final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 				

@@ -377,7 +377,7 @@ public class EditEmployee {
 	}
     
     private static void sqlPullEmpListRequest() throws Exception, SQLException {
-		String[] SQL = Config.SQLConfig();
+		String[] SQL = Config.PullSQLConfig();
 		
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 		
@@ -410,7 +410,7 @@ public class EditEmployee {
 	}
     
     private static void sqlPullDeptListRequest() throws Exception,SQLException{
-    	String[] SQL = Config.SQLConfig();
+    	String[] SQL = Config.PullSQLConfig();
 		
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 		
@@ -460,7 +460,7 @@ public class EditEmployee {
 
 		private void sqlSelEmpPullRequest(String[] name) throws Exception, SQLException {
 			String[] SQL;
-			SQL = Config.SQLConfig();
+			SQL = Config.PullSQLConfig();
 			
 			System.out.println("Querrying DB for selected Employee");
 			
@@ -581,7 +581,7 @@ public class EditEmployee {
 			String[] SQL;
 			System.out.println("Executing Update");
 			
-			SQL = Config.SQLConfig();
+			SQL = Config.PullSQLConfig();
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
