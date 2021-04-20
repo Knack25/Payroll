@@ -149,7 +149,7 @@ public class MainMenu extends JFrame implements ActionListener{
     		viewEmployeeWindow();
     		break;
     	case("process_payroll"):
-    		
+    		processPayrollDialog();
     		break;
     	case("history_payroll"):
     		
@@ -226,7 +226,13 @@ public class MainMenu extends JFrame implements ActionListener{
 			e1.printStackTrace();
 		}
 	}
-	
+	private void processPayrollDialog() {
+		try {
+			Create_Check.createCheckmenu();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
 	
 	// Change this to the default frame
 	 //Create a new internal frame.

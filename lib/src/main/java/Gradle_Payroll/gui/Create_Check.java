@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 
- //this should be connected to edit employee and could be the basework for process payroll
+
 
 public class Create_Check {
 
@@ -27,7 +27,7 @@ public class Create_Check {
 		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		// dialog.addWindowListener(DialogListener);
 	    	
-			JButton createB = new JButton("create");
+			JButton createB = new JButton("Create");
 	    	//loadB.setActionCommand("TermSubmit");
 			//createB.addActionListener(submit);
 			
@@ -43,12 +43,20 @@ public class Create_Check {
 			
 			setLabels();
 	    	
-	    	dialog.setSize(400, 350);
+	    	dialog.setSize(220, 220);
 	    	dialog.setLayout(new GridBagLayout());
 	    	
 	    	GridBagConstraints a1= new GridBagConstraints();
 	    	a1.gridx = 0;
 	    	a1.gridy = 0;
+	    	
+	    	GridBagConstraints b1= new GridBagConstraints();
+	    	b1.gridx = 1;
+	    	b1.gridy = 0;
+	    	
+	    	GridBagConstraints c1= new GridBagConstraints();
+	    	c1.gridx = 2;
+	    	c1.gridy = 0;
 	    	
 	    	GridBagConstraints b2= new GridBagConstraints();
 	    	b2.gridx = 1;
@@ -137,7 +145,7 @@ public class Create_Check {
 	    
 	    	
 	    	
-	    	
+	    	dialog.add(employee,a1);
 	    	dialog.add(rateL,c2d2);
 	    	dialog.add(hoursL,b2);
 	    	dialog.add(createB,a9);
@@ -149,7 +157,7 @@ public class Create_Check {
 	    	dialog.add(salaryL,a6);
 	    	dialog.add(advanceL,a7);
 	    	dialog.add(royaltiesL,a8);
-	    	dialog.add(checkNoL,a1);
+	    	dialog.add(checkNoL,b1);
 	    	
 	    	dialog.add(regHoursT,b3);
 	    	dialog.add(regRateT,c3);
@@ -163,9 +171,9 @@ public class Create_Check {
 	    	dialog.add(advRateT,c7);
 	    	dialog.add(royalHoursT,b8);
 	    	dialog.add(royalRateT,c8);
-	    	dialog.add(checkNoT);
+	    	dialog.add(checkNoT,c1);
 	    	dialog.add(employee,a1);
-	    
+	  
 	    	dialog.repaint();
 	    	
 	    	
