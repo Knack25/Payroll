@@ -32,9 +32,9 @@ public class EditEmployee {
 	static JComboBox<String> department;
 	static JInternalFrame frame;
 	static JLabel empNumL,statusL,nameL,addressL,cityL,stateL,zipL,emailL,ssnL,jobtitleL,dobL,dohL,dotL,localtaxcodeL,addstatetaxL,addfedtaxL,salaryL,reghourL,
-	regpayL,othourL,otpayL,ptohourL,ptopayL,departmentL,teleL,sexL;
+	regpayL,othourL,otpayL,ptohourL,ptopayL,departmentL,teleL,sexL,vacationAvailL,vacationUsedL;
 	static JTextField empNumT,statusT,nameT,addressT,cityT,stateT,zipT,emailT,ssnT,jobtitleT,dobT,dohT,dotT,localtaxcodeT,addstatetaxT,addfedtaxT,salaryT,reghourT,
-	regpayT,othourT,otpayT,ptohourT,ptopayT,departmentT,teleT,sexT;
+	regpayT,othourT,otpayT,ptohourT,ptopayT,departmentT,teleT,sexT,vacationAvailT,vacationUsedT;
 	static Employee emp;
 	static Name empName;
 	static Address empAddress;
@@ -74,6 +74,8 @@ public class EditEmployee {
 		departmentT = new JTextField();
 		teleT = new JTextField();
 		sexT = new JTextField();
+		vacationAvailT = new JTextField();
+		vacationUsedT = new JTextField();
 		
         frame.setVisible(true); //necessary as of 1.3
        
@@ -109,6 +111,8 @@ public class EditEmployee {
     	
     	
     	frame.setLayout(new GridBagLayout());
+    	
+    	//TODO: Configure constraints for vacationUsed and available
    
     	//need to figure out if this can be moved to a separate class
     	GridBagConstraints g1 = new GridBagConstraints();
@@ -287,7 +291,7 @@ public class EditEmployee {
     	frame.add(statusL,a5);
     	frame.add(statusT,b5);
     	frame.add(departmentL,a6);
-    	frame.add(departmentT,b6);
+    	frame.add(department,b6);
     	frame.add(addressL,a7);
     	frame.add(addressT,b7);
     	frame.add(cityL,a8);
@@ -326,6 +330,10 @@ public class EditEmployee {
     	frame.add(otpayT,d12);
     	frame.add(ptopayL,c13);
     	frame.add(ptopayT,d13);
+    	frame.add(vacationAvailL);
+    	frame.add(vacationAvailT);
+    	frame.add(vacationUsedL);
+    	frame.add(vacationUsedT);
     	
     
     	
@@ -374,6 +382,8 @@ public class EditEmployee {
     	departmentL = new JLabel("Department: ");
     	teleL = new JLabel("Telephone: ");
     	sexL = new JLabel("Sex: ");
+    	vacationAvailL = new JLabel("Vacation Time Available: ");
+    	vacationUsedL = new JLabel("Vacation Time Used: ");
 	}
     
     private static void sqlPullEmpListRequest() throws Exception, SQLException {
@@ -471,7 +481,7 @@ public class EditEmployee {
 			
 			String updateStatement = "select * " + "from employee " + 
 			"inner join address on employee.id = address.employee_id " +
-			//"inner join departments on employee.Department = departments.id" + 
+			//"inner join departments on employee.Department = departments.id " + 
 			"WHERE firstname = ? and lastname = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
@@ -494,7 +504,7 @@ public class EditEmployee {
 			empName.setFirst(rs.getString("firstname"));
 			empName.setMiddle(rs.getString("middlename"));
 			empName.setLast(rs.getString("lastname"));
-			
+			//TODO: This needs to be assigned to the address table instead of the employee table
 			empAddress.setStreet(rs.getString("street"));
 			empAddress.setCity(rs.getString("city"));
 			empAddress.setState(rs.getString("state"));
@@ -551,9 +561,12 @@ public class EditEmployee {
 			otpayT.setText(String.valueOf(emp.getOtPay()));
 			ptopayT.setText(String.valueOf(emp.getPtoPay()));
 			//departmentT.setText(String.valueOf(emp.getDepartment()));
+			//Note: Department is off by one index when it is loaded in from 
 			department.setSelectedIndex(emp.getDepartment());
 			teleT.setText(emp.getTelnum());
 			sexT.setText(emp.getSex());
+			vacationAvailT.setText(String.valueOf(emp.getVacationTimeRemaining()));
+			vacationUsedT.setText(String.valueOf(emp.getVacationTimeUsed()));
 			
 			
 			
@@ -581,17 +594,67 @@ public class EditEmployee {
 			String[] SQL;
 			System.out.println("Executing Update");
 			
+			
+			String fullName = nameT.getText();
+			name = fullName.split(fullName);
+			empName.setFirst(name[0]);
+			empName.setMiddle(name[1]);
+			empName.setLast(name[2]);
+			
+			
+			empAddress.setStreet(addressT.getText());
+			empAddress.setCity(cityT.getText());
+			empAddress.setState(stateT.getText());
+			empAddress.setZip(zipT.getText());
+			
+			emp.setID(Integer.parseInt(empNumT.getText()));
+			emp.setTelnum(teleT.getText());
+			emp.setEmail(emailT.getText());
+			emp.setSex(sexT.getText());
+			emp.setSsn(ssnT.getText());
+			emp.setJobTitle(jobtitleT.getText());
+			emp.setDOB(dobT.getText());
+			emp.setDOH(dohT.getText());
+			emp.setDOT(dotT.getText());
+			emp.setSalary(Double.parseDouble(salaryT.getText()));
+			emp.setRegPay(Double.parseDouble(regpayT.getText()));
+			//emp.setRegHour();
+			emp.setOtPay(Double.parseDouble(otpayT.getText()));
+			//emp.setOtHour();
+			emp.setPtoPay(Double.parseDouble(ptopayT.getText()));
+			//emp.setPtoHour();
+			emp.setLocalTaxCode(Integer.parseInt(localtaxcodeT.getText()));
+			emp.setAddStateTax(Double.parseDouble(addstatetaxT.getText()));
+			emp.setAddFedTax(Double.parseDouble(addfedtaxT.getText()));
+			emp.setVacationTimeRemaining(Double.parseDouble(vacationAvailT.getText()));
+			emp.setVacationTimeUsed(Double.parseDouble(vacationUsedT.getText()));
+			emp.setDepartment(department.getSelectedIndex());
+			emp.setStatus("Active");
+			emp.setName(empName);
+			emp.setAddress(empAddress);
+			
+			
 			SQL = Config.PullSQLConfig();
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-			
-			String updateStatement = "select * " + "from employee "+ "inner join address on employee.id = address.employee_id " + "WHERE firstname = ? and lastname = ?";
+			//TODO: Finish pushing updated employee to DB
+			String updateStatement = "update employee " + "set " +
+			"firstname = ?, middlename = ?, lastname = ?, telNum = ?, email = ?, " + 
+			"sex = ?, ssn = ?, jobTitle = ?, dob = ?, doh = ?, dot = ?, " +
+			"salary = ?, regularPay = ?, regularHour = ?, otPay = ?, " +
+			"otHour = ?, ptoPay = ?, ptoHour = ?, localTaxCode = ?, " +
+			"addStateTax = ?, addFedTax = ?, vacationtimeAvail = ?, " +
+			"vacationtimeUsed = ?, Department = ? " + "WHERE firstname = ? and lastname = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
-			
+			pstmt.setString(0, empName.getFirst());
+			pstmt.setString(1, empName.getMiddle());
+			pstmt.setString(2, empName.getLast());
+			pstmt.setString(3, emp.getTelnum());
+			pstmt.setString(4, emp.getEmail());
 		}
 	};
 }

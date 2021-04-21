@@ -142,7 +142,7 @@ import Gradle_Payroll.fileIO.Config;
 			pstmt.setDouble(24, 1);
 			pstmt.setBoolean(25, true);
 				
-			System.out.println(pstmt);
+			//System.out.println(pstmt);
 
 			try {
 			int rs = pstmt.executeUpdate();
@@ -212,8 +212,6 @@ import Gradle_Payroll.fileIO.Config;
 		
 		private int sqlNewEmpAddreessRequest(int ID) throws Exception, SQLException {
 			
-			//TODO: Fix issue inserting new entry into Address Table
-			
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
 			System.out.println("");
@@ -242,13 +240,14 @@ import Gradle_Payroll.fileIO.Config;
 			pstmt.setInt(4, 12345);
 			pstmt.setInt(5, ID);
 			
-			System.out.println(pstmt);
+			//System.out.println(pstmt);
 			
 			int rs = pstmt.executeUpdate();
+			conn.commit();
 			
 			System.out.println("Inserted " + rs + " rows into address table.");
 			
-			
+			conn.setAutoCommit(true);
 			return rs;
 		}
 		

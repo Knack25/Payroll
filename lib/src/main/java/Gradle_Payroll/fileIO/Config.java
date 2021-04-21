@@ -3,11 +3,9 @@ package Gradle_Payroll.fileIO;
 
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
@@ -20,12 +18,12 @@ public class Config {
 		
 		FileOutputStream outstream;
 		try {
+			//outstream = new FileOutputStream("C://Program Files//Payroll//SQLConfig.txt");
 			outstream = new FileOutputStream("SQLConfig.txt");
 			ObjectOutputStream obOutStream = new ObjectOutputStream(outstream);
 			obOutStream.writeObject(input);
 			obOutStream.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -39,50 +37,54 @@ public class Config {
 		String[] output = {null,null,null,null,null};
 		
 		
-		try{
-			
-		System.out.println("Opening Object Input Stream...");
-		ObjectInputStream objinstream = new ObjectInputStream(new FileInputStream("SQLConfig.txt"));  
-		byte[] bt = new byte[22];
+//		try{
+//			
+//		System.out.println("Opening Object Input Stream...");
+//		ObjectInputStream objinstream = new ObjectInputStream(new FileInputStream("SQLConfig.txt"));  
+//		byte[] bt = new byte[22];
+//		
+//		
+//		System.out.println("Reading in input stream.");
+//		objinstream.readFully(bt);
+//		String input = new String(bt);
+//		
+//		System.out.println("input stream:");
+//		System.out.println(input);
+//		
+//		System.out.println("Splitting input String");
+//		output = input.split(input);
+//		
+//		System.out.println("output stream:");
+//		for(int i = 0; i < output.length;i++) {
+//			
+//			System.out.println(output[i]);
+//			
+//		}
 		
 		
-		System.out.println("Reading in input stream.");
-		objinstream.readFully(bt);
-		String input = new String(bt);
 		
-		System.out.println(input);
-		
-		System.out.println("Splitting input String");
-		output = input.split(input);
-		
-		for(int i = 0; i < output.length;i++) {
-			
-			System.out.println(output[i]);
-			
-		}
-		
-		/*
-		String fileName = "SQLConfig.txt";
-		public InputStream getResourceAsStream(String fileName);
+		//public InputStream getResourceAsStream(String fileName);
 		//Scanner sc = new Scanner(new File("C:\\Users\\natha\\Desktop\\SQLConfig.txt"));
-		Scanner sc = new Scanner(new File("~/Gradle_Payroll/SQLConfig.txt"));
+		Scanner sc = new Scanner(new File("SQLConfig.txt"));
 		
 		
 		int i = 0;
 		
 		while (sc.hasNextLine()) {
 			output[i] = sc.nextLine();
+			//System.out.println(output[i]);
 			i++;
-			//System.out.println(sc.nextLine());
+			
 		}
 		
-		sc.close();*/
-		objinstream.close();
+		sc.close();
 		return output;
-		}catch(Exception e){
-			System.out.println(e);
-			return null;
-		}
+//		objinstream.close();
+//		return output;
+//		}catch(Exception e){
+//			System.out.println(e);
+//			return null;
+//		}
 		
 	}
 	

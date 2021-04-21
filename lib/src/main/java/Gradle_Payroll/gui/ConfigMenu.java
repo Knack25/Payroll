@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -38,7 +37,7 @@ public class ConfigMenu extends JFrame implements ActionListener {
 	
 	static String[] PeriodTable = {"Annually: 1","Quarterly: 4","Monthly: 12","4-Weekly: 13","Semi_Monthly: 24","Bi-Weekly: 26/27","Weekly: 52/53"};
 
-	static JComboBox PeriodValueCB = new JComboBox(PeriodTable);
+	static JComboBox<?> PeriodValueCB = new JComboBox<Object>(PeriodTable);
 	
 
 	
@@ -79,7 +78,7 @@ public class ConfigMenu extends JFrame implements ActionListener {
 		
 		
 		
-		ImageIcon icon = new ImageIcon("lib/ACI.png");
+		//ImageIcon icon = new ImageIcon("lib/ACI.png");
 		
 		
 		JPanel Period = new JPanel();
