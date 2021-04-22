@@ -112,7 +112,7 @@ public class EditEmployee {
     	
     	frame.setLayout(new GridBagLayout());
     	
-    	//TODO: Configure constraints for vacationUsed and available
+    
    
     	//need to figure out if this can be moved to a separate class
     	GridBagConstraints g1 = new GridBagConstraints();
@@ -423,7 +423,7 @@ public class EditEmployee {
 		}
 		
 		
-		System.out.println("Data Retreived Successfull for " + i + " entries.");
+		System.out.println("Data Retreived Successfull for " + i + " Employee entries.");
 		
 		rs.close();
 		conn.close();
@@ -452,7 +452,7 @@ public class EditEmployee {
 		}
 		
 		
-		System.out.println("Data Retreived Successfull for " + i + " entries.");
+		System.out.println("Data Retreived Successfull for " + i + " Department entries.");
 		
 		rs.close();
 		conn.close();
@@ -514,7 +514,7 @@ public class EditEmployee {
 			empName.setFirst(rs.getString("firstname"));
 			empName.setMiddle(rs.getString("middlename"));
 			empName.setLast(rs.getString("lastname"));
-			//TODO: This needs to be assigned to the address table instead of the employee table
+			
 			empAddress.setStreet(rs.getString("street"));
 			empAddress.setCity(rs.getString("city"));
 			empAddress.setState(rs.getString("state"));
@@ -541,7 +541,7 @@ public class EditEmployee {
 			emp.setAddFedTax(rs.getDouble("addFedTax"));
 			emp.setVacationTimeRemaining(rs.getDouble("vacationtimeAvail"));
 			emp.setVacationTimeUsed(rs.getDouble("vacationtimeUsed"));
-			emp.setDepartment(rs.getInt("Department"));
+			emp.setDepartment(rs.getInt("Department")-1);
 			emp.setStatus("Active");
 			emp.setName(empName);
 			emp.setAddress(empAddress);
@@ -594,28 +594,60 @@ public class EditEmployee {
         	System.out.println("The value of fullName is: " + fullName);
         	
         	try {
-        		sqlPushRequest(name);
+        		sqlPushAddressRequest(emp.getID());
+        		sqlPushEmpRequest(name);
         	}catch (Exception UpdateEmpPush) {
         		UpdateEmpPush.printStackTrace();
         	}
 		}
-		
-		private void sqlPushRequest(String name[]) throws Exception {
+		private void sqlPushAddressRequest(int id) throws Exception{
 			String[] SQL;
 			System.out.println("Executing Update");
-			
-			
-			String fullName = nameT.getText();
-			name = fullName.split(fullName);
-			empName.setFirst(name[0]);
-			empName.setMiddle(name[1]);
-			empName.setLast(name[2]);
-			
 			
 			empAddress.setStreet(addressT.getText());
 			empAddress.setCity(cityT.getText());
 			empAddress.setState(stateT.getText());
 			empAddress.setZip(zipT.getText());
+			
+			
+			SQL = Config.PullSQLConfig();
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+
+			String updateStatement = "update address " + "set " +
+			"street = ?, city = ?, state = ?, zip = ? " + 
+			 "WHERE employee_id = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+			
+			pstmt.setString(1, empAddress.getStreet());
+			pstmt.setString(2, empAddress.getCity());
+			pstmt.setString(3, empAddress.getState());
+			pstmt.setInt(4, Integer.parseInt(empAddress.getZip()));
+			pstmt.setInt(5, emp.getID());
+			
+			System.out.println(pstmt);
+			
+			int rs = pstmt.executeUpdate();
+			System.out.println("Updated " + rs + " rows.");
+			
+		}
+		
+		
+		private void sqlPushEmpRequest(String name[]) throws Exception {
+			String[] SQL;
+			System.out.println("Executing Update");
+			
+			
+			String fullName = nameT.getText();
+			System.out.println(fullName);
+			name = fullName.split(" ");
+			empName.setFirst(name[0]);
+			empName.setMiddle(name[1]);
+			empName.setLast(name[2]);
+			
 			
 			emp.setID(Integer.parseInt(empNumT.getText()));
 			emp.setTelnum(teleT.getText());
@@ -638,7 +670,7 @@ public class EditEmployee {
 			emp.setAddFedTax(Double.parseDouble(addfedtaxT.getText()));
 			emp.setVacationTimeRemaining(Double.parseDouble(vacationAvailT.getText()));
 			emp.setVacationTimeUsed(Double.parseDouble(vacationUsedT.getText()));
-			emp.setDepartment(department.getSelectedIndex());
+			emp.setDepartment(department.getSelectedIndex()+1);
 			emp.setStatus("Active");
 			emp.setName(empName);
 			emp.setAddress(empAddress);
@@ -649,7 +681,7 @@ public class EditEmployee {
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-			//TODO: Finish pushing updated employee to DB
+
 			String updateStatement = "update employee " + "set " +
 			"firstname = ?, middlename = ?, lastname = ?, telNum = ?, email = ?, " + 
 			"sex = ?, ssn = ?, jobTitle = ?, dob = ?, doh = ?, dot = ?, " +
@@ -660,11 +692,38 @@ public class EditEmployee {
 			
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
-			pstmt.setString(0, empName.getFirst());
-			pstmt.setString(1, empName.getMiddle());
-			pstmt.setString(2, empName.getLast());
-			pstmt.setString(3, emp.getTelnum());
-			pstmt.setString(4, emp.getEmail());
+			pstmt.setString(1, empName.getFirst());
+			pstmt.setString(2, empName.getMiddle());
+			pstmt.setString(3, empName.getLast());
+			pstmt.setString(4, emp.getTelnum());
+			pstmt.setString(5, emp.getEmail());
+			pstmt.setString(6, emp.getSex());
+			pstmt.setString(7, emp.getSsn());
+			pstmt.setString(8, emp.getJobTitle());
+			pstmt.setString(9, emp.getDOB());
+			pstmt.setString(10, emp.getDOH());
+			pstmt.setString(11, emp.getDOT());
+			pstmt.setDouble(12, emp.getSalary());
+			pstmt.setDouble(13, emp.getRegPay());
+			pstmt.setDouble(14, emp.getRegHour());
+			pstmt.setDouble(15, emp.getOtPay());
+			pstmt.setDouble(16, emp.getOtHour());
+			pstmt.setDouble(17, emp.getPtoPay());
+			pstmt.setDouble(18, emp.getPtoHour());
+			pstmt.setInt(19, emp.getLocalTaxCode());
+			pstmt.setDouble(20, emp.getAddStateTax());
+			pstmt.setDouble(21, emp.getAddFedTax());
+			pstmt.setDouble(22, emp.getVacationTimeRemaining());
+			pstmt.setDouble(23, emp.getVacationTimeUsed());
+			pstmt.setInt(24, emp.getDepartment());
+			pstmt.setString(25, empName.getFirst());
+			pstmt.setString(26, empName.getLast());
+
+			System.out.println(pstmt);
+			
+			int rs = pstmt.executeUpdate();
+			System.out.println("Updated " + rs + " rows.");
+			
 		}
 	};
 }

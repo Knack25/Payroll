@@ -48,7 +48,7 @@ public class Payroll_History {
 	 private static void setLabels() {
 		 payrollHisL = new JLabel("<HTML><U> Payroll History </U></HTML>");
 		 nameL = new JLabel("Name: ");
-		 dateL = new JLabel("Date:);
+		 dateL = new JLabel("Date:" );
 		}
 	
 	

@@ -1,0 +1,22 @@
+Authentication:
+	backend needs to be setup to read and write config file for sql
+	Note: Make sure to add a catch for if it fails so it doesnt hang the program.
+	
+Excel_Out: 
+	Need to look up how to export data to an excel sheet in order to write checks to print
+	
+Create Check: 
+	Once the Excel methods have been created, this needs to pull data from the DB and send it to Excel
+	
+Payroll History:
+	This will have options to view previously processed payroll dates by a filtered list
+	
+Payroll Settings:
+	Needs to have link to DB to pull preferences
+	
+View Employees: 
+	Need to finish filter and add link to edit the selected employee
+	
+Void Check:
+	Once all other check classes have been finished, this needs to edit an existing DB entry to void the check
+	

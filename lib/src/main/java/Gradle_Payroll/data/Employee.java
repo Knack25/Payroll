@@ -9,7 +9,7 @@ public class Employee {
 	
 	public Employee(int iD, Name name, String status, Address address, String telnum, String email, String sex,
 		String ssn, String jobTitle, String dOB, String dOH, String dOT, double salary, double regPay,
-		double regHour, double otPay, double otHour, double ptoPay, double ptoHour, double localTaxCode,
+		double regHour, double otPay, double otHour, double ptoPay, double ptoHour, int localTaxCode,
 		double addStateTax, double addFedTax, double vacationTimeUsed, double vacationTimeRemaining,
 		int department, double[] yTD, Tax[] tax) {
 	super();
@@ -65,7 +65,7 @@ public class Employee {
 	private double otHour;
 	private double ptoPay;
 	private double ptoHour;
-	private double localTaxCode;
+	private int localTaxCode;
 	private double addStateTax;
 	private double addFedTax;
 	private double vacationTimeUsed;
@@ -188,10 +188,10 @@ public class Employee {
 	public void setPtoHour(double ptoHour) {
 		this.ptoHour = ptoHour;
 	}
-	public double getLocalTaxCode() {
+	public int getLocalTaxCode() {
 		return localTaxCode;
 	}
-	public void setLocalTaxCode(double localTaxCode) {
+	public void setLocalTaxCode(int localTaxCode) {
 		this.localTaxCode = localTaxCode;
 	}
 	public double getAddStateTax() {
