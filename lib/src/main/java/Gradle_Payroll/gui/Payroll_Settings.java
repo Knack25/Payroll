@@ -31,8 +31,8 @@ public class Payroll_Settings {
 	
 	static JInternalFrame frame;
 	static JLabel settingsL,payFreqL,payPeriodL,slashL,dashL;
-	static JComboBox<String> payFreqD;
-	static JTextField stMnthT,stDayT,stYrT,endMnthT,endDayT,endYrT;
+	static JComboBox<String> payFreqD,startDateD,endDateD;
+	//static JTextField stMnthT,stDayT,stYrT,endMnthT,endDayT,endYrT;
 	
 	
 	//GridBagLayout works very well for what needs to be done here
@@ -89,9 +89,9 @@ public class Payroll_Settings {
     	b1.gridx = 1;
     	b1.gridy = 0;
 
-    	GridBagConstraints n1 = new GridBagConstraints();
-    	n1.gridx = 13;
-    	n1.gridy = 0;
+    	GridBagConstraints f1 = new GridBagConstraints();
+    	f1.gridx = 5;
+    	f1.gridy = 0;
     	
     	GridBagConstraints a2 = new GridBagConstraints();
     	a2.gridx = 0;
@@ -117,10 +117,10 @@ public class Payroll_Settings {
     	b4.gridx = 1;
     	b4.gridy = 3;
     	
-    	GridBagConstraints c2m2 = new GridBagConstraints();
-    	c2m2.gridx = 2;
-    	c2m2.gridy = 1;
-    	c2m2.gridwidth = 11;
+    	GridBagConstraints c2e2 = new GridBagConstraints();
+    	c2e2.gridx = 2;
+    	c2e2.gridy = 1;
+    	c2e2.gridwidth = 3;
     	
     	GridBagConstraints c3 = new GridBagConstraints();
     	a3.gridx = 2;
@@ -131,53 +131,20 @@ public class Payroll_Settings {
     	GridBagConstraints e3 = new GridBagConstraints();
     	a3.gridx = 4;
     	a3.gridy = 2;
-    	GridBagConstraints f3 = new GridBagConstraints();
-    	a3.gridx = 5;
-    	a3.gridy = 2;
-    	GridBagConstraints g3 = new GridBagConstraints();
-    	a3.gridx = 6;
-    	a3.gridy = 2;
-    	GridBagConstraints h3 = new GridBagConstraints();
-    	a3.gridx = 7;
-    	a3.gridy = 2;
-    	GridBagConstraints i3 = new GridBagConstraints();
-    	a3.gridx = 8;
-    	a3.gridy = 2;
-    	GridBagConstraints j3 = new GridBagConstraints();
-    	a3.gridx = 9;
-    	a3.gridy = 2;
-    	GridBagConstraints k3 = new GridBagConstraints();
-    	a3.gridx = 10;
-    	a3.gridy = 2;
-    	GridBagConstraints l3 = new GridBagConstraints();
-    	a3.gridx = 11;
-    	a3.gridy = 2;
-    	GridBagConstraints m3 = new GridBagConstraints();
-    	a3.gridx = 12;
-    	a3.gridy = 2;
-    	
-    	
-
+ 
+ 
     	frame.add(settingsL,b1);
     	frame.add(payFreqL,a2);
     	frame.add(payFreqD,a3);
     	frame.add(viewRangesB,a4);
-    	frame.add(payPeriodL,c2m2);
+    	frame.add(payPeriodL,c2e2);
     	frame.add(deptB,b2);
     	frame.add(taxTableB,b3);
     	frame.add(termEmpB,b4);
-    	frame.add(developerB,n1);
-    	frame.add(stMnthT,c3);
-    	frame.add(slashL,d3);
-    	frame.add(stDayT,e3);
-    	frame.add(slashL,f3);
-    	frame.add(stYrT,g3);
-    	frame.add(dashL,h3);
-    	frame.add(endMnthT,i3);
-    	frame.add(slashL,j3);
-    	frame.add(endDayT,k3);
-    	frame.add(slashL,l3);
-    	frame.add(endYrT,m3);
+    	frame.add(developerB,f1);
+    	frame.add(startDateD,c3);
+    	frame.add(dashL,d3);
+    	frame.add(endDateD,e3);
     	
     
     	

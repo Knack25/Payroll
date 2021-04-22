@@ -112,8 +112,7 @@ public class EditEmployee {
     	
     	frame.setLayout(new GridBagLayout());
     	
-    	//TODO: Configure constraints for vacationUsed and available
-   
+    
     	//need to figure out if this can be moved to a separate class
     	GridBagConstraints g1 = new GridBagConstraints();
     	g1.gridx = 6;

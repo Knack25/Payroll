@@ -13,9 +13,8 @@ import javax.swing.JTextField;
 public class Payroll_History {
 	
 	static JDialog dialog;
-	static JLabel nameL,dateL,payrollHisL;
-	static JComboBox<String> employee;
-	static JTextField stMnthT,stDayT,stYrT,endMnthT,endDayT,endYrT;
+	static JLabel nameL,dateL,payrollHisL,dashL;
+	static JComboBox<String> employee,startDateD,endDateD; 
 	
 	protected static JDialog createFrame() throws Exception{
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
@@ -33,13 +32,49 @@ public class Payroll_History {
 	    	GridBagConstraints b1 = new GridBagConstraints();
 	    	b1.gridx = 1;
 	    	b1.gridy = 0;
-		/*what is needed here for gui:
-		 * labels: Name, Date, payroll history 
-		 * Textfields for beginning and end dates
-		 */
+	    	
+	    	GridBagConstraints a2 = new GridBagConstraints();
+	    	a2.gridx = 0;
+	    	a2.gridy = 1;
+	    	
+	    	GridBagConstraints a3 = new GridBagConstraints();
+	    	a3.gridx = 0;
+	    	a3.gridy = 2;
+	    	
+	    	GridBagConstraints a4 = new GridBagConstraints();
+	    	a4.gridx = 0;
+	    	a4.gridy = 3;
+	    	
+	    	GridBagConstraints b2 = new GridBagConstraints();
+	    	b2.gridx = 1;
+	    	b2.gridy = 1;
+	    	
+	    	GridBagConstraints b3 = new GridBagConstraints();
+	    	b3.gridx = 1;
+	    	b3.gridy = 2;
+	    	
+	    	GridBagConstraints c3 = new GridBagConstraints();
+	    	c3.gridx = 2;
+	    	c3.gridy = 2;
+	    	
+	    	GridBagConstraints d3 = new GridBagConstraints();
+	    	b1.gridx = 3;
+	    	b1.gridy = 2;
+	    	
+	    	GridBagConstraints a1d1 = new GridBagConstraints();
+	    	a1d1.gridx = 0;
+	    	a1d1.gridy = 0;
+	    	a1d1.gridwidth = 4;		
+	    	   	
 		
-		
-		
+		dialog.add(payrollHisL,a1d1);
+		dialog.add(nameL,a2);
+		dialog.add(employee,b2);
+		dialog.add(dateL,a3);
+		dialog.add(startDateD,b3);
+		dialog.add(dashL,c3);
+		dialog.add(endDateD,d3);
+		dialog.add(loadB,a4);
 		
 		
 		return dialog;
@@ -48,7 +83,8 @@ public class Payroll_History {
 	 private static void setLabels() {
 		 payrollHisL = new JLabel("<HTML><U> Payroll History </U></HTML>");
 		 nameL = new JLabel("Name: ");
-		 dateL = new JLabel("Date:);
+		 dateL = new JLabel("Date:");
+		 dashL = new JLabel("-");
 		}
 	
 	
