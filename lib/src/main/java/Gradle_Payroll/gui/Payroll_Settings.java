@@ -41,6 +41,7 @@ public class Payroll_Settings {
     protected static JInternalFrame createFrame() throws Exception{
         frame = new JInternalFrame();
        
+        System.out.println("Launching Frame");
 		
         frame.setVisible(true); //necessary as of 1.3
        
