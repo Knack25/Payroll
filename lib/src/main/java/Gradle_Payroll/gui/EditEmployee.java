@@ -239,7 +239,12 @@ public class EditEmployee {
     	GridBagConstraints c13 = new GridBagConstraints();
     	c13.gridx = 2;
     	c13.gridy = 12;
-    	
+    	GridBagConstraints c14 = new GridBagConstraints();
+    	c14.gridx = 2;
+    	c14.gridy = 13;
+    	GridBagConstraints c15 = new GridBagConstraints();
+    	c15.gridx = 2;
+    	c15.gridy = 14;
     	
     	GridBagConstraints d3 = new GridBagConstraints();
     	d3.gridx = 3;
@@ -274,7 +279,12 @@ public class EditEmployee {
     	GridBagConstraints d13 = new GridBagConstraints();
     	d13.gridx = 3;
     	d13.gridy = 12;
-
+    	GridBagConstraints d14 = new GridBagConstraints();
+    	d14.gridx = 3;
+    	d14.gridy = 13;
+    	GridBagConstraints d15 = new GridBagConstraints();
+    	d15.gridx = 3;
+    	d15.gridy = 14;
     	
     	
     	frame.add(name,g1);
@@ -330,10 +340,10 @@ public class EditEmployee {
     	frame.add(otpayT,d12);
     	frame.add(ptopayL,c13);
     	frame.add(ptopayT,d13);
-    	frame.add(vacationAvailL);
-    	frame.add(vacationAvailT);
-    	frame.add(vacationUsedL);
-    	frame.add(vacationUsedT);
+    	frame.add(vacationAvailL,c14);
+    	frame.add(vacationAvailT,d14);
+    	frame.add(vacationUsedL,c15);
+    	frame.add(vacationUsedT,d15);
     	
     
     	
