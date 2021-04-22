@@ -7,10 +7,12 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class Authentication {
 	static JDialog dialog;
-	static JLabel test;
+	static JLabel test,usernameL,passwordL,ipAddL,dbNameL;
+	static JTextField usernameT,passwordT,ipAddT,dbNameT;
 	
 	 protected static JDialog createFrame() throws Exception{
 		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
@@ -25,10 +27,7 @@ public class Authentication {
 		 dialog.setSize(220, 220);
 	    	dialog.setLayout(new GridBagLayout());
 		 
-		 
-	    	
-	    	
-		 
+		 //TODO: test
 	    	GridBagConstraints a3 = new GridBagConstraints();
 	    	a3.gridx = 0;
 	    	a3.gridy = 2;
@@ -41,15 +40,11 @@ public class Authentication {
 	    	GridBagConstraints a6 = new GridBagConstraints();
 	    	a6.gridx = 0;
 	    	a6.gridy = 5;
+	    	
 	    	GridBagConstraints a7 = new GridBagConstraints();
 	    	a7.gridx = 0;
 	    	a7.gridy = 6;
-	    	GridBagConstraints a8 = new GridBagConstraints();
-	    	a8.gridx = 0;
-	    	a8.gridy = 7;
-	    	GridBagConstraints a9 = new GridBagConstraints();
-	    	a9.gridx = 0;
-	    	a9.gridy = 8;
+	    
 	    	
 	    	GridBagConstraints b3 = new GridBagConstraints();
 	    	b3.gridx = 1;
@@ -63,17 +58,16 @@ public class Authentication {
 	    	GridBagConstraints b6 = new GridBagConstraints();
 	    	b6.gridx = 1;
 	    	b6.gridy = 5;
-	    	GridBagConstraints b7 = new GridBagConstraints();
-	    	b7.gridx = 1;
-	    	b7.gridy = 6;
-	    	GridBagConstraints b8 = new GridBagConstraints();
-	    	b8.gridx = 1;
-	    	b8.gridy = 7;
-	    	GridBagConstraints b9 = new GridBagConstraints();
-	    	b9.gridx = 1;
-	    	b9.gridy = 8;
-		 
-		 
+	    	
+	    	dialog.add(usernameL,a3);
+	    	dialog.add(usernameT,b3);
+	    	dialog.add(passwordL,a4);
+	    	dialog.add(passwordT,b4);
+	    	dialog.add(ipAddL,a5);
+	    	dialog.add(ipAddT,b5);
+	    	dialog.add(dbNameL,a6);
+	    	dialog.add(dbNameT,b6);
+	    	dialog.add(submitB,a7);
 		 
 		 
 		 
@@ -88,6 +82,10 @@ public class Authentication {
 	 }
 	 private static void setLabels() {
 		 test = new JLabel("<HTML><U> Rate </U></HTML>");
+		 usernameL = new JLabel("Username: ");
+		 passwordL = new JLabel("Password: ");
+		 ipAddL = new JLabel("I.P. Address: ");
+		 dbNameL = new JLabel("DataBase Name: ");
 		}
 	
 	

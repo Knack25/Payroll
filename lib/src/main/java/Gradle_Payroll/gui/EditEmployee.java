@@ -113,7 +113,10 @@ public class EditEmployee {
     	frame.setLayout(new GridBagLayout());
     	
     
+<<<<<<< HEAD
    
+=======
+>>>>>>> ace7a168755c58d2975b4ae2f9fd2c9af66613ed
     	//need to figure out if this can be moved to a separate class
     	GridBagConstraints g1 = new GridBagConstraints();
     	g1.gridx = 6;

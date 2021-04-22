@@ -152,7 +152,7 @@ public class MainMenu extends JFrame implements ActionListener{
     		processPayrollDialog();
     		break;
     	case("history_payroll"):
-    		
+    		payrollHistoryWindow();
     		break;
     	case("print_reports"):
     		
@@ -236,6 +236,13 @@ public class MainMenu extends JFrame implements ActionListener{
 	private void payrollSettingsWindow() {
 		try {
 			Payroll_Settings.createFrame();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	private void payrollHistoryWindow() {
+		try {
+			Payroll_History.createFrame();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
