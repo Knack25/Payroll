@@ -42,9 +42,6 @@ public class EditEmployee {
 
 	
 	
-	
-	//GridBagLayout works very well for what needs to be done here
-	
 	 //Create a new internal frame.
     protected static JInternalFrame createFrame() throws Exception{
         frame = new JInternalFrame();
@@ -96,6 +93,8 @@ public class EditEmployee {
         setLabels();
        
     	//TODO: Add another button that brings of the individual tax table for this specific employee
+        JButton taxTableB = new JButton("Edit Tax Table");
+        taxTableB.addActionListener(taxTB);
         
     	JButton saveB = new JButton("Save");
     	saveB.addActionListener(saveEmp);
@@ -116,6 +115,10 @@ public class EditEmployee {
     	
     
     	//need to figure out if this can be moved to a separate class
+    	GridBagConstraints t1 = new GridBagConstraints();
+    	t1.gridx = 15;
+    	t1.gridy = 15;
+    	
     	GridBagConstraints g1 = new GridBagConstraints();
     	g1.gridx = 6;
     	g1.gridy = 0;
@@ -345,6 +348,7 @@ public class EditEmployee {
     	frame.add(vacationAvailT,d14);
     	frame.add(vacationUsedL,c15);
     	frame.add(vacationUsedT,d15);
+    	frame.add(taxTableB,t1);
     	
     
     	
@@ -727,4 +731,20 @@ public class EditEmployee {
 			
 		}
 	};
+	
+	static ActionListener taxTB = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				EditTaxTable.createDialog();
+			}catch (Exception taxTablePull) {
+				
+			}
+			
+		}
+		
+	};
 }
+
+

@@ -27,7 +27,7 @@ public class Authentication {
 		 dialog.setSize(220, 220);
 	    	dialog.setLayout(new GridBagLayout());
 		 
-		 //TODO: test
+		 
 	    	GridBagConstraints a3 = new GridBagConstraints();
 	    	a3.gridx = 0;
 	    	a3.gridy = 2;

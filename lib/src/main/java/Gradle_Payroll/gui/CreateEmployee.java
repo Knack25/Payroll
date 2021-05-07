@@ -10,6 +10,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,7 +22,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.mysql.cj.protocol.Resultset;
+
+import Gradle_Payroll.data.Tax;
 import Gradle_Payroll.fileIO.Config;
+import Gradle_Payroll.sql.MySQL;
  
  
  public class CreateEmployee extends JDialog{
@@ -27,9 +35,9 @@ import Gradle_Payroll.fileIO.Config;
 	 * 
 	 */
 	private static final long serialVersionUID = 4810663888408123313L;
-	static String fName;
-	static String mName;
-	static String lName;
+	static String[] Name;
+	static List<Tax> Taxes;
+	static Tax tax;
 	static JDialog createMenu;
 	static JTextField enterFirst;
 	static JTextField enterMiddle;
@@ -41,6 +49,9 @@ import Gradle_Payroll.fileIO.Config;
 		 createMenu.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		 createMenu.setSize(400, 150);	
 		 
+		 tax = new Tax();
+		 Name = new String[3];
+		 Taxes = new ArrayList<Tax>();
 		 
 		
 		 JPanel fields = new JPanel();
@@ -76,6 +87,7 @@ import Gradle_Payroll.fileIO.Config;
 	 }
 
 	 
+	 //********************************************************Create Listener******************************************************************************
 	static ActionListener CreateListener = new ActionListener() {
 
 		@Override
@@ -88,7 +100,7 @@ import Gradle_Payroll.fileIO.Config;
 				e1.printStackTrace();
 			}
 		}
-
+		//********************************************************SQL Push Request*****************************************************************
 		private void sqlPushRequest() throws Exception, SQLException {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
@@ -104,9 +116,9 @@ import Gradle_Payroll.fileIO.Config;
 			
 			System.out.println("Connected.");
 			
-			 fName = enterFirst.getText();
-			 mName = enterMiddle.getText();
-			 lName = enterLast.getText();
+			 Name[0] = enterFirst.getText();
+			 Name[1] = enterMiddle.getText();
+			 Name[2] = enterLast.getText();
 			 
 			String statement = "INSERT INTO employee(firstname,middlename,lastname,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
 						+ "otPay,otHour,ptoPay,ptoHour,localTaxCode,addStateTax,addFedTax,vacationtimeAvail,vacationtimeUsed,Department,enabled) "
@@ -116,9 +128,9 @@ import Gradle_Payroll.fileIO.Config;
 			
 			System.out.println("Created Prepared Statement");
 			
-			pstmt.setString(1, fName);
-			pstmt.setString(2, mName);
-			pstmt.setString(3, lName);
+			pstmt.setString(1, Name[0]);
+			pstmt.setString(2, Name[1]);
+			pstmt.setString(3, Name[2]);
 			pstmt.setString(4, "Phone Number");
 			pstmt.setString(5, "Email");
 			pstmt.setString(6, "Sex");
@@ -160,56 +172,18 @@ import Gradle_Payroll.fileIO.Config;
 			
 			 conn.close();
 			 
-			id = sqlIDPullRequest(fName, mName, lName);
+			id = MySQL.sqlPullEmpID(Name);
 			
 			sqlNewEmpAddreessRequest(id);
+			sqlPullDefaultTax(id);
+			sqlPushEmpTax();
 			
 			
 			 createMenu.dispose();
 		}
 		
-		private int sqlIDPullRequest(String fName,String mName,String lName) throws Exception, SQLException {
-			
-			int ID = 0;
-			String[] SQL;
-			SQL = Config.PullSQLConfig();
-			System.out.println("");
-			System.out.println("");
-			System.out.println("");
-			System.out.println("Querring for new employee ID.");
-			System.out.println("");
-			System.out.println("Connecting to DB...");
-			
-			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-			
-			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-			conn.setAutoCommit(false);
-			
-			System.out.println("Connected.");
-			
-			String querry = "select * from employee " + "where " + "firstname = ? and " + "middlename = ? and " + "lastname = ?";
-			
-			
-			PreparedStatement pstmt = conn.prepareStatement(querry);
-			
-			pstmt.setString(1, fName);
-			pstmt.setString(2, mName);
-			pstmt.setString(3, lName);
-			
-			ResultSet rs = pstmt.executeQuery();
-			
-			
-			
-			while(rs.next()) {
-				ID = rs.getInt("id");
-			}
-			System.out.println("ID is: " + ID);
-			return ID;
-			
-			
-			
-		}
 		
+		//*************************************************SQL New Employee Address Request*********************************************************
 		private int sqlNewEmpAddreessRequest(int ID) throws Exception, SQLException {
 			
 			String[] SQL;
@@ -249,6 +223,74 @@ import Gradle_Payroll.fileIO.Config;
 			
 			conn.setAutoCommit(true);
 			return rs;
+		}
+		
+		
+		//***************************************************SQL Pull Default Tax Info******************************************************************
+		private void sqlPullDefaultTax(int empID) throws Exception{
+			String[] SQL;
+			SQL = Config.PullSQLConfig();
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			Statement st = conn.createStatement();
+			
+			ResultSet rs = st.executeQuery("Select * from tax_defaults");
+		
+			
+			
+			while(rs.next()) {
+				tax.setName(rs.getString("Name"));
+				tax.setType(rs.getString("type"));
+				tax.setAmmount(rs.getDouble("ammount"));
+				tax.setFedTaxExempt(rs.getBoolean("fedTaxExempt"));
+				tax.setStateTaxExempt(rs.getBoolean("stateTaxExempt"));
+				tax.setStatePATaxExempt(rs.getBoolean("statePATaxExempt"));
+				tax.setSscTaxExempt(rs.getBoolean("SSCTaxExempt"));
+				tax.setMedicareTaxeExempt(rs.getBoolean("medicareTaxExempt"));
+				tax.setLocalTaxExempt(rs.getBoolean("localTaxExempt"));
+				tax.setEmployee_id(empID);
+				Taxes.add(tax);
+			}
+			
+			
+			conn.close();
+			
+			return;
+		}
+		
+		private void sqlPushEmpTax() throws Exception{
+			
+			String[] SQL;
+			SQL = Config.PullSQLConfig();
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			String insertStatement = "Insert into tax(employee_id,taxname,taxtype,ammount,fedTaxExempt,stateTaxExempt,statePATaxExempt,SSCTaxExempt,"
+					+ "medicareTaxExempt,localTaxExempt) values(?,?,?,?,?,?,?,?,?,?)";
+			
+			PreparedStatement pstmt = conn.prepareStatement(insertStatement);
+			
+			for(int i = 0; i < Taxes.size();i++) {
+				pstmt.setInt(1, Taxes.get(i).getEmployee_id());
+				pstmt.setString(2, Taxes.get(i).getName());
+				pstmt.setString(3, Taxes.get(i).getType());
+				pstmt.setDouble(4, Taxes.get(i).getAmmount());
+				pstmt.setBoolean(5, Taxes.get(i).isFedTaxExempt());
+				pstmt.setBoolean(6, Taxes.get(i).isStateTaxExempt());
+				pstmt.setBoolean(7, Taxes.get(i).isStatePATaxExempt());
+				pstmt.setBoolean(8, Taxes.get(i).isSscTaxExempt());
+				pstmt.setBoolean(9, Taxes.get(i).isMedicareTaxeExempt());
+				pstmt.setBoolean(10, Taxes.get(i).isLocalTaxExempt());
+				
+				int rs = pstmt.executeUpdate(); 
+				
+				System.out.println("Inserted " + rs + " entries");
+				
+			}
+			
 		}
 		
 	};	 

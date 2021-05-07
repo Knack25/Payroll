@@ -8,23 +8,19 @@ public class Tax {
 	
 	public Tax() {
 		super();
+		this.name = "Name";
+		this.ID = 0;
+		this.type = "Type";
+		this.ammount = 00.00;
+		this.fedTaxExempt = false;
+		this.stateTaxExempt = false;
+		this.statePATaxExempt = false;
+		this.sscTaxExempt = false;
+		this.medicareTaxeExempt = false;
+		this.localTaxExempt = false;
+		this.YTD = 00.00;
 	}
-	public Tax(String name, int iD, String type, double ammount, boolean fedTaxExempt, boolean stateTaxExempt,
-			boolean statePATaxExempt, boolean sscTaxExempt, boolean medicareTaxeExempt, boolean localTaxExempt,
-			double yTD) {
-		super();
-		this.name = name;
-		ID = iD;
-		this.type = type;
-		this.ammount = ammount;
-		this.fedTaxExempt = fedTaxExempt;
-		this.stateTaxExempt = stateTaxExempt;
-		this.statePATaxExempt = statePATaxExempt;
-		this.sscTaxExempt = sscTaxExempt;
-		this.medicareTaxeExempt = medicareTaxeExempt;
-		this.localTaxExempt = localTaxExempt;
-		YTD = yTD;
-	}
+	
 	private String name;
 	private int ID;
 	private String type;
@@ -36,7 +32,14 @@ public class Tax {
 	private boolean medicareTaxeExempt;
 	private boolean localTaxExempt;
 	private double YTD;
+	private int employee_id;
 	
+	public int getEmployee_id() {
+		return employee_id;
+	}
+	public void setEmployee_id(int employee_id) {
+		this.employee_id = employee_id;
+	}
 	public double getYTD() {
 		return YTD;
 	}
