@@ -3,6 +3,11 @@ package Gradle_Payroll.gui;
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -10,11 +15,15 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import Gradle_Payroll.fileIO.Config;
+
 public class Payroll_History {
 	
 	static JDialog dialog;
 	static JLabel nameL,dateL,payrollHisL,dashL;
 	static JComboBox<String> employee,startDateD,endDateD; 
+	static JButton loadB;
+	static String fName,mName,lName,fullName;
 	
 	protected static JDialog createFrame() throws Exception{
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
@@ -22,10 +31,14 @@ public class Payroll_History {
 		System.out.println("Creating Dialog Box");
 		 
 		 
-		 JButton loadB = new JButton("Load");
+		 loadB = new JButton("Load");
+		 employee = new JComboBox<String>();
+		 startDateD = new JComboBox<String>();
+		 endDateD = new JComboBox<String>();
 		 
 		 
 		 setLabels();
+		 sqlPullEmpListRequest();
 		 dialog.setSize(220, 220);
 	    	dialog.setLayout(new GridBagLayout());
 		 
@@ -76,22 +89,53 @@ public class Payroll_History {
 		dialog.add(endDateD,d3);
 		dialog.add(loadB,a4);
 		
-		
+		System.out.println("Done.");
+		dialog.setVisible(true);
 		return dialog;
 	}
 	
 	 private static void setLabels() {
+		 System.out.println("Ceating Labels...");
 		 payrollHisL = new JLabel("<HTML><U> Payroll History </U></HTML>");
 		 nameL = new JLabel("Name: ");
-<<<<<<< HEAD
 		 dateL = new JLabel("Date:" );
-=======
 		 dateL = new JLabel("Date:");
 		 dashL = new JLabel("-");
->>>>>>> ace7a168755c58d2975b4ae2f9fd2c9af66613ed
+
 		}
 	
-	
+	 private static void sqlPullEmpListRequest() throws Exception, SQLException {
+			String[] SQL = Config.PullSQLConfig();
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			
+			Statement stmt = conn.createStatement();
+				
+			ResultSet rs = stmt.executeQuery("select * from employee");
+			
+			
+			
+			int i = 0;
+			
+			
+			while(rs.next()) {
+				fName = rs.getString("firstname");
+				mName = rs.getString("middlename");
+				lName = rs.getString("lastname");
+				fullName = fName + " " + mName + " " + lName;
+				employee.addItem(fullName);
+				i++;
+			}
+			
+			
+			System.out.println("Data Retreived Successfull for " + i + " Employee entries.");
+			
+			rs.close();
+			conn.close();
+		}
 	
 	
 	

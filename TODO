@@ -20,3 +20,6 @@ View Employees:
 Void Check:
 	Once all other check classes have been finished, this needs to edit an existing DB entry to void the check
 	
+Edit Employee:
+	Add button that brings up the unique tax table for that person and have an area to edit it.
+	

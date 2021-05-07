@@ -36,35 +36,6 @@ public class Config {
 		
 		String[] output = {null,null,null,null,null};
 		
-		
-//		try{
-//			
-//		System.out.println("Opening Object Input Stream...");
-//		ObjectInputStream objinstream = new ObjectInputStream(new FileInputStream("SQLConfig.txt"));  
-//		byte[] bt = new byte[22];
-//		
-//		
-//		System.out.println("Reading in input stream.");
-//		objinstream.readFully(bt);
-//		String input = new String(bt);
-//		
-//		System.out.println("input stream:");
-//		System.out.println(input);
-//		
-//		System.out.println("Splitting input String");
-//		output = input.split(input);
-//		
-//		System.out.println("output stream:");
-//		for(int i = 0; i < output.length;i++) {
-//			
-//			System.out.println(output[i]);
-//			
-//		}
-		
-		
-		
-		//public InputStream getResourceAsStream(String fileName);
-		//Scanner sc = new Scanner(new File("C:\\Users\\natha\\Desktop\\SQLConfig.txt"));
 		Scanner sc = new Scanner(new File("SQLConfig.txt"));
 		
 		
@@ -72,19 +43,12 @@ public class Config {
 		
 		while (sc.hasNextLine()) {
 			output[i] = sc.nextLine();
-			//System.out.println(output[i]);
 			i++;
 			
 		}
 		
 		sc.close();
 		return output;
-//		objinstream.close();
-//		return output;
-//		}catch(Exception e){
-//			System.out.println(e);
-//			return null;
-//		}
 		
 	}
 	

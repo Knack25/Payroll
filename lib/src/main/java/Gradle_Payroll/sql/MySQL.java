@@ -3,6 +3,8 @@ package Gradle_Payroll.sql;
 
 import java.sql.*;
 
+import Gradle_Payroll.fileIO.Config;
+
 
 public class MySQL {
 
@@ -40,43 +42,35 @@ public class MySQL {
 		return 0;
 	}
 	
-	
-	public static int LoadEmployeeTable() {
+	 public static int sqlPullEmpID(String[] name) throws Exception,SQLException{
+		 int ID = 0;
+		 
+		 String[] SQL = Config.PullSQLConfig();
+			
+		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+		 
+		String requestStatement = "select * from employee where firstname = ? and lastname = ?";
 		
+		PreparedStatement pstmt = conn.prepareStatement(requestStatement);
 		
+		if(name.length == 3) {
+			pstmt.setString(1,name[0]);
+			pstmt.setString(2, name[2]);
+		}
+		if(name.length == 2) {
+			pstmt.setString(1,name[0]);
+			pstmt.setString(2, name[1]);
+		}
 		
-		return 0;
-	}
-
-	//If the input value is a String
-	public static int SQLModify(Connection conn, String table,String Column,String value,String Where,int WhereValue) throws Exception {
+		ResultSet rs = pstmt.executeQuery();
 		
-		Statement stmt = conn.createStatement();
+		rs.next();
+		ID = rs.getInt("id");
 		
-		int result = stmt.executeUpdate("update" + table + "set" + Column + "='" + value + "'");
-		System.out.println(result + "Records affected.");
-		
-		return 0;
-	}
-	
-	//If the input value is a Double
-	public static int SQLModify(Connection conn, String table,String Column,double value,String Where, int WhereValue) throws Exception {
-		
-		Statement stmt = conn.createStatement();
-		
-		int result = stmt.executeUpdate("update" + table + "set" + Column + "='" + value + "' where " + Where + "=" + WhereValue);
-		System.out.println(result + "Records affected.");
-		
-		return 0;
-	}
-	
-	public static int QuerryResult(Connection conn,String str) {
-		
-		
-		
-		
-		return 0;
-	}
+		 return ID;
+	 }
 
 	
 }

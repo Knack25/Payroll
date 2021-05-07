@@ -26,6 +26,9 @@ public class MainMenu extends JFrame implements ActionListener{
 	
 	
 	public MainMenu() {
+		
+	
+		
 		super("ACI Payroll");
 		
 		int inset = 50;

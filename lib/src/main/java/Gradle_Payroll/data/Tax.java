@@ -4,6 +4,27 @@ package Gradle_Payroll.data;
 
 public class Tax {
 
+	
+	
+	public Tax() {
+		super();
+	}
+	public Tax(String name, int iD, String type, double ammount, boolean fedTaxExempt, boolean stateTaxExempt,
+			boolean statePATaxExempt, boolean sscTaxExempt, boolean medicareTaxeExempt, boolean localTaxExempt,
+			double yTD) {
+		super();
+		this.name = name;
+		ID = iD;
+		this.type = type;
+		this.ammount = ammount;
+		this.fedTaxExempt = fedTaxExempt;
+		this.stateTaxExempt = stateTaxExempt;
+		this.statePATaxExempt = statePATaxExempt;
+		this.sscTaxExempt = sscTaxExempt;
+		this.medicareTaxeExempt = medicareTaxeExempt;
+		this.localTaxExempt = localTaxExempt;
+		YTD = yTD;
+	}
 	private String name;
 	private int ID;
 	private String type;
@@ -14,7 +35,14 @@ public class Tax {
 	private boolean sscTaxExempt;
 	private boolean medicareTaxeExempt;
 	private boolean localTaxExempt;
+	private double YTD;
 	
+	public double getYTD() {
+		return YTD;
+	}
+	public void setYTD(double yTD) {
+		YTD = yTD;
+	}
 	public String getName() {
 		return name;
 	}

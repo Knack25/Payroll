@@ -42,6 +42,7 @@ public class EditEmployee {
 
 	
 	
+	
 	//GridBagLayout works very well for what needs to be done here
 	
 	 //Create a new internal frame.
@@ -94,7 +95,8 @@ public class EditEmployee {
       
         setLabels();
        
-    	
+    	//TODO: Add another button that brings of the individual tax table for this specific employee
+        
     	JButton saveB = new JButton("Save");
     	saveB.addActionListener(saveEmp);
     	
@@ -113,10 +115,6 @@ public class EditEmployee {
     	frame.setLayout(new GridBagLayout());
     	
     
-<<<<<<< HEAD
-   
-=======
->>>>>>> ace7a168755c58d2975b4ae2f9fd2c9af66613ed
     	//need to figure out if this can be moved to a separate class
     	GridBagConstraints g1 = new GridBagConstraints();
     	g1.gridx = 6;
