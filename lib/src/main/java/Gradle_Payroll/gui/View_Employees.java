@@ -3,7 +3,6 @@ package Gradle_Payroll.gui;
 
 
 import java.awt.Dialog;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;

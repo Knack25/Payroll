@@ -1,7 +1,6 @@
 package Gradle_Payroll.gui;
 
 import java.awt.Dialog;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.sql.Connection;
@@ -34,7 +33,7 @@ public class EditTaxTable {
 	
 	
 	
-	protected static JDialog createDialog(int empID) throws Exception{
+	protected static void createDialog(int empID) throws Exception{
 		
 		String dollar = "$";
 		String percent = "%";
@@ -43,11 +42,12 @@ public class EditTaxTable {
 		
 		
 		dialog = new JDialog(null,Dialog.ModalityType.APPLICATION_MODAL);
-		dialog.setSize(400,400);
+		dialog.setSize(800,800);
 		GridBagConstraints c = new GridBagConstraints();
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		rs = SQLPullTax(empID);
+		SQLPullTax(empID);
+		taxNum = SQLTaxNum(empID);
 		
 		
 		List<JTextField> Ammount = new ArrayList<JTextField>();
@@ -60,12 +60,12 @@ public class EditTaxTable {
 		List<JCheckBox> MedicareExempt = new ArrayList<JCheckBox>();
 		List<JCheckBox> LocalExempt = new ArrayList<JCheckBox>();
 		
-	
 		
 		
 		int autoX = 0;
 		int autoY = 0;
-		for(int i = 0; i <= taxNum;i++) {
+		for(int i = 0; i < taxNum;i++) {
+			rs.next();
 			
 			c.gridx = autoX;
 			c.gridy = autoY;
@@ -75,7 +75,8 @@ public class EditTaxTable {
 			
 			//Name of the tax
 			JTextField name = new JTextField();
-			 name.setColumns(3);
+			name.setText(rs.getString("taxname"));
+			name.setColumns(3);
 			panel.add(name,c);
 			Name.add(name);
 			autoX++;
@@ -85,6 +86,11 @@ public class EditTaxTable {
 			JComboBox<String> taxtype = new JComboBox<String>();
 			taxtype.addItem(dollar);
 			taxtype.addItem(percent);
+			if(rs.getString("taxtype") == "%") {
+				taxtype.setSelectedIndex(1);
+			}else {
+				taxtype.setSelectedIndex(0);
+			}
 			panel.add(taxtype,c);
 			TaxType.add(taxtype);
 			autoX++;
@@ -93,6 +99,7 @@ public class EditTaxTable {
 			//Amount of the tax
 			JTextField ammnt = new JTextField();
 			ammnt.setColumns(3);
+			ammnt.setText(String.valueOf(rs.getDouble("ammount")));
 			panel.add(ammnt,c);
 			Ammount.add(ammnt);
 			autoX++;
@@ -100,6 +107,7 @@ public class EditTaxTable {
 			
 			//Federal Exempt
 			JCheckBox fedExempt = new JCheckBox();
+			fedExempt.setSelected(rs.getBoolean("fedTaxExempt"));
 			panel.add(fedExempt,c);
 			FederalExempt.add(fedExempt);
 			autoX++;
@@ -107,6 +115,7 @@ public class EditTaxTable {
 			
 			//State Exempt
 			JCheckBox stateExempt = new JCheckBox();
+			stateExempt.setSelected(rs.getBoolean("stateTaxExempt"));
 			panel.add(stateExempt,c);
 			StateExempt.add(stateExempt);
 			autoX++;
@@ -114,6 +123,7 @@ public class EditTaxTable {
 			
 			//State PA Exempt
 			JCheckBox statePAExempt = new JCheckBox();
+			statePAExempt.setSelected(rs.getBoolean("statePATaxExempt"));
 			panel.add(statePAExempt,c);
 			StatePAExempt.add(statePAExempt);
 			autoX++;
@@ -121,6 +131,7 @@ public class EditTaxTable {
 			
 			//SSC Exempt
 			JCheckBox sscExempt = new JCheckBox();
+			sscExempt.setSelected(rs.getBoolean("SSCTaxExempt"));
 			panel.add(sscExempt,c);
 			SSCExempt.add(sscExempt);
 			autoX++;
@@ -128,6 +139,7 @@ public class EditTaxTable {
 			
 			//Medicare Exempt
 			JCheckBox medicareExempt = new JCheckBox();
+			medicareExempt.setSelected(rs.getBoolean("medicareTaxExempt"));
 			panel.add(medicareExempt,c);
 			MedicareExempt.add(medicareExempt);
 			autoX++;
@@ -135,24 +147,25 @@ public class EditTaxTable {
 			
 			//Local Exempt
 			JCheckBox localExempt = new JCheckBox();
+			localExempt.setSelected(rs.getBoolean("localTaxExempt"));
 			panel.add(localExempt,c);
 			LocalExempt.add(localExempt);
 			
 			autoX = 0;
 			autoY++;
+			
 		}
 		
 		dialog.add(panel);
 		
 		dialog.setVisible(true);
 		
-		return null;
+		return;
 	}
 	
 	//This will take all the current taxes for the selected employee and return them as a ResultSet...
 	//It will also set taxNum to the ammount of taxes for that employee in order to dynamically create the tax table
-	private static ResultSet SQLPullTax(int empID) throws Exception {
-		ResultSet rs = null;
+	private static void SQLPullTax(int empID) throws Exception {
 		
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
@@ -169,15 +182,38 @@ public class EditTaxTable {
 		
 		pstmt.setInt(1, empID);
 		
-		rs = pstmt.executeQuery();
+		rs = pstmt.executeQuery();		
 		
-		while(rs.next()) {
-			taxNum++;
-		}
-		
-		return rs;
+		return;
 	}
 	
+private static int SQLTaxNum(int empID) throws Exception {
+		ResultSet Rs;
+		String[] SQL;
+		SQL = Config.PullSQLConfig();
+		int TaxNum = 0;
+		
+		System.out.println("Querrying DB for selected Employee");
+		
+		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+		
+		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+		
+		String insertStatement = "select * from tax where employee_id = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(insertStatement);
+		
+		pstmt.setInt(1, empID);
+		
+		Rs = pstmt.executeQuery();
+		
+		while(Rs.next()) {
+			TaxNum++;
+		}
+		
+		
+		return TaxNum;
+	}
 
 	
 }

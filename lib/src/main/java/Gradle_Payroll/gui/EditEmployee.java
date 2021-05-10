@@ -742,6 +742,7 @@ public class EditEmployee {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
+				System.out.println("Edit Tax Table Pressed.");
 				EditTaxTable.createDialog(emp.getID());
 			}catch (Exception taxTablePull) {
 				
