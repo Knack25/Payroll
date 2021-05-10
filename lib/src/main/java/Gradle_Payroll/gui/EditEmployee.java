@@ -96,6 +96,9 @@ public class EditEmployee {
         JButton taxTableB = new JButton("Edit Tax Table");
         taxTableB.addActionListener(taxTB);
         
+        JButton createCheckB = new JButton("Create Check");
+        //taxTableB.addActionListener(createCheck);
+        
     	JButton saveB = new JButton("Save");
     	saveB.addActionListener(saveEmp);
     	
@@ -108,13 +111,13 @@ public class EditEmployee {
 		
 		System.out.println("Creating Edit Frame");
 		
-		frame.setSize(1535, 820);
+		frame.setSize(1300, 650);
     	
     	
     	frame.setLayout(new GridBagLayout());
     	
     
-    	//need to figure out if this can be moved to a separate class
+    	
     	GridBagConstraints t1 = new GridBagConstraints();
     	t1.gridx = 15;
     	t1.gridy = 15;
@@ -125,6 +128,9 @@ public class EditEmployee {
     	GridBagConstraints h1 = new GridBagConstraints();
     	h1.gridx = 7;
     	h1.gridy = 0;
+    	GridBagConstraints i1 = new GridBagConstraints();
+    	i1.gridx = 8;
+    	i1.gridy = 0;
     	GridBagConstraints m15 = new GridBagConstraints();
     	m15.gridx = 13;
     	m15.gridy = 14;
@@ -290,6 +296,11 @@ public class EditEmployee {
     	d15.gridx = 3;
     	d15.gridy = 14;
     	
+    	GridBagConstraints e3 = new GridBagConstraints();
+    	e3.gridx = 4;
+    	e3.gridy = 2;
+    	
+    	
     	
     	frame.add(name,g1);
     	frame.add(employee,h1);
@@ -348,8 +359,8 @@ public class EditEmployee {
     	frame.add(vacationAvailT,d14);
     	frame.add(vacationUsedL,c15);
     	frame.add(vacationUsedT,d15);
-    	frame.add(taxTableB,t1);
-    	
+    	frame.add(taxTableB,e3);
+    	//frame.add(createCheckB,i1);
     
     	
     	frame.setClosable(true);
@@ -360,14 +371,8 @@ public class EditEmployee {
     	frame.setVisible(true);
     	
     
-    	
+    	//TODO: add a button that links to the YTD table
         
-    	/* need the following features,
-    	-tax tables for the employees
-    	-YTDs 
-    	-function to create one check for the individual employee.
-    	*/
-    	
     	
         
 		return frame;
@@ -745,6 +750,19 @@ public class EditEmployee {
 		}
 		
 	};
+//static ActionListener createCheck = new ActionListener() {
+//		
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			try {
+//				Create_Check.createCheckmenu(emp.getID());
+//			}catch (Exception taxTablePull) {
+//				
+//			}
+//			
+//		}
+//		
+//	};
 }
 
 

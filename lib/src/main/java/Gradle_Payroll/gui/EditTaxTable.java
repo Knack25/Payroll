@@ -1,6 +1,7 @@
 package Gradle_Payroll.gui;
 
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.sql.Connection;
@@ -42,6 +43,7 @@ public class EditTaxTable {
 		
 		
 		dialog = new JDialog(null,Dialog.ModalityType.APPLICATION_MODAL);
+		dialog.setSize(400,400);
 		GridBagConstraints c = new GridBagConstraints();
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -58,56 +60,85 @@ public class EditTaxTable {
 		List<JCheckBox> MedicareExempt = new ArrayList<JCheckBox>();
 		List<JCheckBox> LocalExempt = new ArrayList<JCheckBox>();
 		
+	
+		
+		
 		int autoX = 0;
 		int autoY = 0;
 		for(int i = 0; i <= taxNum;i++) {
 			
-			c.gridx = (autoX % 5);
+			c.gridx = autoX;
 			c.gridy = autoY;
-//			if((autoX % 5) == 1) {
-//				autoY++;
-//			}
 			panel.add(new JLabel(String.valueOf(i)),c);
+			autoX++;
+			c.gridx = autoX;
+			
 			//Name of the tax
 			JTextField name = new JTextField();
-			panel.add(name);
+			 name.setColumns(3);
+			panel.add(name,c);
 			Name.add(name);
+			autoX++;
+			c.gridx = autoX;
+			
 			//Type of the tax
 			JComboBox<String> taxtype = new JComboBox<String>();
 			taxtype.addItem(dollar);
 			taxtype.addItem(percent);
-			panel.add(taxtype);
+			panel.add(taxtype,c);
 			TaxType.add(taxtype);
-			//Ammount of the tax
+			autoX++;
+			c.gridx = autoX;
+			
+			//Amount of the tax
 			JTextField ammnt = new JTextField();
-			panel.add(ammnt);
+			ammnt.setColumns(3);
+			panel.add(ammnt,c);
 			Ammount.add(ammnt);
+			autoX++;
+			c.gridx = autoX;
+			
 			//Federal Exempt
 			JCheckBox fedExempt = new JCheckBox();
-			panel.add(fedExempt);
+			panel.add(fedExempt,c);
 			FederalExempt.add(fedExempt);
+			autoX++;
+			c.gridx = autoX;
+			
 			//State Exempt
 			JCheckBox stateExempt = new JCheckBox();
-			panel.add(stateExempt);
+			panel.add(stateExempt,c);
 			StateExempt.add(stateExempt);
+			autoX++;
+			c.gridx = autoX;
+			
 			//State PA Exempt
 			JCheckBox statePAExempt = new JCheckBox();
-			panel.add(statePAExempt);
+			panel.add(statePAExempt,c);
 			StatePAExempt.add(statePAExempt);
+			autoX++;
+			c.gridx = autoX;
+			
 			//SSC Exempt
 			JCheckBox sscExempt = new JCheckBox();
-			panel.add(sscExempt);
+			panel.add(sscExempt,c);
 			SSCExempt.add(sscExempt);
+			autoX++;
+			c.gridx = autoX;
+			
 			//Medicare Exempt
 			JCheckBox medicareExempt = new JCheckBox();
-			panel.add(medicareExempt);
+			panel.add(medicareExempt,c);
 			MedicareExempt.add(medicareExempt);
+			autoX++;
+			c.gridx = autoX;
+			
 			//Local Exempt
 			JCheckBox localExempt = new JCheckBox();
-			panel.add(localExempt);
+			panel.add(localExempt,c);
 			LocalExempt.add(localExempt);
 			
-			
+			autoX = 0;
 			autoY++;
 		}
 		

@@ -77,9 +77,9 @@ public class Void_Check {
 	    	
 	    	dialog.add(voidCheckL,b1c1);
 	    	dialog.add(nameL,a2);
-	    	//dialog.add(employee,b2);
+	    	dialog.add(employee,b2);
 	    	dialog.add(checkNoL,c2);
-	    	//dialog.add(checkNo,d2);
+	    	dialog.add(checkNo,d2);
 	    	dialog.add(voidB,a3);
 	    	dialog.repaint();
 	    	

@@ -229,7 +229,7 @@ public class Create_Check {
 	    	dialog.add(salRateT,c6);
 	    	dialog.add(advHoursT,b7);
 	    	dialog.add(advRateT,c7);
-	    	//TODO: Royalty is a fixed ammount based on IP or the like... There is not hours related to it.
+	    	//TODO: Royalty is a fixed amount based on IP or the like... There is not hours related to it.
 	    	dialog.add(royalHoursT,b8);
 	    	dialog.add(royalRateT,c8);
 	    	dialog.add(checkNoT,c1);
@@ -273,6 +273,7 @@ public class Create_Check {
 				empID = MySQL.sqlPullEmpID(name);
 				checkID = sqlPushCheckInitRequest(empID);
 				//TODO: Add method to calculate taxes for check
+					//Dante: can you run it through a calculator that deducts from each field that is applicable and send it?
 				//TODO: Add method to format and print check
 			}catch (Exception PushCheckInitRequest) {
 				PushCheckInitRequest.printStackTrace();

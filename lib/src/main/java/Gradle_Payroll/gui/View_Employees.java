@@ -65,7 +65,6 @@ public class View_Employees {
 		 
 	    	
 	    	JScrollPane scrollPane = new JScrollPane(employee);
-	    	scrollPane.setPreferredSize(new Dimension(150,150));
 	    	
 	    	searchB = new JButton("Search");
 	    	searchB.addActionListener(search);

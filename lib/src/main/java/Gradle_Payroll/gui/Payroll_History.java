@@ -38,7 +38,7 @@ public class Payroll_History {
 		 
 		 setLabels();
 		 sqlPullEmpListRequest();
-		 dialog.setSize(220, 220);
+		 dialog.setSize(400, 200);
 	    	dialog.setLayout(new GridBagLayout());
 		 
 	    	GridBagConstraints b1 = new GridBagConstraints();
@@ -60,6 +60,7 @@ public class Payroll_History {
 	    	GridBagConstraints b2 = new GridBagConstraints();
 	    	b2.gridx = 1;
 	    	b2.gridy = 1;
+	    	b2.gridwidth = 3;
 	    	
 	    	GridBagConstraints b3 = new GridBagConstraints();
 	    	b3.gridx = 1;
@@ -70,22 +71,23 @@ public class Payroll_History {
 	    	c3.gridy = 2;
 	    	
 	    	GridBagConstraints d3 = new GridBagConstraints();
-	    	b1.gridx = 3;
-	    	b1.gridy = 2;
+	    	d3.gridx = 3;
+	    	d3.gridy = 2;
 	    	
 	    	GridBagConstraints a1d1 = new GridBagConstraints();
 	    	a1d1.gridx = 0;
 	    	a1d1.gridy = 0;
 	    	a1d1.gridwidth = 4;		
 	    	   	
+	    
 		
 		dialog.add(payrollHisL,a1d1);
 		dialog.add(nameL,a2);
 		dialog.add(employee,b2);
 		dialog.add(dateL,a3);
 		dialog.add(startDateD,b3);
-		dialog.add(dashL,c3);
-		dialog.add(endDateD,d3);
+		//dialog.add(dashL,c3);
+		dialog.add(endDateD,c3);
 		dialog.add(loadB,a4);
 		
 		System.out.println("Done.");

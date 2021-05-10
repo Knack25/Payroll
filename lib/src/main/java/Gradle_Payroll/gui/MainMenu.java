@@ -110,17 +110,17 @@ public class MainMenu extends JFrame implements ActionListener{
 		menu = new JMenu("Settings");
 		
 		
-		menuItem = new JMenuItem("Payroll Settings");
+		menuItem = new JMenuItem("Program Settings");
 		menuItem.setActionCommand("payroll_settings");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
 		
-		menuItem = new JMenuItem("Program Settings");
-		menuItem.setActionCommand("program_settings");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
+//		menuItem = new JMenuItem("Program Settings");
+//		menuItem.setActionCommand("program_settings");
+//		menuItem.addActionListener(this);
+//		menu.add(menuItem);
 		
-		menuItem = new JMenuItem("MySQL Settings");
+		menuItem = new JMenuItem("Developer Mode");
 		menuItem.setActionCommand("sql_settings");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
@@ -158,7 +158,7 @@ public class MainMenu extends JFrame implements ActionListener{
     		payrollHistoryWindow();
     		break;
     	case("print_reports"):
-    		
+    		printReportsWindow();
     		break;
     	case("void_check"):
     		voidCheckDialog();
@@ -166,11 +166,11 @@ public class MainMenu extends JFrame implements ActionListener{
     	case("payroll_settings"):
     		payrollSettingsWindow();
     		break;
-    	case("program_settings"):
-    		
-    		break;
+//    	case("program_settings"):
+//    		
+//    		break;
     	case("sql_settings"):
-    		
+    		developerModeWindow();
     		break;
     	default:
     		quit();
@@ -246,6 +246,20 @@ public class MainMenu extends JFrame implements ActionListener{
 	private void payrollHistoryWindow() {
 		try {
 			Payroll_History.createFrame();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	private void printReportsWindow() {
+		try {
+		//	Payroll_History.createFrame();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	private void developerModeWindow() {
+		try {
+			//Authentication.createFrame();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
