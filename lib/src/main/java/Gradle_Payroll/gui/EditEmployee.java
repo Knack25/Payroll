@@ -92,7 +92,6 @@ public class EditEmployee {
       
         setLabels();
        
-    	//TODO: Add another button that brings of the individual tax table for this specific employee
         JButton taxTableB = new JButton("Edit Tax Table");
         taxTableB.addActionListener(taxTB);
         

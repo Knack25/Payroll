@@ -26,7 +26,7 @@ public class EditTaxTable {
 	static int taxNum = 0;
 
 	static JDialog dialog;
-	static JLabel taxNameL,taxIDL,taxTypeL,taxFedExemptL,taxSateExemptL,taxStatePAExemptL,taxSSCExemptL,taxMedicareExemptL,taxLocalExemptL,YTDL;
+	static JLabel taxNameL,taxIDL,taxTypeL,taxFedExemptL,taxSateExemptL,taxStatePAExemptL,taxSSCExemptL,taxMedicareExemptL,taxLocalExemptL,exemptionsL,YTDL;
 	static JComboBox<String> taxType;
 	static JPanel panel;
 	static Tax tax;
@@ -60,11 +60,54 @@ public class EditTaxTable {
 		List<JCheckBox> MedicareExempt = new ArrayList<JCheckBox>();
 		List<JCheckBox> LocalExempt = new ArrayList<JCheckBox>();
 		
+		setLabels();
+//		GridBagConstraints d = new GridBagConstraints();
+//		int tmp = 0;
+//		d.gridx = tmp;
+//		d.gridy = 0;
+//	
+//		for(int j = 0; j<10; j++) {
+//			panel.add(taxNameL,d);
+//			tmp++;
+//			d.gridx = tmp;
+//			panel.add(YTDL);
+//			tmp++;
+//			d.gridx = tmp;
+//			panel.add(YTDL);
+//			tmp++;
+//			d.gridx = tmp;
+//			panel.add(YTDL);
+//			tmp++;
+//			d.gridx = tmp;
+//			panel.add(YTDL);
+//			tmp++;
+//			d.gridx = tmp;
+//			panel.add(YTDL);
+//			tmp++;
+//			d.gridx = tmp;
+//			panel.add(YTDL);
+//			tmp++;
+//			d.gridx = tmp;
+//			panel.add(YTDL);
+//			tmp++;
+//			d.gridx = tmp;
+//			panel.add(YTDL);
+//			tmp++;
+//			d.gridx = tmp;
+//		}
+		panel.add(taxNameL);
+		panel.add(taxTypeL);
+		
+		panel.add(taxFedExemptL);
+		panel.add(taxSateExemptL);
+		panel.add(taxStatePAExemptL);
+		panel.add(taxSSCExemptL);
+		panel.add(taxMedicareExemptL);
+		panel.add(taxLocalExemptL);
 	
 		
-		
 		int autoX = 0;
-		int autoY = 0;
+		int autoY = 1;
 		for(int i = 0; i <= taxNum;i++) {
 			
 			c.gridx = autoX;
@@ -177,7 +220,19 @@ public class EditTaxTable {
 		
 		return rs;
 	}
-	
+	private static void setLabels() {
+		taxNameL = new JLabel("Tax Name	");
+		taxIDL = new JLabel("Tax I.D.	");
+		
+		taxTypeL = new JLabel("Tax Type");
+		taxFedExemptL = new JLabel("Federal Exemption");
+		taxSateExemptL = new JLabel("Ohio Exemption");
+		taxStatePAExemptL = new JLabel("Pennsylvania Exemption");
+		taxSSCExemptL = new JLabel("SSC Exemption");
+		taxMedicareExemptL = new JLabel("Medicare Exemption");
+		taxLocalExemptL = new JLabel("Local Exemption");
+		exemptionsL = new JLabel("Exemptions");
+	}
 
 	
 }
