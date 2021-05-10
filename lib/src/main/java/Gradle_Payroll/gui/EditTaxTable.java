@@ -3,6 +3,10 @@ package Gradle_Payroll.gui;
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,27 +18,34 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Gradle_Payroll.data.Tax;
+import Gradle_Payroll.fileIO.Config;
 
 public class EditTaxTable {
 	
-	//TODO: This will have to be grabbed from SQL for the ammount of tax entries corresponding with the given Employee ID
 	static int taxNum = 0;
 
 	static JDialog dialog;
 	static JLabel taxNameL,taxIDL,taxTypeL,taxFedExemptL,taxSateExemptL,taxStatePAExemptL,taxSSCExemptL,taxMedicareExemptL,taxLocalExemptL,YTDL;
 	static JComboBox<String> taxType;
 	static JPanel panel;
-	static Tax[] taxes;
+	static Tax tax;
+	static ResultSet rs;
 	
-	protected static JDialog createDialog() throws Exception{
+	
+	
+	protected static JDialog createDialog(int empID) throws Exception{
 		
 		String dollar = "$";
 		String percent = "%";
+		
+		
+		
 		
 		dialog = new JDialog(null,Dialog.ModalityType.APPLICATION_MODAL);
 		GridBagConstraints c = new GridBagConstraints();
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
+		rs = SQLPullTax(empID);
 		
 		
 		List<JTextField> Ammount = new ArrayList<JTextField>();
@@ -49,12 +60,13 @@ public class EditTaxTable {
 		
 		int autoX = 0;
 		int autoY = 0;
-		for(int i = 0; i < taxNum;i++) {
+		for(int i = 0; i <= taxNum;i++) {
+			
 			c.gridx = (autoX % 5);
 			c.gridy = autoY;
-			if((autoX % 5) == 4) {
-				autoY++;
-			}
+//			if((autoX % 5) == 1) {
+//				autoY++;
+//			}
 			panel.add(new JLabel(String.valueOf(i)),c);
 			//Name of the tax
 			JTextField name = new JTextField();
@@ -96,7 +108,7 @@ public class EditTaxTable {
 			LocalExempt.add(localExempt);
 			
 			
-			autoX++;
+			autoY++;
 		}
 		
 		dialog.add(panel);
@@ -104,6 +116,35 @@ public class EditTaxTable {
 		dialog.setVisible(true);
 		
 		return null;
+	}
+	
+	//This will take all the current taxes for the selected employee and return them as a ResultSet...
+	//It will also set taxNum to the ammount of taxes for that employee in order to dynamically create the tax table
+	private static ResultSet SQLPullTax(int empID) throws Exception {
+		ResultSet rs = null;
+		
+		String[] SQL;
+		SQL = Config.PullSQLConfig();
+		
+		System.out.println("Querrying DB for selected Employee");
+		
+		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+		
+		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+		
+		String insertStatement = "select * from tax where employee_id = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(insertStatement);
+		
+		pstmt.setInt(1, empID);
+		
+		rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			taxNum++;
+		}
+		
+		return rs;
 	}
 	
 

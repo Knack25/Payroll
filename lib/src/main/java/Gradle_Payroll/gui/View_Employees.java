@@ -272,7 +272,7 @@ public class View_Employees {
 	    }
 	 
 	 
-	 
+	 /*
 	 private static int sqlPullRequest() throws Exception, SQLException {
 			String[] SQL = Config.PullSQLConfig();
 			
@@ -307,7 +307,7 @@ public class View_Employees {
 			return i;
 		}
 	 
-	 
+	 */
 	 static ActionListener submit = new ActionListener() {
 			
 			@Override

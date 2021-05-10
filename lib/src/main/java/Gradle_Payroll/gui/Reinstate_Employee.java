@@ -107,7 +107,6 @@ public class Reinstate_Employee {
 				//Connect to SQL and save new column in employee
 	        	
 	        	fullName = (String) employee.getSelectedItem();
-	        	int selindex = employee.getSelectedIndex();
 	        	System.out.println("The value of fullName is: " + fullName);
 	        	 String[] name = fullName.split(" ");
 	        	for(int i = 0; i < name.length; i++) {
