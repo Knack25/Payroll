@@ -116,11 +116,26 @@ public class EditEmployee {
     	frame.setLayout(new GridBagLayout());
     	
     
+    	for (int x = 0; x < 16;x++) {
+    		
+    			//make a switch case here for the x value
+    				//inside it will have your modulus values and edge cases
+    				//for each x mod value, you have another internal for loop for y valuesi if need be
+    		
+    	}
     	
+    	//if we end up sorting by y values primarily, the do the opposite
+    	
+    	/*All of the values of each switch or loop should be in their own panel which is organized and controlled by an arraylist.
+    	 * The arraylist will be what is checked when something is updated or when pushing to the DB... This would be done the same way the panels
+    	 * are built.  */
+    	
+    	// edge 1
     	GridBagConstraints t1 = new GridBagConstraints();
     	t1.gridx = 15;
     	t1.gridy = 15;
     	
+    	//block 2
     	GridBagConstraints g1 = new GridBagConstraints();
     	g1.gridx = 6;
     	g1.gridy = 0;
@@ -130,15 +145,19 @@ public class EditEmployee {
     	GridBagConstraints i1 = new GridBagConstraints();
     	i1.gridx = 8;
     	i1.gridy = 0;
+    	
+    	//edge 2
     	GridBagConstraints m15 = new GridBagConstraints();
     	m15.gridx = 13;
     	m15.gridy = 14;
+    	
+    	//edge 3
     	GridBagConstraints b2c2 = new GridBagConstraints();
     	b2c2.gridx = 1;
     	b2c2.gridy = 1;
     	b2c2.gridwidth = 2;
     	
-    	
+    	//block 2
     	GridBagConstraints a3 = new GridBagConstraints();
     	a3.gridx = 0;
     	a3.gridy = 2;
@@ -177,6 +196,7 @@ public class EditEmployee {
     	a14.gridy = 13;
     	
     	
+    	//block 3
     	GridBagConstraints b3 = new GridBagConstraints();
     	b3.gridx = 1;
     	b3.gridy = 2;
@@ -214,7 +234,7 @@ public class EditEmployee {
     	b14.gridx = 1;
     	b14.gridy = 13;
     	
-    	
+    	//block 4
     	GridBagConstraints c3 = new GridBagConstraints();
     	c3.gridx = 2;
     	c3.gridy = 2;
@@ -255,6 +275,7 @@ public class EditEmployee {
     	c15.gridx = 2;
     	c15.gridy = 14;
     	
+    	//block 5
     	GridBagConstraints d3 = new GridBagConstraints();
     	d3.gridx = 3;
     	d3.gridy = 2;
@@ -295,6 +316,7 @@ public class EditEmployee {
     	d15.gridx = 3;
     	d15.gridy = 14;
     	
+    	//edge 4
     	GridBagConstraints e3 = new GridBagConstraints();
     	e3.gridx = 4;
     	e3.gridy = 2;
