@@ -157,8 +157,15 @@ public class EditTaxTable {
 				c.gridy = autoY;
 				
 				panel.add(saveB,c);
+				autoX++;
+				c.gridx = autoX;
+				panel.add(addB,c);
+				autoX++;
+				c.gridx = autoX;
+				panel.add(removeB,c);
 				
 				
+				autoX++;
 				autoY++;
 			}
 			//On all the middle runs, build the table
@@ -277,6 +284,7 @@ public class EditTaxTable {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
+				taxNum = SQLTaxNum(EMPID);
 				SQLPushTable();
 			} catch (Exception SQLPush) {
 				SQLPush.printStackTrace();
@@ -325,10 +333,14 @@ public class EditTaxTable {
 
 				result += pstmt.executeUpdate();
 				
-				dialog.dispose();
+				
+				
+				
 			}
 			
 			System.out.println("Updated " + result + " Entries.");
+			conn.close();
+			dialog.dispose();
 			
 			
 		}
@@ -359,24 +371,29 @@ public class EditTaxTable {
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
 			String insertStatement = "INSERT INTO "
-					+ "tax(name,type,ammout,fedTaxExempt,stateTaxExempt,statePATaxExempt,SSCTaxExempt,medicareTaxExempt,localTaxExempt)"
-					+ "Values(?,?,?,?,?,?,?,?,?)";
+					+ "tax(employee_id,taxname,taxtype,ammount,fedTaxExempt,stateTaxExempt,statePATaxExempt,SSCTaxExempt,medicareTaxExempt,localTaxExempt)"
+					+ "Values(?,?,?,?,?,?,?,?,?,?)";
 			
 			PreparedStatement pstmt = conn.prepareStatement(insertStatement);
 			
-			pstmt.setString(1, "Name");
-			pstmt.setInt(2, 0);
-			pstmt.setDouble(3, 00.00);
-			pstmt.setBoolean(4, false);
+			pstmt.setInt(1, empID);
+			pstmt.setString(2, "Name");
+			pstmt.setInt(3, 0);
+			pstmt.setDouble(4, 00.00);
 			pstmt.setBoolean(5, false);
 			pstmt.setBoolean(6, false);
 			pstmt.setBoolean(7, false);
 			pstmt.setBoolean(8, false);
 			pstmt.setBoolean(9, false);
+			pstmt.setBoolean(10, false);
 			
 			result = pstmt.executeUpdate();
 			
 			System.out.println("Added " + result + "entry(s) to table.");
+			
+			System.out.println("Refreshing GUI...");
+			dialog.dispose();
+			createDialog(empID);
 		}
 	};
 	
@@ -385,30 +402,10 @@ public class EditTaxTable {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				SQLRemoveTax();
+				TaxTableRemove.createDialog(EMPID);
 			} catch (Exception SQLTaxRemove) {
 				SQLTaxRemove.printStackTrace();
 			}
-			
-		}
-
-		private void SQLRemoveTax() throws Exception {
-			String[] SQL;
-			SQL = Config.PullSQLConfig();
-			int result = 0;
-			
-			System.out.println("Querrying DB for selected Employee");
-			
-			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-			
-			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-			
-			String insertStatement = "Delete from tax where id = ?";
-			
-			PreparedStatement pstmt = conn.prepareStatement(insertStatement);
-			
-			
-			
 		}
 	};
 	
