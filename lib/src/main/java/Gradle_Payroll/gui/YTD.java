@@ -23,7 +23,14 @@ import javax.swing.JTextField;
 import Gradle_Payroll.data.Tax;
 import Gradle_Payroll.fileIO.Config;
 
-public class EditTaxTable {
+public class YTD {
+	
+
+	/*Everything needed for the YTD
+	 * name of YTD
+	 * Amount 
+	 * tax table
+	 * */
 	
 	static int taxNum = 0;
 	final static String dollar = "$";
@@ -32,7 +39,7 @@ public class EditTaxTable {
 	static int EMPID;
 
 	static JDialog dialog;
-	static JLabel taxNameL,taxIDL,taxTypeL,taxFedExemptL,taxSateExemptL,taxStatePAExemptL,taxSSCExemptL,taxMedicareExemptL,taxLocalExemptL,YTDL;
+	static JLabel NameL,IDL,amountL;
 	static JComboBox<String> taxType;
 	static JPanel panel;
 	static Tax tax;
@@ -40,12 +47,6 @@ public class EditTaxTable {
 	static List<JTextField> Ammount;
 	static List<JTextField> Name;
 	static List<JComboBox<String>> TaxType;
-	static List<JCheckBox> FederalExempt;
-	static List<JCheckBox> StateExempt;
-	static List<JCheckBox> StatePAExempt;
-	static List<JCheckBox> SSCExempt;
-	static List<JCheckBox> MedicareExempt;
-	static List<JCheckBox> LocalExempt;
 	static List<JLabel> ID;
 	
 	
@@ -57,15 +58,9 @@ public class EditTaxTable {
 		JButton saveB = new JButton("Save");
 		saveB.addActionListener(saveBListener);
 		
-		JButton addB = new JButton("Add");
-		addB.addActionListener(addBListener);
-		
-		JButton removeB = new JButton("Remove");
-		removeB.addActionListener(removeBListener);
-		
 		
 		dialog = new JDialog(null,Dialog.ModalityType.APPLICATION_MODAL);
-		dialog.setSize(1200,800);
+		dialog.setSize(800,800);
 		GridBagConstraints c = new GridBagConstraints();
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -76,19 +71,12 @@ public class EditTaxTable {
 		Ammount = new ArrayList<JTextField>();
 		Name = new ArrayList<JTextField>();
 		TaxType = new ArrayList<JComboBox<String>>();
-		FederalExempt = new ArrayList<JCheckBox>();
-		StateExempt = new ArrayList<JCheckBox>();
-		StatePAExempt = new ArrayList<JCheckBox>();
-		SSCExempt = new ArrayList<JCheckBox>();
-		MedicareExempt = new ArrayList<JCheckBox>();
-		LocalExempt = new ArrayList<JCheckBox>();
 		ID = new ArrayList<JLabel>();
 		
 		
 		
 		int autoX = 0;
 		int autoY = 0;
-		c.weightx = 0.09;
 		for(int i = 0; i <= taxNum;i++) {
 			
 			//On the first run, build the labels
@@ -104,45 +92,13 @@ public class EditTaxTable {
 				autoX++;
 				c.gridx = autoX;
 			
-				JLabel taxTypeL = new JLabel("Type");
-				panel.add(taxTypeL,c);
-				autoX++;
-				c.gridx = autoX;
 				
-				JLabel ammountL = new JLabel("Ammount");
-				panel.add(ammountL,c);
+				JLabel amountL = new JLabel("Amount");
+				panel.add(amountL,c);
 				autoX++;
 				c.gridx = autoX;
+				//c.weightx
 				
-				JLabel fedExemptL = new JLabel("Federal");
-				panel.add(fedExemptL,c);
-				autoX++;
-				c.gridx = autoX;
-				
-				JLabel stateExemptL = new JLabel("State");
-				panel.add(stateExemptL,c);
-				autoX++;
-				c.gridx = autoX;
-				
-				JLabel statePAExemptL = new JLabel("State(PA)");
-				panel.add(statePAExemptL,c);
-				autoX++;
-				c.gridx = autoX;
-				
-				JLabel SSCExemptL = new JLabel("SSC");
-				panel.add(SSCExemptL,c);
-				autoX++;
-				c.gridx = autoX;
-				
-				JLabel medicareExemptL = new JLabel("Medicare");
-				panel.add(medicareExemptL,c);
-				autoX++;
-				c.gridx = autoX;
-				
-				JLabel localExemptL = new JLabel("Local");
-				panel.add(localExemptL,c);
-				autoX++;
-				c.gridx = autoX;
 				
 				JLabel sysID = new JLabel("ID");
 				panel.add(sysID,c);
@@ -168,16 +124,15 @@ public class EditTaxTable {
 				
 				c.gridx = autoX;
 				c.gridy = autoY;
-//				c.fill = GridBagConstraints.HORIZONTAL;
 				panel.add(new JLabel(String.valueOf(i)),c);
 				autoX++;
 				c.gridx = autoX;
 				
 				//Name of the tax
-				c.fill = GridBagConstraints.HORIZONTAL;
 				JTextField name = new JTextField();
 				name.setText(rs.getString("taxname"));
 				name.setColumns(3);
+				name.setEditable(false);
 				panel.add(name,c);
 				Name.add(name);
 				autoX++;
@@ -200,70 +155,21 @@ public class EditTaxTable {
 				//Amount of the tax
 				JTextField ammnt = new JTextField();
 				ammnt.setColumns(3);
+				name.setEditable(false);
 				ammnt.setText(String.valueOf(rs.getDouble("ammount")));
 				panel.add(ammnt,c);
 				Ammount.add(ammnt);
 				autoX++;
 				c.gridx = autoX;
 				
-				//Federal Exempt
-				JCheckBox fedExempt = new JCheckBox();
-				fedExempt.setSelected(rs.getBoolean("fedTaxExempt"));
-				panel.add(fedExempt,c);
-				FederalExempt.add(fedExempt);
-				autoX++;
-				c.gridx = autoX;
-				
-				//State Exempt
-				JCheckBox stateExempt = new JCheckBox();
-				stateExempt.setSelected(rs.getBoolean("stateTaxExempt"));
-				panel.add(stateExempt,c);
-				StateExempt.add(stateExempt);
-				autoX++;
-				c.gridx = autoX;
-				
-				//State PA Exempt
-				JCheckBox statePAExempt = new JCheckBox();
-				statePAExempt.setSelected(rs.getBoolean("statePATaxExempt"));
-				panel.add(statePAExempt,c);
-				StatePAExempt.add(statePAExempt);
-				autoX++;
-				c.gridx = autoX;
-				
-				//SSC Exempt
-				JCheckBox sscExempt = new JCheckBox();
-				sscExempt.setSelected(rs.getBoolean("SSCTaxExempt"));
-				panel.add(sscExempt,c);
-				SSCExempt.add(sscExempt);
-				autoX++;
-				c.gridx = autoX;
-				
-				//Medicare Exempt
-				JCheckBox medicareExempt = new JCheckBox();
-				medicareExempt.setSelected(rs.getBoolean("medicareTaxExempt"));
-				panel.add(medicareExempt,c);
-				MedicareExempt.add(medicareExempt);
-				autoX++;
-				c.gridx = autoX;
-				
-				//Local Exempt
-				JCheckBox localExempt = new JCheckBox();
-				localExempt.setSelected(rs.getBoolean("localTaxExempt"));
-				panel.add(localExempt,c);
-				LocalExempt.add(localExempt);
-				autoX++;
-				c.gridx = autoX;
 				
 				JLabel taxID = new JLabel(rs.getString("id"));
 				panel.add(taxID,c);
-				ID.add(taxID);
-				
+				ID.add(taxID);			
 				autoX = 0;
 				c.gridx = autoX;
 				autoY++;
 			}
-			
-			
 			
 		}
 		
@@ -309,20 +215,8 @@ public class EditTaxTable {
 				pstmt.setString(1,Name.get(i).getText());
 				//Tax Type
 				pstmt.setInt(2, TaxType.get(i).getSelectedIndex());
-				//Tax Ammount
+				//Tax Amount
 				pstmt.setDouble(3, Double.parseDouble(Ammount.get(i).getText()));
-				//Federal Tax Exempt
-				pstmt.setBoolean(4, FederalExempt.get(i).isSelected());
-				//State Tax Exempt
-				pstmt.setBoolean(5, StateExempt.get(i).isSelected());
-				//State PA Tax Exempt
-				pstmt.setBoolean(6, StatePAExempt.get(i).isSelected());
-				//SSC Tax Exempt
-				pstmt.setBoolean(7, SSCExempt.get(i).isSelected());
-				//Medicare Tax Exempt
-				pstmt.setBoolean(8, MedicareExempt.get(i).isSelected());
-				//Local Tax Exempt
-				pstmt.setBoolean(9, LocalExempt.get(i).isSelected());
 				//Tax ID
 				pstmt.setInt(10, Integer.parseInt(ID.get(i).getText()));
 
