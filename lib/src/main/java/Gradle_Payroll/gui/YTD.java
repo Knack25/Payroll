@@ -138,20 +138,6 @@ public class YTD {
 				autoX++;
 				c.gridx = autoX;
 				
-				//Type of the tax
-				JComboBox<String> taxtype = new JComboBox<String>();
-				taxtype.addItem(dollar);
-				taxtype.addItem(percent);
-				if(rs.getInt("taxtype") == 1) {
-					taxtype.setSelectedIndex(1);
-				}else {
-					taxtype.setSelectedIndex(0);
-				}
-				panel.add(taxtype,c);
-				TaxType.add(taxtype);
-				autoX++;
-				c.gridx = autoX;
-				
 				//Amount of the tax
 				JTextField ammnt = new JTextField();
 				ammnt.setColumns(3);

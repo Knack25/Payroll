@@ -230,6 +230,7 @@ public class Create_Check {
 	    	dialog.add(advHoursT,b7);
 	    	dialog.add(advRateT,c7);
 	    	//TODO: Royalty is a fixed amount based on IP or the like... There is not hours related to it.
+	    		//Dante: Royalty is like a commission. It's a fixed rate. Some taxes still apply to it.
 	    	dialog.add(royalHoursT,b8);
 	    	dialog.add(royalRateT,c8);
 	    	dialog.add(checkNoT,c1);
