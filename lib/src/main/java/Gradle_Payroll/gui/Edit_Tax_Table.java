@@ -65,13 +65,14 @@ public class Edit_Tax_Table {
 		
 		
 		dialog = new JDialog(null,Dialog.ModalityType.APPLICATION_MODAL);
-		dialog.setSize(1200,800);
+		
+		dialog.setLocation(50, 50);
 		GridBagConstraints c = new GridBagConstraints();
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		SQLPullTax(empID);
 		taxNum = SQLTaxNum(empID) + 1;
-		
+		dialog.setSize(1400,700);
 		
 		Ammount = new ArrayList<JTextField>();
 		Name = new ArrayList<JTextField>();
@@ -93,59 +94,71 @@ public class Edit_Tax_Table {
 			
 			//On the first run, build the labels
 			if(i == 0) {
-				
+				c.fill = GridBagConstraints.HORIZONTAL;
 				JLabel idL = new JLabel("#");
 				panel.add(idL,c);
 				autoX++;
 				c.gridx = autoX;
-				
+
+				c.fill = GridBagConstraints.HORIZONTAL;
 				JLabel nameL = new JLabel("Name");
 				panel.add(nameL,c);
 				autoX++;
 				c.gridx = autoX;
 			
+				c.fill = GridBagConstraints.HORIZONTAL;
 				JLabel taxTypeL = new JLabel("Type");
 				panel.add(taxTypeL,c);
 				autoX++;
 				c.gridx = autoX;
 				
+				c.fill = GridBagConstraints.HORIZONTAL;
 				JLabel ammountL = new JLabel("Ammount");
 				panel.add(ammountL,c);
 				autoX++;
 				c.gridx = autoX;
 				
+				c.fill = GridBagConstraints.HORIZONTAL;
 				JLabel fedExemptL = new JLabel("Federal");
 				panel.add(fedExemptL,c);
 				autoX++;
 				c.gridx = autoX;
 				
+				c.fill = GridBagConstraints.HORIZONTAL;
 				JLabel stateExemptL = new JLabel("State");
 				panel.add(stateExemptL,c);
 				autoX++;
 				c.gridx = autoX;
 				
+				c.fill = GridBagConstraints.HORIZONTAL;
 				JLabel statePAExemptL = new JLabel("State(PA)");
 				panel.add(statePAExemptL,c);
 				autoX++;
 				c.gridx = autoX;
 				
+				c.fill = GridBagConstraints.HORIZONTAL;
 				JLabel SSCExemptL = new JLabel("SSC");
 				panel.add(SSCExemptL,c);
 				autoX++;
 				c.gridx = autoX;
 				
+				c.fill = GridBagConstraints.HORIZONTAL;
 				JLabel medicareExemptL = new JLabel("Medicare");
 				panel.add(medicareExemptL,c);
 				autoX++;
 				c.gridx = autoX;
 				
+				c.fill = GridBagConstraints.HORIZONTAL;
 				JLabel localExemptL = new JLabel("Local");
 				panel.add(localExemptL,c);
 				autoX++;
 				c.gridx = autoX;
 				
+				c.fill = GridBagConstraints.HORIZONTAL;
 				JLabel sysID = new JLabel("ID");
+				sysID.setVisible(false);
 				panel.add(sysID,c);
+				
 				
 				
 				autoX = 0;
@@ -175,7 +188,6 @@ public class Edit_Tax_Table {
 				
 				c.gridx = autoX;
 				c.gridy = autoY;
-//				c.fill = GridBagConstraints.HORIZONTAL;
 				panel.add(new JLabel(String.valueOf(i)),c);
 				autoX++;
 				c.gridx = autoX;
@@ -262,8 +274,10 @@ public class Edit_Tax_Table {
 				c.gridx = autoX;
 				
 				JLabel taxID = new JLabel(rs.getString("id"));
+				taxID.setVisible(false);
 				panel.add(taxID,c);
 				ID.add(taxID);
+				
 				
 				autoX = 0;
 				c.gridx = autoX;
