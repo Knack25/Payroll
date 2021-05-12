@@ -32,7 +32,7 @@ public class Tax_Table_Remove extends JDialog {
 	public static JDialog createDialog(int empID) {
 		dialog = new JDialog(null,Dialog.ModalityType.APPLICATION_MODAL);
 		dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		dialog.setSize(400, 150);
+		dialog.setSize(350, 120);
 		JPanel comboPanel, buttonPanel;
 		comboPanel = new JPanel();
 		buttonPanel = new JPanel();
