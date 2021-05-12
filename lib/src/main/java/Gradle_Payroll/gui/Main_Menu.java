@@ -235,7 +235,8 @@ public class Main_Menu extends JFrame implements ActionListener{
 	private void processPayrollDialog() {
 		try {
 			Create_Check.createCheckmenu();
-			Check_Edit.createDialog(CheckNum);
+			JInternalFrame edit_check =  Check_Edit.createDialog(CheckNum);
+			MainMenu.add(edit_check);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
