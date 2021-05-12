@@ -21,8 +21,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import java.util.*;
-
 import Gradle_Payroll.data.Address;
 import Gradle_Payroll.data.Employee;
 import Gradle_Payroll.data.Name;
@@ -35,12 +33,12 @@ public class EditEmployee {
 	static JInternalFrame frame;
 	static JLabel empNumL,statusL,nameL,addressL,cityL,stateL,zipL,emailL,ssnL,jobtitleL,dobL,dohL,dotL,localtaxcodeL,addstatetaxL,addfedtaxL,salaryL,reghourL,
 	regpayL,othourL,otpayL,ptohourL,ptopayL,departmentL,teleL,sexL,vacationAvailL,vacationUsedL;
-	static JTextField TextField;
+	static JTextField empNumT,statusT,nameT,addressT,cityT,stateT,zipT,emailT,ssnT,jobtitleT,dobT,dohT,dotT,localtaxcodeT,addstatetaxT,addfedtaxT,salaryT,reghourT,
+	regpayT,othourT,otpayT,ptohourT,ptopayT,departmentT,teleT,sexT,vacationAvailT,vacationUsedT;
 	static Employee emp;
 	static Name empName;
 	static Address empAddress;
 	static String fName,mName,lName,fullName,dept;
-	static List<JTextField> Text;
 
 	
 	
@@ -51,6 +49,31 @@ public class EditEmployee {
 		empAddress = new Address();
 		empName = new Name();
 		
+		empNumT = new JTextField();
+		statusT  = new JTextField();
+		nameT = new JTextField();
+		addressT = new JTextField();
+		cityT = new JTextField();
+		stateT = new JTextField();
+		zipT = new JTextField();
+		emailT = new JTextField();
+		ssnT = new JTextField();
+		jobtitleT = new JTextField();
+		dobT = new JTextField();
+		dohT = new JTextField();
+		dotT = new JTextField();
+		localtaxcodeT = new JTextField();
+		addstatetaxT = new JTextField();
+		addfedtaxT = new JTextField();
+		salaryT = new JTextField();
+		regpayT = new JTextField();
+		otpayT = new JTextField();
+		ptopayT = new JTextField();
+		departmentT = new JTextField();
+		teleT = new JTextField();
+		sexT = new JTextField();
+		vacationAvailT = new JTextField();
+		vacationUsedT = new JTextField();
 		
         frame.setVisible(true); //necessary as of 1.3
        
@@ -65,8 +88,6 @@ public class EditEmployee {
         department = new JComboBox<String>();
         //department.addItemListener(departmentSel);
         
-        
-        Text = new ArrayList<JTextField>();
         sqlPullDeptListRequest();
       
         setLabels();
@@ -94,6 +115,25 @@ public class EditEmployee {
     	
     	frame.setLayout(new GridBagLayout());
     	
+    
+    	for (int x = 0; x < 16;x++) {
+    		
+    			//make a switch case here for the x value
+    				//inside it will have your modulus values and edge cases
+    				//for each x mod value, you have another internal for loop for y valuesi if need be
+    		
+    	}
+    	
+    	//if we end up sorting by y values primarily, the do the opposite
+    	
+    	/*All of the values of each switch or loop should be in their own panel which is organized and controlled by an arraylist.
+    	 * The arraylist will be what is checked when something is updated or when pushing to the DB... This would be done the same way the panels
+    	 * are built.  */
+    	
+    	// edge 1
+    	GridBagConstraints t1 = new GridBagConstraints();
+    	t1.gridx = 15;
+    	t1.gridy = 15;
     	
     	//block 2
     	GridBagConstraints g1 = new GridBagConstraints();
@@ -117,6 +157,164 @@ public class EditEmployee {
     	b2c2.gridy = 1;
     	b2c2.gridwidth = 2;
     	
+    	//block 2
+    	GridBagConstraints a3 = new GridBagConstraints();
+    	a3.gridx = 0;
+    	a3.gridy = 2;
+    	GridBagConstraints a4 = new GridBagConstraints();
+    	a4.gridx = 0;
+    	a4.gridy = 3;
+    	GridBagConstraints a5 = new GridBagConstraints();
+    	a5.gridx = 0;
+    	a5.gridy = 4;
+    	GridBagConstraints a6 = new GridBagConstraints();
+    	a6.gridx = 0;
+    	a6.gridy = 5;
+    	GridBagConstraints a7 = new GridBagConstraints();
+    	a7.gridx = 0;
+    	a7.gridy = 6;
+    	GridBagConstraints a8 = new GridBagConstraints();
+    	a8.gridx = 0;
+    	a8.gridy = 7;
+    	GridBagConstraints a9 = new GridBagConstraints();
+    	a9.gridx = 0;
+    	a9.gridy = 8;
+    	GridBagConstraints a10 = new GridBagConstraints();
+    	a10.gridx = 0;
+    	a10.gridy = 9;
+    	GridBagConstraints a11 = new GridBagConstraints();
+    	a11.gridx = 0;
+    	a11.gridy = 10;
+    	GridBagConstraints a12 = new GridBagConstraints();
+    	a12.gridx = 0;
+    	a12.gridy = 11;
+    	GridBagConstraints a13 = new GridBagConstraints();
+    	a13.gridx = 0;
+    	a13.gridy = 12;
+    	GridBagConstraints a14 = new GridBagConstraints();
+    	a14.gridx = 0;
+    	a14.gridy = 13;
+    	
+    	
+    	//block 3
+    	GridBagConstraints b3 = new GridBagConstraints();
+    	b3.gridx = 1;
+    	b3.gridy = 2;
+    	GridBagConstraints b4 = new GridBagConstraints();
+    	b4.gridx = 1;
+    	b4.gridy = 3;
+    	GridBagConstraints b5 = new GridBagConstraints();
+    	b5.gridx = 1;
+    	b5.gridy = 4;
+    	GridBagConstraints b6 = new GridBagConstraints();
+    	b6.gridx = 1;
+    	b6.gridy = 5;
+    	GridBagConstraints b7 = new GridBagConstraints();
+    	b7.gridx = 1;
+    	b7.gridy = 6;
+    	GridBagConstraints b8 = new GridBagConstraints();
+    	b8.gridx = 1;
+    	b8.gridy = 7;
+    	GridBagConstraints b9 = new GridBagConstraints();
+    	b9.gridx = 1;
+    	b9.gridy = 8;
+    	GridBagConstraints b10 = new GridBagConstraints();
+    	b10.gridx = 1;
+    	b10.gridy = 9;
+    	GridBagConstraints b11 = new GridBagConstraints();
+    	b11.gridx = 1;
+    	b11.gridy = 10;
+    	GridBagConstraints b12 = new GridBagConstraints();
+    	b12.gridx = 1;
+    	b12.gridy = 11;
+    	GridBagConstraints b13 = new GridBagConstraints();
+    	b13.gridx = 1;
+    	b13.gridy = 12;
+    	GridBagConstraints b14 = new GridBagConstraints();
+    	b14.gridx = 1;
+    	b14.gridy = 13;
+    	
+    	//block 4
+    	GridBagConstraints c3 = new GridBagConstraints();
+    	c3.gridx = 2;
+    	c3.gridy = 2;
+    	GridBagConstraints c4 = new GridBagConstraints();
+    	c4.gridx = 2;
+    	c4.gridy = 3;
+    	GridBagConstraints c5 = new GridBagConstraints();
+    	c5.gridx = 2;
+    	c5.gridy = 4;
+    	GridBagConstraints c6 = new GridBagConstraints();
+    	c6.gridx = 2;
+    	c6.gridy = 5;
+    	GridBagConstraints c7 = new GridBagConstraints();
+    	c7.gridx = 2;
+    	c7.gridy = 6;
+    	GridBagConstraints c8 = new GridBagConstraints();
+    	c8.gridx = 2;
+    	c8.gridy = 7;
+    	GridBagConstraints c9 = new GridBagConstraints();
+    	c9.gridx = 2;
+    	c9.gridy = 8;
+    	GridBagConstraints c10 = new GridBagConstraints();
+    	c10.gridx = 2;
+    	c10.gridy = 9;
+    	GridBagConstraints c11 = new GridBagConstraints();
+    	c11.gridx = 2;
+    	c11.gridy = 10;
+    	GridBagConstraints c12 = new GridBagConstraints();
+    	c12.gridx = 2;
+    	c12.gridy = 11;
+    	GridBagConstraints c13 = new GridBagConstraints();
+    	c13.gridx = 2;
+    	c13.gridy = 12;
+    	GridBagConstraints c14 = new GridBagConstraints();
+    	c14.gridx = 2;
+    	c14.gridy = 13;
+    	GridBagConstraints c15 = new GridBagConstraints();
+    	c15.gridx = 2;
+    	c15.gridy = 14;
+    	
+    	//block 5
+    	GridBagConstraints d3 = new GridBagConstraints();
+    	d3.gridx = 3;
+    	d3.gridy = 2;
+    	GridBagConstraints d4 = new GridBagConstraints();
+    	d4.gridx = 3;
+    	d4.gridy = 3;
+    	GridBagConstraints d5 = new GridBagConstraints();
+    	d5.gridx = 3;
+    	d5.gridy = 4;
+    	GridBagConstraints d6 = new GridBagConstraints();
+    	d6.gridx = 3;
+    	d6.gridy = 5;
+    	GridBagConstraints d7 = new GridBagConstraints();
+    	d7.gridx = 3;
+    	d7.gridy = 6;
+    	GridBagConstraints d8 = new GridBagConstraints();
+    	d8.gridx = 3;
+    	d8.gridy = 7;
+    	GridBagConstraints d9 = new GridBagConstraints();
+    	d9.gridx = 3;
+    	d9.gridy = 8;
+    	GridBagConstraints d10 = new GridBagConstraints();
+    	d10.gridx = 3;
+    	d10.gridy = 9;
+    	GridBagConstraints d11 = new GridBagConstraints();
+    	d11.gridx = 3;
+    	d11.gridy = 10;
+    	GridBagConstraints d12 = new GridBagConstraints();
+    	d12.gridx = 3;
+    	d12.gridy = 11;
+    	GridBagConstraints d13 = new GridBagConstraints();
+    	d13.gridx = 3;
+    	d13.gridy = 12;
+    	GridBagConstraints d14 = new GridBagConstraints();
+    	d14.gridx = 3;
+    	d14.gridy = 13;
+    	GridBagConstraints d15 = new GridBagConstraints();
+    	d15.gridx = 3;
+    	d15.gridy = 14;
     	
     	//edge 4
     	GridBagConstraints e3 = new GridBagConstraints();
@@ -124,143 +322,6 @@ public class EditEmployee {
     	e3.gridy = 2;
     	
     	
-    	GridBagConstraints boom = new GridBagConstraints();
-    	
-    	for (int x = 0; x < 5;x++) {
-    		boom.gridx = x;
-    		for(int y = 0; y < 16;y++) {
-    			if(x==0) {
-    				switch(y) {
-    				case 2:
-    					boom.gridy = y;
-    					frame.add(empNumL,boom);
-    					break;
-    				case 3:
-    					boom.gridy = y;
-    					frame.add(nameL,boom);
-    					break;
-    				case 4:
-    					boom.gridy = y;
-    					frame.add(statusL,boom);
-    					break;
-    				case 5:
-    					boom.gridy = y;
-    					frame.add(departmentL,boom);
-    					break;
-    				case 6:
-    					boom.gridy = y;
-    					frame.add(addressL,boom);
-    					break;
-    				case 7:
-    					boom.gridy = y;
-    					frame.add(cityL,boom);
-    					break;
-    				case 8:
-    					boom.gridy = y;
-    					frame.add(stateL,boom);
-    					break;
-    				case 9:
-    					boom.gridy = y;
-    					frame.add(zipL,boom);
-    					break;
-    				case 10:
-    					boom.gridy = y;
-    					frame.add(teleL,boom);
-    					break;
-    				case 11:
-    					boom.gridy = y;
-    					frame.add(emailL,boom);
-    					break;
-    				case 12:
-    					boom.gridy = y;
-    					frame.add(sexL,boom);
-    					break;
-    				case 13:
-    					boom.gridy = y;
-    					frame.add(ssnL,boom);
-    					break;
-    				case 14:	
-    					break;
-    				}
-    			}
-    			if(x==2) {
-    				switch(y) {
-    				case 2:
-    					boom.gridy = y;
-    					frame.add(jobtitleL,boom);
-    					break;
-    				case 3:
-    					boom.gridy = y;
-    					frame.add(dobL,boom);
-    					break;
-    				case 4:
-    					boom.gridy = y;
-    					frame.add(dohL,boom);
-    					break;
-    				case 5:
-    					boom.gridy = y;
-    					frame.add(dotL,boom);
-    					break;
-    				case 6:
-    					boom.gridy = y;
-    					frame.add(localtaxcodeL,boom);
-    					break;
-    				case 7:
-    					boom.gridy = y;
-    					frame.add(addstatetaxL,boom);
-    					break;
-    				case 8:
-    					boom.gridy = y;
-    					frame.add(addfedtaxL,boom);
-    					break;
-    				case 9:
-    					boom.gridy = y;
-    					frame.add(salaryL,boom);
-    					break;
-    				case 10:
-    					boom.gridy = y;
-    					frame.add(regpayL,boom);
-    					break;
-    				case 11:
-    					boom.gridy = y;
-    					frame.add(otpayL,boom);
-    					break;
-    				case 12:
-    					boom.gridy = y;
-    					frame.add(ptopayL,boom);
-    					break;
-    				case 13:
-    					boom.gridy = y;
-    					frame.add(vacationAvailL,boom);
-    					break;
-    				case 14:
-    					boom.gridy = y;
-    					frame.add(vacationUsedL,boom);
-    					break;
-    				
-    				}
-    			}
-    		}		
-    	}
-    	
-    	
-
-    	
-    	for(int x = 1;x<4;x+=2) {
-    		for(int y=2;y<15;y++) {
-    			TextField = new JTextField();
-    			TextField.setText(null);
-    			Text.add(TextField);
-    			boom.gridx = x;
-    			boom.gridy = y;
-    			if(x==1 && y==14) {
-    				continue;
-    			}
-    			frame.add(TextField,boom);
-    		}
-    	}
-    	
-    
     	
     	frame.add(name,g1);
     	frame.add(employee,h1);
@@ -268,8 +329,57 @@ public class EditEmployee {
     	
     	frame.add(employeeDataL,b2c2);
     
-    	
-    	
+    	frame.add(empNumL,a3);
+    	//frame.add(test,b3); //testing the looks with text fields
+    	frame.add(empNumT,b3);
+    	frame.add(nameL,a4);
+    	frame.add(nameT,b4);
+    	frame.add(statusL,a5);
+    	frame.add(statusT,b5);
+    	frame.add(departmentL,a6);
+    	frame.add(department,b6);
+    	frame.add(addressL,a7);
+    	frame.add(addressT,b7);
+    	frame.add(cityL,a8);
+    	frame.add(cityT,b8);
+    	frame.add(stateL,a9);
+    	frame.add(stateT,b9);
+    	frame.add(zipL,a10);
+    	frame.add(zipT,b10);
+    	frame.add(teleL,a11);
+    	frame.add(teleT,b11); 
+    	frame.add(emailL,a12);
+    	frame.add(emailT,b12);
+    	frame.add(sexL,a13);
+    	frame.add(sexT,b13);
+    	frame.add(ssnL,a14);
+    	frame.add(ssnT,b14);
+    	frame.add(jobtitleL,c3);
+    	frame.add(jobtitleT,d3);
+    	frame.add(dobL,c4);
+    	frame.add(dobT,d4);
+    	frame.add(dohL,c5);
+    	frame.add(dohT,d5);
+    	frame.add(dotL,c6);
+    	frame.add(dotT,d6);
+    	frame.add(localtaxcodeL,c7);
+    	frame.add(localtaxcodeT,d7);
+    	frame.add(addstatetaxL,c8);
+    	frame.add(addstatetaxT,d8);
+    	frame.add(addfedtaxL,c9);
+    	frame.add(addfedtaxT,d9);
+    	frame.add(salaryL,c10);
+    	frame.add(salaryT,d10);
+    	frame.add(regpayL,c11);
+    	frame.add(regpayT,d11);
+    	frame.add(otpayL,c12);
+    	frame.add(otpayT,d12);
+    	frame.add(ptopayL,c13);
+    	frame.add(ptopayT,d13);
+    	frame.add(vacationAvailL,c14);
+    	frame.add(vacationAvailT,d14);
+    	frame.add(vacationUsedL,c15);
+    	frame.add(vacationUsedT,d15);
     	frame.add(taxTableB,e3);
     	//frame.add(createCheckB,i1);
     
@@ -471,34 +581,34 @@ public class EditEmployee {
 			conn.close();
 			
 			
-//			empNumT.setText(String.valueOf(emp.getID()));
-//			statusT.setText(emp.getStatus());
-//			nameT.setText(emp.getName().getFirst() + " " + emp.getName().getMiddle() + " " + emp.getName().getLast());
-//			addressT.setText(emp.getAddress().getStreet());
-//			cityT.setText(emp.getAddress().getCity());
-//			stateT.setText(emp.getAddress().getState());
-//			zipT.setText(emp.getAddress().getZip());
-//			emailT.setText(emp.getEmail());
-//			ssnT.setText(emp.getSsn());
-//			jobtitleT.setText(emp.getJobTitle());
-//			dobT.setText(emp.getDOB());
-//			dohT.setText(emp.getDOH());
-//			dotT.setText(emp.getDOT());
-//			localtaxcodeT.setText(String.valueOf(emp.getLocalTaxCode()));
-//			addstatetaxT.setText( String.valueOf(emp.getAddStateTax()));
-//			addfedtaxT.setText(String.valueOf(emp.getAddFedTax()));
-//			salaryT.setText(String.valueOf(emp.getSalary()));
-//			regpayT.setText(String.valueOf(emp.getRegPay()));
-//			otpayT.setText(String.valueOf(emp.getOtPay()));
-//			ptopayT.setText(String.valueOf(emp.getPtoPay()));
-//			//departmentT.setText(String.valueOf(emp.getDepartment()));
-//			//Note: Department is off by one index when it is loaded in from 
-//			department.setSelectedIndex(emp.getDepartment());
-//			teleT.setText(emp.getTelnum());
-//			sexT.setText(emp.getSex());
-//			vacationAvailT.setText(String.valueOf(emp.getVacationTimeRemaining()));
-//			vacationUsedT.setText(String.valueOf(emp.getVacationTimeUsed()));
-//			
+			empNumT.setText(String.valueOf(emp.getID()));
+			statusT.setText(emp.getStatus());
+			nameT.setText(emp.getName().getFirst() + " " + emp.getName().getMiddle() + " " + emp.getName().getLast());
+			addressT.setText(emp.getAddress().getStreet());
+			cityT.setText(emp.getAddress().getCity());
+			stateT.setText(emp.getAddress().getState());
+			zipT.setText(emp.getAddress().getZip());
+			emailT.setText(emp.getEmail());
+			ssnT.setText(emp.getSsn());
+			jobtitleT.setText(emp.getJobTitle());
+			dobT.setText(emp.getDOB());
+			dohT.setText(emp.getDOH());
+			dotT.setText(emp.getDOT());
+			localtaxcodeT.setText(String.valueOf(emp.getLocalTaxCode()));
+			addstatetaxT.setText( String.valueOf(emp.getAddStateTax()));
+			addfedtaxT.setText(String.valueOf(emp.getAddFedTax()));
+			salaryT.setText(String.valueOf(emp.getSalary()));
+			regpayT.setText(String.valueOf(emp.getRegPay()));
+			otpayT.setText(String.valueOf(emp.getOtPay()));
+			ptopayT.setText(String.valueOf(emp.getPtoPay()));
+			//departmentT.setText(String.valueOf(emp.getDepartment()));
+			//Note: Department is off by one index when it is loaded in from 
+			department.setSelectedIndex(emp.getDepartment());
+			teleT.setText(emp.getTelnum());
+			sexT.setText(emp.getSex());
+			vacationAvailT.setText(String.valueOf(emp.getVacationTimeRemaining()));
+			vacationUsedT.setText(String.valueOf(emp.getVacationTimeUsed()));
+			
 			
 			
 			frame.repaint();
@@ -525,10 +635,10 @@ public class EditEmployee {
 			String[] SQL;
 			System.out.println("Executing Update");
 			
-//			empAddress.setStreet(addressT.getText());
-//			empAddress.setCity(cityT.getText());
-//			empAddress.setState(stateT.getText());
-//			empAddress.setZip(zipT.getText());
+			empAddress.setStreet(addressT.getText());
+			empAddress.setCity(cityT.getText());
+			empAddress.setState(stateT.getText());
+			empAddress.setZip(zipT.getText());
 			
 			
 			SQL = Config.PullSQLConfig();
@@ -562,7 +672,7 @@ public class EditEmployee {
 			System.out.println("Executing Update");
 			
 			
-//			String fullName = nameT.getText();
+			String fullName = nameT.getText();
 			System.out.println(fullName);
 			name = fullName.split(" ");
 			empName.setFirst(name[0]);
@@ -570,32 +680,32 @@ public class EditEmployee {
 			empName.setLast(name[2]);
 			
 			
-//			emp.setID(Integer.parseInt(empNumT.getText()));
-//			emp.setTelnum(teleT.getText());
-//			emp.setEmail(emailT.getText());
-//			emp.setSex(sexT.getText());
-//			emp.setSsn(ssnT.getText());
-//			emp.setJobTitle(jobtitleT.getText());
-//			emp.setDOB(dobT.getText());
-//			emp.setDOH(dohT.getText());
-//			emp.setDOT(dotT.getText());
-//			emp.setSalary(Double.parseDouble(salaryT.getText()));
-//			emp.setRegPay(Double.parseDouble(regpayT.getText()));
-//			//emp.setRegHour();
-//			emp.setOtPay(Double.parseDouble(otpayT.getText()));
-//			//emp.setOtHour();
-//			emp.setPtoPay(Double.parseDouble(ptopayT.getText()));
-//			//emp.setPtoHour();
-//			emp.setLocalTaxCode(Integer.parseInt(localtaxcodeT.getText()));
-//			emp.setAddStateTax(Double.parseDouble(addstatetaxT.getText()));
-//			emp.setAddFedTax(Double.parseDouble(addfedtaxT.getText()));
-//			emp.setVacationTimeRemaining(Double.parseDouble(vacationAvailT.getText()));
-//			emp.setVacationTimeUsed(Double.parseDouble(vacationUsedT.getText()));
-//			emp.setDepartment(department.getSelectedIndex()+1);
-//			emp.setStatus("Active");
-//			emp.setName(empName);
-//			emp.setAddress(empAddress);
-//			
+			emp.setID(Integer.parseInt(empNumT.getText()));
+			emp.setTelnum(teleT.getText());
+			emp.setEmail(emailT.getText());
+			emp.setSex(sexT.getText());
+			emp.setSsn(ssnT.getText());
+			emp.setJobTitle(jobtitleT.getText());
+			emp.setDOB(dobT.getText());
+			emp.setDOH(dohT.getText());
+			emp.setDOT(dotT.getText());
+			emp.setSalary(Double.parseDouble(salaryT.getText()));
+			emp.setRegPay(Double.parseDouble(regpayT.getText()));
+			//emp.setRegHour();
+			emp.setOtPay(Double.parseDouble(otpayT.getText()));
+			//emp.setOtHour();
+			emp.setPtoPay(Double.parseDouble(ptopayT.getText()));
+			//emp.setPtoHour();
+			emp.setLocalTaxCode(Integer.parseInt(localtaxcodeT.getText()));
+			emp.setAddStateTax(Double.parseDouble(addstatetaxT.getText()));
+			emp.setAddFedTax(Double.parseDouble(addfedtaxT.getText()));
+			emp.setVacationTimeRemaining(Double.parseDouble(vacationAvailT.getText()));
+			emp.setVacationTimeUsed(Double.parseDouble(vacationUsedT.getText()));
+			emp.setDepartment(department.getSelectedIndex()+1);
+			emp.setStatus("Active");
+			emp.setName(empName);
+			emp.setAddress(empAddress);
+			
 			
 			SQL = Config.PullSQLConfig();
 			

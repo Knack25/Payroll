@@ -1,5 +1,6 @@
 package Gradle_Payroll.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JPanel;
 
 import Gradle_Payroll.fileIO.Config;
 
@@ -30,7 +32,10 @@ public class TaxTableRemove extends JDialog {
 	public static JDialog createDialog(int empID) {
 		dialog = new JDialog(null,Dialog.ModalityType.APPLICATION_MODAL);
 		dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		dialog.setSize(400, 150);	
+		dialog.setSize(400, 150);
+		JPanel comboPanel, buttonPanel;
+		comboPanel = new JPanel();
+		buttonPanel = new JPanel();
 		
 		EMPID = empID;
 		Name = new JComboBox<String>();
@@ -49,10 +54,12 @@ public class TaxTableRemove extends JDialog {
 			e.printStackTrace();
 		}
 		
+		comboPanel.add(Name);
+		buttonPanel.add(submitB,BorderLayout.WEST);
+		buttonPanel.add(cancelB,BorderLayout.EAST);
 		
-		dialog.add(Name);
-		dialog.add(submitB);
-		dialog.add(cancelB);
+		dialog.add(comboPanel,BorderLayout.NORTH);
+		dialog.add(buttonPanel,BorderLayout.SOUTH);
 		
 		dialog.setVisible(true);
 		
@@ -99,6 +106,7 @@ public class TaxTableRemove extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				Update();
+				dialog.dispose();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

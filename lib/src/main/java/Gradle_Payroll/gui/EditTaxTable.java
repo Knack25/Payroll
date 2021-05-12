@@ -406,6 +406,8 @@ public class EditTaxTable {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				TaxTableRemove.createDialog(EMPID);
+				dialog.dispose();
+				createDialog(EMPID);
 			} catch (Exception SQLTaxRemove) {
 				SQLTaxRemove.printStackTrace();
 			}
