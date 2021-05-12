@@ -26,7 +26,7 @@ import Gradle_Payroll.data.Employee;
 import Gradle_Payroll.data.Name;
 import Gradle_Payroll.fileIO.Config;
 
-public class EditEmployee {
+public class Edit_Employee {
 	
 	static JComboBox<String> employee;
 	static JComboBox<String> department;
@@ -527,14 +527,17 @@ public class EditEmployee {
 			
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
-			if(name.length == 3) {
-				pstmt.setString(1,name[0]);
-				pstmt.setString(2, name[2]);
-			}
-			if(name.length == 2) {
-				pstmt.setString(1,name[0]);
-				pstmt.setString(2, name[1]);
-			}
+//			if(name.length == 3) {
+//				pstmt.setString(1,name[0]);
+//				pstmt.setString(2, name[2]);
+//			}
+//			if(name.length == 2) {
+//				pstmt.setString(1,name[0]);
+//				pstmt.setString(2, name[1]);
+//			}
+			
+			pstmt.setString(1, name[0]);
+			pstmt.setString(2, name[name.length-1]);
 			
 			//int output = pstmt.executeUpdate();
 			ResultSet rs = pstmt.executeQuery();
@@ -764,7 +767,7 @@ public class EditEmployee {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				System.out.println("Edit Tax Table Pressed.");
-				EditTaxTable.createDialog(emp.getID());
+				Edit_Tax_Table.createDialog(emp.getID());
 			}catch (Exception taxTablePull) {
 				
 			}

@@ -14,7 +14,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class MainMenu extends JFrame implements ActionListener{
+public class Main_Menu extends JFrame implements ActionListener{
 
 
 	 /**
@@ -25,7 +25,7 @@ public class MainMenu extends JFrame implements ActionListener{
 	JDesktopPane MainMenu;
 	
 	
-	public MainMenu() {
+	public Main_Menu() {
 		
 	
 		
@@ -179,7 +179,7 @@ public class MainMenu extends JFrame implements ActionListener{
 
     private void editEmployeeFrame() {
     	try {
-    		JInternalFrame edit_emp = EditEmployee.createFrame();
+    		JInternalFrame edit_emp = Edit_Employee.createFrame();
     		MainMenu.add(edit_emp);
     	}catch(Exception e1) {
     		e1.printStackTrace();
@@ -208,7 +208,7 @@ public class MainMenu extends JFrame implements ActionListener{
 
 	private void createEmployeeWindow() {
 		try{
-			CreateEmployee.CreateMenu();
+			Create_Employee.CreateMenu();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -286,7 +286,7 @@ public class MainMenu extends JFrame implements ActionListener{
 	public static void createAndShowGUI() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		
-		MainMenu frame = new MainMenu();
+		Main_Menu frame = new Main_Menu();
 		frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		frame.setVisible(true);

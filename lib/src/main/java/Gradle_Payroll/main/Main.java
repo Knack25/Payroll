@@ -3,7 +3,7 @@ package Gradle_Payroll.main;
 
 
 
-import Gradle_Payroll.gui.MainMenu;
+import Gradle_Payroll.gui.Main_Menu;
 
 public class Main {
 
@@ -12,7 +12,7 @@ public class Main {
 			
 			@Override
 			public void run() {
-				MainMenu.createAndShowGUI();
+				Main_Menu.createAndShowGUI();
 				
 			}
 		});

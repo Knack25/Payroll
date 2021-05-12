@@ -26,7 +26,7 @@ import Gradle_Payroll.fileIO.Config;
 import Gradle_Payroll.sql.MySQL;
  
  
- public class CreateEmployee extends JDialog{
+ public class Create_Employee extends JDialog{
 	 
 	/**
 	 * 
@@ -112,6 +112,9 @@ import Gradle_Payroll.sql.MySQL;
 			conn.setAutoCommit(false);
 			
 			System.out.println("Connected.");
+			
+			/*TODO: Add method to trim any loose spaces before and after each field.
+			 * If this is not done, SQL cannot find the correct employee*/
 			
 			 Name[0] = enterFirst.getText();
 			 Name[1] = enterMiddle.getText();

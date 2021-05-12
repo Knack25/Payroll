@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 
 import Gradle_Payroll.fileIO.Config;
 
-public class TaxTableRemove extends JDialog {
+public class Tax_Table_Remove extends JDialog {
 	
 	/**
 	 * 

@@ -85,8 +85,8 @@ public class Create_Check {
 	    	salHoursT.setPreferredSize(minTextSize);
 	    	salRateT = new JTextField();
 	    	salRateT.setPreferredSize(minTextSize);
-	    	royalHoursT = new JTextField();
-	    	royalHoursT.setPreferredSize(minTextSize);
+//	    	royalHoursT = new JTextField();
+//	    	royalHoursT.setPreferredSize(minTextSize);
 	    	royalRateT = new JTextField();
 	    	royalRateT.setPreferredSize(minTextSize);
 	    	checkNoT = new JTextField();
@@ -231,7 +231,7 @@ public class Create_Check {
 	    	dialog.add(advRateT,c7);
 	    	//TODO: Royalty is a fixed amount based on IP or the like... There is not hours related to it.
 	    		//Dante: Royalty is like a commission. It's a fixed rate. Some taxes still apply to it.
-	    	dialog.add(royalHoursT,b8);
+	    	//dialog.add(royalHoursT,b8);
 	    	dialog.add(royalRateT,c8);
 	    	dialog.add(checkNoT,c1);
 	    	dialog.add(employee,a1);
@@ -272,7 +272,10 @@ public class Create_Check {
 			
 			try {
 				empID = MySQL.sqlPullEmpID(name);
-				checkID = sqlPushCheckInitRequest(empID);
+				//checkID = sqlPushCheckInitRequest(empID);
+				dialog.dispose();
+				Check_Edit.createDialog(empID);
+				
 				//TODO: Add method to calculate taxes for check
 					//Dante: can you run it through a calculator that deducts from each field that is applicable and send it?
 				//TODO: Add method to format and print check

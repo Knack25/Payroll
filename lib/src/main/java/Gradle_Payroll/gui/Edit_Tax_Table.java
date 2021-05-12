@@ -23,7 +23,7 @@ import javax.swing.JTextField;
 import Gradle_Payroll.data.Tax;
 import Gradle_Payroll.fileIO.Config;
 
-public class EditTaxTable {
+public class Edit_Tax_Table {
 	
 	static int taxNum = 0;
 	final static String dollar = "$";
@@ -405,7 +405,7 @@ public class EditTaxTable {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				TaxTableRemove.createDialog(EMPID);
+				Tax_Table_Remove.createDialog(EMPID);
 				dialog.dispose();
 				createDialog(EMPID);
 			} catch (Exception SQLTaxRemove) {
