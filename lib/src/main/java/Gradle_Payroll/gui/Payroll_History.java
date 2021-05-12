@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -19,10 +20,13 @@ import Gradle_Payroll.fileIO.Config;
 public class Payroll_History {
 	
 	static JDialog dialog;
-	static JLabel nameL,dateL,payrollHisL,dashL;
-	static JComboBox<String> employee,startDateD,endDateD; 
+	static JLabel nameL,dateL,payrollHisL,dashL,checkL;
+	static JComboBox<String> employee,startDateD,endDateD,checkStartD,checkEndD; 
 	static JButton loadB;
 	static String fName,mName,lName,fullName;
+	static JCheckBox nameSelect,dateSelect,checkSelect;
+	
+	
 	
 	protected static JDialog createFrame() throws Exception{
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
@@ -40,11 +44,19 @@ public class Payroll_History {
 		 sqlPullEmpListRequest();
 		 dialog.setSize(400, 200);
 	    	dialog.setLayout(new GridBagLayout());
-		 
-	    	GridBagConstraints b1 = new GridBagConstraints();
-	    	b1.gridx = 1;
-	    	b1.gridy = 0;
+
 	    	
+	    	
+	    	GridBagConstraints a1d1 = new GridBagConstraints();
+	    	a1d1.gridx = 0;
+	    	a1d1.gridy = 0;
+	    	a1d1.gridwidth = 4;		
+	    	
+	    	dialog.add(payrollHisL,a1d1);
+
+	    	
+	    	
+	    	//check boxes
 	    	GridBagConstraints a2 = new GridBagConstraints();
 	    	a2.gridx = 0;
 	    	a2.gridy = 1;
@@ -57,14 +69,40 @@ public class Payroll_History {
 	    	a4.gridx = 0;
 	    	a4.gridy = 3;
 	    	
+	    	GridBagConstraints a5 = new GridBagConstraints();
+	    	a5.gridx = 0;
+	    	a5.gridy = 4;
+	    	
+	    	
+	    	dialog.add(nameSelect,a2);
+			dialog.add(dateSelect,a3);	    	
+	    	dialog.add(checkSelect,a4);
+	    	
+	    	
+	    	//labels
 	    	GridBagConstraints b2 = new GridBagConstraints();
 	    	b2.gridx = 1;
 	    	b2.gridy = 1;
-	    	b2.gridwidth = 3;
 	    	
 	    	GridBagConstraints b3 = new GridBagConstraints();
 	    	b3.gridx = 1;
 	    	b3.gridy = 2;
+	    	
+	    	GridBagConstraints b4 = new GridBagConstraints();
+	    	b4.gridx = 1;
+	    	a4.gridy = 3;
+	    	
+	    	
+			dialog.add(nameL,b2);
+			dialog.add(dateL,b3);	    	
+	    	dialog.add(checkL,b4);
+	    	
+	    	
+	    	
+	    	//fields
+	    	GridBagConstraints c2 = new GridBagConstraints();
+	    	c2.gridx = 2;
+	    	c2.gridy = 1;
 	    	
 	    	GridBagConstraints c3 = new GridBagConstraints();
 	    	c3.gridx = 2;
@@ -74,21 +112,27 @@ public class Payroll_History {
 	    	d3.gridx = 3;
 	    	d3.gridy = 2;
 	    	
-	    	GridBagConstraints a1d1 = new GridBagConstraints();
-	    	a1d1.gridx = 0;
-	    	a1d1.gridy = 0;
-	    	a1d1.gridwidth = 4;		
-	    	   	
+	    	GridBagConstraints e3 = new GridBagConstraints();
+	    	e3.gridx = 4;
+	    	e3.gridy = 2;
+	    	
+	    	GridBagConstraints c4 = new GridBagConstraints();
+	    	c4.gridx = 2;
+	    	c4.gridy = 3;
 	    
-		
-		dialog.add(payrollHisL,a1d1);
-		dialog.add(nameL,a2);
-		dialog.add(employee,b2);
-		dialog.add(dateL,a3);
-		dialog.add(startDateD,b3);
-		//dialog.add(dashL,c3);
-		dialog.add(endDateD,c3);
-		dialog.add(loadB,a4);
+	    	GridBagConstraints d4 = new GridBagConstraints();
+	    	d4.gridx = 3;
+	    	d4.gridy = 3;
+	    	
+
+	    	dialog.add(startDateD,c3);
+	    	
+	    	dialog.add(endDateD,d3);
+
+	    	dialog.add(employee,c2);
+	    	dialog.add(checkStartD,c4);
+	    	dialog.add(checkEndD,c4);
+	    	dialog.add(loadB,a5);
 		
 		System.out.println("Done.");
 		dialog.setVisible(true);
@@ -102,6 +146,7 @@ public class Payroll_History {
 		 dateL = new JLabel("Date:" );
 		 dateL = new JLabel("Date:");
 		 dashL = new JLabel("-");
+		 checkL = new JLabel("Check No:");
 
 		}
 	

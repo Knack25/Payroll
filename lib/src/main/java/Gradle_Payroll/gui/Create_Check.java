@@ -35,9 +35,8 @@ public class Create_Check {
 
 	static JComboBox<String> employee;
 	static JDialog dialog;
-	static JLabel regularL,ptoL,overtimeL,salaryL,advanceL,royaltiesL,checkNoL,hoursL,rateL,dateL;
-	static JTextField regHoursT,regRateT,ptoHoursT,ptoRateT,otHoursT,otRateT,salHoursT,
-	salRateT,advHoursT,advRateT,royalHoursT,royalRateT,checkNoT,dateT;
+	static JLabel regularL,ptoL,overtimeL,salaryL,advanceL,royaltiesL,checkNoL,hoursL,rateL,dateL,fixedPayL;
+	static JTextField regHoursT,regRateT,ptoHoursT,ptoRateT,otHoursT,otRateT,salpayT,advpayT,royalpayT,checkNoT,dateT,startT,endT;
 	static String fName,mName,lName,fullName;
 	static Dimension minTextSize;
 	static Check check;
@@ -82,165 +81,172 @@ public class Create_Check {
 	    	otHoursT.setPreferredSize(minTextSize);
 	    	otRateT = new JTextField();
 	    	otRateT.setPreferredSize(minTextSize);
-	    	advHoursT = new JTextField();
-	    	advHoursT.setPreferredSize(minTextSize);
-	    	advRateT = new JTextField();
-	    	advRateT.setPreferredSize(minTextSize);
-	    	salHoursT = new JTextField();
-	    	salHoursT.setPreferredSize(minTextSize);
-	    	salRateT = new JTextField();
-	    	salRateT.setPreferredSize(minTextSize);
-//	    	royalHoursT = new JTextField();
-//	    	royalHoursT.setPreferredSize(minTextSize);
-	    	royalRateT = new JTextField();
-	    	royalRateT.setPreferredSize(minTextSize);
+	    	salpayT = new JTextField();
+	    	salpayT.setPreferredSize(minTextSize);
+	    	advpayT = new JTextField();
+	    	advpayT.setPreferredSize(minTextSize);
+	    	royalpayT = new JTextField();
+	    	royalpayT.setPreferredSize(minTextSize);
 	    	checkNoT = new JTextField();
 	    	checkNoT.setPreferredSize(minTextSize);
 	    	checkNoT.setSize(minTextSize);
 	    	dateT = new JTextField();
 	    	dateT.setPreferredSize(minTextSize);
+	    	startT = new JTextField();
+	    	startT.setPreferredSize(minTextSize);
+	    	endT = new JTextField();
+	    	endT.setPreferredSize(minTextSize);
 			
 			System.out.println("Creating Dialog Box");
 			
 			setLabels();
 	    	
-	    	dialog.setSize(320, 320);
+	    	dialog.setSize(400,400);
 	    	dialog.setLayout(new GridBagLayout());
 	    	
 	    	/*TODO: Created all elements required to set Check Date...
 	    	need to create location on dialog to place it.
 	    	*/ 
 	    	
-	    	GridBagConstraints a1= new GridBagConstraints();
-	    	a1.gridx = 0;
-	    	a1.gridy = 0;
 	    	
-	    	GridBagConstraints b1= new GridBagConstraints();
-	    	b1.gridx = 1;
-	    	b1.gridy = 0;
 	    	
-	    	GridBagConstraints c1= new GridBagConstraints();
-	    	c1.gridx = 2;
-	    	c1.gridy = 0;
-	    	
-	    	GridBagConstraints b2= new GridBagConstraints();
-	    	b2.gridx = 1;
-	    	b2.gridy = 1;
-
 	    	GridBagConstraints c2d2 = new GridBagConstraints();
 	    	c2d2.gridx = 2;
 	    	c2d2.gridy = 1;
 	    	c2d2.gridwidth = 2;
 	    	
-	    	GridBagConstraints a9 = new GridBagConstraints();
-	    	a9.gridx = 0;
-	    	a9.gridy = 8;
+	    	GridBagConstraints a6c6 = new GridBagConstraints();
+	    	a6c6.gridx = 0;
+	    	a6c6.gridy = 5;
+	    	a6c6.gridwidth = 3;
 	    	
-	    	GridBagConstraints a3 = new GridBagConstraints();
-	    	a3.gridx = 0;
-	    	a3.gridy = 2;
-	    	
-	    	GridBagConstraints a4 = new GridBagConstraints();
-	    	a4.gridx = 0;
-	    	a4.gridy = 3;
+	    	GridBagConstraints b7c7 = new GridBagConstraints();
+	    	b7c7.gridx = 1;
+	    	b7c7.gridy = 6;
+	    	b7c7.gridwidth = 2;
 
-	    	GridBagConstraints a5 = new GridBagConstraints();
-	    	a5.gridx = 0;
-	    	a5.gridy = 4;
+	    	GridBagConstraints b8c8 = new GridBagConstraints();
+	    	b8c8.gridx = 1;
+	    	b8c8.gridy = 7;
+	    	b8c8.gridwidth = 2;
 	    	
-	    	GridBagConstraints a6 = new GridBagConstraints();
-	    	a6.gridx = 0;
-	    	a6.gridy = 5;
+	    	GridBagConstraints b9c9 = new GridBagConstraints();
+	    	b9c9.gridx = 1;
+	    	b9c9.gridy = 8;
+	    	b9c9.gridwidth = 2;
+	  
+	    	GridBagConstraints c11 = new GridBagConstraints();
+	    	c11.gridx = 2;
+	    	c11.gridy = 10;
 	    	
-	    	GridBagConstraints a7 = new GridBagConstraints();
-	    	a7.gridx = 0;
-	    	a7.gridy = 6;
+	    	dialog.add(createB,c11);
 	    	
-	    	GridBagConstraints a8 = new GridBagConstraints();
-	    	a8.gridx = 0;
-	    	a8.gridy = 7;
-	    
-	    	GridBagConstraints b3 = new GridBagConstraints();
-	    	b3.gridx = 1;
-	    	b3.gridy = 2;
-	    	
-	    	GridBagConstraints b4 = new GridBagConstraints();
-	    	b4.gridx = 1;
-	    	b4.gridy = 3;
-	    	
-	    	GridBagConstraints b5 = new GridBagConstraints();
-	    	b5.gridx = 1;
-	    	b5.gridy = 4;
-	    	
-	    	GridBagConstraints b6 = new GridBagConstraints();
-	    	b6.gridx = 1;
-	    	b6.gridy = 5;
-	    	
-	    	GridBagConstraints b7 = new GridBagConstraints();
-	    	b7.gridx = 1;
-	    	b7.gridy = 6;
-	    	
-	    	GridBagConstraints b8 = new GridBagConstraints();
-	    	b8.gridx = 1;
-	    	b8.gridy = 7;
-	    	
-	    	GridBagConstraints c3 = new GridBagConstraints();
-	    	c3.gridx = 2;
-	    	c3.gridy = 2;
-	    	
-	    	GridBagConstraints c4 = new GridBagConstraints();
-	    	c4.gridx = 2;
-	    	c4.gridy = 3;
-	    	
-	    	GridBagConstraints c5 = new GridBagConstraints();
-	    	c5.gridx = 2;
-	    	c5.gridy = 4;
-	    	
-	    	GridBagConstraints c6 = new GridBagConstraints();
-	    	c6.gridx = 2;
-	    	c6.gridy = 5;
-	    	
-	    	GridBagConstraints c7 = new GridBagConstraints();
-	    	c7.gridx = 2;
-	    	c7.gridy = 6;
-	    	
-	    	GridBagConstraints c8 = new GridBagConstraints();
-	    	c8.gridx = 2;
-	    	c8.gridy = 7;
-	    
-	    	
-	    	
-	    	dialog.add(employee,a1);
+
 	    	dialog.add(rateL,c2d2);
-	    	dialog.add(hoursL,b2);
-	    	dialog.add(createB,a9);
+	    	dialog.add(fixedPayL,a6c6);
+	    	dialog.add(salpayT,b7c7);
+	    	dialog.add(advpayT,b8c8);
+	    	dialog.add(royalpayT,b9c9);
+	    
+	    	GridBagConstraints boom = new GridBagConstraints();
+	    	for(int x = 0; x < 3; x++) {
+	    		boom.gridx = x;
+	    		for(int y = 0; y < 10; y++) {
+	    			if(x==0) {
+	    				switch(y) {
+	    				case 0:
+	    					boom.gridy = y;
+	    					dialog.add(employee,boom);
+	    					break;
+	    				case 2:
+	    					boom.gridy = y;
+	    					dialog.add(regularL,boom);
+	    					break;
+	    				case 3:
+	    					boom.gridy = y;
+	    					dialog.add(ptoL,boom);
+	    					break;
+	    				case 4:
+	    					boom.gridy = y;
+	    					dialog.add(overtimeL,boom);
+	    					break;
+	    				case 6:
+	    					boom.gridy = y;
+	    					dialog.add(salaryL,boom);
+	    					break;
+	    				case 7:
+	    					boom.gridy = y;
+	    					dialog.add(advanceL,boom);
+	    					break;
+	    				case 8: 
+	    					boom.gridy = y;
+	    					dialog.add(royaltiesL,boom);
+	    					break;
+	    				case 9: 
+	    					boom.gridy = y;
+	    					dialog.add(dateL,boom);
+	    					break;
+	    				}
+	    			}
+	    			if(x==1) {
+	    				switch(y) {
+	    				
+	    				case 0:
+	    					boom.gridy = y;
+	    					dialog.add(checkNoL,boom);
+	    					break;
+	    				case 1:
+	    					boom.gridy = y;
+	    					dialog.add(hoursL,boom);
+	    					break;
+	    				case 2:
+	    					boom.gridy = y;
+	    					dialog.add(regHoursT,boom);
+	    					break;
+	    				case 3:
+	    					boom.gridy = y;
+	    					dialog.add(ptoHoursT,boom);
+	    					break;
+	    				case 4:
+	    					boom.gridy = y;
+	    					dialog.add(otHoursT,boom);
+	    					break;
+	    				case 9:
+	    					boom.gridy = y;
+	    					dialog.add(startT,boom);
+	    					break;
+	    				}
+	    			}
+	    			if(x==2) {
+	    				switch(y) {
+	    				
+	    				case 0:
+	    					boom.gridy = y;
+	    					dialog.add(checkNoT,boom);
+	    					break;
+	    				case 2:
+	    					boom.gridy = y;
+	    					dialog.add(regRateT,boom);
+	    					break;
+	    				case 3:
+	    					boom.gridy = y;
+	    					dialog.add(ptoRateT,boom);
+	    					break;
+	    				case 4:
+	    					boom.gridy = y;
+	    					dialog.add(otRateT,boom);
+	    					break;
+	    				case 9:
+	    					boom.gridy = y;
+	    					dialog.add(endT,boom);
+	    					break;
+	    				}
+	    			}
+	    		}
+	    	}
 	    	
 	    	
-	    	dialog.add(regularL,a3);
-	    	dialog.add(ptoL,a4);
-	    	dialog.add(overtimeL,a5);
-	    	dialog.add(salaryL,a6);
-	    	dialog.add(advanceL,a7);
-	    	dialog.add(royaltiesL,a8);
-	    	dialog.add(checkNoL,b1);
-	    	
-	    	dialog.add(regHoursT,b3);
-	    	dialog.add(regRateT,c3);
-	    	dialog.add(ptoHoursT,b4);
-	    	dialog.add(ptoRateT,c4);
-	    	dialog.add(otHoursT,b5);
-	    	dialog.add(otRateT,c5);
-	    	dialog.add(salHoursT,b6);
-	    	dialog.add(salRateT,c6);
-	    	dialog.add(advHoursT,b7);
-	    	dialog.add(advRateT,c7);
-	    	//TODO: Royalty is a fixed amount based on IP or the like... There is not hours related to it.
-	    		//Dante: Royalty is like a commission. It's a fixed rate. Some taxes still apply to it.
-	    	//dialog.add(royalHoursT,b8);
-	    	dialog.add(royalRateT,c8);
-	    	dialog.add(checkNoT,c1);
-	    	dialog.add(employee,a1);
-	    	
+
 	    	setCheckNum();
 	    	
 	    	//TODO: Preload data from employee file for autofill
@@ -279,7 +285,8 @@ public class Create_Check {
 		 checkNoL = new JLabel("Check #: ");
 		 hoursL = new JLabel("<HTML><U> Hours </U></HTML>");
 		 rateL = new JLabel("<HTML><U> Rate </U></HTML>");
-		 dateL = new JLabel("Check Date: ");
+		 fixedPayL = new JLabel("<HTML><U> Fixed Pay</U></HTML>");
+		 dateL = new JLabel("Check Date Range: ");
 		}
 	 
 	 static ActionListener createCheck = new ActionListener() {
@@ -372,16 +379,6 @@ public class Create_Check {
 		pstmt.setDouble(6, Double.parseDouble(otHoursT.getText()));
 		//otRate
 		pstmt.setDouble(7, Double.parseDouble(otRateT.getText()));
-		//salHours
-		pstmt.setDouble(8, Double.parseDouble(salHoursT.getText()));
-		//salRate
-		pstmt.setDouble(9, Double.parseDouble(salRateT.getText()));
-		//advHours
-		pstmt.setDouble(10, Double.parseDouble(advHoursT.getText()));
-		//advRate
-		pstmt.setDouble(11, Double.parseDouble(advRateT.getText()));
-		//Royalty
-		pstmt.setDouble(12, Double.parseDouble(royalRateT.getText()));
 		//employee_id
 		pstmt.setInt(13, ID);
 		

@@ -256,7 +256,7 @@ public class Main_Menu extends JFrame implements ActionListener{
 	}
 	private void printReportsWindow() {
 		try {
-		//	Payroll_History.createFrame();
+			Print_Reports.createFrame();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -268,6 +268,7 @@ public class Main_Menu extends JFrame implements ActionListener{
 			e1.printStackTrace();
 		}
 	}
+	
 	
 	// Change this to the default frame
 	 //Create a new internal frame.
