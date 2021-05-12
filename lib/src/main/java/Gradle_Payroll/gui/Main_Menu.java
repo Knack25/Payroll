@@ -23,8 +23,11 @@ public class Main_Menu extends JFrame implements ActionListener{
 	private static final long serialVersionUID = -8356941478722720686L;
 
 	JDesktopPane MainMenu;
+	static int CheckNum;
 	
 	
+	
+
 	public Main_Menu() {
 		
 	
@@ -232,6 +235,7 @@ public class Main_Menu extends JFrame implements ActionListener{
 	private void processPayrollDialog() {
 		try {
 			Create_Check.createCheckmenu();
+			Check_Edit.createDialog(CheckNum);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

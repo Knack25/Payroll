@@ -6,31 +6,32 @@ import javax.swing.JInternalFrame;
 
 public class Check_Edit {
 	
-	static JInternalFrame dialog;
-	static int EMPID;
+	static JInternalFrame frame;
+	static int CHECKNUM;
 	
-	protected static JInternalFrame createDialog(int empID) {
-		dialog = new JInternalFrame();
-		dialog.setSize(320, 320);
-    	dialog.setLayout(new GridBagLayout());
+	protected static JInternalFrame createDialog(int checkNum) {
+		frame = new JInternalFrame();
+		frame.setSize(320, 320);
+    	frame.setLayout(new GridBagLayout());
     	
-    	EMPID = empID;
-    	
-    	
-		
-		
-    	
-    	
-    	
-    	
+    	CHECKNUM = checkNum;
     	
     	
     	
 		
+		
     	
-    	dialog.setVisible(true);
-    	dialog.setResizable(false);
-		return dialog;
+    	
+    	
+    	
+    	
+    	
+    	
+		
+    	
+    	frame.setVisible(true);
+    	frame.setResizable(true);
+		return frame;
 	}
 
 }

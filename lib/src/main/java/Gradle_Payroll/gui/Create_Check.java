@@ -17,6 +17,7 @@ import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -42,6 +43,9 @@ public class Create_Check {
 	static Check check;
 	static YTD ytd;
 	static Tax tax;
+	static int empID;
+	static int checkID; 
+	
 
 	
 	 protected static JDialog createCheckmenu()  throws Exception {
@@ -55,6 +59,7 @@ public class Create_Check {
 		 	check = new Check();
 		 	ytd = new YTD();
 		 	tax = new Tax();
+		 	
 		 	
 		 	
 		 	
@@ -235,6 +240,10 @@ public class Create_Check {
 	    	dialog.add(royalRateT,c8);
 	    	dialog.add(checkNoT,c1);
 	    	dialog.add(employee,a1);
+	    	
+	    	setCheckNum();
+	    	
+	    	//TODO: Preload data from employee file for autofill
 	  
 	    	dialog.repaint();
 	    	
@@ -246,7 +255,21 @@ public class Create_Check {
 			return dialog;
 	 }
 	 
-	 private static void setLabels() {
+	 private static void setCheckNum() throws Exception {
+		 String[] SQL = Config.PullSQLConfig();
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			Statement stmt = conn.createStatement();
+				
+			ResultSet rs = stmt.executeQuery("select * from generalconfig where id = 1");
+			rs.next();
+			checkNoT.setText(String.valueOf(rs.getInt("nextCheckNum")));
+	}
+
+	private static void setLabels() {
 		 regularL = new JLabel("Regular: ");
 		 ptoL = new JLabel("P.T.O: ");
 		 overtimeL = new JLabel("Overtime: ");
@@ -263,8 +286,8 @@ public class Create_Check {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int checkID; 
-			int empID;
+			
+			
 			
 			fullName = (String) employee.getSelectedItem();
 			String[] name = fullName.split(" ");
@@ -272,9 +295,9 @@ public class Create_Check {
 			
 			try {
 				empID = MySQL.sqlPullEmpID(name);
-				//checkID = sqlPushCheckInitRequest(empID);
+				checkID = sqlPushCheckInitRequest(empID);
 				dialog.dispose();
-				Check_Edit.createDialog(empID);
+				Main_Menu.CheckNum = checkID;
 				
 				//TODO: Add method to calculate taxes for check
 					//Dante: can you run it through a calculator that deducts from each field that is applicable and send it?
@@ -323,6 +346,7 @@ public class Create_Check {
 	 private static int sqlPushCheckInitRequest(int ID) throws Exception,SQLException{
 		 String[] SQL = Config.PullSQLConfig();
 		 int checkID = 0;
+		 checkID =  Integer.parseInt(checkNoT.getText());
 			
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -335,34 +359,60 @@ public class Create_Check {
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 			
 		//checkNum
-		pstmt.setDouble(0,  Double.parseDouble(checkNoT.getText()));
+		pstmt.setDouble(1, checkID);
 		//regHours
-		pstmt.setDouble(1, Double.parseDouble(regHoursT.getText()));
+		pstmt.setDouble(2, Double.parseDouble(regHoursT.getText()));
 		//regRate
-		pstmt.setDouble(2, Double.parseDouble(regRateT.getText()));
+		pstmt.setDouble(3, Double.parseDouble(regRateT.getText()));
 		//ptoHours
-		pstmt.setDouble(3, Double.parseDouble(ptoHoursT.getText()));
+		pstmt.setDouble(4, Double.parseDouble(ptoHoursT.getText()));
 		//ptoRate
-		pstmt.setDouble(4, Double.parseDouble(ptoRateT.getText()));
+		pstmt.setDouble(5, Double.parseDouble(ptoRateT.getText()));
 		//otHours
-		pstmt.setDouble(5, Double.parseDouble(otHoursT.getText()));
+		pstmt.setDouble(6, Double.parseDouble(otHoursT.getText()));
 		//otRate
-		pstmt.setDouble(6, Double.parseDouble(otRateT.getText()));
+		pstmt.setDouble(7, Double.parseDouble(otRateT.getText()));
 		//salHours
-		pstmt.setDouble(7, Double.parseDouble(salHoursT.getText()));
+		pstmt.setDouble(8, Double.parseDouble(salHoursT.getText()));
 		//salRate
-		pstmt.setDouble(8, Double.parseDouble(salRateT.getText()));
+		pstmt.setDouble(9, Double.parseDouble(salRateT.getText()));
 		//advHours
-		pstmt.setDouble(9, Double.parseDouble(advHoursT.getText()));
+		pstmt.setDouble(10, Double.parseDouble(advHoursT.getText()));
 		//advRate
-		pstmt.setDouble(10, Double.parseDouble(advRateT.getText()));
+		pstmt.setDouble(11, Double.parseDouble(advRateT.getText()));
 		//Royalty
-		pstmt.setDouble(11, Double.parseDouble(royalRateT.getText()));
+		pstmt.setDouble(12, Double.parseDouble(royalRateT.getText()));
 		//employee_id
-		pstmt.setInt(12, ID);
+		pstmt.setInt(13, ID);
+		
+		pstmt.executeUpdate();
+		
+		conn.close();
+		
+		updateNextCheckNum(checkID);
 		 
 		 return checkID;
 	 }
+
+	private static void updateNextCheckNum(int checkID) throws Exception {
+		 String[] SQL = Config.PullSQLConfig();
+		 checkID = checkID + 1;
+			
+		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+		
+		//TODO: Finish creating statement and insert values
+		String updateStatement = "update generalconfig set nextCheckNum = ? where id = 1";
+		
+		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+			
+		//checkNum
+		pstmt.setInt(1, checkID);
+		
+		pstmt.executeUpdate();
+		
+	}
 	 
 }; 
 	 
