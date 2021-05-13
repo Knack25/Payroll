@@ -82,7 +82,18 @@ public class Check_Edit {
 	}
 
 	private static void createLabels() {
-		// TODO Auto-generated method stub
+		chkNumL = new JLabel("Check Number: ");
+		chkDateL = new JLabel("Date: ");
+		payPeriodL = new JLabel("Pay Period: ");
+		hourRateL = new JLabel("Rate: ");
+		salaryL = new JLabel("Salary: ");
+		regHrsL = new JLabel("Regular Hours: ");
+		ptoHrsL = new JLabel("P.T.O. Hours: ");
+		otHrsL = new JLabel("O.T. Hours: ");
+		otherL = new JLabel("Other: ");
+		grossPayL = new JLabel("Gross Amnt: ");
+		currentL  = new JLabel("Current: ");
+		YTDL  = new JLabel("Y.T.D: ");
 		
 	}
 
