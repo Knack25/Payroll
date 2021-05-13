@@ -17,6 +17,7 @@ import Gradle_Payroll.data.Address;
 import Gradle_Payroll.data.Check;
 import Gradle_Payroll.data.Name;
 import Gradle_Payroll.fileIO.Config;
+import Gradle_Payroll.fileIO.Excel_Out;
 
 public class Check_Edit {
 	
@@ -188,6 +189,22 @@ public class Check_Edit {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Call Excel funciton and send it off to be printed.
+			try {
+				Excel_Out.create("Dante", 12, 52);
+				Excel_Out.formatColwidth(1, 17);
+				Excel_Out.formatColwidth(2, 12);
+				Excel_Out.formatColwidth(3, 7);
+				Excel_Out.formatColwidth(4, 17);
+				Excel_Out.formatColwidth(5, 17);
+				Excel_Out.formatColwidth(6, 17);
+				Excel_Out.formatColwidth(7, 17);
+				Excel_Out.formatColwidth(8, 17);
+				Excel_Out.formatColwidth(9, 17);
+				Excel_Out.formatColwidth(10, 17);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			// TODO Save the data from the check to an entry in the DB.
 			
 		}
