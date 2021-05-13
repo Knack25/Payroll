@@ -25,7 +25,6 @@ public class Excel_Out{
 	
 	
 	public static void create(String sheetName,int numCol,int numRow) throws Exception {
-		createBook();
 		createSheet(sheetName);
 		createCells(numCol, numRow);
 		normalF = book.createFont();
@@ -65,6 +64,10 @@ public class Excel_Out{
 		return 0;
 	}
 	public static int writeToCell(int col,int row, boolean input) {
+		sheet.getRow(row).getCell(col).setCellValue(input);
+		return 0;
+	}
+	public static int writeToCell(int col,int row,double input) {
 		sheet.getRow(row).getCell(col).setCellValue(input);
 		return 0;
 	}

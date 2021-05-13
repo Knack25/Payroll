@@ -19,6 +19,8 @@ public class Check {
 	private double advHours = 0;
 	private double advRate = 0;
 	private double royaltyRate = 0;
+	private double AddStateTax = 0;
+	private double AddFedTax = 0;
 	
 	
 	private Name name;
@@ -133,6 +135,19 @@ public class Check {
 	public void setYtd(YTD ytd) {
 		this.ytd = ytd;
 	}
+	public double getAddStateTax() {
+		return AddStateTax;
+	}
+	public void setAddStateTax(double addStateTax) {
+		AddStateTax = addStateTax;
+	}
+	public double getAddFedTax() {
+		return AddFedTax;
+	}
+	public void setAddFedTax(double addFedTax) {
+		AddFedTax = addFedTax;
+	}
+	
 	
 	
 	

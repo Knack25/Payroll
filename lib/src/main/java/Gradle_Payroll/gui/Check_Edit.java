@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -15,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import Gradle_Payroll.data.Address;
-import Gradle_Payroll.data.Employee;
+import Gradle_Payroll.data.Check;
 import Gradle_Payroll.data.Name;
 import Gradle_Payroll.fileIO.Config;
 
@@ -26,9 +25,9 @@ public class Check_Edit {
 	static JButton printB,cancelB;
 	static JLabel chkNumL,chkDateL,payPeriodL,hourRateL,salaryL,regHrsL,ptoHrsL,otHrsL,otherL,grossPayL,currentL,YTDL;
 	static JTextField nameT,addressT,cityStateZipT,dateT,amntT;
-	static Employee emp;
 	static Address addr;
 	static Name name;
+	static Check check;
 	
 	static String amntSpellOut;
 	
@@ -43,9 +42,9 @@ public class Check_Edit {
     	cancelB = new JButton("Cancel");
     	cancelB.addActionListener(cancelBListener);
     	
-    	emp = new Employee();
     	addr = new Address();
     	name = new Name();
+    	check = new Check();
     	
     	CHECKNUM = checkNum;
     	
@@ -56,12 +55,8 @@ public class Check_Edit {
     	
     	
     	//TODO: Add method to calculate taxes for check
-    	try {
-			pullData();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	
+		pullData();
 		calcGross();
 		calcNet();
 		calcTaxes();
@@ -78,7 +73,69 @@ public class Check_Edit {
 		return frame;
 	}
 
-	private static void pullData() throws Exception {
+	private static void pullData() {
+		try {
+			pullCheckData();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			pullEmpData();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+	}
+
+	private static void pullEmpData() throws Exception {
+		String[] SQL;
+		SQL = Config.PullSQLConfig();
+		
+		System.out.println("Querrying DB for selected Employee");
+		
+		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+		
+		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+		
+		
+		String updateStatement = "select * " + "from employee " + 
+		"inner join address on employee.id = address.employee_id " +
+		"WHERE id = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+
+		
+		pstmt.setInt(1, EMPNUM);
+		
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		
+		
+		rs.next();
+		name.setFirst(rs.getString("firstname"));
+		name.setMiddle(rs.getString("middlename"));
+		name.setLast(rs.getString("lastname"));
+		
+		addr.setStreet(rs.getString("street"));
+		addr.setCity(rs.getString("city"));
+		addr.setState(rs.getString("state"));
+		addr.setZip(rs.getString("zip"));
+		
+		check.setID(rs.getInt("id"));
+		check.setAddStateTax(rs.getDouble("addStateTax"));
+		check.setAddFedTax(rs.getDouble("addFedTax"));
+		check.setName(name);
+		check.setAddress(addr);
+		
+		pstmt.close();
+		conn.close();
+		
+	}
+
+	private static void pullCheckData() throws Exception {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
 		
@@ -100,17 +157,15 @@ public class Check_Edit {
 		ResultSet rs = pstmt.executeQuery();
 		
 		EMPNUM = rs.getInt("employee_id");
-		emp.setRegHour(rs.getDouble("regHours"));
-		emp.setRegPay(rs.getDouble("regRate"));
-		emp.setPtoHour(rs.getDouble("ptoHours"));
-		emp.setPtoPay(rs.getDouble("ptoRate"));
-		emp.setOtHour(rs.getDouble("otHours"));
-		emp.setOtPay(rs.getDouble("otRate"));
-		emp.setSalary(rs.getDouble("salRate"));
-		emp.setAdvance(rs.getDouble("advRate"));
-		emp.setRoyalty(rs.getDouble("royaltyRate"));
-		
-		
+		check.setRegHours(rs.getDouble("regHours"));
+		check.setRegRate(rs.getDouble("regRate"));
+		check.setPtoHours(rs.getDouble("ptoHours"));
+		check.setPtoRate(rs.getDouble("ptoRate"));
+		check.setOtHours(rs.getDouble("otHours"));
+		check.setOtRate(rs.getDouble("otRate"));
+		check.setSalRate(rs.getDouble("salRate"));
+		check.setAdvRate(rs.getDouble("advRate"));
+		check.setRoyaltyRate(rs.getDouble("royaltyRate"));
 	}
 
 	private static void calcGross() {
