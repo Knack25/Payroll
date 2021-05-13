@@ -32,15 +32,15 @@ public class Edit_Employee {
 	static JComboBox<String> department;
 	static JInternalFrame frame;
 	static JLabel empNumL,statusL,nameL,addressL,cityL,stateL,zipL,emailL,ssnL,jobtitleL,dobL,dohL,dotL,localtaxcodeL,addstatetaxL,addfedtaxL,salaryL,reghourL,
-	regpayL,othourL,otpayL,ptohourL,ptopayL,departmentL,teleL,sexL,vacationAvailL,vacationUsedL;
+	regpayL,othourL,otpayL,ptohourL,ptopayL,royaltyL,departmentL,teleL,sexL,vacationAvailL,vacationUsedL;
 	static JTextField empNumT,statusT,nameT,addressT,cityT,stateT,zipT,emailT,ssnT,jobtitleT,dobT,dohT,dotT,localtaxcodeT,addstatetaxT,addfedtaxT,salaryT,reghourT,
-	regpayT,othourT,otpayT,ptohourT,ptopayT,departmentT,teleT,sexT,vacationAvailT,vacationUsedT;
+	regpayT,othourT,otpayT,ptohourT,ptopayT,royaltyT,departmentT,teleT,sexT,vacationAvailT,vacationUsedT;
 	static Employee emp;
 	static Name empName;
 	static Address empAddress;
 	static String fName,mName,lName,fullName,dept;
 
-	
+	//TODO: Add location for Royalty
 	
 	 //Create a new internal frame.
     protected static JInternalFrame createFrame() throws Exception{
@@ -57,6 +57,7 @@ public class Edit_Employee {
 		stateT = new JTextField();
 		zipT = new JTextField();
 		emailT = new JTextField();
+		//TODO: See if there is a way to have this blanked out until you hover over it
 		ssnT = new JTextField();
 		jobtitleT = new JTextField();
 		dobT = new JTextField();
@@ -69,6 +70,7 @@ public class Edit_Employee {
 		regpayT = new JTextField();
 		otpayT = new JTextField();
 		ptopayT = new JTextField();
+		royaltyT = new JTextField();
 		departmentT = new JTextField();
 		teleT = new JTextField();
 		sexT = new JTextField();
@@ -86,7 +88,7 @@ public class Edit_Employee {
         employee.addItemListener(employeeSel);
         
         department = new JComboBox<String>();
-        //department.addItemListener(departmentSel);
+        
         
         sqlPullDeptListRequest();
       
@@ -384,7 +386,6 @@ public class Edit_Employee {
     	frame.setMaximizable(true);
     	frame.setLocation(0, 0);
     	
-    	//frame.repaint();
     	frame.setVisible(true);
     	
     
@@ -416,6 +417,7 @@ public class Edit_Employee {
     	regpayL = new JLabel("Regular Time: ");
     	otpayL = new JLabel("Overtime: ");
     	ptopayL = new JLabel("P.T.O Time: ");
+    	royaltyL = new JLabel("Royalty: ");
     	departmentL = new JLabel("Department: ");
     	teleL = new JLabel("Telephone: ");
     	sexL = new JLabel("Sex: ");
@@ -518,24 +520,15 @@ public class Edit_Employee {
 			
 			String updateStatement = "select * " + "from employee " + 
 			"inner join address on employee.id = address.employee_id " +
-			//"inner join departments on employee.Department = departments.id " + 
 			"WHERE firstname = ? and lastname = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
-//			if(name.length == 3) {
-//				pstmt.setString(1,name[0]);
-//				pstmt.setString(2, name[2]);
-//			}
-//			if(name.length == 2) {
-//				pstmt.setString(1,name[0]);
-//				pstmt.setString(2, name[1]);
-//			}
 			
 			pstmt.setString(1, name[0]);
 			pstmt.setString(2, name[name.length-1]);
 			
-			//int output = pstmt.executeUpdate();
+			
 			ResultSet rs = pstmt.executeQuery();
 			
 			
@@ -566,6 +559,7 @@ public class Edit_Employee {
 			emp.setOtHour(rs.getDouble("otHour"));
 			emp.setPtoPay(rs.getDouble("ptoPay"));
 			emp.setPtoHour(rs.getDouble("ptoHour"));
+			emp.setRoyalty(rs.getDouble("royalty"));
 			emp.setLocalTaxCode(rs.getInt("localTaxCode"));
 			emp.setAddStateTax(rs.getDouble("addStateTax"));
 			emp.setAddFedTax(rs.getDouble("addFedTax"));
@@ -600,6 +594,7 @@ public class Edit_Employee {
 			regpayT.setText(String.valueOf(emp.getRegPay()));
 			otpayT.setText(String.valueOf(emp.getOtPay()));
 			ptopayT.setText(String.valueOf(emp.getPtoPay()));
+			royaltyT.setText(String.valueOf(emp.getRoyalty()));
 			//departmentT.setText(String.valueOf(emp.getDepartment()));
 			//Note: Department is off by one index when it is loaded in from 
 			department.setSelectedIndex(emp.getDepartment());
@@ -695,6 +690,7 @@ public class Edit_Employee {
 			//emp.setOtHour();
 			emp.setPtoPay(Double.parseDouble(ptopayT.getText()));
 			//emp.setPtoHour();
+			emp.setRoyalty(Double.parseDouble(royaltyT.getText()));
 			emp.setLocalTaxCode(Integer.parseInt(localtaxcodeT.getText()));
 			emp.setAddStateTax(Double.parseDouble(addstatetaxT.getText()));
 			emp.setAddFedTax(Double.parseDouble(addfedtaxT.getText()));
@@ -716,7 +712,7 @@ public class Edit_Employee {
 			"firstname = ?, middlename = ?, lastname = ?, telNum = ?, email = ?, " + 
 			"sex = ?, ssn = ?, jobTitle = ?, dob = ?, doh = ?, dot = ?, " +
 			"salary = ?, regularPay = ?, regularHour = ?, otPay = ?, " +
-			"otHour = ?, ptoPay = ?, ptoHour = ?, localTaxCode = ?, " +
+			"otHour = ?, ptoPay = ?, ptoHour = ?,royalty = ?, localTaxCode = ?, " +
 			"addStateTax = ?, addFedTax = ?, vacationtimeAvail = ?, " +
 			"vacationtimeUsed = ?, Department = ? " + "WHERE firstname = ? and lastname = ?";
 			
@@ -740,14 +736,15 @@ public class Edit_Employee {
 			pstmt.setDouble(16, emp.getOtHour());
 			pstmt.setDouble(17, emp.getPtoPay());
 			pstmt.setDouble(18, emp.getPtoHour());
-			pstmt.setInt(19, emp.getLocalTaxCode());
-			pstmt.setDouble(20, emp.getAddStateTax());
-			pstmt.setDouble(21, emp.getAddFedTax());
-			pstmt.setDouble(22, emp.getVacationTimeRemaining());
-			pstmt.setDouble(23, emp.getVacationTimeUsed());
-			pstmt.setInt(24, emp.getDepartment());
-			pstmt.setString(25, empName.getFirst());
-			pstmt.setString(26, empName.getLast());
+			pstmt.setDouble(19, emp.getRoyalty());
+			pstmt.setInt(20, emp.getLocalTaxCode());
+			pstmt.setDouble(21, emp.getAddStateTax());
+			pstmt.setDouble(22, emp.getAddFedTax());
+			pstmt.setDouble(23, emp.getVacationTimeRemaining());
+			pstmt.setDouble(24, emp.getVacationTimeUsed());
+			pstmt.setInt(25, emp.getDepartment());
+			pstmt.setString(26, empName.getFirst());
+			pstmt.setString(27, empName.getLast());
 
 			System.out.println(pstmt);
 			
@@ -771,19 +768,6 @@ public class Edit_Employee {
 		}
 		
 	};
-//static ActionListener createCheck = new ActionListener() {
-//		
-//		@Override
-//		public void actionPerformed(ActionEvent e) {
-//			try {
-//				Create_Check.createCheckmenu(emp.getID());
-//			}catch (Exception taxTablePull) {
-//				
-//			}
-//			
-//		}
-//		
-//	};
 }
 
 

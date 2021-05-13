@@ -131,7 +131,7 @@ public class Edit_Tax_Table {
 				c.gridx = autoX;
 				
 				c.fill = GridBagConstraints.HORIZONTAL;
-				JLabel statePAExemptL = new JLabel("State(PA)");
+				JLabel statePAExemptL = new JLabel("State 2");
 				panel.add(statePAExemptL,c);
 				autoX++;
 				c.gridx = autoX;

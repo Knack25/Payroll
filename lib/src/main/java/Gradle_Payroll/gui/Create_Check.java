@@ -17,7 +17,6 @@ import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -249,7 +248,7 @@ public class Create_Check {
 
 	    	setCheckNum();
 	    	
-	    	//TODO: Preload data from employee file for autofill
+	    	preLoadData();
 	  
 	    	dialog.repaint();
 	    	
@@ -261,7 +260,39 @@ public class Create_Check {
 			return dialog;
 	 }
 	 
-	 private static void setCheckNum() throws Exception {
+	 private static void preLoadData() throws Exception {
+		 String[] SQL = Config.PullSQLConfig();
+		 @SuppressWarnings("unused")
+		String fullname = (String) employee.getSelectedItem();
+		 String[] name = fullName.split(" ");
+		
+		
+			
+		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+		
+		String updateStatement = "select * " + "from employee " + "WHERE firstname = ? and lastname = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+		
+		pstmt.setString(1, name[0]);
+		pstmt.setString(2, name[name.length-1]);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		rs.next();
+		regRateT.setText(String.valueOf(rs.getDouble("regularPay")));
+		otRateT.setText(String.valueOf(rs.getDouble("otPay")));
+		ptoRateT.setText(String.valueOf(rs.getDouble("ptoPay")));
+		salpayT.setText(String.valueOf(rs.getDouble("salary")));
+		royalpayT.setText(String.valueOf(rs.getDouble("royalty")));
+		
+		
+		
+	}
+
+	private static void setCheckNum() throws Exception {
 		 String[] SQL = Config.PullSQLConfig();
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
@@ -306,9 +337,6 @@ public class Create_Check {
 				dialog.dispose();
 				Main_Menu.CheckNum = checkID;
 				
-				//TODO: Add method to calculate taxes for check
-					//Dante: can you run it through a calculator that deducts from each field that is applicable and send it?
-				//TODO: Add method to format and print check
 			}catch (Exception PushCheckInitRequest) {
 				PushCheckInitRequest.printStackTrace();
 			}
@@ -359,9 +387,8 @@ public class Create_Check {
 			
 		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 		
-		//TODO: Finish creating statement and insert values
 		String updateStatement = "Insert into checks(checknum,regHours,regRate,ptoHours,ptoRate,otHours," + 
-		"otRate,salHours,salRate,advHours,advRate,royaltyRate,employee_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		"otRate,salRate,advRate,royaltyRate,employee_id) Values(?,?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 			
@@ -379,14 +406,21 @@ public class Create_Check {
 		pstmt.setDouble(6, Double.parseDouble(otHoursT.getText()));
 		//otRate
 		pstmt.setDouble(7, Double.parseDouble(otRateT.getText()));
+		//salRate
+		pstmt.setDouble(8, Double.parseDouble(salpayT.getText()));
+		//advRate
+		pstmt.setDouble(9, Double.parseDouble(advpayT.getText()));
+		//royaltyRate
+		pstmt.setDouble(10, Double.parseDouble(royalpayT.getText()));
 		//employee_id
-		pstmt.setInt(13, ID);
+		pstmt.setInt(11, ID);
 		
 		pstmt.executeUpdate();
 		
 		conn.close();
 		
 		updateNextCheckNum(checkID);
+		Main_Menu.processPayrollEdit();
 		 
 		 return checkID;
 	 }
@@ -399,7 +433,7 @@ public class Create_Check {
 			
 		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 		
-		//TODO: Finish creating statement and insert values
+		
 		String updateStatement = "update generalconfig set nextCheckNum = ? where id = 1";
 		
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);

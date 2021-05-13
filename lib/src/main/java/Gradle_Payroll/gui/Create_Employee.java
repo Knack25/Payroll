@@ -113,16 +113,14 @@ import Gradle_Payroll.sql.MySQL;
 			
 			System.out.println("Connected.");
 			
-			/*TODO: Add method to trim any loose spaces before and after each field.
-			 * If this is not done, SQL cannot find the correct employee*/
 			
-			 Name[0] = enterFirst.getText();
-			 Name[1] = enterMiddle.getText();
-			 Name[2] = enterLast.getText();
+			 Name[0] = enterFirst.getText().trim();
+			 Name[1] = enterMiddle.getText().trim();
+			 Name[2] = enterLast.getText().trim();
 			 
 			String statement = "INSERT INTO employee(firstname,middlename,lastname,telNum,email,sex,ssn,jobTitle,dob,doh,dot,salary,regularPay,regularHour,"
-						+ "otPay,otHour,ptoPay,ptoHour,localTaxCode,addStateTax,addFedTax,vacationtimeAvail,vacationtimeUsed,Department,enabled) "
-						+ "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+						+ "otPay,otHour,ptoPay,ptoHour,royalty,localTaxCode,addStateTax,addFedTax,vacationtimeAvail,vacationtimeUsed,Department,enabled) "
+						+ "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			PreparedStatement pstmt = conn.prepareStatement(statement);
 			
@@ -146,13 +144,14 @@ import Gradle_Payroll.sql.MySQL;
 			pstmt.setDouble(16, 00.00);
 			pstmt.setDouble(17, 12.00);
 			pstmt.setDouble(18, 00.00);
-			pstmt.setInt(19, 44545);
-			pstmt.setDouble(20, 00.00);
+			pstmt.setDouble(19, 00.00);
+			pstmt.setInt(20, 44545);
 			pstmt.setDouble(21, 00.00);
-			pstmt.setDouble(22, 60.00);
-			pstmt.setDouble(23, 00.00);
-			pstmt.setDouble(24, 1);
-			pstmt.setBoolean(25, true);
+			pstmt.setDouble(22, 00.00);
+			pstmt.setDouble(23, 60.00);
+			pstmt.setDouble(24, 00.00);
+			pstmt.setDouble(25, 1);
+			pstmt.setBoolean(26, true);
 				
 			//System.out.println(pstmt);
 

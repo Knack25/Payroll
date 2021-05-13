@@ -22,7 +22,7 @@ public class Main_Menu extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = -8356941478722720686L;
 
-	JDesktopPane MainMenu;
+	static JDesktopPane MainMenu;
 	static int CheckNum;
 	
 	
@@ -235,10 +235,16 @@ public class Main_Menu extends JFrame implements ActionListener{
 	private void processPayrollDialog() {
 		try {
 			Create_Check.createCheckmenu();
-			JInternalFrame edit_check =  Check_Edit.createDialog(CheckNum);
-			MainMenu.add(edit_check);
 		} catch (Exception e1) {
 			e1.printStackTrace();
+		}
+	}
+	static public void processPayrollEdit() {
+		try {
+			JInternalFrame edit_check =  Check_Edit.createDialog(CheckNum);
+			MainMenu.add(edit_check);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	private void payrollSettingsWindow() {

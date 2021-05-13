@@ -26,5 +26,6 @@ Edit Employee:
 Excel Books:
 	LOCK OUT ALL EDITING WITHIN THE EXCEL WORKBOOK
 	
-	GET RID OF SECOND STATE TAX!!!!
+State Tax:
+	Actually we still need a second one becuase things can be exempt in either state.
 	
