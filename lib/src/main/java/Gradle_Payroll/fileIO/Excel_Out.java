@@ -25,6 +25,7 @@ public class Excel_Out{
 	
 	
 	public static void create(String sheetName,int numCol,int numRow) throws Exception {
+		createBook();
 		createSheet(sheetName);
 		createCells(numCol, numRow);
 		normalF = book.createFont();
@@ -72,7 +73,7 @@ public class Excel_Out{
 		return 0;
 	}
 	
-	public static int formatRowHeight(int row,int height) {
+	public static int formatRowHeight(int row,float height) {
 		sheet.getRow(row).setHeightInPoints(height);
 		return 0;
 	}
