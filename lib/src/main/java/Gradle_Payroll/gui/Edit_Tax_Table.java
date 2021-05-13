@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 
 import Gradle_Payroll.data.Tax;
 import Gradle_Payroll.fileIO.Config;
+import Gradle_Payroll.sql.MySQL;
 
 public class Edit_Tax_Table {
 	
@@ -71,7 +72,7 @@ public class Edit_Tax_Table {
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		SQLPullTax(empID);
-		taxNum = SQLTaxNum(empID) + 1;
+		taxNum = MySQL.SQLTaxNum(empID) + 1;
 		dialog.setSize(1400,700);
 		
 		Ammount = new ArrayList<JTextField>();
@@ -181,7 +182,7 @@ public class Edit_Tax_Table {
 				
 				autoX++;
 				autoY++;
-			}
+			} 	
 			//On all the middle runs, build the table
 			else{
 				rs.next();
@@ -243,7 +244,7 @@ public class Edit_Tax_Table {
 				
 				//State PA Exempt
 				JCheckBox statePAExempt = new JCheckBox();
-				statePAExempt.setSelected(rs.getBoolean("statePATaxExempt"));
+				statePAExempt.setSelected(rs.getBoolean("state2TaxExempt"));
 				panel.add(statePAExempt,c);
 				StatePAExempt.add(statePAExempt);
 				autoX++;
@@ -301,7 +302,7 @@ public class Edit_Tax_Table {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				taxNum = SQLTaxNum(EMPID);
+				taxNum = MySQL.SQLTaxNum(EMPID);
 				SQLPushTable();
 			} catch (Exception SQLPush) {
 				SQLPush.printStackTrace();
@@ -321,7 +322,7 @@ public class Edit_Tax_Table {
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
 			String insertStatement = "update tax set taxname = ?, taxtype = ?, ammount = ?, fedTaxExempt = ?, stateTaxExempt = ?,"
-					+ "statePATaxExempt = ?, SSCTaxExempt = ?, medicareTaxExempt = ?, localTaxExempt = ? where id = ?";
+					+ "state2TaxExempt = ?, SSCTaxExempt = ?, medicareTaxExempt = ?, localTaxExempt = ? where id = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(insertStatement);
 			
@@ -388,7 +389,7 @@ public class Edit_Tax_Table {
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
 			String insertStatement = "INSERT INTO "
-					+ "tax(employee_id,taxname,taxtype,ammount,fedTaxExempt,stateTaxExempt,statePATaxExempt,SSCTaxExempt,medicareTaxExempt,localTaxExempt)"
+					+ "tax(employee_id,taxname,taxtype,ammount,fedTaxExempt,stateTaxExempt,state2TaxExempt,SSCTaxExempt,medicareTaxExempt,localTaxExempt)"
 					+ "Values(?,?,?,?,?,?,?,?,?,?)";
 			
 			PreparedStatement pstmt = conn.prepareStatement(insertStatement);
@@ -452,32 +453,6 @@ public class Edit_Tax_Table {
 	}
 	
 	//This will set taxNum to the ammount of taxes for that employee in order to dynamically create the tax table
-private static int SQLTaxNum(int empID) throws Exception {
-		ResultSet Rs;
-		String[] SQL;
-		SQL = Config.PullSQLConfig();
-		int TaxNum = 0;
-		
-		System.out.println("Querrying DB for selected Employee");
-		
-		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-		
-		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-		
-		String insertStatement = "select * from tax where employee_id = ?";
-		
-		PreparedStatement pstmt = conn.prepareStatement(insertStatement);
-		
-		pstmt.setInt(1, empID);
-		
-		Rs = pstmt.executeQuery();
-		
-		while(Rs.next()) {
-			TaxNum++;
-		}
-		
-		
-		return TaxNum;
-	}
+
 
 }

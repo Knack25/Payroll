@@ -14,7 +14,7 @@ public class Tax {
 		this.ammount = 00.00;
 		this.fedTaxExempt = false;
 		this.stateTaxExempt = false;
-		this.statePATaxExempt = false;
+		this.state2TaxExempt = false;
 		this.sscTaxExempt = false;
 		this.medicareTaxeExempt = false;
 		this.localTaxExempt = false;
@@ -26,11 +26,17 @@ public class Tax {
 	private String type;
 	private double ammount;
 	private boolean fedTaxExempt;
+	private double  fedTaxAmmnt;
 	private boolean stateTaxExempt;
-	private boolean statePATaxExempt;
+	private double  stateTaxAmmnt;
+	private boolean state2TaxExempt;
+	private double  state2TaxAmmnt;
 	private boolean sscTaxExempt;
+	private double  sscTaxAmmnt;
 	private boolean medicareTaxeExempt;
+	private double  medicareTaxAmmnt;
 	private boolean localTaxExempt;
+	private double  localTaxAmmnt;
 	private double YTD;
 	private int employee_id;
 	
@@ -82,11 +88,11 @@ public class Tax {
 	public void setStateTaxExempt(boolean stateTaxExempt) {
 		this.stateTaxExempt = stateTaxExempt;
 	}
-	public boolean isStatePATaxExempt() {
-		return statePATaxExempt;
+	public boolean isState2TaxExempt() {
+		return state2TaxExempt;
 	}
-	public void setStatePATaxExempt(boolean statePATaxExempt) {
-		this.statePATaxExempt = statePATaxExempt;
+	public void setState2TaxExempt(boolean state2TaxExempt) {
+		this.state2TaxExempt = state2TaxExempt;
 	}
 	public boolean isSscTaxExempt() {
 		return sscTaxExempt;

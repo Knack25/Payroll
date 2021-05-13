@@ -71,6 +71,34 @@ public class MySQL {
 		
 		 return ID;
 	 }
+	 
+	 public static int SQLTaxNum(int empID) throws Exception {
+			ResultSet Rs;
+			String[] SQL;
+			SQL = Config.PullSQLConfig();
+			int TaxNum = 0;
+			
+			System.out.println("Querrying DB for selected Employee");
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			String insertStatement = "select * from tax where employee_id = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(insertStatement);
+			
+			pstmt.setInt(1, empID);
+			
+			Rs = pstmt.executeQuery();
+			
+			while(Rs.next()) {
+				TaxNum++;
+			}
+			
+			
+			return TaxNum;
+		}
 
 	
 }

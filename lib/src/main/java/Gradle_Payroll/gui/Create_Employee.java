@@ -232,7 +232,7 @@ import Gradle_Payroll.sql.MySQL;
 			SQL = Config.PullSQLConfig();
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
-			String insertStatement = "Insert into tax(employee_id,taxname,taxtype,ammount,fedTaxExempt,stateTaxExempt,statePATaxExempt,SSCTaxExempt,"
+			String insertStatement = "Insert into tax(employee_id,taxname,taxtype,ammount,fedTaxExempt,stateTaxExempt,state2TaxExempt,SSCTaxExempt,"
 					+ "medicareTaxExempt,localTaxExempt) values(?,?,?,?,?,?,?,?,?,?)";
 			
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
@@ -253,7 +253,7 @@ import Gradle_Payroll.sql.MySQL;
 				tax.setAmmount(rs.getDouble("ammount"));
 				tax.setFedTaxExempt(rs.getBoolean("fedTaxExempt"));
 				tax.setStateTaxExempt(rs.getBoolean("stateTaxExempt"));
-				tax.setStatePATaxExempt(rs.getBoolean("statePATaxExempt"));
+				tax.setState2TaxExempt(rs.getBoolean("state2TaxExempt"));
 				tax.setSscTaxExempt(rs.getBoolean("SSCTaxExempt"));
 				tax.setMedicareTaxeExempt(rs.getBoolean("medicareTaxExempt"));
 				tax.setLocalTaxExempt(rs.getBoolean("localTaxExempt"));
@@ -269,7 +269,7 @@ import Gradle_Payroll.sql.MySQL;
 				pstmt.setDouble(4, tax.getAmmount());
 				pstmt.setBoolean(5, tax.isFedTaxExempt());
 				pstmt.setBoolean(6, tax.isStateTaxExempt());
-				pstmt.setBoolean(7, tax.isStatePATaxExempt());
+				pstmt.setBoolean(7, tax.isState2TaxExempt());
 				pstmt.setBoolean(8, tax.isSscTaxExempt());
 				pstmt.setBoolean(9, tax.isMedicareTaxeExempt());
 				pstmt.setBoolean(10, tax.isLocalTaxExempt());

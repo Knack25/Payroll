@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -16,19 +18,22 @@ import javax.swing.JTextField;
 import Gradle_Payroll.data.Address;
 import Gradle_Payroll.data.Check;
 import Gradle_Payroll.data.Name;
+import Gradle_Payroll.data.Tax;
 import Gradle_Payroll.fileIO.Config;
 import Gradle_Payroll.fileIO.Excel_Out;
+import Gradle_Payroll.sql.MySQL;
 
 public class Check_Edit {
 	
 	static JInternalFrame frame;
-	static int CHECKNUM,EMPNUM;
+	static int CHECKNUM,EMPID,NUMTAXAMNT;
 	static JButton printB,cancelB;
 	static JLabel chkNumL,chkDateL,payPeriodL,hourRateL,salaryL,regHrsL,ptoHrsL,otHrsL,otherL,grossPayL,currentL,YTDL;
 	static JTextField nameT,addressT,cityStateZipT,dateT,amntT;
 	static Address addr;
 	static Name name;
 	static Check check;
+	static List<Tax> tax;
 	
 	static String amntSpellOut;
 	
@@ -47,22 +52,21 @@ public class Check_Edit {
     	name = new Name();
     	check = new Check();
     	
+    	tax = new ArrayList<Tax>();
+    	
     	CHECKNUM = checkNum;
-    	
-    	
-    	
 		
 		
     	
     	
     	//TODO: Add method to calculate taxes for check
     	
-		pullData();
+		pullData(); //Done
 		calcGross();
 		calcNet();
 		calcTaxes();
 			//Dante: can you run it through a calculator that deducts from each field that is applicable and send it?
-		//TODO: Add method to format and print check
+
     	
     	
     	
@@ -77,17 +81,60 @@ public class Check_Edit {
 	private static void pullData() {
 		try {
 			pullCheckData();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception CheckData) {
+			CheckData.printStackTrace();
 		}
 		try {
 			pullEmpData();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception EmpData) {
+			EmpData.printStackTrace();
 		}
-		
+		try {
+			NUMTAXAMNT = MySQL.SQLTaxNum(EMPID);
+		} catch (Exception TaxNum) {
+			TaxNum.printStackTrace();
+		}
+		try {
+			pullTaxData();
+		} catch (Exception TaxData) {
+			TaxData.printStackTrace();
+		}
 	
+	}
+
+	private static void pullTaxData() throws Exception {
+		// TODO grab all tax data into array
+		Tax tempTax = new Tax();
+		String[] SQL;
+		SQL = Config.PullSQLConfig();
+		
+		System.out.println("Querrying DB for selected Employee");
+		
+		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+		
+		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+		
+		
+		String updateStatement = "select * " + "from tax " + "WHERE employee_id = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+		
+		pstmt.setInt(1, EMPID);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			tempTax.setName(rs.getString("taxname"));
+			tempTax.setType(rs.getString("taxtype"));
+			tempTax.setAmmount(rs.getDouble("ammount"));
+			tempTax.setFedTaxExempt(rs.getBoolean("fedTaxExempt"));
+			tempTax.setStateTaxExempt(rs.getBoolean("stateTaxExempt"));
+			tempTax.setState2TaxExempt(rs.getBoolean("state2TaxExempt"));
+			tempTax.setSscTaxExempt(rs.getBoolean("SSCTaxExempt"));
+			tempTax.setMedicareTaxeExempt(rs.getBoolean("medicareTaxExempt"));
+			tempTax.setLocalTaxExempt(rs.getBoolean("localTaxExempt"));
+			tax.add(tempTax);
+		}
 	}
 
 	private static void pullEmpData() throws Exception {
@@ -108,7 +155,7 @@ public class Check_Edit {
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
 		
-		pstmt.setInt(1, EMPNUM);
+		pstmt.setInt(1, EMPID);
 		
 		
 		ResultSet rs = pstmt.executeQuery();
@@ -157,7 +204,7 @@ public class Check_Edit {
 		
 		ResultSet rs = pstmt.executeQuery();
 		
-		EMPNUM = rs.getInt("employee_id");
+		EMPID = rs.getInt("employee_id");
 		check.setRegHours(rs.getDouble("regHours"));
 		check.setRegRate(rs.getDouble("regRate"));
 		check.setPtoHours(rs.getDouble("ptoHours"));
@@ -170,7 +217,13 @@ public class Check_Edit {
 	}
 
 	private static void calcGross() {
-		// TODO Calculate Gross amount form all inputs
+		double reg,ot,pto,salary,other;
+		reg = check.getRegRate() * check.getRegHours();
+		ot = check.getOtRate() * check.getOtHours();
+		pto = check.getPtoRate() * check.getPtoHours();
+		salary =  check.getSalRate();
+		other = check.getAdvRate() + check.getRoyaltyRate();
+		check.setGrossAmmnt(reg + ot + pto + salary + other);
 		
 	}
 
@@ -202,7 +255,6 @@ public class Check_Edit {
 				Excel_Out.formatColwidth(9, 17);
 				Excel_Out.formatColwidth(10, 17);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			// TODO Save the data from the check to an entry in the DB.

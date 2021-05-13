@@ -25,6 +25,7 @@ public class Excel_Out{
 	
 	
 	public static void create(String sheetName,int numCol,int numRow) throws Exception {
+		createBook();
 		createSheet(sheetName);
 		createCells(numCol, numRow);
 		normalF = book.createFont();
@@ -81,6 +82,7 @@ public class Excel_Out{
 		sheet.setColumnWidth(col, width);
 		return 0;
 	}
+	
 	
 	public static int clearCellFormat(int col,int row) {
 		sheet.getRow(row).getCell(col).setCellStyle(normalS);
