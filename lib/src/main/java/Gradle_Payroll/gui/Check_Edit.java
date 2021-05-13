@@ -243,17 +243,103 @@ public class Check_Edit {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Call Excel funciton and send it off to be printed.
 			try {
-				Excel_Out.create("Dante", 12, 52);
+				Excel_Out.create("Test v1", 12, 52);
+				
 				Excel_Out.formatColwidth(1, 17);
 				Excel_Out.formatColwidth(2, 12);
 				Excel_Out.formatColwidth(3, 7);
-				Excel_Out.formatColwidth(4, 17);
-				Excel_Out.formatColwidth(5, 17);
-				Excel_Out.formatColwidth(6, 17);
-				Excel_Out.formatColwidth(7, 17);
-				Excel_Out.formatColwidth(8, 17);
-				Excel_Out.formatColwidth(9, 17);
-				Excel_Out.formatColwidth(10, 17);
+				Excel_Out.formatColwidth(4, 13);
+				Excel_Out.formatColwidth(5, 3);
+				Excel_Out.formatColwidth(6, 13);
+				Excel_Out.formatColwidth(7, 10);
+				Excel_Out.formatColwidth(8, 18);
+				Excel_Out.formatColwidth(9, 16);
+				Excel_Out.formatColwidth(10, 8);
+				Excel_Out.formatColwidth(11, 16);
+				Excel_Out.formatColwidth(12, 15);
+				
+				
+				for(int i = 1;i < 53; i++)
+					Excel_Out.formatRowHeight(i, (float)17.25);
+		
+				Excel_Out.formatRowHeight(4, 36);
+				Excel_Out.formatRowHeight(5, (float)34.5);
+				for(int i = 6; i < 38; i++) {
+						if(i==8 || i==17 || i==18)
+							continue;
+						Excel_Out.formatRowHeight(i, (float)19.5);
+				}
+				Excel_Out.formatRowHeight(8, (float)16.5);
+				Excel_Out.formatRowHeight(17, (float)16.5);
+				Excel_Out.formatRowHeight(18, (float)16.5);
+				
+				
+				Excel_Out.writeToCell(3, 7, amntSpellOut);
+				Excel_Out.writeToCell(9, 9, dateT.getText());
+				Excel_Out.writeToCell(12, 9, amntT.getText());
+				Excel_Out.writeToCell(3, 1, nameT.getText());
+				Excel_Out.writeToCell(3,12,addressT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				
+				
+				Excel_Out.writeToCell(9,21,"Current");
+				Excel_Out.writeToCell(11,21,"YTD");
+				Excel_Out.writeToCell(2,22,"Check Date");
+				Excel_Out.writeToCell(4,22, null/* Need that date that the check was made*/);
+				
+				Excel_Out.writeToCell(9,22,amntT.getText());
+				Excel_Out.writeToCell(11,22,null/*Gross YTD*/);
+				
+				Excel_Out.writeToCell(2,24,"Pay Period");
+				Excel_Out.writeToCell(4,24,null/*beginning date for period*/);
+				Excel_Out.writeToCell(5,24,"-");
+				Excel_Out.writeToCell(6,24,null/*end date for period*/);
+				
+				
+				Excel_Out.writeToCell(8,22,"Gross Pay");
+				int i;
+				for(i = 0;i < 14; i++) {
+					Excel_Out.writeToCell(8,(23+i),null/*Name of the tax*/);
+					if(i == 13)
+						Excel_Out.writeToCell(8,(23+i),"Other");
+				}
+				Excel_Out.writeToCell(8,23,"Federal");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Social Security");
+				Excel_Out.writeToCell(8,24,"Net Pay");
+				
+				
+				Excel_Out.writeToCell(9,24,cityStateZipT.getText());
+				Excel_Out.writeToCell(11,24,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+				
+				
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

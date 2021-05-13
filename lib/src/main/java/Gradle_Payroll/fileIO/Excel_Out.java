@@ -73,7 +73,7 @@ public class Excel_Out{
 		return 0;
 	}
 	
-	public static int formatRowHeight(int row,int height) {
+	public static int formatRowHeight(int row,float height) {
 		sheet.getRow(row).setHeightInPoints(height);
 		return 0;
 	}
