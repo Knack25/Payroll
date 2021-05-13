@@ -233,7 +233,7 @@ import Gradle_Payroll.sql.MySQL;
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
 			String insertStatement = "Insert into tax(employee_id,taxname,taxtype,ammount,fedTaxExempt,stateTaxExempt,state2TaxExempt,SSCTaxExempt,"
-					+ "medicareTaxExempt,localTaxExempt) values(?,?,?,?,?,?,?,?,?,?)";
+					+ "medicareTaxExempt,localTaxExempt,primaryTax) values(?,?,?,?,?,?,?,?,?,?,?)";
 			
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
@@ -257,6 +257,7 @@ import Gradle_Payroll.sql.MySQL;
 				tax.setSscTaxExempt(rs.getBoolean("SSCTaxExempt"));
 				tax.setMedicareTaxeExempt(rs.getBoolean("medicareTaxExempt"));
 				tax.setLocalTaxExempt(rs.getBoolean("localTaxExempt"));
+				tax.setPrimaryTax(rs.getBoolean("primaryTax"));
 				tax.setEmployee_id(empID);
 				System.out.println(tax.getName());
 				//Taxes.add(tax);
@@ -273,6 +274,7 @@ import Gradle_Payroll.sql.MySQL;
 				pstmt.setBoolean(8, tax.isSscTaxExempt());
 				pstmt.setBoolean(9, tax.isMedicareTaxeExempt());
 				pstmt.setBoolean(10, tax.isLocalTaxExempt());
+				pstmt.setBoolean(11, tax.isPrimaryTax());
 				
 				int rs2 = pstmt.executeUpdate(); 
 				i += rs2;

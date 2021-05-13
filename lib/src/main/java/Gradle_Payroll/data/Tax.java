@@ -12,12 +12,14 @@ public class Tax {
 		this.ID = 0;
 		this.type = "Type";
 		this.ammount = 00.00;
+		this.netAmmount = 00.00;
 		this.fedTaxExempt = false;
 		this.stateTaxExempt = false;
 		this.state2TaxExempt = false;
 		this.sscTaxExempt = false;
 		this.medicareTaxeExempt = false;
 		this.localTaxExempt = false;
+		this.primaryTax = false;
 		this.YTD = 00.00;
 	}
 	
@@ -25,18 +27,14 @@ public class Tax {
 	private int ID;
 	private String type;
 	private double ammount;
+	private double netAmmount;
 	private boolean fedTaxExempt;
-	private double  fedTaxAmmnt;
 	private boolean stateTaxExempt;
-	private double  stateTaxAmmnt;
 	private boolean state2TaxExempt;
-	private double  state2TaxAmmnt;
 	private boolean sscTaxExempt;
-	private double  sscTaxAmmnt;
 	private boolean medicareTaxeExempt;
-	private double  medicareTaxAmmnt;
 	private boolean localTaxExempt;
-	private double  localTaxAmmnt;
+	private boolean primaryTax;
 	private double YTD;
 	private int employee_id;
 	
@@ -111,6 +109,18 @@ public class Tax {
 	}
 	public void setLocalTaxExempt(boolean localTaxExempt) {
 		this.localTaxExempt = localTaxExempt;
+	}
+	public boolean isPrimaryTax() {
+		return primaryTax;
+	}
+	public void setPrimaryTax(boolean primaryTax) {
+		this.primaryTax = primaryTax;
+	}
+	public double getNetAmmount() {
+		return netAmmount;
+	}
+	public void setNetAmmount(double netAmmount) {
+		this.netAmmount = netAmmount;
 	}
 	
 }

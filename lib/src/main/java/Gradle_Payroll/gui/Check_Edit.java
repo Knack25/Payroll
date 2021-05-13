@@ -57,14 +57,12 @@ public class Check_Edit {
     	CHECKNUM = checkNum;
 		
 		
-    	
-    	
-    	//TODO: Add method to calculate taxes for check
-    	
-		pullData(); //Done
-		calcGross();
+		sqlPullData(); //Done
+		calcGross(); //Done
+		calcTaxes(); //Done
 		calcNet();
-		calcTaxes();
+		createLabels();
+		drawData();
 			//Dante: can you run it through a calculator that deducts from each field that is applicable and send it?
 
     	
@@ -78,14 +76,24 @@ public class Check_Edit {
 		return frame;
 	}
 
-	private static void pullData() {
+	private static void drawData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void createLabels() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void sqlPullData() {
 		try {
-			pullCheckData();
+			sqlPullCheckData();
 		} catch (Exception CheckData) {
 			CheckData.printStackTrace();
 		}
 		try {
-			pullEmpData();
+			sqlPullEmpData();
 		} catch (Exception EmpData) {
 			EmpData.printStackTrace();
 		}
@@ -95,15 +103,14 @@ public class Check_Edit {
 			TaxNum.printStackTrace();
 		}
 		try {
-			pullTaxData();
+			sqlPullTaxData();
 		} catch (Exception TaxData) {
 			TaxData.printStackTrace();
 		}
 	
 	}
 
-	private static void pullTaxData() throws Exception {
-		// TODO grab all tax data into array
+	private static void sqlPullTaxData() throws Exception {
 		Tax tempTax = new Tax();
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
@@ -133,11 +140,12 @@ public class Check_Edit {
 			tempTax.setSscTaxExempt(rs.getBoolean("SSCTaxExempt"));
 			tempTax.setMedicareTaxeExempt(rs.getBoolean("medicareTaxExempt"));
 			tempTax.setLocalTaxExempt(rs.getBoolean("localTaxExempt"));
+			tempTax.setPrimaryTax(rs.getBoolean("primaryTax"));
 			tax.add(tempTax);
 		}
 	}
 
-	private static void pullEmpData() throws Exception {
+	private static void sqlPullEmpData() throws Exception {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
 		
@@ -183,7 +191,7 @@ public class Check_Edit {
 		
 	}
 
-	private static void pullCheckData() throws Exception {
+	private static void sqlPullCheckData() throws Exception {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
 		
@@ -224,16 +232,72 @@ public class Check_Edit {
 		salary =  check.getSalRate();
 		other = check.getAdvRate() + check.getRoyaltyRate();
 		check.setGrossAmmnt(reg + ot + pto + salary + other);
-		
+		check.setFedGrossAmmnt(check.getGrossAmmnt());
+		check.setStateGrossAmmnt(check.getGrossAmmnt());
+		check.setState2GrossAmmnt(check.getGrossAmmnt());
+		check.setSscGrossAmmnt(check.getGrossAmmnt());
+		check.setMedicareGrossAmmnt(check.getGrossAmmnt());
+		check.setLocalGrossAmmnt(check.getGrossAmmnt());
 	}
 
 	private static void calcNet() {
 		// TODO Calculate Net from Gross and total Taxes
+		check.setNetAmmnt(check.getGrossAmmnt());
 		
+		//Get all of the taxes
+		for(int i = 0; i < NUMTAXAMNT; i++) {
+			check.setNetAmmnt(check.getNetAmmnt() - tax.get(i).getNetAmmount());
+		}
+		
+		//TODO: Subtract all extra values
+		check.setNetAmmnt(check.getNetAmmnt() - check.getAddFedTax());
+		check.setNetAmmnt(check.getNetAmmnt() - check.getAddStateTax());
 	}
 
 	private static void calcTaxes() {
-		// TODO Calculate Taxes based on exemptions and ammounts
+		
+		
+		
+		for(int i = 0; i < NUMTAXAMNT;i++) {
+			if(!tax.get(i).isPrimaryTax() && tax.get(i).getType() == "%") {
+				tax.get(i).setNetAmmount(tax.get(i).getAmmount() * check.getGrossAmmnt());
+			}else {
+				tax.get(i).setNetAmmount(tax.get(i).getAmmount());
+			}
+		}
+		
+		
+		
+		for(int i = 0; i < NUMTAXAMNT;i++) {
+			if(!tax.get(i).isPrimaryTax()) {
+				if(tax.get(i).isFedTaxExempt()) {
+					check.setFedGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+				}
+				if(tax.get(i).isStateTaxExempt()) {
+					check.setStateGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+				}
+				if(tax.get(i).isState2TaxExempt()) {
+					check.setState2GrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+				}
+				if(tax.get(i).isSscTaxExempt()) {
+					check.setSscGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+				}
+				if(tax.get(i).isMedicareTaxeExempt()) {
+					check.setMedicareGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+				}
+				if(tax.get(i).isLocalTaxExempt()) {
+					check.setLocalGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+				}
+			}
+				
+		}
+		
+		tax.get(0).setNetAmmount(check.getFedGrossAmmnt() * tax.get(0).getAmmount());
+		tax.get(1).setNetAmmount(check.getStateGrossAmmnt() * tax.get(1).getAmmount());
+		tax.get(2).setNetAmmount(check.getState2GrossAmmnt() * tax.get(2).getAmmount());
+		tax.get(3).setNetAmmount(check.getSscGrossAmmnt() * tax.get(3).getAmmount());
+		tax.get(4).setNetAmmount(check.getMedicareGrossAmmnt() * tax.get(4).getAmmount());
+		tax.get(5).setNetAmmount(check.getLocalGrossAmmnt() * tax.get(5).getAmmount());
 		
 	}
 	
@@ -241,110 +305,118 @@ public class Check_Edit {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Call Excel funciton and send it off to be printed.
+			
 			try {
-				Excel_Out.create("Test v1", 12, 52);
-				
-				Excel_Out.formatColwidth(1, 17);
-				Excel_Out.formatColwidth(2, 12);
-				Excel_Out.formatColwidth(3, 7);
-				Excel_Out.formatColwidth(4, 13);
-				Excel_Out.formatColwidth(5, 3);
-				Excel_Out.formatColwidth(6, 13);
-				Excel_Out.formatColwidth(7, 10);
-				Excel_Out.formatColwidth(8, 18);
-				Excel_Out.formatColwidth(9, 16);
-				Excel_Out.formatColwidth(10, 8);
-				Excel_Out.formatColwidth(11, 16);
-				Excel_Out.formatColwidth(12, 15);
-				
-				
-				for(int i = 1;i < 53; i++)
-					Excel_Out.formatRowHeight(i, (float)17.25);
-		
-				Excel_Out.formatRowHeight(4, 36);
-				Excel_Out.formatRowHeight(5, (float)34.5);
-				for(int i = 6; i < 38; i++) {
-						if(i==8 || i==17 || i==18)
-							continue;
-						Excel_Out.formatRowHeight(i, (float)19.5);
-				}
-				Excel_Out.formatRowHeight(8, (float)16.5);
-				Excel_Out.formatRowHeight(17, (float)16.5);
-				Excel_Out.formatRowHeight(18, (float)16.5);
-				
-				
-				Excel_Out.writeToCell(3, 7, amntSpellOut);
-				Excel_Out.writeToCell(9, 9, dateT.getText());
-				Excel_Out.writeToCell(12, 9, amntT.getText());
-				Excel_Out.writeToCell(3, 1, nameT.getText());
-				Excel_Out.writeToCell(3,12,addressT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				
-				
-				Excel_Out.writeToCell(9,21,"Current");
-				Excel_Out.writeToCell(11,21,"YTD");
-				Excel_Out.writeToCell(2,22,"Check Date");
-				Excel_Out.writeToCell(4,22, null/* Need that date that the check was made*/);
-				
-				Excel_Out.writeToCell(9,22,amntT.getText());
-				Excel_Out.writeToCell(11,22,null/*Gross YTD*/);
-				
-				Excel_Out.writeToCell(2,24,"Pay Period");
-				Excel_Out.writeToCell(4,24,null/*beginning date for period*/);
-				Excel_Out.writeToCell(5,24,"-");
-				Excel_Out.writeToCell(6,24,null/*end date for period*/);
-				
-				
-				Excel_Out.writeToCell(8,22,"Gross Pay");
-				int i;
-				for(i = 0;i < 14; i++) {
-					Excel_Out.writeToCell(8,(23+i),null/*Name of the tax*/);
-					if(i == 13)
-						Excel_Out.writeToCell(8,(23+i),"Other");
-				}
-				Excel_Out.writeToCell(8,23,"Federal");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Social Security");
-				Excel_Out.writeToCell(8,24,"Net Pay");
-				
-				
-				Excel_Out.writeToCell(9,24,cityStateZipT.getText());
-				Excel_Out.writeToCell(11,24,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-				
+				formatExcel();
 				
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			// TODO Save the data from the check to an entry in the DB.
+			sqlPushCheck();
+		}
+
+		private void sqlPushCheck() {
 			
+			
+		}
+
+		private void formatExcel() throws Exception {
+			Excel_Out.create("Test v1", 12, 52);
+			
+			Excel_Out.formatColwidth(1, 17);
+			Excel_Out.formatColwidth(2, 12);
+			Excel_Out.formatColwidth(3, 7);
+			Excel_Out.formatColwidth(4, 13);
+			Excel_Out.formatColwidth(5, 3);
+			Excel_Out.formatColwidth(6, 13);
+			Excel_Out.formatColwidth(7, 10);
+			Excel_Out.formatColwidth(8, 18);
+			Excel_Out.formatColwidth(9, 16);
+			Excel_Out.formatColwidth(10, 8);
+			Excel_Out.formatColwidth(11, 16);
+			Excel_Out.formatColwidth(12, 15);
+			
+			
+			for(int i = 1;i < 53; i++)
+				Excel_Out.formatRowHeight(i, (float)17.25);
+
+			Excel_Out.formatRowHeight(4, 36);
+			Excel_Out.formatRowHeight(5, (float)34.5);
+			for(int i = 6; i < 38; i++) {
+					if(i==8 || i==17 || i==18)
+						continue;
+					Excel_Out.formatRowHeight(i, (float)19.5);
+			}
+			Excel_Out.formatRowHeight(8, (float)16.5);
+			Excel_Out.formatRowHeight(17, (float)16.5);
+			Excel_Out.formatRowHeight(18, (float)16.5);
+			
+			
+			Excel_Out.writeToCell(3, 7, amntSpellOut);
+			Excel_Out.writeToCell(9, 9, dateT.getText());
+			Excel_Out.writeToCell(12, 9, amntT.getText());
+			Excel_Out.writeToCell(3, 1, nameT.getText());
+			Excel_Out.writeToCell(3,12,addressT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			
+			
+			Excel_Out.writeToCell(9,21,"Current");
+			Excel_Out.writeToCell(11,21,"YTD");
+			Excel_Out.writeToCell(2,22,"Check Date");
+			Excel_Out.writeToCell(4,22, null/* Need that date that the check was made*/);
+			
+			Excel_Out.writeToCell(9,22,amntT.getText());
+			Excel_Out.writeToCell(11,22,null/*Gross YTD*/);
+			
+			Excel_Out.writeToCell(2,24,"Pay Period");
+			Excel_Out.writeToCell(4,24,null/*beginning date for period*/);
+			Excel_Out.writeToCell(5,24,"-");
+			Excel_Out.writeToCell(6,24,null/*end date for period*/);
+			
+			
+			Excel_Out.writeToCell(8,22,"Gross Pay");
+			int i;
+			for(i = 0;i < 14; i++) {
+				Excel_Out.writeToCell(8,(23+i),null/*Name of the tax*/);
+				if(i == 13)
+					Excel_Out.writeToCell(8,(23+i),"Other");
+			}
+			Excel_Out.writeToCell(8,23,"Federal");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Social Security");
+			Excel_Out.writeToCell(8,24,"Net Pay");
+			
+			
+			Excel_Out.writeToCell(9,24,cityStateZipT.getText());
+			Excel_Out.writeToCell(11,24,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
 		}
 	};
 	

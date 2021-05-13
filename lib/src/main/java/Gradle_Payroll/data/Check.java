@@ -7,6 +7,12 @@ public class Check {
 	private int ID = 0;
 	private double checkNum = 0;
 	private double grossAmmnt = 0;
+	private double fedGrossAmmnt = 0;
+	private double stateGrossAmmnt = 0;
+	private double state2GrossAmmnt = 0;
+	private double sscGrossAmmnt = 0;
+	private double medicareGrossAmmnt = 0;
+	private double localGrossAmmnt = 0;
 	private double netAmmnt = 0;
 	private double regHours = 0;
 	private double regRate = 0;
@@ -146,6 +152,42 @@ public class Check {
 	}
 	public void setAddFedTax(double addFedTax) {
 		AddFedTax = addFedTax;
+	}
+	public double getFedGrossAmmnt() {
+		return fedGrossAmmnt;
+	}
+	public void setFedGrossAmmnt(double fedGrossAmmnt) {
+		this.fedGrossAmmnt = fedGrossAmmnt;
+	}
+	public double getStateGrossAmmnt() {
+		return stateGrossAmmnt;
+	}
+	public void setStateGrossAmmnt(double stateGrossAmmnt) {
+		this.stateGrossAmmnt = stateGrossAmmnt;
+	}
+	public double getState2GrossAmmnt() {
+		return state2GrossAmmnt;
+	}
+	public void setState2GrossAmmnt(double state2GrossAmmnt) {
+		this.state2GrossAmmnt = state2GrossAmmnt;
+	}
+	public double getSscGrossAmmnt() {
+		return sscGrossAmmnt;
+	}
+	public void setSscGrossAmmnt(double sscGrossAmmnt) {
+		this.sscGrossAmmnt = sscGrossAmmnt;
+	}
+	public double getMedicareGrossAmmnt() {
+		return medicareGrossAmmnt;
+	}
+	public void setMedicareGrossAmmnt(double medicareGrossAmmnt) {
+		this.medicareGrossAmmnt = medicareGrossAmmnt;
+	}
+	public double getLocalGrossAmmnt() {
+		return localGrossAmmnt;
+	}
+	public void setLocalGrossAmmnt(double localGrossAmmnt) {
+		this.localGrossAmmnt = localGrossAmmnt;
 	}
 	
 	

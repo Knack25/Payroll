@@ -80,7 +80,7 @@ public class Tax_Table_Remove extends JDialog {
 		
 		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 		
-		String insertStatement = "Select * from tax where employee_id = ?";
+		String insertStatement = "Select * from tax where employee_id = ? and primaryTax = false";
 		
 		PreparedStatement pstmt = conn.prepareStatement(insertStatement);
 		
