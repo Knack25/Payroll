@@ -63,8 +63,9 @@ public class Check_Edit {
 		calcNet();
 		createLabels();
 		drawData();
-			//Dante: can you run it through a calculator that deducts from each field that is applicable and send it?
-
+		
+		frame.add(printB);
+		frame.add(cancelB);
     	
     	
     	
@@ -386,48 +387,62 @@ public class Check_Edit {
 			Excel_Out.writeToCell(6,24,null/*end date for period*/);
 			
 			
+			
+			
+			
 			Excel_Out.writeToCell(8,22,"Gross Pay");
+			//Doubt that this will work properly
 			int i;
 			for(i = 0;i < 14; i++) {
-				Excel_Out.writeToCell(8,(23+i),null/*Name of the tax*/);
-				if(i == 13)
+				if(i == 13) {
 					Excel_Out.writeToCell(8,(23+i),"Other");
+					Excel_Out.writeToCell(9,(23+i),null/* the sum of all unseen tax tables for current check*/);
+					Excel_Out.writeToCell(11,(23+i),null/* the sum of all unseen tax tables for YTD*/);
+					continue;
+				}
+				Excel_Out.writeToCell(8,(23+i),null/*Name of the tax*/);
+				Excel_Out.writeToCell(9,(23+i),null/*value of the tax on the current check*/);
+				Excel_Out.writeToCell(11,(23+i),null/*value of the tax for YTD*/);
 			}
-			Excel_Out.writeToCell(8,23,"Federal");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Social Security");
-			Excel_Out.writeToCell(8,24,"Net Pay");
+			Excel_Out.writeToCell(8,23+i+1,"Net Pay");
 			
 			
-			Excel_Out.writeToCell(9,24,cityStateZipT.getText());
-			Excel_Out.writeToCell(11,24,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			
+			
+			Excel_Out.writeToCell(4,27,"Current");
+			Excel_Out.writeToCell(6,27,"YTD");
+			
+			Excel_Out.writeToCell(2,28,"Regular");
+			Excel_Out.writeToCell(4,28, check.getRegHours());
+			Excel_Out.writeToCell(6,28,null /*YTD hours worked*/);
+			
+			int j = 29;
+			if(j == 3 /*checks if there YTD for PTO is greater than 0*/) {
+				Excel_Out.writeToCell(2,j,"PTO");
+				Excel_Out.writeToCell(4,j,check.getPtoHours());
+				Excel_Out.writeToCell(6,j,null/* Total YTD PTO hours used*/);
+				j++;
+			}
+			
+			if(j == 3 /*checks if there YTD for overtime is greater than 0*/) {
+				Excel_Out.writeToCell(2,j,"Overtime");
+				Excel_Out.writeToCell(4,j,check.getOtHours());
+				Excel_Out.writeToCell(6,j,null/* Total YTD PTO hours used*/);
+				j++;
+			}
+			
+			
+			Excel_Out.underlineCell(4, 27);
+			Excel_Out.underlineCell(6, 27);
+			Excel_Out.underlineCell(4, j--);
+			Excel_Out.underlineCell(6, j--);
+			
+			Excel_Out.setCellBorder(9, 21);
+			Excel_Out.setCellBorder(11, 21);
+			Excel_Out.setCellBorder(9, 23);
+			Excel_Out.setCellBorder(11, 23);
+			
+			
 		}
 	};
 	
