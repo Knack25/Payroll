@@ -168,7 +168,7 @@ public class Check_Edit {
     					break;
     				case 9:
     					pos.gridy = y;
-    					frame.add(otherHrsCurrT,pos);
+    				//	frame.add(otherHrsCurrT,pos);
     					break;
     				}
     			}
@@ -196,7 +196,7 @@ public class Check_Edit {
     					break;
     				case 9:
     					pos.gridy = y;
-    					frame.add(otherHrsYTDT,pos);
+    					//frame.add(otherHrsYTDT,pos);
     					break;
     				}
     			}
@@ -347,7 +347,6 @@ public class Check_Edit {
 		try {
 			sqlPullYTDData();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
@@ -370,7 +369,10 @@ public class Check_Edit {
 		
 		pstmt.setInt(1, EMPID);
 		pstmt.setString(2, "grossAmmnt");
+		
+		System.out.println(pstmt);
 		ResultSet rs = pstmt.executeQuery();
+		rs.next();
 		yTD_Initial.setGrossAmmntYTD(rs.getDouble("ammount"));
 		
 		pstmt.setString(2, "netAmmnt");
@@ -513,9 +515,11 @@ public class Check_Edit {
 		
 		pstmt.setInt(1, CHECKNUM);
 		
+		System.out.println(pstmt);
+		
 		
 		ResultSet rs = pstmt.executeQuery();
-		
+		rs.next();
 		EMPID = rs.getInt("employee_id");
 		check.setRegHours(rs.getDouble("regHours"));
 		check.setRegRate(rs.getDouble("regRate"));

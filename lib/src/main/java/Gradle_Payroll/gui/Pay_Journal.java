@@ -354,7 +354,6 @@ public class Pay_Journal {
 		try {
 			sqlPullYTDData();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	

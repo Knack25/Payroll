@@ -335,7 +335,10 @@ public class Create_Check {
 				empID = MySQL.sqlPullEmpID(name);
 				checkID = sqlPushCheckInitRequest(empID);
 				dialog.dispose();
+				System.out.println(checkID);
 				Main_Menu.CheckNum = checkID;
+				Main_Menu.processPayrollEdit();
+				
 				
 			}catch (Exception PushCheckInitRequest) {
 				PushCheckInitRequest.printStackTrace();
@@ -420,7 +423,7 @@ public class Create_Check {
 		conn.close();
 		
 		updateNextCheckNum(checkID);
-		Main_Menu.processPayrollEdit();
+		
 		 
 		 return checkID;
 	 }
