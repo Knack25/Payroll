@@ -167,7 +167,7 @@ public class Main_Menu extends JFrame implements ActionListener{
     		voidCheckDialog();
     		break;
     	case("payroll_settings"):
-    		payrollSettingsWindow();
+    		programSettingsWindow();
     		break;
 //    	case("program_settings"):
 //    		
@@ -247,9 +247,9 @@ public class Main_Menu extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 	}
-	private void payrollSettingsWindow() {
+	private void programSettingsWindow() {
 		try {
-			Payroll_Settings.createFrame();
+			Program_Settings.createFrame();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
