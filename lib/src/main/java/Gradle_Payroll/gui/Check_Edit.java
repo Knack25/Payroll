@@ -1,5 +1,6 @@
 package Gradle_Payroll.gui;
 
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -79,13 +80,175 @@ public class Check_Edit {
 		createLabels();
 		drawData();
 		
-		frame.add(printB);
-		frame.add(cancelB);
-    	
-    	
-    	
-    	
+
+
 		
+		
+		GridBagConstraints pos = new GridBagConstraints();
+    	for(int x = 0; x < 13; x++) {
+    		pos.gridx = x;
+    		for(int y =1; y < 40; y++) {
+    			if(x==0) {
+    				switch(y) {
+    				case 0:
+    					pos.gridy = y;
+    					frame.add(chkNumL,pos);
+    					break;
+    				case 1:
+    					pos.gridy = y;
+    					frame.add(chkDateL,pos);
+    					break;
+    				case 2:
+    					pos.gridy = y;
+    					frame.add(payPeriodL,pos);
+    					break;
+    				case 3:
+    					pos.gridy = y;
+    					frame.add(hourRateL,pos);
+    					break;
+    				case 5:
+    					pos.gridy = y;
+    					frame.add(regHrsL,pos);
+    					break;
+    				case 6:
+    					pos.gridy = y;
+    					frame.add(ptoHrsL,pos);
+    					break;
+    				case 7:
+    					pos.gridy = y;
+    					frame.add(otHrsL,pos);
+    					break;
+    				case 8:
+    					pos.gridy = y;
+    					frame.add(salaryL,pos);
+    					break;
+    				case 9:
+    					pos.gridy = y;
+    					frame.add(otherL,pos);
+    					break;
+    				}
+    			}
+    			if(x==1) {
+    				switch(y) {
+    				case 0:
+    					pos.gridy = y;
+    					frame.add(null/*check number*/,pos);
+    					break;
+    				case 1:
+    					pos.gridy = y;
+    					frame.add(dateT,pos);
+    					break;
+    				case 2:
+    					pos.gridy = y;
+    					frame.add(periodDateT,pos);
+    					break;
+    				case 3:
+    					pos.gridy = y;
+    					frame.add(hourRateT,pos);
+    					break;
+    				case 4:
+    					pos.gridy = y;
+    					frame.add(currentL,pos);
+    					break;
+    				case 5:
+    					pos.gridy = y;
+    					frame.add(regularHrsCurrT,pos);
+    					break;
+    				case 6:
+    					pos.gridy = y;
+    					frame.add(ptoHrsCurrT,pos);
+    					break;
+    				case 7:
+    					pos.gridy = y;
+    					frame.add(otHrsCurrT,pos);
+    					break;
+    				case 8:
+    					pos.gridy = y;
+    					frame.add(salaryCurrT,pos);
+    					break;
+    				case 9:
+    					pos.gridy = y;
+    					frame.add(otherHrsCurrT,pos);
+    					break;
+    				}
+    			}
+    			if(x==2) {
+    				switch(y) {
+    				case 4:
+    					pos.gridy = y;
+    					frame.add(YTDL,pos);
+    					break;
+    				case 5:
+    					pos.gridy = y;
+    					frame.add(regularHrsYTDT,pos);
+    					break;
+    				case 6:
+    					pos.gridy = y;
+    					frame.add(ptoHrsYTDT,pos);
+    					break;
+    				case 7:
+    					pos.gridy = y;
+    					frame.add(otHrsYTDT,pos);
+    					break;
+    				case 8:
+    					pos.gridy = y;
+    					frame.add(salaryYTDT,pos);
+    					break;
+    				case 9:
+    					pos.gridy = y;
+    					frame.add(otherHrsYTDT,pos);
+    					break;
+    				}
+    			}
+//    			if(x==3) {
+//    				switch(y) {
+//    				case 0:
+//    					pos.gridy = y;
+//    					frame.add(null/*check number*/,pos);
+//    					break;
+//    				case 1:
+//    					pos.gridy = y;
+//    					frame.add(dateT,pos);
+//    					break;
+//    				case 2:
+//    					pos.gridy = y;
+//    					frame.add(periodDateT,pos);
+//    					break;
+//    				case 3:
+//    					pos.gridy = y;
+//    					frame.add(hourRateT,pos);
+//    					break;
+//    				case 4:
+//    					pos.gridy = y;
+//    					frame.add(currentL,pos);
+//    					break;
+//    				case 5:
+//    					pos.gridy = y;
+//    					frame.add(regularHrsCurrT,pos);
+//    					break;
+//    				case 6:
+//    					pos.gridy = y;
+//    					frame.add(ptoHrsCurrT,pos);
+//    					break;
+//    				case 7:
+//    					pos.gridy = y;
+//    					frame.add(otHrsCurrT,pos);
+//    					break;
+//    				case 8:
+//    					pos.gridy = y;
+//    					frame.add(salaryCurrT,pos);
+//    					break;
+//    				case 9:
+//    					pos.gridy = y;
+//    					frame.add(otherHrsCurrT,pos);
+//    					break;
+//    				}
+//    			}
+    		}
+    	}
+    	
+    	frame.add(cancelB);
+    	frame.add(printB);
     	
     	frame.setVisible(true);
     	frame.setResizable(true);
@@ -155,8 +318,8 @@ public class Check_Edit {
 		otHrsL = new JLabel("O.T. Hours: ");
 		otherL = new JLabel("Other: ");
 		grossPayL = new JLabel("Gross Amnt: ");
-		currentL  = new JLabel("Current: ");
-		YTDL  = new JLabel("Y.T.D: ");
+		currentL  = new JLabel("<HTML><U> Current </U></HTML>");
+		YTDL  = new JLabel("<HTML><U> YTD </U></HTML>");
 		
 	}
 
@@ -500,7 +663,7 @@ public class Check_Edit {
 			Excel_Out.writeToCell(3, 7, amntSpellOut);
 			Excel_Out.writeToCell(9, 9, dateT.getText());
 			Excel_Out.writeToCell(12, 9, amntT.getText());
-			Excel_Out.writeToCell(3, 1, nameT.getText());
+			Excel_Out.writeToCell(3, 11, nameT.getText());
 			Excel_Out.writeToCell(3,12,addressT.getText());
 			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
 			
@@ -508,15 +671,15 @@ public class Check_Edit {
 			Excel_Out.writeToCell(9,21,"Current");
 			Excel_Out.writeToCell(11,21,"YTD");
 			Excel_Out.writeToCell(2,22,"Check Date");
-			Excel_Out.writeToCell(4,22, null/* Need that date that the check was made*/);
+			Excel_Out.writeToCell(4, 22, date);
 			
 			Excel_Out.writeToCell(9,22,amntT.getText());
-			Excel_Out.writeToCell(11,22,null/*Gross YTD*/);
+			Excel_Out.writeToCell(11,22, 1/*Gross YTD*/);
 			
 			Excel_Out.writeToCell(2,24,"Pay Period");
-			Excel_Out.writeToCell(4,24,null/*beginning date for period*/);
+			Excel_Out.writeToCell(4,24,1/*beginning date for period*/);
 			Excel_Out.writeToCell(5,24,"-");
-			Excel_Out.writeToCell(6,24,null/*end date for period*/);
+			Excel_Out.writeToCell(6,24,1/*end date for period*/);
 			
 			
 			
@@ -528,13 +691,13 @@ public class Check_Edit {
 			for(i = 0;i < 14; i++) {
 				if(i == 13) {
 					Excel_Out.writeToCell(8,(23+i),"Other");
-					Excel_Out.writeToCell(9,(23+i),null/* the sum of all unseen tax tables for current check*/);
-					Excel_Out.writeToCell(11,(23+i),null/* the sum of all unseen tax tables for YTD*/);
+					Excel_Out.writeToCell(9,(23+i),1/* the sum of all unseen tax tables for current check*/);
+					Excel_Out.writeToCell(11,(23+i),1/* the sum of all unseen tax tables for YTD*/);
 					continue;
 				}
-				Excel_Out.writeToCell(8,(23+i),null/*Name of the tax*/);
-				Excel_Out.writeToCell(9,(23+i),null/*value of the tax on the current check*/);
-				Excel_Out.writeToCell(11,(23+i),null/*value of the tax for YTD*/);
+				Excel_Out.writeToCell(8,(23+i),1/*Name of the tax*/);
+				Excel_Out.writeToCell(9,(23+i),1/*value of the tax on the current check*/);
+				Excel_Out.writeToCell(11,(23+i),1/*value of the tax for YTD*/);
 			}
 			Excel_Out.writeToCell(8,23+i+1,"Net Pay");
 			
@@ -546,20 +709,17 @@ public class Check_Edit {
 			
 			Excel_Out.writeToCell(2,28,"Regular");
 			Excel_Out.writeToCell(4,28, check.getRegHours());
-			Excel_Out.writeToCell(6,28,null /*YTD hours worked*/);
+			Excel_Out.writeToCell(6,28,1 /*YTD hours worked*/);
 			
-			int j = 29;
-			if(j == 3 /*checks if there YTD for PTO is greater than 0*/) {
-				Excel_Out.writeToCell(2,j,"PTO");
-				Excel_Out.writeToCell(4,j,check.getPtoHours());
-				Excel_Out.writeToCell(6,j,null/* Total YTD PTO hours used*/);
-				j++;
-			}
+			int j = 30;
+			Excel_Out.writeToCell(2,29,"PTO");
+			Excel_Out.writeToCell(4,29,check.getPtoHours());
+			Excel_Out.writeToCell(6,29,1/* Total YTD PTO hours used*/);
 			
-			if(j == 3 /*checks if there YTD for overtime is greater than 0*/) {
+			if(check.getOtHours() != 0) {
 				Excel_Out.writeToCell(2,j,"Overtime");
 				Excel_Out.writeToCell(4,j,check.getOtHours());
-				Excel_Out.writeToCell(6,j,null/* Total YTD PTO hours used*/);
+				Excel_Out.writeToCell(6,j,1/* Total YTD PTO hours used*/);
 				j++;
 			}
 			

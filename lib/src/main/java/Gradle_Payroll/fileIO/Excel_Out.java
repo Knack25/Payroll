@@ -4,6 +4,7 @@ package Gradle_Payroll.fileIO;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.time.LocalDate;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -60,6 +61,10 @@ public class Excel_Out{
 		sheet.getRow(row).getCell(col).setCellValue(input);
 		return 0;
 	}
+	public static int writeToCell(int col,int row, LocalDate date) {
+		sheet.getRow(row).getCell(col).setCellValue(date);
+		return 0;
+	}
 	public static int writeToCell(int col,int row, int input) {
 		sheet.getRow(row).getCell(col).setCellValue(input);
 		return 0;
@@ -100,6 +105,11 @@ public class Excel_Out{
 	}
 	public static int setCellBorder(int col,int row) {
 		sheet.getRow(row).getCell(col).getCellStyle().setBorderBottom(BorderStyle.MEDIUM);
+		return 0;
+	}
+	
+	public static int setThickCellBorder(int col,int row) {
+		sheet.getRow(row).getCell(col).getCellStyle().setBorderBottom(BorderStyle.THICK);
 		return 0;
 	}
 	
