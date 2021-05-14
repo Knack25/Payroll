@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -22,6 +21,7 @@ import Gradle_Payroll.data.Address;
 import Gradle_Payroll.data.Check;
 import Gradle_Payroll.data.Name;
 import Gradle_Payroll.data.Tax;
+import Gradle_Payroll.data.YTD;
 import Gradle_Payroll.fileIO.Config;
 import Gradle_Payroll.fileIO.Excel_Out;
 import Gradle_Payroll.fileIO.NumberToWords;
@@ -34,7 +34,7 @@ public class Check_Edit {
 	static JButton printB,cancelB;
 	static JLabel chkNumL,chkDateL,payPeriodL,hourRateL,salaryL,regHrsL,ptoHrsL,otHrsL,otherL,grossPayL,currentL,YTDL;
 	static JTextField nameT,addressT,cityStateZipT,dateT,amntT,spelledAmntT,periodDateT,hourRateT,salaryCurrT,salaryYTDT;
-	static JTextField regularHrsCurrT,regularHrsYTDT,ptoHrsCurrT,ptoHrsYTDT,otHrsCurrT,otHrsYTDT,otherHrsCurrT,otherHrsYTDT;
+	static JTextField regularHrsCurrT,regularHrsYTDT,ptoHrsCurrT,ptoHrsYTDT,otHrsCurrT,otHrsYTDT;
 	static JTextField grossPayCurrT,grossPayYTDT,netPayCurrT,netPayYTDT;
 	static Address addr;
 	static Name name;
@@ -44,7 +44,7 @@ public class Check_Edit {
 	static String amntSpellOut,fullName,address,cityStateZip,payPeriodDate;
 	static LocalDate date;
 	static SimpleDateFormat dateFormat;
-	static YTD ytd;
+	static YTD yTD_Initial,yTD_Calc;
 	
 	
 	
@@ -62,6 +62,9 @@ public class Check_Edit {
     	addr = new Address();
     	name = new Name();
     	check = new Check();
+    	yTD_Initial = new YTD();
+    	yTD_Calc = new YTD();
+    	
     	
     	tax = new ArrayList<Tax>();
     	
@@ -90,8 +93,17 @@ public class Check_Edit {
 	}
 
 	private static void calcYTD() {
-		// TODO Load in YTD Values
-		
+		yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD() + check.getGrossAmmnt());
+		yTD_Calc.setRegHoursYTD(yTD_Initial.getRegHoursYTD() + check.getRegHours());
+		yTD_Calc.setRegAmmntYTD(yTD_Initial.getRegAmmntYTD() + check.getRegAmmnt());
+		yTD_Calc.setPtoHoursYTD(yTD_Initial.getPtoHoursYTD() + check.getPtoHours());
+		yTD_Calc.setPtoAmmntYTD(yTD_Initial.getPtoAmmntYTD() + check.getPtoAmmnt());
+		yTD_Calc.setOtHoursYTD(yTD_Initial.getOtHoursYTD() + check.getOtHours());
+		yTD_Calc.setOtAmmntYTD(yTD_Initial.getOtAmmntYTD() + check.getOtAmmnt());
+		yTD_Calc.setSalAmmntYTD(yTD_Initial.getSalAmmntYTD() + check.getSalAmmnt());
+		yTD_Calc.setAdvAmmntYTD(yTD_Initial.getAdvAmmntYTD() + check.getAdvAmmnt());
+		yTD_Calc.setRoyaltyAmmntYTD(yTD_Initial.getRoyaltyAmmntYTD() + check.getRoyaltyAmmnt());
+		yTD_Calc.setNetAmmntYTD(yTD_Initial.getNetAmmntYTD() + check.getNetAmmnt());
 	}
 
 	private static void drawData() {
@@ -118,20 +130,18 @@ public class Check_Edit {
 		spelledAmntT = new JTextField(amntSpellOut);
 		periodDateT = new JTextField(payPeriodDate);
 		hourRateT = new JTextField(String.valueOf(check.getRegRate()));
-		salaryCurrT = new JTextField(String.valueOf(check.getSalRate()));
-		salaryYTDT
-		regularHrsCurrT
-		regularHrsYTDT
-		ptoHrsCurrT
-		ptoHrsYTDT
-		otHrsCurrT
-		otHrsYTDT
-		otherHrsCurrT
-		otherHrsYTDT
-		grossPayCurrT
-		grossPayYTDT
-		netPayCurrT
-		netPayYTDT
+		salaryCurrT = new JTextField(String.valueOf(check.getSalAmmnt()));
+		salaryYTDT = new JTextField(String.valueOf(yTD_Calc.getSalAmmntYTD()));
+		regularHrsCurrT = new JTextField(String.valueOf(check.getRegHours()));
+		regularHrsYTDT = new JTextField(String.valueOf(yTD_Calc.getRegHoursYTD()));
+		ptoHrsCurrT = new JTextField(String.valueOf(check.getPtoHours()));
+		ptoHrsYTDT = new JTextField(String.valueOf(yTD_Calc.getPtoHoursYTD()));
+		otHrsCurrT = new JTextField(String.valueOf(check.getOtHours()));
+		otHrsYTDT = new JTextField(String.valueOf(yTD_Calc.getOtHoursYTD()));
+		grossPayCurrT = new JTextField(String.valueOf(check.getGrossAmmnt()));
+		grossPayYTDT = new JTextField(String.valueOf(yTD_Calc.getGrossAmmntYTD()));
+		netPayCurrT = new JTextField(String.valueOf(check.getNetAmmnt()));
+		netPayYTDT = new JTextField(String.valueOf(yTD_Calc.getNetAmmntYTD()));
 	}
 
 	private static void createLabels() {
@@ -196,12 +206,49 @@ public class Check_Edit {
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 		
 		pstmt.setInt(1, EMPID);
-		pstmt.setString(2, "");
-		
+		pstmt.setString(2, "grossAmmnt");
 		ResultSet rs = pstmt.executeQuery();
+		yTD_Initial.setGrossAmmntYTD(rs.getDouble("ammount"));
 		
+		pstmt.setString(2, "netAmmnt");
+		rs = pstmt.executeQuery();
+		yTD_Initial.setNetAmmntYTD(rs.getDouble("ammount"));
 		
+		pstmt.setString(2, "regHours");
+		rs = pstmt.executeQuery();
+		yTD_Initial.setRegHoursYTD(rs.getDouble("ammount"));
 		
+		pstmt.setString(2, "regAmmnt");
+		rs = pstmt.executeQuery();
+		yTD_Initial.setRegAmmntYTD(rs.getDouble("ammount"));
+		
+		pstmt.setString(2, "ptoHours");
+		rs = pstmt.executeQuery();
+		yTD_Initial.setPtoHoursYTD(rs.getDouble("ammount"));
+		
+		pstmt.setString(2, "ptoAmmnt");
+		rs = pstmt.executeQuery();
+		yTD_Initial.setPtoAmmntYTD(rs.getDouble("ammount"));
+		
+		pstmt.setString(2, "otHours");
+		rs = pstmt.executeQuery();
+		yTD_Initial.setOtHoursYTD(rs.getDouble("ammount"));
+		
+		pstmt.setString(2, "otAmmnt");
+		rs = pstmt.executeQuery();
+		yTD_Initial.setOtAmmntYTD(rs.getDouble("ammount"));
+		
+		pstmt.setString(2, "salAmmnt");
+		rs = pstmt.executeQuery();
+		yTD_Initial.setSalAmmntYTD(rs.getDouble("ammount"));
+		
+		pstmt.setString(2, "advAmmnt");
+		rs = pstmt.executeQuery();
+		yTD_Initial.setAdvAmmntYTD(rs.getDouble("ammount"));
+		
+		pstmt.setString(2, "royaltyAmmnt");
+		rs = pstmt.executeQuery();
+		yTD_Initial.setRoyaltyAmmntYTD(rs.getDouble("ammount"));
 	}
 
 	private static void sqlPullTaxData() throws Exception {
@@ -313,9 +360,9 @@ public class Check_Edit {
 		check.setPtoRate(rs.getDouble("ptoRate"));
 		check.setOtHours(rs.getDouble("otHours"));
 		check.setOtRate(rs.getDouble("otRate"));
-		check.setSalRate(rs.getDouble("salRate"));
-		check.setAdvRate(rs.getDouble("advRate"));
-		check.setRoyaltyRate(rs.getDouble("royaltyRate"));
+		check.setSalAmmnt(rs.getDouble("salRate"));
+		check.setAdvAmmnt(rs.getDouble("advRate"));
+		check.setRoyaltyAmmnt(rs.getDouble("royaltyRate"));
 	}
 
 	private static void calcGross() {
@@ -323,8 +370,8 @@ public class Check_Edit {
 		reg = check.getRegRate() * check.getRegHours();
 		ot = check.getOtRate() * check.getOtHours();
 		pto = check.getPtoRate() * check.getPtoHours();
-		salary =  check.getSalRate();
-		other = check.getAdvRate() + check.getRoyaltyRate();
+		salary =  check.getSalAmmnt();
+		other = check.getAdvAmmnt() + check.getRoyaltyRate();
 		check.setGrossAmmnt(reg + ot + pto + salary + other);
 		check.setFedGrossAmmnt(check.getGrossAmmnt());
 		check.setStateGrossAmmnt(check.getGrossAmmnt());
@@ -332,6 +379,9 @@ public class Check_Edit {
 		check.setSscGrossAmmnt(check.getGrossAmmnt());
 		check.setMedicareGrossAmmnt(check.getGrossAmmnt());
 		check.setLocalGrossAmmnt(check.getGrossAmmnt());
+		check.setRegAmmnt(reg);
+		check.setOtAmmnt(ot);
+		check.setPtoAmmnt(pto);
 	}
 
 	private static void calcNet() {

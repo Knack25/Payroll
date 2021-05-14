@@ -368,10 +368,7 @@ public class Edit_Tax_Table {
 			}
 			
 			System.out.println("Updated " + result + " Entries.");
-			conn.close();
-			dialog.dispose();
-			
-			
+			conn.close();	
 		}
 	};
 		

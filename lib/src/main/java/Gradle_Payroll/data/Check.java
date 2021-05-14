@@ -16,15 +16,16 @@ public class Check {
 	private double netAmmnt = 0;
 	private double regHours = 0;
 	private double regRate = 0;
+	private double regAmmnt = 0;
 	private double ptoHours = 0;
 	private double ptoRate = 0;
+	private double ptoAmmnt = 0;
 	private double otHours = 0;
 	private double otRate = 0;
-	private double salHours = 0;
-	private double salRate = 0;
-	private double advHours = 0;
-	private double advRate = 0;
-	private double royaltyRate = 0;
+	private double otAmmnt = 0;
+	private double salAmmnt =0;
+	private double advAmmnt =0;
+	private double royaltyAmmnt = 0;
 	private double AddStateTax = 0;
 	private double AddFedTax = 0;
 	
@@ -93,35 +94,12 @@ public class Check {
 	public void setOtRate(double otRate) {
 		this.otRate = otRate;
 	}
-	public double getSalHours() {
-		return salHours;
-	}
-	public void setSalHours(double salHours) {
-		this.salHours = salHours;
-	}
-	public double getSalRate() {
-		return salRate;
-	}
-	public void setSalRate(double salRate) {
-		this.salRate = salRate;
-	}
-	public double getAdvHours() {
-		return advHours;
-	}
-	public void setAdvHours(double advHours) {
-		this.advHours = advHours;
-	}
-	public double getAdvRate() {
-		return advRate;
-	}
-	public void setAdvRate(double advRate) {
-		this.advRate = advRate;
-	}
+	
 	public double getRoyaltyRate() {
-		return royaltyRate;
+		return royaltyAmmnt;
 	}
 	public void setRoyaltyRate(double royaltyRate) {
-		this.royaltyRate = royaltyRate;
+		this.royaltyAmmnt = royaltyRate;
 	}
 	public Name getName() {
 		return name;
@@ -188,6 +166,42 @@ public class Check {
 	}
 	public void setLocalGrossAmmnt(double localGrossAmmnt) {
 		this.localGrossAmmnt = localGrossAmmnt;
+	}
+	public double getRegAmmnt() {
+		return regAmmnt;
+	}
+	public void setRegAmmnt(double regAmmnt) {
+		this.regAmmnt = regAmmnt;
+	}
+	public double getPtoAmmnt() {
+		return ptoAmmnt;
+	}
+	public void setPtoAmmnt(double ptoAmmnt) {
+		this.ptoAmmnt = ptoAmmnt;
+	}
+	public double getOtAmmnt() {
+		return otAmmnt;
+	}
+	public void setOtAmmnt(double otAmmnt) {
+		this.otAmmnt = otAmmnt;
+	}
+	public double getSalAmmnt() {
+		return salAmmnt;
+	}
+	public void setSalAmmnt(double salAmmnt) {
+		this.salAmmnt = salAmmnt;
+	}
+	public double getAdvAmmnt() {
+		return advAmmnt;
+	}
+	public void setAdvAmmnt(double advAmmnt) {
+		this.advAmmnt = advAmmnt;
+	}
+	public double getRoyaltyAmmnt() {
+		return royaltyAmmnt;
+	}
+	public void setRoyaltyAmmnt(double royaltyAmmnt) {
+		this.royaltyAmmnt = royaltyAmmnt;
 	}
 	
 	

@@ -5,8 +5,10 @@ public class YTD {
 	
 	
 	public YTD() {
-		super();
 	}
+	
+	
+	
 	private double grossAmmntYTD = 0;
 	private double netAmmntYTD = 0;
 	private double regHoursYTD = 0;
@@ -61,10 +63,10 @@ public class YTD {
 	public void setOtHoursYTD(double otHoursYTD) {
 		this.otHoursYTD = otHoursYTD;
 	}
-	public double getOtAmmntTD() {
+	public double getOtAmmntYTD() {
 		return otAmmntTD;
 	}
-	public void setOtAmmntTD(double otAmmntTD) {
+	public void setOtAmmntYTD(double otAmmntTD) {
 		this.otAmmntTD = otAmmntTD;
 	}
 	public double getSalAmmntYTD() {

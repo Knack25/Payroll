@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -23,7 +22,7 @@ import javax.swing.JTextField;
 import Gradle_Payroll.data.Tax;
 import Gradle_Payroll.fileIO.Config;
 
-public class YTD {
+public class Edit_YTD {
 	
 
 	/*Everything needed for the YTD

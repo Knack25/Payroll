@@ -384,7 +384,7 @@ import Gradle_Payroll.sql.MySQL;
 			pstmt.setInt(4, ID);
 			rs =+ pstmt.executeUpdate();
 			
-			pstmt.setString(1, "Federal");
+		/*	pstmt.setString(1, "Federal");
 			pstmt.setDouble(2, 00.00);
 			pstmt.setDouble(3, cal.get(Calendar.YEAR));
 			pstmt.setInt(4, ID);
@@ -448,7 +448,7 @@ import Gradle_Payroll.sql.MySQL;
 			pstmt.setDouble(2, 00.00);
 			pstmt.setDouble(3, cal.get(Calendar.YEAR));
 			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();
+			rs =+ pstmt.executeUpdate();*/
 			 
 			 
 			System.out.println("Inserted " + rs + " rows into ytd table.");
