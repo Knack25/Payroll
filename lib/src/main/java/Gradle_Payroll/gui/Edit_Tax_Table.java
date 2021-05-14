@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -48,12 +49,14 @@ public class Edit_Tax_Table {
 	static List<JCheckBox> MedicareExempt;
 	static List<JCheckBox> LocalExempt;
 	static List<JLabel> ID;
+	static Calendar cal;
 	
 	
 	
 	protected static void createDialog(int empID) throws Exception{
 		
 		EMPID = empID;
+		cal = Calendar.getInstance();
 		
 		JButton saveB = new JButton("Save");
 		saveB.addActionListener(saveBListener);
@@ -314,19 +317,24 @@ public class Edit_Tax_Table {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
 			int result = 0;
+			int result2 = 0;
 			
 			System.out.println("Querrying DB for selected Employee");
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			Connection connytd = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
 			String insertStatement = "update tax set taxname = ?, taxtype = ?, ammount = ?, fedTaxExempt = ?, stateTaxExempt = ?,"
 					+ "state2TaxExempt = ?, SSCTaxExempt = ?, medicareTaxExempt = ?, localTaxExempt = ? where id = ?";
 			
-			PreparedStatement pstmt = conn.prepareStatement(insertStatement);
+			String insertStatementytd = "update tax_ytd set name = ? where id = ?";
 			
-			for(int i = 0; i < taxNum-1; i++) {
+			PreparedStatement pstmt = conn.prepareStatement(insertStatement);
+			PreparedStatement pstmtytd = connytd.prepareStatement(insertStatementytd);
+			
+			for(int i = 0; i < taxNum; i++) {
 				//Tax Name
 				System.out.println(Name.get(i).getText());
 				pstmt.setString(1,Name.get(i).getText());
@@ -351,9 +359,12 @@ public class Edit_Tax_Table {
 
 				result += pstmt.executeUpdate();
 				
+				//TODO: Update the name on the YTD Table for the relative tax
 				
+				pstmtytd.setString(1, Name.get(i).getText());
+				pstmtytd.setInt(2, Integer.parseInt(ID.get(i).getText()));
 				
-				
+				result2 += pstmtytd.executeUpdate();
 			}
 			
 			System.out.println("Updated " + result + " Entries.");
@@ -389,8 +400,8 @@ public class Edit_Tax_Table {
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
 			String insertStatement = "INSERT INTO "
-					+ "tax(employee_id,taxname,taxtype,ammount,fedTaxExempt,stateTaxExempt,state2TaxExempt,SSCTaxExempt,medicareTaxExempt,localTaxExempt)"
-					+ "Values(?,?,?,?,?,?,?,?,?,?)";
+					+ "tax(employee_id,taxname,taxtype,ammount,fedTaxExempt,stateTaxExempt,state2TaxExempt,SSCTaxExempt,medicareTaxExempt,localTaxExempt,primaryTax)"
+					+ "Values(?,?,?,?,?,?,?,?,?,?,?)";
 			
 			PreparedStatement pstmt = conn.prepareStatement(insertStatement);
 			
@@ -404,10 +415,30 @@ public class Edit_Tax_Table {
 			pstmt.setBoolean(8, false);
 			pstmt.setBoolean(9, false);
 			pstmt.setBoolean(10, false);
+			pstmt.setBoolean(11, false);
 			
 			result = pstmt.executeUpdate();
 			
-			System.out.println("Added " + result + "entry(s) to table.");
+			System.out.println("Added " + result + "entry(s) to tax table.");
+			
+			//TODO: You also will need to create a new YTD Entry for this tax
+	
+			Connection conn2 = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			String insertStatement2 = "INSERT INTO "
+					+ "tax_ytd(employee_id,name,ammount,year)"
+					+ "Values(?,?,?,?)";
+			
+			PreparedStatement pstmt2 = conn2.prepareStatement(insertStatement2);
+			
+			pstmt2.setInt(1, EMPID);
+			pstmt2.setString(2, "Name");
+			pstmt2.setDouble(3, 00.00);
+			pstmt2.setDouble(4, cal.get(Calendar.YEAR));
+			
+			result = pstmt2.executeUpdate();
+			
+			System.out.println("Added " + result + "entry(s) to tax_ytd table.");
 			
 			System.out.println("Refreshing GUI...");
 			dialog.dispose();
@@ -451,8 +482,4 @@ public class Edit_Tax_Table {
 		
 		return;
 	}
-	
-	//This will set taxNum to the ammount of taxes for that employee in order to dynamically create the tax table
-
-
 }

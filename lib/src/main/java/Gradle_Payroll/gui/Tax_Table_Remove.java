@@ -127,6 +127,7 @@ public class Tax_Table_Remove extends JDialog {
 			
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
+			
 			String insertStatement = "Delete from tax where id = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(insertStatement);
@@ -136,6 +137,20 @@ public class Tax_Table_Remove extends JDialog {
 			int rs = pstmt.executeUpdate();
 			
 			System.out.println("Deleted " + rs + " entry with id: " + id + ".");
+			
+			
+			
+			//Delete from tax_ytd
+			Connection conn2 = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			
+			String insertStatement2 = "Delete from tax_ytd where id = ?";
+			
+			PreparedStatement pstmt2 = conn.prepareStatement(insertStatement2);
+			
+			pstmt2.setInt(1, id);
+			
+			int rs2 = pstmt2.executeUpdate();
 		}
 	};
 	

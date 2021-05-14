@@ -7,7 +7,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -21,6 +24,7 @@ import Gradle_Payroll.data.Name;
 import Gradle_Payroll.data.Tax;
 import Gradle_Payroll.fileIO.Config;
 import Gradle_Payroll.fileIO.Excel_Out;
+import Gradle_Payroll.fileIO.NumberToWords;
 import Gradle_Payroll.sql.MySQL;
 
 public class Check_Edit {
@@ -29,13 +33,20 @@ public class Check_Edit {
 	static int CHECKNUM,EMPID,NUMTAXAMNT;
 	static JButton printB,cancelB;
 	static JLabel chkNumL,chkDateL,payPeriodL,hourRateL,salaryL,regHrsL,ptoHrsL,otHrsL,otherL,grossPayL,currentL,YTDL;
-	static JTextField nameT,addressT,cityStateZipT,dateT,amntT;
+	static JTextField nameT,addressT,cityStateZipT,dateT,amntT,spelledAmntT,periodDateT,hourRateT,salaryCurrT,salaryYTDT;
+	static JTextField regularHrsCurrT,regularHrsYTDT,ptoHrsCurrT,ptoHrsYTDT,otHrsCurrT,otHrsYTDT,otherHrsCurrT,otherHrsYTDT;
+	static JTextField grossPayCurrT,grossPayYTDT,netPayCurrT,netPayYTDT;
 	static Address addr;
 	static Name name;
 	static Check check;
 	static List<Tax> tax;
+	static List<JTextField> TaxCurrT,TaxYTDT;
+	static String amntSpellOut,fullName,address,cityStateZip,payPeriodDate;
+	static LocalDate date;
+	static SimpleDateFormat dateFormat;
+	static YTD ytd;
 	
-	static String amntSpellOut;
+	
 	
 	protected static JInternalFrame createDialog(int checkNum) {
 		frame = new JInternalFrame();
@@ -61,6 +72,7 @@ public class Check_Edit {
 		calcGross(); //Done
 		calcTaxes(); //Done
 		calcNet();
+		calcYTD();
 		createLabels();
 		drawData();
 			//Dante: can you run it through a calculator that deducts from each field that is applicable and send it?
@@ -76,9 +88,49 @@ public class Check_Edit {
 		return frame;
 	}
 
-	private static void drawData() {
-		// TODO Auto-generated method stub
+	private static void calcYTD() {
+		// TODO Load in YTD Values
 		
+	}
+
+	private static void drawData() {
+		formatData();
+		instantiateFields();
+	}
+
+	private static void formatData() {
+		fullName = check.getName().getFirst() + " " + check.getName().getLast();
+		address = check.getAddress().getStreet();
+		cityStateZip = check.getAddress().getCity() + " " + check.getAddress().getState() + " " + check.getAddress().getZip();
+		date = LocalDate.now();
+		amntSpellOut = NumberToWords.convert((long) check.getNetAmmnt());
+		payPeriodDate = "Pay Period Date goes Here";
+		
+	}
+
+	private static void instantiateFields() {
+		nameT = new JTextField(fullName);
+		addressT = new JTextField(address);
+		cityStateZipT = new JTextField(cityStateZip);
+		dateT = new JTextField(date.toString());
+		amntT = new JTextField(String.valueOf(check.getNetAmmnt()));
+		spelledAmntT = new JTextField(amntSpellOut);
+		periodDateT = new JTextField(payPeriodDate);
+		hourRateT = new JTextField(String.valueOf(check.getRegRate()));
+		salaryCurrT = new JTextField(String.valueOf(check.getSalRate()));
+		salaryYTDT
+		regularHrsCurrT
+		regularHrsYTDT
+		ptoHrsCurrT
+		ptoHrsYTDT
+		otHrsCurrT
+		otHrsYTDT
+		otherHrsCurrT
+		otherHrsYTDT
+		grossPayCurrT
+		grossPayYTDT
+		netPayCurrT
+		netPayYTDT
 	}
 
 	private static void createLabels() {
@@ -118,7 +170,37 @@ public class Check_Edit {
 		} catch (Exception TaxData) {
 			TaxData.printStackTrace();
 		}
+		try {
+			sqlPullYTDData();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
+	}
+
+	private static void sqlPullYTDData() throws Exception {
+		String[] SQL;
+		SQL = Config.PullSQLConfig();
+		
+		System.out.println("Querrying DB for selected Employee");
+		
+		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+		
+		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+		
+		
+		String updateStatement = "select * " + "from ytd " + "WHERE employee_id = ? and name = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+		
+		pstmt.setInt(1, EMPID);
+		pstmt.setString(2, "");
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		
+		
 	}
 
 	private static void sqlPullTaxData() throws Exception {

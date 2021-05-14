@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -39,6 +40,7 @@ import Gradle_Payroll.sql.MySQL;
 	static JTextField enterFirst;
 	static JTextField enterMiddle;
 	static JTextField enterLast;
+	static Calendar cal;
 	
 	 
 	 public static JDialog CreateMenu() {
@@ -49,6 +51,7 @@ import Gradle_Payroll.sql.MySQL;
 		 tax = new Tax();
 		 Name = new String[3];
 		 Taxes = new ArrayList<Tax>();
+		 cal = Calendar.getInstance();
 		 
 		
 		 JPanel fields = new JPanel();
@@ -175,11 +178,13 @@ import Gradle_Payroll.sql.MySQL;
 			
 			sqlNewEmpAddreessRequest(id);
 			sqlPullDefaultTax(id);
-			//sqlPushEmpTax();
+			sqlNewYTD(id);
+			sqlNewTaxYTD(id);
 			
 			
 			 createMenu.dispose();
 		}
+		
 		
 		
 		//*************************************************SQL New Employee Address Request*********************************************************
@@ -289,5 +294,218 @@ import Gradle_Payroll.sql.MySQL;
 			return;
 		}
 		
+		//TODO: Create default fields for YTD Values
+		private void sqlNewYTD(int ID) throws Exception {
+			String[] SQL;
+			int rs = 0;
+			SQL = Config.PullSQLConfig();
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("Creating new entries in YTD table.");
+		
+			System.out.println("Connecting to DB...");
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			System.out.println("Connected.");
+			
+			String statement = "INSERT INTO ytd(name,ammount,year,employee_id) "
+					+ "Values(?,?,?,?)";
+			
+			
+			PreparedStatement pstmt = conn.prepareStatement(statement);
+			
+			pstmt.setString(1, "grossAmmnt");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "netAmmnt");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "regHours");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "regAmmnt");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "ptoHours");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "ptoAmmnt");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "otHours");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "otAmmnt");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "salAmmnt");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "advAmmnt");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "royaltyAmmnt");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "Federal");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "State");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "State 2");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "Social Security");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "Medicare");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "Local");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "Pension");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "Medical");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "Aflack(Exempt)");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "Aflack(Non-Exempt");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			
+			pstmt.setString(1, "Advance");
+			pstmt.setDouble(2, 00.00);
+			pstmt.setDouble(3, cal.get(Calendar.YEAR));
+			pstmt.setInt(4, ID);
+			rs =+ pstmt.executeUpdate();
+			 
+			 
+			System.out.println("Inserted " + rs + " rows into ytd table.");
+			
+			return;
+		}
+		
+		private void sqlNewTaxYTD(int ID) throws Exception {
+			String[] SQL;
+			int rs = 0;
+			int taxNum = 0;
+			List<String> taxNames = new ArrayList<String>();
+			SQL = Config.PullSQLConfig();
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("Creating new entries in Tax_YTD table.");
+		
+			System.out.println("Connecting to DB...");
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection pushconn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			Connection pullconn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			System.out.println("Connected.");
+			
+			String pullstatement = "Select * from tax where employee_id = ?";
+			
+			String pushstatement = "INSERT INTO tax_ytd(name,ammount,year,employee_id) "
+					+ "Values(?,?,?,?)";
+			
+			taxNum = MySQL.SQLTaxNum(ID);
+			
+			
+			PreparedStatement Pushpstmt = pushconn.prepareStatement(pushstatement);
+			PreparedStatement Pullpstmt = pullconn.prepareStatement(pullstatement);
+			
+			Pullpstmt.setInt(1, ID);
+			
+			ResultSet pullRS = Pullpstmt.executeQuery();
+			
+			while(pullRS.next()) {
+				taxNames.add(pullRS.getString("taxname"));
+			}
+			
+			for(int i =0;i<taxNum;i++) {
+				Pushpstmt.setString(1, taxNames.get(i));
+				Pushpstmt.setDouble(2, 00.00);
+				Pushpstmt.setDouble(3, cal.get(Calendar.YEAR));
+				Pushpstmt.setInt(4, ID);
+				rs =+ Pushpstmt.executeUpdate();
+			}
+			
+			System.out.println("Inserted " + rs + " rows into ytd table.");
+			
+			return;
+		}
 	};	 
  }

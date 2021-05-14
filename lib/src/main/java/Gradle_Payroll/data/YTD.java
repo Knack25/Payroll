@@ -15,9 +15,7 @@ public class YTD {
 	private double ptoAmmntYTD = 0;
 	private double otHoursYTD = 0;
 	private double otAmmntTD = 0;
-	private double salHoursYTD = 0;
 	private double salAmmntYTD = 0;
-	private double advHoursYTD = 0;
 	private double advAmmntYTD = 0;
 	private double royaltyAmmntYTD = 0;
 	
@@ -69,23 +67,11 @@ public class YTD {
 	public void setOtAmmntTD(double otAmmntTD) {
 		this.otAmmntTD = otAmmntTD;
 	}
-	public double getSalHoursYTD() {
-		return salHoursYTD;
-	}
-	public void setSalHoursYTD(double salHoursYTD) {
-		this.salHoursYTD = salHoursYTD;
-	}
 	public double getSalAmmntYTD() {
 		return salAmmntYTD;
 	}
 	public void setSalAmmntYTD(double salAmmntYTD) {
 		this.salAmmntYTD = salAmmntYTD;
-	}
-	public double getAdvHoursYTD() {
-		return advHoursYTD;
-	}
-	public void setAdvHoursYTD(double advHoursYTD) {
-		this.advHoursYTD = advHoursYTD;
 	}
 	public double getAdvAmmntYTD() {
 		return advAmmntYTD;
