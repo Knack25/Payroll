@@ -13,8 +13,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.ExcelNumberFormat;
-
+import org.apache.poi.ss.usermodel.BuiltinFormats;
 
 
 public class Excel_Out{
@@ -78,8 +77,10 @@ public class Excel_Out{
 		sheet.getRow(row).getCell(col).setCellValue(input);
 		return 0;
 	}
-	public static int changeNumberFormat() {
-		
+	public static int changeNumberFormat(int col,int row) {
+		CellStyle dollarStyle=book.createCellStyle();
+		dollarStyle.setDataFormat((short) 7);
+		sheet.getRow(row).getCell(col).setCellStyle(dollarStyle);
 		return 0;
 	}
 	public static int formatRowHeight(int row,float height) {
