@@ -212,7 +212,7 @@ public class Check_Edit {
     	frame.setResizable(true);
 		return frame;
 	}
-	
+	//*********************************************Update Data***********************************************************
 	private static void updateData() {
 		
 		check.setGrossAmmnt(Double.parseDouble(grossPayCurrT.getText()));
@@ -244,7 +244,7 @@ public class Check_Edit {
 		updateFields();
 		
 	}
-
+	//*********************************************Update Fields***********************************************************
 	private static void updateFields() {
 		nameT.setText(fullName);
 		
@@ -272,6 +272,7 @@ public class Check_Edit {
 		royalAmmntT.setText(String.valueOf(check.getRoyaltyAmmnt()));
 	}
 
+	//*********************************************Calculate YTD***********************************************************
 	private static void calcYTD() {
 		yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD() + check.getGrossAmmnt());
 		yTD_Calc.setRegHoursYTD(yTD_Initial.getRegHoursYTD() + check.getRegHours());
@@ -287,11 +288,13 @@ public class Check_Edit {
 		
 	}
 
+	//*********************************************Draw Data***********************************************************
 	private static void drawData() {
 		formatData();
 		instantiateFields();
 	}
 
+	//*********************************************Format Data***********************************************************
 	private static void formatData() {
 		fullName = check.getName().getFirst() + " " + check.getName().getLast();
 		address = check.getAddress().getStreet();
@@ -302,6 +305,7 @@ public class Check_Edit {
 		
 	}
 
+	//*********************************************Text Field Inst***********************************************************
 	private static void instantiateFields() {
 		nameT = new JTextField(fullName);
 		nameT.addActionListener(textListener);
@@ -349,6 +353,7 @@ public class Check_Edit {
 		royalAmmntT.addActionListener(textListener);
 	}
 
+	//*********************************************Create Labels***********************************************************
 	private static void createLabels() {
 		chkNumL = new JLabel("Check Number: ");
 		chkDateL = new JLabel("Date: ");
@@ -365,6 +370,7 @@ public class Check_Edit {
 		
 	}
 
+	//*********************************************SQL Pull Data***********************************************************
 	private static void sqlPullData() {
 		try {
 			sqlPullCheckData();
@@ -394,6 +400,7 @@ public class Check_Edit {
 	
 	}
 
+	//*********************************************SQL Pull YTD Data***********************************************************
 	private static void sqlPullYTDData() throws Exception {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
@@ -466,6 +473,7 @@ public class Check_Edit {
 		yTD_Initial.setRoyaltyAmmntYTD(rs.getDouble("ammount"));
 	}
 
+	//*********************************************SQL Pull Tax Data***********************************************************
 	private static void sqlPullTaxData() throws Exception {
 		Tax tempTax = new Tax();
 		String[] SQL;
@@ -503,6 +511,7 @@ public class Check_Edit {
 		sqlPullTaxYTD();
 	}
 
+	//*********************************************SQL Pull Tax YTD Data***********************************************************
 	private static void sqlPullTaxYTD() throws Exception {
 		int i  = 0;
 		String[] SQL;
@@ -528,6 +537,7 @@ public class Check_Edit {
 		
 	}
 
+	//*********************************************SQL Pull Employee Data***********************************************************
 	private static void sqlPullEmpData() throws Exception {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
@@ -574,6 +584,7 @@ public class Check_Edit {
 		
 	}
 
+	//*********************************************SQL Pull Check Data***********************************************************
 	private static void sqlPullCheckData() throws Exception {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
@@ -609,6 +620,7 @@ public class Check_Edit {
 		check.setRoyaltyAmmnt(rs.getDouble("royaltyRate"));
 	}
 
+	//*********************************************Calculate Gross***********************************************************
 	private static void calcGross() {
 		double reg,ot,pto,salary,other;
 		reg = check.getRegRate() * check.getRegHours();
@@ -628,6 +640,7 @@ public class Check_Edit {
 		check.setPtoAmmnt(pto);
 	}
 
+	//*********************************************Calculate Net***********************************************************
 	private static void calcNet() {
 		double netAmmnt = check.getGrossAmmnt();
 		
@@ -642,13 +655,14 @@ public class Check_Edit {
 		check.setNetAmmnt(netAmmnt);
 	}
 
+	//*********************************************Calclate Taxes***********************************************************
 	private static void calcTaxes() {
 		
 		
 		
 		for(int i = 0; i < NUMTAXAMNT;i++) {
 			if(!tax.get(i).isPrimaryTax() && tax.get(i).getType() == "%") {
-				tax.get(i).setNetAmmount(tax.get(i).getAmmount() * check.getGrossAmmnt());
+				tax.get(i).setNetAmmount(tax.get(i).getAmmount() * 0.01 * check.getGrossAmmnt());
 			}else {
 				tax.get(i).setNetAmmount(tax.get(i).getAmmount());
 			}
@@ -680,15 +694,16 @@ public class Check_Edit {
 				
 		}
 		
-		tax.get(0).setNetAmmount(check.getFedGrossAmmnt() * tax.get(0).getAmmount());
-		tax.get(1).setNetAmmount(check.getStateGrossAmmnt() * tax.get(1).getAmmount());
-		tax.get(2).setNetAmmount(check.getState2GrossAmmnt() * tax.get(2).getAmmount());
-		tax.get(3).setNetAmmount(check.getSscGrossAmmnt() * tax.get(3).getAmmount());
-		tax.get(4).setNetAmmount(check.getMedicareGrossAmmnt() * tax.get(4).getAmmount());
-		tax.get(5).setNetAmmount(check.getLocalGrossAmmnt() * tax.get(5).getAmmount());
+		tax.get(0).setNetAmmount(check.getFedGrossAmmnt() * 0.01 * tax.get(0).getAmmount());
+		tax.get(1).setNetAmmount(check.getStateGrossAmmnt() * 0.01 * tax.get(1).getAmmount());
+		tax.get(2).setNetAmmount(check.getState2GrossAmmnt() * 0.01 * tax.get(2).getAmmount());
+		tax.get(3).setNetAmmount(check.getSscGrossAmmnt() * 0.01 * tax.get(3).getAmmount());
+		tax.get(4).setNetAmmount(check.getMedicareGrossAmmnt() * 0.01 * tax.get(4).getAmmount());
+		tax.get(5).setNetAmmount(check.getLocalGrossAmmnt() * 0.01 * tax.get(5).getAmmount());
 		
 	}
 	
+	//*********************************************Print Button Listener***********************************************************
 	static ActionListener printBListener = new ActionListener() {
 		
 		@Override
@@ -721,11 +736,10 @@ public class Check_Edit {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			
-			
+			frame.dispose();
 		}
 
-		
+		//*********************************************SQL Push Tax YTD Data***********************************************************
 		private void sqlPushTaxYTD() throws Exception {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
@@ -754,6 +768,7 @@ public class Check_Edit {
 		}
 
 
+		//*********************************************SQL Push Check Data***********************************************************
 		private void sqlPushCheckTax() throws Exception {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
@@ -872,7 +887,7 @@ public class Check_Edit {
 			
 			
 			String updateStatement = "update checks set  " + "payrollStartDate = ?, payrollEndDate = ?, date = ?, "
-					+ "grossAmmnt = ?, netAmmt = ?, regHours = ?, regRate = ?, ptoHours = ?, otHours = ?, otRate = ?, "
+					+ "grossAmmnt = ?, netAmmt = ?, regHours = ?, regRate = ?, ptoHours = ?,ptoRate = ?, otHours = ?, otRate = ?, "
 					+ "salRate = ?, advRate = ?, royaltyRate = ? " + "WHERE checknum = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
@@ -910,7 +925,7 @@ public class Check_Edit {
 			int rs = pstmt.executeUpdate();
 			
 		}
-
+		//*********************************************Format Excel***********************************************************
 		private void formatExcel() throws Exception {
 			//static YTD yTD_Initial,yTD_Calc;
 			
@@ -1021,11 +1036,11 @@ public class Check_Edit {
 		}
 	};
 	
+	//*********************************************Cancel Button Listener***********************************************************
 	static ActionListener cancelBListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Dispose this screen and remove the check in progress from the database
 			frame.dispose();
 			try {
 				deleteCheck();
@@ -1037,6 +1052,7 @@ public class Check_Edit {
 			
 		}
 
+		//*********************************************Delete Check***********************************************************
 		private void deleteCheck() throws Exception {
 			 String[] SQL;
 			SQL = Config.PullSQLConfig();
@@ -1064,6 +1080,7 @@ public class Check_Edit {
 			
 		}
 		
+		//*********************************************Update Checknum***********************************************************
 		private void updateNextCheckNum(int checkID) throws Exception {
 			 String[] SQL = Config.PullSQLConfig();
 				
@@ -1084,6 +1101,7 @@ public class Check_Edit {
 		}
 	};
 	
+	//*********************************************Text Field Enter Listener******************************************************
 	static ActionListener textListener = new ActionListener() {
 		
 		@Override
