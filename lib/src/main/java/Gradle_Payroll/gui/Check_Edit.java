@@ -36,7 +36,7 @@ public class Check_Edit {
 	static JLabel chkNumL,chkDateL,payPeriodL,hourRateL,salaryL,regHrsL,ptoHrsL,otHrsL,otherL,grossPayL,currentL,YTDL;
 	static JTextField nameT,addressT,cityStateZipT,dateT,amntT,spelledAmntT,periodDateT,hourRateT,salaryCurrT,salaryYTDT;
 	static JTextField regularHrsCurrT,regularHrsYTDT,ptoHrsCurrT,ptoHrsYTDT,otHrsCurrT,otHrsYTDT;
-	static JTextField grossPayCurrT,grossPayYTDT,netPayCurrT,netPayYTDT;
+	static JTextField grossPayCurrT,grossPayYTDT,netPayCurrT,netPayYTDT,advAmmntT,royalAmmntT;
 	static Address addr;
 	static Name name;
 	static Check check;
@@ -79,6 +79,7 @@ public class Check_Edit {
 		calcYTD();
 		createLabels();
 		drawData();
+		
 		
 
 
@@ -254,6 +255,61 @@ public class Check_Edit {
     	frame.setResizable(true);
 		return frame;
 	}
+	
+	private static void updateData() {
+		
+		check.setGrossAmmnt(Double.parseDouble(grossPayCurrT.getText()));
+		check.setRegHours(Double.parseDouble(regularHrsCurrT.getText()));
+		check.setRegRate(Double.parseDouble(hourRateT.getText()));
+		double reg = check.getRegRate() * check.getRegHours();
+		check.setOtHours(Double.parseDouble(otHrsCurrT.getText()));
+		check.setOtRate(Double.parseDouble(hourRateT.getText()));
+		double ot = check.getOtRate() * check.getOtHours();
+		check.setPtoHours(Double.parseDouble(ptoHrsCurrT.getText()));
+		check.setPtoRate(Double.parseDouble(hourRateT.getText()));
+		double pto = check.getPtoRate() * check.getPtoHours();
+		check.setSalAmmnt(Double.parseDouble(salaryCurrT.getText()));
+		check.setAdvAmmnt(Double.parseDouble(advAmmntT.getText()));
+		check.setRoyaltyAmmnt(Double.parseDouble(royalAmmntT.getText()));
+		check.setNetAmmnt(Double.parseDouble(netPayCurrT.getText()));
+		
+		check.setRegAmmnt(reg);
+		check.setOtAmmnt(ot);
+		check.setPtoAmmnt(pto);
+		
+		//Format all string data
+		formatData();
+		calcYTD();
+		updateFields();
+		
+	}
+
+	private static void updateFields() {
+		nameT.setText(fullName);
+		
+		addressT.setText(address);
+		
+		cityStateZipT.setText(cityStateZip);
+		dateT.setText(date.toString());
+		amntT.setText(String.valueOf(check.getNetAmmnt()));
+		spelledAmntT.setText(amntSpellOut);
+		periodDateT.setText(payPeriodDate);
+		hourRateT.setText(String.valueOf(check.getRegRate()));
+		salaryCurrT.setText(String.valueOf(check.getSalAmmnt()));
+		salaryYTDT.setText(String.valueOf(yTD_Calc.getSalAmmntYTD()));
+		regularHrsCurrT.setText(String.valueOf(check.getRegHours()));
+		regularHrsYTDT.setText(String.valueOf(yTD_Calc.getRegHoursYTD()));
+		ptoHrsCurrT.setText(String.valueOf(check.getPtoHours()));
+		ptoHrsYTDT.setText(String.valueOf(yTD_Calc.getPtoHoursYTD()));
+		otHrsCurrT.setText(String.valueOf(check.getOtHours()));
+		otHrsYTDT.setText(String.valueOf(yTD_Calc.getOtHoursYTD()));
+		grossPayCurrT.setText(String.valueOf(check.getGrossAmmnt()));
+		grossPayYTDT.setText(String.valueOf(yTD_Calc.getGrossAmmntYTD()));
+		netPayCurrT.setText(String.valueOf(check.getNetAmmnt()));
+		netPayYTDT.setText(String.valueOf(yTD_Calc.getNetAmmntYTD()));
+		advAmmntT.setText(String.valueOf(check.getAdvAmmnt()));
+		royalAmmntT.setText(String.valueOf(check.getRoyaltyAmmnt()));
+	}
 
 	private static void calcYTD() {
 		yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD() + check.getGrossAmmnt());
@@ -267,6 +323,7 @@ public class Check_Edit {
 		yTD_Calc.setAdvAmmntYTD(yTD_Initial.getAdvAmmntYTD() + check.getAdvAmmnt());
 		yTD_Calc.setRoyaltyAmmntYTD(yTD_Initial.getRoyaltyAmmntYTD() + check.getRoyaltyAmmnt());
 		yTD_Calc.setNetAmmntYTD(yTD_Initial.getNetAmmntYTD() + check.getNetAmmnt());
+		
 	}
 
 	private static void drawData() {
@@ -286,25 +343,49 @@ public class Check_Edit {
 
 	private static void instantiateFields() {
 		nameT = new JTextField(fullName);
+		nameT.addActionListener(textListener);
 		addressT = new JTextField(address);
+		addressT.addActionListener(textListener);
 		cityStateZipT = new JTextField(cityStateZip);
+		cityStateZipT.addActionListener(textListener);
 		dateT = new JTextField(date.toString());
+		dateT.addActionListener(textListener);
 		amntT = new JTextField(String.valueOf(check.getNetAmmnt()));
+		amntT.addActionListener(textListener);
 		spelledAmntT = new JTextField(amntSpellOut);
+		spelledAmntT.addActionListener(textListener);
 		periodDateT = new JTextField(payPeriodDate);
+		periodDateT.addActionListener(textListener);
 		hourRateT = new JTextField(String.valueOf(check.getRegRate()));
+		hourRateT.addActionListener(textListener);
 		salaryCurrT = new JTextField(String.valueOf(check.getSalAmmnt()));
+		salaryCurrT.addActionListener(textListener);
 		salaryYTDT = new JTextField(String.valueOf(yTD_Calc.getSalAmmntYTD()));
+		salaryYTDT.addActionListener(textListener);
 		regularHrsCurrT = new JTextField(String.valueOf(check.getRegHours()));
+		regularHrsCurrT.addActionListener(textListener);
 		regularHrsYTDT = new JTextField(String.valueOf(yTD_Calc.getRegHoursYTD()));
+		regularHrsYTDT.addActionListener(textListener);
 		ptoHrsCurrT = new JTextField(String.valueOf(check.getPtoHours()));
+		ptoHrsCurrT.addActionListener(textListener);
 		ptoHrsYTDT = new JTextField(String.valueOf(yTD_Calc.getPtoHoursYTD()));
+		ptoHrsYTDT.addActionListener(textListener);
 		otHrsCurrT = new JTextField(String.valueOf(check.getOtHours()));
+		otHrsCurrT.addActionListener(textListener);
 		otHrsYTDT = new JTextField(String.valueOf(yTD_Calc.getOtHoursYTD()));
+		otHrsYTDT.addActionListener(textListener);
 		grossPayCurrT = new JTextField(String.valueOf(check.getGrossAmmnt()));
+		grossPayCurrT.addActionListener(textListener);
 		grossPayYTDT = new JTextField(String.valueOf(yTD_Calc.getGrossAmmntYTD()));
+		grossPayYTDT.addActionListener(textListener);
 		netPayCurrT = new JTextField(String.valueOf(check.getNetAmmnt()));
+		netPayCurrT.addActionListener(textListener);
 		netPayYTDT = new JTextField(String.valueOf(yTD_Calc.getNetAmmntYTD()));
+		netPayYTDT.addActionListener(textListener);
+		advAmmntT = new JTextField(String.valueOf(check.getAdvAmmnt()));
+		advAmmntT.addActionListener(textListener);
+		royalAmmntT = new JTextField(String.valueOf(check.getRoyaltyAmmnt()));
+		royalAmmntT.addActionListener(textListener);
 	}
 
 	private static void createLabels() {
@@ -356,7 +437,6 @@ public class Check_Edit {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
 		
-		System.out.println("Querrying DB for selected Employee");
 		
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 		
@@ -370,49 +450,58 @@ public class Check_Edit {
 		pstmt.setInt(1, EMPID);
 		pstmt.setString(2, "grossAmmnt");
 		
-		System.out.println(pstmt);
 		ResultSet rs = pstmt.executeQuery();
 		rs.next();
 		yTD_Initial.setGrossAmmntYTD(rs.getDouble("ammount"));
 		
 		pstmt.setString(2, "netAmmnt");
 		rs = pstmt.executeQuery();
+		rs.next();
 		yTD_Initial.setNetAmmntYTD(rs.getDouble("ammount"));
 		
 		pstmt.setString(2, "regHours");
 		rs = pstmt.executeQuery();
+		rs.next();
 		yTD_Initial.setRegHoursYTD(rs.getDouble("ammount"));
 		
 		pstmt.setString(2, "regAmmnt");
 		rs = pstmt.executeQuery();
+		rs.next();
 		yTD_Initial.setRegAmmntYTD(rs.getDouble("ammount"));
 		
 		pstmt.setString(2, "ptoHours");
 		rs = pstmt.executeQuery();
+		rs.next();
 		yTD_Initial.setPtoHoursYTD(rs.getDouble("ammount"));
 		
 		pstmt.setString(2, "ptoAmmnt");
 		rs = pstmt.executeQuery();
+		rs.next();
 		yTD_Initial.setPtoAmmntYTD(rs.getDouble("ammount"));
 		
 		pstmt.setString(2, "otHours");
 		rs = pstmt.executeQuery();
+		rs.next();
 		yTD_Initial.setOtHoursYTD(rs.getDouble("ammount"));
 		
 		pstmt.setString(2, "otAmmnt");
 		rs = pstmt.executeQuery();
+		rs.next();
 		yTD_Initial.setOtAmmntYTD(rs.getDouble("ammount"));
 		
 		pstmt.setString(2, "salAmmnt");
 		rs = pstmt.executeQuery();
+		rs.next();
 		yTD_Initial.setSalAmmntYTD(rs.getDouble("ammount"));
 		
 		pstmt.setString(2, "advAmmnt");
 		rs = pstmt.executeQuery();
+		rs.next();
 		yTD_Initial.setAdvAmmntYTD(rs.getDouble("ammount"));
 		
 		pstmt.setString(2, "royaltyAmmnt");
 		rs = pstmt.executeQuery();
+		rs.next();
 		yTD_Initial.setRoyaltyAmmntYTD(rs.getDouble("ammount"));
 	}
 
@@ -464,7 +553,7 @@ public class Check_Edit {
 		
 		String updateStatement = "select * " + "from employee " + 
 		"inner join address on employee.id = address.employee_id " +
-		"WHERE id = ?";
+		"WHERE employee.id = ?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
@@ -552,7 +641,6 @@ public class Check_Edit {
 	}
 
 	private static void calcNet() {
-		// TODO Calculate Net from Gross and total Taxes
 		check.setNetAmmnt(check.getGrossAmmnt());
 		
 		//Get all of the taxes
@@ -560,7 +648,6 @@ public class Check_Edit {
 			check.setNetAmmnt(check.getNetAmmnt() - tax.get(i).getNetAmmount());
 		}
 		
-		//TODO: Subtract all extra values
 		check.setNetAmmnt(check.getNetAmmnt() - check.getAddFedTax());
 		check.setNetAmmnt(check.getNetAmmnt() - check.getAddStateTax());
 	}
@@ -747,8 +834,70 @@ public class Check_Edit {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Dispose this screen and remove the check in progress from the database
+			frame.dispose();
+			try {
+				deleteCheck();
+				updateNextCheckNum(CHECKNUM);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			
+		}
+
+		private void deleteCheck() throws Exception {
+			 String[] SQL;
+			SQL = Config.PullSQLConfig();
+			
+			System.out.println("Querrying DB for selected Employee");
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			
+			String updateStatement = "delete " + "from checks " + "WHERE checknum = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+
+			
+			pstmt.setInt(1, CHECKNUM);
+			
+			System.out.println(pstmt);
+			
+			
+			int rs = pstmt.executeUpdate();
+			
+			System.out.println("Deleted " + rs + " entry(s) from checks.");
+			
+		}
+		
+		private void updateNextCheckNum(int checkID) throws Exception {
+			 String[] SQL = Config.PullSQLConfig();
+				
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+				
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			
+			String updateStatement = "update generalconfig set nextCheckNum = ? where id = 1";
+			
+			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+				
+			//checkNum
+			pstmt.setInt(1, checkID);
+			
+			pstmt.executeUpdate();
 			
 		}
 	};
-
+	
+	static ActionListener textListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Enter Key Pressed.");
+			updateData();
+		}
+	};
 }

@@ -90,6 +90,7 @@ public class Edit_Tax_Table {
 		ID = new ArrayList<JLabel>();
 		
 		
+		//TODO: Remove check marks for the primary taxes
 		
 		int autoX = 0;
 		int autoY = 0;
@@ -359,7 +360,7 @@ public class Edit_Tax_Table {
 
 				result += pstmt.executeUpdate();
 				
-				//TODO: Update the name on the YTD Table for the relative tax
+			
 				
 				pstmtytd.setString(1, Name.get(i).getText());
 				pstmtytd.setInt(2, Integer.parseInt(ID.get(i).getText()));
@@ -418,7 +419,7 @@ public class Edit_Tax_Table {
 			
 			System.out.println("Added " + result + "entry(s) to tax table.");
 			
-			//TODO: You also will need to create a new YTD Entry for this tax
+
 	
 			Connection conn2 = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
