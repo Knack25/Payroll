@@ -201,50 +201,6 @@ public class Check_Edit {
     					break;
     				}
     			}
-//    			if(x==3) {
-//    				switch(y) {
-//    				case 0:
-//    					pos.gridy = y;
-//    					frame.add(null/*check number*/,pos);
-//    					break;
-//    				case 1:
-//    					pos.gridy = y;
-//    					frame.add(dateT,pos);
-//    					break;
-//    				case 2:
-//    					pos.gridy = y;
-//    					frame.add(periodDateT,pos);
-//    					break;
-//    				case 3:
-//    					pos.gridy = y;
-//    					frame.add(hourRateT,pos);
-//    					break;
-//    				case 4:
-//    					pos.gridy = y;
-//    					frame.add(currentL,pos);
-//    					break;
-//    				case 5:
-//    					pos.gridy = y;
-//    					frame.add(regularHrsCurrT,pos);
-//    					break;
-//    				case 6:
-//    					pos.gridy = y;
-//    					frame.add(ptoHrsCurrT,pos);
-//    					break;
-//    				case 7:
-//    					pos.gridy = y;
-//    					frame.add(otHrsCurrT,pos);
-//    					break;
-//    				case 8:
-//    					pos.gridy = y;
-//    					frame.add(salaryCurrT,pos);
-//    					break;
-//    				case 9:
-//    					pos.gridy = y;
-//    					frame.add(otherHrsCurrT,pos);
-//    					break;
-//    				}
-//    			}
     		}
     	}
     	
@@ -526,6 +482,7 @@ public class Check_Edit {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
+			tempTax = new Tax();
 			tempTax.setName(rs.getString("taxname"));
 			tempTax.setType(rs.getString("taxtype"));
 			tempTax.setAmmount(rs.getDouble("ammount"));
@@ -597,7 +554,7 @@ public class Check_Edit {
 		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 		
 		
-		String updateStatement = "select * " + "from checks " + "WHERE id = ?";
+		String updateStatement = "select * " + "from checks " + "WHERE checknum = ?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
@@ -720,112 +677,112 @@ public class Check_Edit {
 		}
 
 		private void formatExcel() throws Exception {
+			//static YTD yTD_Initial,yTD_Calc;
+			
 			Excel_Out.create("Test v1", 12, 52);
 			
-			Excel_Out.formatColwidth(1, 17);
-			Excel_Out.formatColwidth(2, 12);
-			Excel_Out.formatColwidth(3, 7);
-			Excel_Out.formatColwidth(4, 13);
-			Excel_Out.formatColwidth(5, 3);
-			Excel_Out.formatColwidth(6, 13);
-			Excel_Out.formatColwidth(7, 10);
-			Excel_Out.formatColwidth(8, 18);
-			Excel_Out.formatColwidth(9, 16);
-			Excel_Out.formatColwidth(10, 8);
-			Excel_Out.formatColwidth(11, 16);
-			Excel_Out.formatColwidth(12, 15);
+			Excel_Out.formatColwidth(0, 17*262);
+			Excel_Out.formatColwidth(1, 12*265);
+			Excel_Out.formatColwidth(2, 7*265);
+			Excel_Out.formatColwidth(3, 13*265);
+			Excel_Out.formatColwidth(4, 3*265);
+			Excel_Out.formatColwidth(5, 13*265);
+			Excel_Out.formatColwidth(6, 10*265);
+			Excel_Out.formatColwidth(7, 18*265);
+			Excel_Out.formatColwidth(8, 16*265);
+			Excel_Out.formatColwidth(9, 8*265);
+			Excel_Out.formatColwidth(10, 16*265);
+			Excel_Out.formatColwidth(11, 15*265);
 			
 			
-			for(int i = 1;i < 53; i++)
+			for(int i = 0;i < 52; i++)
 				Excel_Out.formatRowHeight(i, (float)17.25);
 
-			Excel_Out.formatRowHeight(4, 36);
-			Excel_Out.formatRowHeight(5, (float)34.5);
-			for(int i = 6; i < 38; i++) {
-					if(i==8 || i==17 || i==18)
+			Excel_Out.formatRowHeight(3, 36);
+			Excel_Out.formatRowHeight(4, (float)34.5);
+			for(int i = 5; i < 37; i++) {
+					if(i==7 || i==16 || i==17)
 						continue;
 					Excel_Out.formatRowHeight(i, (float)19.5);
 			}
-			Excel_Out.formatRowHeight(8, (float)16.5);
+			Excel_Out.formatRowHeight(7, (float)16.5);
+			Excel_Out.formatRowHeight(16, (float)16.5);
 			Excel_Out.formatRowHeight(17, (float)16.5);
-			Excel_Out.formatRowHeight(18, (float)16.5);
 			
 			
-			Excel_Out.writeToCell(3, 7, amntSpellOut);
-			Excel_Out.writeToCell(9, 9, dateT.getText());
-			Excel_Out.writeToCell(12, 9, amntT.getText());
-			Excel_Out.writeToCell(3, 11, nameT.getText());
-			Excel_Out.writeToCell(3,12,addressT.getText());
-			Excel_Out.writeToCell(3,13,cityStateZipT.getText());
+			Excel_Out.writeToCell(2, 6, amntSpellOut);
+			Excel_Out.writeToCell(8, 8, dateT.getText());
+			Excel_Out.writeToCell(11, 8, amntT.getText());
+			Excel_Out.writeToCell(2, 10, nameT.getText());
+			Excel_Out.writeToCell(2,11,addressT.getText());
+			Excel_Out.writeToCell(2,12,cityStateZipT.getText());
 			
 			
-			Excel_Out.writeToCell(9,21,"Current");
-			Excel_Out.writeToCell(11,21,"YTD");
-			Excel_Out.writeToCell(2,22,"Check Date");
-			Excel_Out.writeToCell(4, 22, date);
+			Excel_Out.writeToCell(8,20,"Current");
+			Excel_Out.writeToCell(10,20,"YTD");
+			Excel_Out.writeToCell(1,21,"Check Date");
+			Excel_Out.writeToCell(3, 21, dateT.getText());
 			
-			Excel_Out.writeToCell(9,22,amntT.getText());
-			Excel_Out.writeToCell(11,22, 1/*Gross YTD*/);
+			Excel_Out.writeToCell(8,21,amntT.getText());
+			Excel_Out.writeToCell(10,21, yTD_Calc.getGrossAmmntYTD());
 			
-			Excel_Out.writeToCell(2,24,"Pay Period");
-			Excel_Out.writeToCell(4,24,1/*beginning date for period*/);
-			Excel_Out.writeToCell(5,24,"-");
-			Excel_Out.writeToCell(6,24,1/*end date for period*/);
+			Excel_Out.writeToCell(1,23,"Pay Period");
+			Excel_Out.writeToCell(3,23,periodDateT.getText());
 			
 			
 			
 			
-			
-			Excel_Out.writeToCell(8,22,"Gross Pay");
-			//Doubt that this will work properly
+			Excel_Out.writeToCell(7,21,"Gross Pay");
+			//only showing advance (last tax table on the list)
 			int i;
-			for(i = 0;i < 14; i++) {
+			for(i = 0;i < NUMTAXAMNT; i++) {
 				if(i == 13) {
-					Excel_Out.writeToCell(8,(23+i),"Other");
-					Excel_Out.writeToCell(9,(23+i),1/* the sum of all unseen tax tables for current check*/);
-					Excel_Out.writeToCell(11,(23+i),1/* the sum of all unseen tax tables for YTD*/);
+					Excel_Out.writeToCell(7,(22+i),"Other");
+					Excel_Out.writeToCell(8,(22+i),1/* the sum of all unseen tax tables for current check*/);
+					Excel_Out.writeToCell(10,(22+i),1/* the sum of all unseen tax tables for YTD*/);
 					continue;
 				}
-				Excel_Out.writeToCell(8,(23+i),1/*Name of the tax*/);
-				Excel_Out.writeToCell(9,(23+i),1/*value of the tax on the current check*/);
-				Excel_Out.writeToCell(11,(23+i),1/*value of the tax for YTD*/);
+				System.out.println(i);
+				Excel_Out.writeToCell(7,(22+i),tax.get(i).getName()/*Name of the tax*/);
+				Excel_Out.writeToCell(8,(22+i),tax.get(i).getAmmount()/*value of the tax on the current check*/);
+				Excel_Out.writeToCell(10,(22+i),tax.get(i).getNetAmmount()/*value of the tax for YTD*/);
 			}
-			Excel_Out.writeToCell(8,23+i+1,"Net Pay");
+			Excel_Out.writeToCell(7,22+i,"Net Pay");
+			Excel_Out.writeToCell(7,22+i,netPayCurrT.getText());
+			Excel_Out.writeToCell(7,22+i,netPayYTDT.getText());
 			
 			
+			Excel_Out.writeToCell(3,26,"Current");
+			Excel_Out.writeToCell(5,26,"YTD");
 			
+			Excel_Out.writeToCell(1,27,"Regular");
+			Excel_Out.writeToCell(3,27, check.getRegHours());
+			Excel_Out.writeToCell(5,27,yTD_Calc.getRegHoursYTD() /*YTD hours worked*/);
 			
-			Excel_Out.writeToCell(4,27,"Current");
-			Excel_Out.writeToCell(6,27,"YTD");
-			
-			Excel_Out.writeToCell(2,28,"Regular");
-			Excel_Out.writeToCell(4,28, check.getRegHours());
-			Excel_Out.writeToCell(6,28,1 /*YTD hours worked*/);
-			
-			int j = 30;
-			Excel_Out.writeToCell(2,29,"PTO");
-			Excel_Out.writeToCell(4,29,check.getPtoHours());
-			Excel_Out.writeToCell(6,29,1/* Total YTD PTO hours used*/);
+			int j = 29;
+			Excel_Out.writeToCell(1,28,"PTO");
+			Excel_Out.writeToCell(3,28,check.getPtoHours());
+			Excel_Out.writeToCell(5,28,yTD_Calc.getPtoHoursYTD()/* Total YTD PTO hours used*/);
 			
 			if(check.getOtHours() != 0) {
-				Excel_Out.writeToCell(2,j,"Overtime");
-				Excel_Out.writeToCell(4,j,check.getOtHours());
-				Excel_Out.writeToCell(6,j,1/* Total YTD PTO hours used*/);
+				Excel_Out.writeToCell(1,j,"Overtime");
+				Excel_Out.writeToCell(3,j,check.getOtHours());
+				Excel_Out.writeToCell(5,j,yTD_Calc.getOtHoursYTD()/* Total YTD PTO hours used*/);
 				j++;
 			}
 			
+			//TODO: work on getting the underlining for text and borders
+//			Excel_Out.underlineCell(3, 26);
+//			Excel_Out.underlineCell(5, 26);
+//			Excel_Out.underlineCell(3, j--);
+//			Excel_Out.underlineCell(5, j--);
 			
-			Excel_Out.underlineCell(4, 27);
-			Excel_Out.underlineCell(6, 27);
-			Excel_Out.underlineCell(4, j--);
-			Excel_Out.underlineCell(6, j--);
+//			Excel_Out.setCellBorder(8, 20);
+//			Excel_Out.setCellBorder(10, 20);
+//			Excel_Out.setCellBorder(8, 22);
+//			Excel_Out.setCellBorder(10, 22);
 			
-			Excel_Out.setCellBorder(9, 21);
-			Excel_Out.setCellBorder(11, 21);
-			Excel_Out.setCellBorder(9, 23);
-			Excel_Out.setCellBorder(11, 23);
-			
-			
+			Excel_Out.writeOut();
 		}
 	};
 	

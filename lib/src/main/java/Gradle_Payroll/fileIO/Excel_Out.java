@@ -108,13 +108,9 @@ public class Excel_Out{
 		return 0;
 	}
 	
-	public static int setThickCellBorder(int col,int row) {
-		sheet.getRow(row).getCell(col).getCellStyle().setBorderBottom(BorderStyle.THICK);
-		return 0;
-	}
 	
 	public static int writeOut() throws Exception{
-		try(OutputStream fileOut = new FileOutputStream("Output.xlsx")){
+		try(OutputStream fileOut = new FileOutputStream("Output.xls")){
 			book.write(fileOut);
 			return 0;
 		}catch(Exception e){
