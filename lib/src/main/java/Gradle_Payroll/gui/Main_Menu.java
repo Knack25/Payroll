@@ -24,6 +24,7 @@ public class Main_Menu extends JFrame implements ActionListener{
 
 	static JDesktopPane MainMenu;
 	static int CheckNum;
+	static double year;
 	
 	
 	
@@ -241,7 +242,7 @@ public class Main_Menu extends JFrame implements ActionListener{
 	}
 	static public void processPayrollEdit() {
 		try {
-			JInternalFrame edit_check =  Check_Edit.createDialog(CheckNum);
+			JInternalFrame edit_check =  Check_Edit.createDialog(CheckNum,year);
 			MainMenu.add(edit_check);
 		} catch (Exception e) {
 			e.printStackTrace();

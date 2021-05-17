@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,10 +46,11 @@ public class Check_Edit {
 	static LocalDate date;
 	static SimpleDateFormat dateFormat;
 	static YTD yTD_Initial,yTD_Calc;
+	static Double YEAR;
 	
 	
 	
-	protected static JInternalFrame createDialog(int checkNum) {
+	protected static JInternalFrame createDialog(int checkNum,double year) {
 		frame = new JInternalFrame();
 		frame.setSize(320, 320);
     	frame.setLayout(new GridBagLayout());
@@ -67,7 +67,7 @@ public class Check_Edit {
     	yTD_Initial = new YTD();
     	yTD_Calc = new YTD();
     	
-    	
+    	YEAR = year;
     	tax = new ArrayList<Tax>();
     	
     	CHECKNUM = checkNum;
@@ -280,7 +280,11 @@ public class Check_Edit {
 		
 		//Format all string data
 		formatData();
+		calcGross();
+		calcTaxes(); 
+		calcNet();
 		calcYTD();
+		
 		updateFields();
 		
 	}
@@ -527,6 +531,7 @@ public class Check_Edit {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
+			tempTax = new  Tax();
 			tempTax.setName(rs.getString("taxname"));
 			tempTax.setType(rs.getString("taxtype"));
 			tempTax.setAmmount(rs.getDouble("ammount"));
@@ -539,6 +544,32 @@ public class Check_Edit {
 			tempTax.setPrimaryTax(rs.getBoolean("primaryTax"));
 			tax.add(tempTax);
 		}
+		sqlPullTaxYTD();
+	}
+
+	private static void sqlPullTaxYTD() throws Exception {
+		int i  = 0;
+		String[] SQL;
+		SQL = Config.PullSQLConfig();
+		
+		System.out.println("Querrying DB for selected Employee");
+		
+		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+		
+		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+		
+		
+		String updateStatement = "select * " + "from tax_ytd " + "WHERE employee_id = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+		
+		pstmt.setInt(1, EMPID);
+		
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()) {
+			tax.get(i).setYTD(rs.getDouble("ammount"));
+		}
+		
 	}
 
 	private static void sqlPullEmpData() throws Exception {
@@ -716,12 +747,95 @@ public class Check_Edit {
 			// TODO Save the data from the check to an entry in the DB.
 			try {
 				sqlPushCheck();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			try {
 				sqlPushYTD();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
+			try {
+				sqlPushCheckTax();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			try {
+				sqlPushTaxYTD();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			
 		}
 
+		
+		private void sqlPushTaxYTD() throws Exception {
+			String[] SQL;
+			SQL = Config.PullSQLConfig();
+			
+			System.out.println("Querrying DB for selected Employee");
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			String updateStatement = "update tax_ytd set  " + "ammount = ? " + "WHERE employee_id = ? and name = ? and year = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+			
+			pstmt.setInt(2, EMPID);
+			pstmt.setDouble(4, YEAR);
+			
+			
+			for(int i = 0; i < NUMTAXAMNT;i++) {
+				pstmt.setDouble(1, tax.get(i).getYTD());
+				pstmt.setString(3, tax.get(i).getName());
+				pstmt.executeUpdate();
+			}
+			
+			
+		}
+
+
+		private void sqlPushCheckTax() throws Exception {
+			String[] SQL;
+			SQL = Config.PullSQLConfig();
+			
+			System.out.println("Querrying DB for selected Employee");
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			
+			String updateStatement = "Insert into check_tax(check_id,taxname,taxtype,ammount,netammount,fedTaxExempt," + 
+					"stateTaxExempt,state2TaxExempt,SSCTaxExempt,medicareTaxExempt,localTaxExempt) Values(?,?,?,?,?,?,?,?,?,?,?)";
+			
+			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+			
+			for (int i = 0;i<NUMTAXAMNT;i++) {
+				pstmt.setInt(1, CHECKNUM);
+				pstmt.setString(2, tax.get(i).getName());
+				if(tax.get(i).getType() == "%") {
+					pstmt.setInt(3, 1);
+				}else {
+					pstmt.setInt(3, 0);
+				}
+				pstmt.setDouble(4, tax.get(i).getAmmount());
+				pstmt.setDouble(5, tax.get(i).getNetAmmount());
+				pstmt.setBoolean(6, tax.get(i).isFedTaxExempt());
+				pstmt.setBoolean(7, tax.get(i).isStateTaxExempt());
+				pstmt.setBoolean(8, tax.get(i).isState2TaxExempt());
+				pstmt.setBoolean(9, tax.get(i).isSscTaxExempt());
+				pstmt.setBoolean(10, tax.get(i).isMedicareTaxeExempt());
+				pstmt.setBoolean(11, tax.get(i).isLocalTaxExempt());
+				pstmt.executeUpdate();
+			}
+		}
+
+
+		//*********************************************SQL Push YTD*************************************************************
 		private void sqlPushYTD() throws Exception {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
@@ -739,10 +853,11 @@ public class Check_Edit {
 			
 			
 			pstmt.setInt(2, EMPID);
+			pstmt.setDouble(4, YEAR);
 			
 			pstmt.setDouble(1, yTD_Calc.getGrossAmmntYTD());
 			pstmt.setString(3, "grossAmmnt");
-			//pstmt.setDouble(4, );
+			@SuppressWarnings("unused")
 			int rs = pstmt.executeUpdate();
 			
 			pstmt.setDouble(1, yTD_Calc.getNetAmmntYTD());
@@ -787,6 +902,8 @@ public class Check_Edit {
 	
 		}
 
+		
+		//*************************************************SQL Push Check*******************************************************
 		private void sqlPushCheck() throws Exception {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
@@ -833,6 +950,7 @@ public class Check_Edit {
 			System.out.println(pstmt);
 			
 			
+			@SuppressWarnings("unused")
 			int rs = pstmt.executeUpdate();
 			
 		}

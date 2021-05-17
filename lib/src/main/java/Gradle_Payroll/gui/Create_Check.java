@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -358,6 +359,7 @@ public class Create_Check {
 				dialog.dispose();
 				System.out.println(checkID);
 				Main_Menu.CheckNum = checkID;
+				Main_Menu.year = Calendar.YEAR;
 				Main_Menu.processPayrollEdit();
 				
 				
