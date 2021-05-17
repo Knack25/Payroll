@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -24,14 +25,12 @@ public class Main_Menu extends JFrame implements ActionListener{
 
 	static JDesktopPane MainMenu;
 	static int CheckNum;
-	static double year;
+	static int year;
 	
 	
 	
 
 	public Main_Menu() {
-		
-	
 		
 		super("ACI Payroll");
 		

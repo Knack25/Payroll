@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.Calendar;
 
 import javax.swing.JButton;
@@ -351,6 +352,7 @@ public class Create_Check {
 			
 			fullName = (String) employee.getSelectedItem();
 			String[] name = fullName.split(" ");
+			LocalDate currDate = LocalDate.now();
 			System.out.println("Check Creation Requested...");
 			
 			try {
@@ -359,7 +361,7 @@ public class Create_Check {
 				dialog.dispose();
 				System.out.println(checkID);
 				Main_Menu.CheckNum = checkID;
-				Main_Menu.year = Calendar.YEAR;
+				Main_Menu.year = currDate.getYear();
 				Main_Menu.processPayrollEdit();
 				
 				

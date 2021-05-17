@@ -47,11 +47,11 @@ public class Check_Edit {
 	static LocalDate date;
 	static SimpleDateFormat dateFormat;
 	static YTD yTD_Initial,yTD_Calc;
-	static Double YEAR;
+	static int YEAR;
 	
 	
 	
-	protected static JInternalFrame createDialog(int checkNum,double year) {
+	protected static JInternalFrame createDialog(int checkNum,int year) {
 		frame = new JInternalFrame();
 		frame.setSize(400, 400);
     	frame.setLayout(new GridBagLayout());
@@ -566,7 +566,7 @@ public class Check_Edit {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
 		
-		System.out.println("Querrying DB for selected Employee");
+		System.out.println("Querrying DB for Tax Data");
 		
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 		
@@ -604,7 +604,7 @@ public class Check_Edit {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
 		
-		System.out.println("Querrying DB for selected Employee");
+		System.out.println("Querrying DB for Tax YTD Data");
 		
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 		
@@ -629,7 +629,7 @@ public class Check_Edit {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
 		
-		System.out.println("Querrying DB for selected Employee");
+		System.out.println("Querrying DB for Employee Data");
 		
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 		
@@ -676,7 +676,7 @@ public class Check_Edit {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
 		
-		System.out.println("Querrying DB for selected Employee");
+		System.out.println("Querrying DB for Check Data");
 		
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 		
@@ -689,8 +689,6 @@ public class Check_Edit {
 
 		
 		pstmt.setInt(1, CHECKNUM);
-		
-		System.out.println(pstmt);
 		
 		
 		ResultSet rs = pstmt.executeQuery();
@@ -706,7 +704,6 @@ public class Check_Edit {
 		check.setAdvAmmnt(rs.getDouble("advRate"));
 		check.setRoyaltyAmmnt(rs.getDouble("royaltyRate"));
 		check.setStartDate(rs.getString("payrollStartDate"));
-		System.out.println(check.getStartDate());
 		check.setEndDate(rs.getString("payrollEndDate"));
 	}
 
@@ -833,7 +830,7 @@ public class Check_Edit {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
 			
-			System.out.println("Querrying DB for selected Employee");
+			System.out.println("Pushing Tax YTD to DB");
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -862,7 +859,7 @@ public class Check_Edit {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
 			
-			System.out.println("Querrying DB for selected Employee");
+			System.out.println("Pushig Check Tax to DB");
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -900,7 +897,7 @@ public class Check_Edit {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
 			
-			System.out.println("Querrying DB for selected Employee");
+			System.out.println("Pushing YTD to DB");
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -914,6 +911,7 @@ public class Check_Edit {
 			
 			pstmt.setInt(2, EMPID);
 			pstmt.setDouble(4, YEAR);
+	
 			
 			pstmt.setDouble(1, yTD_Calc.getGrossAmmntYTD());
 			pstmt.setString(3, "grossAmmnt");
@@ -968,7 +966,7 @@ public class Check_Edit {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
 			
-			System.out.println("Querrying DB for selected Employee");
+			System.out.println("Pushing Check to DB");
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -1087,7 +1085,6 @@ public class Check_Edit {
 					
 					continue;
 				}
-				System.out.println(i);
 				Excel_Out.writeToCell(7,(22+i),tax.get(i).getName()/*Name of the tax*/);
 				Excel_Out.writeToCell(8,(22+i),tax.get(i).getNetAmmount()/*value of the tax on the current check*/);
 				Excel_Out.changeNumberFormat(8, (22+i));
@@ -1158,7 +1155,7 @@ public class Check_Edit {
 			 String[] SQL;
 			SQL = Config.PullSQLConfig();
 			
-			System.out.println("Querrying DB for selected Employee");
+			System.out.println("Deleting Check");
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -1171,8 +1168,6 @@ public class Check_Edit {
 
 			
 			pstmt.setInt(1, CHECKNUM);
-			
-			System.out.println(pstmt);
 			
 			
 			int rs = pstmt.executeUpdate();
