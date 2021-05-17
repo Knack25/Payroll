@@ -1019,7 +1019,7 @@ public class Check_Edit {
 			//static YTD yTD_Initial,yTD_Calc;
 			
 			Excel_Out.create("Test v1", 12, 52);
-			
+			Excel_Out.createPrintArea(12, 52);
 			Excel_Out.formatColwidth(0, 17*262);
 			Excel_Out.formatColwidth(1, 12*265);
 			Excel_Out.formatColwidth(2, 7*265);
@@ -1087,7 +1087,6 @@ public class Check_Edit {
 					
 					continue;
 				}
-				System.out.println(i);
 				Excel_Out.writeToCell(7,(22+i),tax.get(i).getName()/*Name of the tax*/);
 				Excel_Out.writeToCell(8,(22+i),tax.get(i).getNetAmmount()/*value of the tax on the current check*/);
 				Excel_Out.changeNumberFormat(8, (22+i));
@@ -1124,11 +1123,11 @@ public class Check_Edit {
 			j--;
 			//TODO: work on getting the underlining for text and borders
 			Excel_Out.underlineCell(3, 26);
-			Excel_Out.underlineCell(5, 26);
+			Excel_Out.underlineCell(5, 26);	
 //			Excel_Out.underlineCell(3, j);
 //			Excel_Out.underlineCell(5, j);
-			
-			Excel_Out.setCellBorder(8, 20);
+			//TODO: Fix bottom border so it doesn't go everywhere
+//			Excel_Out.setCellBorder(8, 20);
 //			Excel_Out.setCellBorder(10, 20);
 //			Excel_Out.setCellBorder(8, 22);
 //			Excel_Out.setCellBorder(10, 22);
