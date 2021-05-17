@@ -32,9 +32,7 @@ public class Edit_YTD {
 	 * */
 	
 	static int taxNum = 0;
-	final static String dollar = "$";
-	final static String percent = "%";
-	
+
 	static int EMPID;
 
 	static JDialog dialog;
@@ -45,7 +43,6 @@ public class Edit_YTD {
 	static ResultSet rs;
 	static List<JTextField> Ammount;
 	static List<JTextField> Name;
-	static List<JComboBox<String>> TaxType;
 	static List<JLabel> ID;
 	
 	

@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.ExcelNumberFormat;
 
 
 
@@ -77,7 +78,10 @@ public class Excel_Out{
 		sheet.getRow(row).getCell(col).setCellValue(input);
 		return 0;
 	}
-	
+	public static int changeNumberFormat() {
+		
+		return 0;
+	}
 	public static int formatRowHeight(int row,float height) {
 		sheet.getRow(row).setHeightInPoints(height);
 		return 0;
