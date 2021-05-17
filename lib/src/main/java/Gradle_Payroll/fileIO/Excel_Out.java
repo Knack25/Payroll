@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -44,6 +45,10 @@ public class Excel_Out{
 	
 	public static void createSheet(String sheetName) {
 		sheet = book.createSheet(sheetName);
+	}
+	
+	public static void createPrintArea(int numCol,int numRow) throws Exception{
+		book.setPrintArea(0, 0, numCol, 0, numRow);
 	}
 	
 	private static int createCells(int col,int row) {
