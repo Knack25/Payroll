@@ -33,9 +33,10 @@ public class Check_Edit {
 	static JInternalFrame frame;
 	static int CHECKNUM,EMPID,NUMTAXAMNT;
 	static JButton printB,cancelB;
-	static JLabel chkNumL,chkDateL,payPeriodL,hourRateL,salaryL,regHrsL,ptoHrsL,otHrsL,otherL,grossPayL,currentL,YTDL;
+	static JLabel chkNumL,chkDateL,payPeriodL,hourRateL,salaryL,regHrsL,ptoHrsL,otHrsL,otherL,grossPayL,netPayL,currentL,YTDL;
 	static JTextField nameT,addressT,cityStateZipT,dateT,amntT,spelledAmntT,periodDateT,hourRateT,salaryCurrT,salaryYTDT;
 	static JTextField regularHrsCurrT,regularHrsYTDT,ptoHrsCurrT,ptoHrsYTDT,otHrsCurrT,otHrsYTDT;
+	static JTextField regCalcT,ptoCalcT,otCalcT,salCalcT;
 	static JTextField grossPayCurrT,grossPayYTDT,netPayCurrT,netPayYTDT,advAmmntT,royalAmmntT;
 	static Address addr;
 	static Name name;
@@ -126,7 +127,11 @@ public class Check_Edit {
     					break;
     				case 9:
     					pos.gridy = y;
-    					frame.add(otherL,pos);
+    					frame.add(grossPayL,pos);
+    					break;
+    				case 10:
+    					pos.gridy = y;
+    					frame.add(netPayL,pos);
     					break;
     				}
     			}
@@ -147,6 +152,7 @@ public class Check_Edit {
     				case 3:
     					pos.gridy = y;
     					frame.add(hourRateT,pos);
+    					hourRateT.setEditable(false);
     					break;
     				case 4:
     					pos.gridy = y;
@@ -155,22 +161,32 @@ public class Check_Edit {
     				case 5:
     					pos.gridy = y;
     					frame.add(regularHrsCurrT,pos);
+    					regularHrsCurrT.setEditable(false);
     					break;
     				case 6:
     					pos.gridy = y;
     					frame.add(ptoHrsCurrT,pos);
+    					ptoHrsCurrT.setEditable(false);
     					break;
     				case 7:
     					pos.gridy = y;
     					frame.add(otHrsCurrT,pos);
+    					otHrsCurrT.setEditable(false);
     					break;
     				case 8:
     					pos.gridy = y;
     					frame.add(salaryCurrT,pos);
+    					salaryCurrT.setEditable(false);
     					break;
     				case 9:
     					pos.gridy = y;
-    				//	frame.add(otherHrsCurrT,pos);
+    					frame.add(grossPayCurrT,pos);
+    					grossPayCurrT.setEditable(false);
+    					break;
+    				case 10:
+    					pos.gridy = y;
+    					frame.add(netPayCurrT,pos);
+    					netPayCurrT.setEditable(false);
     					break;
     				}
     			}
@@ -183,27 +199,64 @@ public class Check_Edit {
     				case 5:
     					pos.gridy = y;
     					frame.add(regularHrsYTDT,pos);
+    					regularHrsYTDT.setEditable(false);
     					break;
     				case 6:
     					pos.gridy = y;
     					frame.add(ptoHrsYTDT,pos);
+    					ptoHrsYTDT.setEditable(false);
     					break;
     				case 7:
     					pos.gridy = y;
     					frame.add(otHrsYTDT,pos);
+    					otHrsYTDT.setEditable(false);
     					break;
     				case 8:
     					pos.gridy = y;
     					frame.add(salaryYTDT,pos);
+    					salaryYTDT.setEditable(false);
     					break;
     				case 9:
     					pos.gridy = y;
-    					//frame.add(otherHrsYTDT,pos);
+    					frame.add(grossPayYTDT,pos);
+    					grossPayYTDT.setEditable(false);
     					break;
+    				case 10:
+    					pos.gridy = y;
+    					frame.add(netPayYTDT,pos);
+    					netPayYTDT.setEditable(false);
+    					break;
+    				}
+    			}
+    			if(x==3) {
+    				switch(y) {
+    				case 5:
+    					pos.gridy = y;
+    					frame.add(regCalcT,pos);
+    					regCalcT.setEditable(false);
+    					break;
+    				case 6:
+    					pos.gridy = y;
+    					frame.add(ptoCalcT,pos);
+    					ptoCalcT.setEditable(false);
+    					break;
+    				case 7:
+    					pos.gridy = y;
+    					frame.add(otCalcT,pos);
+    					otCalcT.setEditable(false);
+    					break;
+    				case 8:
+    					pos.gridy = y;
+    					frame.add(salCalcT,pos);
+    					salCalcT.setEditable(false);
+    					break;
+    				
     				}
     			}
     		}
     	}
+    	
+    	
     	
     	frame.add(cancelB);
     	frame.add(printB);
@@ -270,6 +323,11 @@ public class Check_Edit {
 		netPayYTDT.setText(String.valueOf(yTD_Calc.getNetAmmntYTD()));
 		advAmmntT.setText(String.valueOf(check.getAdvAmmnt()));
 		royalAmmntT.setText(String.valueOf(check.getRoyaltyAmmnt()));
+		
+		regCalcT.setText(String.valueOf(check.getRegAmmnt()));
+		ptoCalcT.setText(String.valueOf(check.getPtoAmmnt()));
+		otCalcT.setText(String.valueOf(check.getOtAmmnt()));
+		salCalcT.setText(String.valueOf(check.getSalAmmnt()));
 	}
 
 	//*********************************************Calculate YTD***********************************************************
@@ -351,6 +409,16 @@ public class Check_Edit {
 		advAmmntT.addActionListener(textListener);
 		royalAmmntT = new JTextField(String.valueOf(check.getRoyaltyAmmnt()));
 		royalAmmntT.addActionListener(textListener);
+		
+		regCalcT = new JTextField(String.valueOf(check.getRegAmmnt()));
+		regCalcT.addActionListener(textListener);
+		ptoCalcT= new JTextField(String.valueOf(check.getPtoAmmnt()));
+		ptoCalcT.addActionListener(textListener);		
+		otCalcT= new JTextField(String.valueOf(check.getOtAmmnt()));
+		otCalcT.addActionListener(textListener);
+		salCalcT= new JTextField(String.valueOf(check.getSalAmmnt()));
+		salCalcT.addActionListener(textListener);
+		
 	}
 
 	//*********************************************Create Labels***********************************************************
@@ -367,7 +435,7 @@ public class Check_Edit {
 		grossPayL = new JLabel("Gross Amnt: ");
 		currentL  = new JLabel("<HTML><U> Current </U></HTML>");
 		YTDL  = new JLabel("<HTML><U> YTD </U></HTML>");
-		
+		netPayL = new JLabel("Net Pay:");
 	}
 
 	//*********************************************SQL Pull Data***********************************************************
@@ -1021,11 +1089,12 @@ public class Check_Edit {
 				j++;
 			}
 			
+			j--;
 			//TODO: work on getting the underlining for text and borders
-//			Excel_Out.underlineCell(3, 26);
-//			Excel_Out.underlineCell(5, 26);
-//			Excel_Out.underlineCell(3, j--);
-//			Excel_Out.underlineCell(5, j--);
+			Excel_Out.underlineCell(3, 26);
+			Excel_Out.underlineCell(5, 26);
+			Excel_Out.underlineCell(3, j);
+			Excel_Out.underlineCell(5, j);
 			
 //			Excel_Out.setCellBorder(8, 20);
 //			Excel_Out.setCellBorder(10, 20);
