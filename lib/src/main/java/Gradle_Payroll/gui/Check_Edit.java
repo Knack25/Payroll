@@ -53,7 +53,7 @@ public class Check_Edit {
 	
 	protected static JInternalFrame createDialog(int checkNum,double year) {
 		frame = new JInternalFrame();
-		frame.setSize(320, 320);
+		frame.setSize(400, 400);
     	frame.setLayout(new GridBagLayout());
     	
     	printB = new JButton("Print and Save");
@@ -1051,7 +1051,8 @@ public class Check_Edit {
 			
 			Excel_Out.writeToCell(2, 6, amntSpellOut);
 			Excel_Out.writeToCell(8, 8, dateT.getText());
-			Excel_Out.writeToCell(11, 8, amntT.getText());
+			Excel_Out.writeToCell(11, 8, Double.parseDouble(amntT.getText()));
+			Excel_Out.changeNumberFormat(11, 8);
 			Excel_Out.writeToCell(2, 10, nameT.getText());
 			Excel_Out.writeToCell(2,11,addressT.getText());
 			Excel_Out.writeToCell(2,12,cityStateZipT.getText());
@@ -1062,7 +1063,7 @@ public class Check_Edit {
 			Excel_Out.writeToCell(1,21,"Check Date");
 			Excel_Out.writeToCell(3, 21, dateT.getText());
 			
-			Excel_Out.writeToCell(8,21,amntT.getText());
+			Excel_Out.writeToCell(8,21,Double.parseDouble(amntT.getText()));
 			Excel_Out.writeToCell(10,21, yTD_Calc.getGrossAmmntYTD());
 			
 			Excel_Out.writeToCell(1,23,"Pay Period");
@@ -1072,24 +1073,34 @@ public class Check_Edit {
 			
 			
 			Excel_Out.writeToCell(7,21,"Gross Pay");
-			//only showing advance (last tax table on the list)
+			Excel_Out.writeToCell(8,21,Double.parseDouble(grossPayCurrT.getText()));
+			Excel_Out.changeNumberFormat(8, 21);
+			Excel_Out.writeToCell(10,21,Double.parseDouble(grossPayYTDT.getText()));
+			Excel_Out.changeNumberFormat(10, 21);
 			int i;
 			for(i = 0;i < NUMTAXAMNT; i++) {
 				if(i == 13) {
 					Excel_Out.writeToCell(7,(22+i),"Other");
 					Excel_Out.writeToCell(8,(22+i),1/* the sum of all unseen tax tables for current check*/);
+					
 					Excel_Out.writeToCell(10,(22+i),1/* the sum of all unseen tax tables for YTD*/);
+					
 					continue;
 				}
 				System.out.println(i);
 				Excel_Out.writeToCell(7,(22+i),tax.get(i).getName()/*Name of the tax*/);
-				Excel_Out.writeToCell(8,(22+i),tax.get(i).getAmmount()/*value of the tax on the current check*/);
-				Excel_Out.writeToCell(10,(22+i),tax.get(i).getNetAmmount()/*value of the tax for YTD*/);
+				Excel_Out.writeToCell(8,(22+i),tax.get(i).getNetAmmount()/*value of the tax on the current check*/);
+				Excel_Out.changeNumberFormat(8, (22+i));
+				Excel_Out.writeToCell(10,(22+i),tax.get(i).getYTD()/*value of the tax for YTD*/);
+				Excel_Out.changeNumberFormat(10, (22+i));
 			}
-			Excel_Out.writeToCell(7,22+i,"Net Pay");
-			Excel_Out.writeToCell(7,22+i,netPayCurrT.getText());
-			Excel_Out.writeToCell(7,22+i,netPayYTDT.getText());
 			
+			
+			Excel_Out.writeToCell(7,22+i,"Net Pay");
+			Excel_Out.writeToCell(8,22+i,Double.parseDouble(netPayCurrT.getText()));
+			Excel_Out.changeNumberFormat(8, 22+i);
+			Excel_Out.writeToCell(10,22+i,Double.parseDouble(netPayYTDT.getText()));
+			Excel_Out.changeNumberFormat(10, 22+i);
 			
 			Excel_Out.writeToCell(3,26,"Current");
 			Excel_Out.writeToCell(5,26,"YTD");
@@ -1114,10 +1125,10 @@ public class Check_Edit {
 			//TODO: work on getting the underlining for text and borders
 			Excel_Out.underlineCell(3, 26);
 			Excel_Out.underlineCell(5, 26);
-			Excel_Out.underlineCell(3, j);
-			Excel_Out.underlineCell(5, j);
+//			Excel_Out.underlineCell(3, j);
+//			Excel_Out.underlineCell(5, j);
 			
-//			Excel_Out.setCellBorder(8, 20);
+			Excel_Out.setCellBorder(8, 20);
 //			Excel_Out.setCellBorder(10, 20);
 //			Excel_Out.setCellBorder(8, 22);
 //			Excel_Out.setCellBorder(10, 22);
