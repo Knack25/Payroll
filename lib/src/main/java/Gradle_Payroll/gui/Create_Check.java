@@ -407,33 +407,37 @@ public class Create_Check {
 			
 		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 		
-		String updateStatement = "Insert into checks(checknum,regHours,regRate,ptoHours,ptoRate,otHours," + 
-		"otRate,salRate,advRate,royaltyRate,employee_id) Values(?,?,?,?,?,?,?,?,?,?,?)";
+		String updateStatement = "Insert into checks(checknum,payrollStartDate,payrollEndDate,regHours,regRate,ptoHours,ptoRate,otHours," + 
+		"otRate,salRate,advRate,royaltyRate,employee_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 			
 		//checkNum
 		pstmt.setDouble(1, checkID);
+		//Payroll Start Date
+		pstmt.setString(2, startT.getText());
+		//Payroll End Date
+		pstmt.setString(3, endT.getText());
 		//regHours
-		pstmt.setDouble(2, Double.parseDouble(regHoursT.getText()));
+		pstmt.setDouble(4, Double.parseDouble(regHoursT.getText()));
 		//regRate
-		pstmt.setDouble(3, Double.parseDouble(regRateT.getText()));
+		pstmt.setDouble(5, Double.parseDouble(regRateT.getText()));
 		//ptoHours
-		pstmt.setDouble(4, Double.parseDouble(ptoHoursT.getText()));
+		pstmt.setDouble(6, Double.parseDouble(ptoHoursT.getText()));
 		//ptoRate
-		pstmt.setDouble(5, Double.parseDouble(ptoRateT.getText()));
+		pstmt.setDouble(7, Double.parseDouble(ptoRateT.getText()));
 		//otHours
-		pstmt.setDouble(6, Double.parseDouble(otHoursT.getText()));
+		pstmt.setDouble(8, Double.parseDouble(otHoursT.getText()));
 		//otRate
-		pstmt.setDouble(7, Double.parseDouble(otRateT.getText()));
+		pstmt.setDouble(9, Double.parseDouble(otRateT.getText()));
 		//salRate
-		pstmt.setDouble(8, Double.parseDouble(salpayT.getText()));
+		pstmt.setDouble(10, Double.parseDouble(salpayT.getText()));
 		//advRate
-		pstmt.setDouble(9, Double.parseDouble(advpayT.getText()));
+		pstmt.setDouble(11, Double.parseDouble(advpayT.getText()));
 		//royaltyRate
-		pstmt.setDouble(10, Double.parseDouble(royalpayT.getText()));
+		pstmt.setDouble(12, Double.parseDouble(royalpayT.getText()));
 		//employee_id
-		pstmt.setInt(11, ID);
+		pstmt.setInt(13, ID);
 		
 		pstmt.executeUpdate();
 		

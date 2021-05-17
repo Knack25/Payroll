@@ -686,6 +686,9 @@ public class Check_Edit {
 		check.setSalAmmnt(rs.getDouble("salRate"));
 		check.setAdvAmmnt(rs.getDouble("advRate"));
 		check.setRoyaltyAmmnt(rs.getDouble("royaltyRate"));
+		check.setStartDate(rs.getString("payrollStartDate"));
+		System.out.println(check.getStartDate());
+		check.setEndDate(rs.getString("payrollEndDate"));
 	}
 
 	//*********************************************Calculate Gross***********************************************************
