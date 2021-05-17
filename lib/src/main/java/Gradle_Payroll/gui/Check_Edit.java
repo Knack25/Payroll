@@ -354,12 +354,31 @@ public class Check_Edit {
 
 	//*********************************************Format Data***********************************************************
 	private static void formatData() {
+		float whole,decimal;
+		int length = 0;
+		String NetAmmnt = " ";
+		String[] ammount = null;
 		fullName = check.getName().getFirst() + " " + check.getName().getLast();
 		address = check.getAddress().getStreet();
 		cityStateZip = check.getAddress().getCity() + " " + check.getAddress().getState() + " " + check.getAddress().getZip();
 		date = LocalDate.now();
-		amntSpellOut = NumberToWords.convert((long) check.getNetAmmnt());
-		payPeriodDate = "Pay Period Date goes Here";
+		NetAmmnt = Double.toString(check.getNetAmmnt());
+		ammount = NetAmmnt.split("\\.");
+		length = ammount[1].length();
+		whole = Integer.valueOf(ammount[0]);
+		decimal = Integer.valueOf(ammount[1]);
+		
+		//If we have a value less than 10 and the length is 1, we know it was a tens value
+		if(length == 1 && decimal < 10) {
+			//Convert it to a tens multiple
+			decimal = decimal * 10;
+		}
+		//Else we assume that is was actually less than 10
+		
+		
+	
+		amntSpellOut = NumberToWords.convert((long) whole) + " and " + NumberToWords.convert((long) decimal);
+		payPeriodDate = check.getEndDate();
 		
 	}
 
@@ -786,7 +805,6 @@ public class Check_Edit {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			// TODO Save the data from the check to an entry in the DB.
 			try {
 				sqlPushCheck();
 			} catch (Exception e1) {
@@ -963,7 +981,7 @@ public class Check_Edit {
 			
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
-			//TODO: Load Start and end date and currDate for pay period into check
+			
 			pstmt.setString(1, check.getStartDate());
 			pstmt.setString(2, check.getEndDate());
 			pstmt.setString(3, check.getDate());
