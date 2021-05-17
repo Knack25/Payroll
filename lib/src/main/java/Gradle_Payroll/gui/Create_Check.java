@@ -43,6 +43,7 @@ public class Create_Check {
 	static Tax tax;
 	static int empID;
 	static int checkID; 
+	static String[] selname;
 	
 
 	
@@ -249,6 +250,7 @@ public class Create_Check {
 	    	setCheckNum();
 	    	
 	    	preLoadData();
+	    	employee.addActionListener(selUpdateListener);
 	  
 	    	dialog.repaint();
 	    	
@@ -260,29 +262,48 @@ public class Create_Check {
 			return dialog;
 	 }
 	 
+	 static ActionListener selUpdateListener = new ActionListener() {
+		
+		@Override
+		public
+		 void actionPerformed(ActionEvent e) {
+			try {
+				preLoadData();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	};
+	 
 	 private static void preLoadData() throws Exception {
 		 String[] SQL = Config.PullSQLConfig();
+		 int id = 0;
 		 @SuppressWarnings("unused")
-		String fullname = (String) employee.getSelectedItem();
-		 String[] name = fullName.split(" ");
-		
+		 String fullname = (String) employee.getSelectedItem();
+		 String[] selname = fullname.split(" ");
+		 System.out.println(fullname);
+		 System.out.println(selname[0]);
+		 id = MySQL.sqlPullEmpID(selname);
 		
 			
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
 		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 		
-		String updateStatement = "select * " + "from employee " + "WHERE firstname = ? and lastname = ?";
+		String updateStatement = "select * " + "from employee " + "WHERE id = ?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 		
-		pstmt.setString(1, name[0]);
-		pstmt.setString(2, name[name.length-1]);
+		System.out.println(id);
+		
+		pstmt.setInt(1, id);
+		
 		
 		ResultSet rs = pstmt.executeQuery();
 		
 		rs.next();
 		regRateT.setText(String.valueOf(rs.getDouble("regularPay")));
+		System.out.println("Regular rate Obtained: " + regRateT.getText());
 		otRateT.setText(String.valueOf(rs.getDouble("otPay")));
 		ptoRateT.setText(String.valueOf(rs.getDouble("ptoPay")));
 		salpayT.setText(String.valueOf(rs.getDouble("salary")));
@@ -358,10 +379,7 @@ public class Create_Check {
 				
 			ResultSet rs = stmt.executeQuery("select * from employee where enabled = true");
 			
-			
-			
 			int i = 0;
-			
 			
 			while(rs.next()) {
 				fName = rs.getString("firstname");
@@ -372,14 +390,11 @@ public class Create_Check {
 				i++;
 			}
 			
-			
 			System.out.println("Data Retreived Successfull for " + i + " Employee entries.");
 			
 			rs.close();
 			conn.close();
 		}
-	 
-	
 	 
 	 private static int sqlPushCheckInitRequest(int ID) throws Exception,SQLException{
 		 String[] SQL = Config.PullSQLConfig();

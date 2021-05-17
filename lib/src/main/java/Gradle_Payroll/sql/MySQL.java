@@ -48,6 +48,7 @@ public class MySQL {
 		 String[] SQL = Config.PullSQLConfig();
 			
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+		System.out.println(name[0]);
 			
 		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 		 

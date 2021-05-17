@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -641,15 +642,17 @@ public class Check_Edit {
 	}
 
 	private static void calcNet() {
-		check.setNetAmmnt(check.getGrossAmmnt());
+		double netAmmnt = check.getGrossAmmnt();
 		
 		//Get all of the taxes
 		for(int i = 0; i < NUMTAXAMNT; i++) {
-			check.setNetAmmnt(check.getNetAmmnt() - tax.get(i).getNetAmmount());
+			netAmmnt = netAmmnt - tax.get(i).getNetAmmount();
 		}
 		
-		check.setNetAmmnt(check.getNetAmmnt() - check.getAddFedTax());
-		check.setNetAmmnt(check.getNetAmmnt() - check.getAddStateTax());
+		netAmmnt = netAmmnt - check.getAddFedTax();
+		netAmmnt = netAmmnt - check.getAddStateTax();
+		
+		check.setNetAmmnt(netAmmnt);
 	}
 
 	private static void calcTaxes() {
@@ -711,11 +714,126 @@ public class Check_Edit {
 				e1.printStackTrace();
 			}
 			// TODO Save the data from the check to an entry in the DB.
-			sqlPushCheck();
+			try {
+				sqlPushCheck();
+				sqlPushYTD();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 
-		private void sqlPushCheck() {
+		private void sqlPushYTD() throws Exception {
+			String[] SQL;
+			SQL = Config.PullSQLConfig();
 			
+			System.out.println("Querrying DB for selected Employee");
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			
+			String updateStatement = "update ytd set  " + "ammount = ? " + "WHERE employee_id = ? and name = ? and year = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+			
+			
+			pstmt.setInt(2, EMPID);
+			
+			pstmt.setDouble(1, yTD_Calc.getGrossAmmntYTD());
+			pstmt.setString(3, "grossAmmnt");
+			//pstmt.setDouble(4, );
+			int rs = pstmt.executeUpdate();
+			
+			pstmt.setDouble(1, yTD_Calc.getNetAmmntYTD());
+			pstmt.setString(3, "netAmmnt");
+			rs = pstmt.executeUpdate();
+			
+			pstmt.setDouble(1,yTD_Calc.getRegHoursYTD());
+			pstmt.setString(3, "regHours");
+			rs = pstmt.executeUpdate();
+			
+			pstmt.setDouble(1, yTD_Calc.getRegAmmntYTD());
+			pstmt.setString(3, "regAmmnt");
+			rs = pstmt.executeUpdate();
+			
+			pstmt.setDouble(1, yTD_Calc.getPtoHoursYTD());
+			pstmt.setString(3, "ptoHours");
+			rs = pstmt.executeUpdate();
+			
+			pstmt.setDouble(1, yTD_Calc.getPtoAmmntYTD());
+			pstmt.setString(3, "ptoAmmnt");
+			rs = pstmt.executeUpdate();
+			
+			pstmt.setDouble(1, yTD_Calc.getOtHoursYTD());
+			pstmt.setString(3, "otHours");
+			rs = pstmt.executeUpdate();
+			
+			pstmt.setDouble(1, yTD_Calc.getOtAmmntYTD());
+			pstmt.setString(3, "otAmmnt");
+			rs = pstmt.executeUpdate();
+			
+			pstmt.setDouble(1, yTD_Calc.getSalAmmntYTD());
+			pstmt.setString(3, "salAmmnt");
+			rs = pstmt.executeUpdate();
+			
+			pstmt.setDouble(1, yTD_Calc.getAdvAmmntYTD());
+			pstmt.setString(3, "advAmmnt");
+			rs = pstmt.executeUpdate();
+			
+			pstmt.setDouble(1, yTD_Calc.getRoyaltyAmmntYTD());
+			pstmt.setString(3, "royaltyAmmnt");
+			rs = pstmt.executeUpdate();
+	
+		}
+
+		private void sqlPushCheck() throws Exception {
+			String[] SQL;
+			SQL = Config.PullSQLConfig();
+			
+			System.out.println("Querrying DB for selected Employee");
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			
+			String updateStatement = "update checks set  " + "payrollStartDate = ?, payrollEndDate = ?, date = ?, "
+					+ "grossAmmnt = ?, netAmmt = ?, regHours = ?, regRate = ?, ptoHours = ?, otHours = ?, otRate = ?, "
+					+ "salRate = ?, advRate = ?, royaltyRate = ? " + "WHERE checknum = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+
+			//TODO: Load Start and end date and currDate for pay period into check
+			pstmt.setString(1, check.getStartDate());
+			pstmt.setString(2, check.getEndDate());
+			pstmt.setString(3, check.getDate());
+			
+			pstmt.setDouble(4, check.getGrossAmmnt());
+			pstmt.setDouble(5, check.getNetAmmnt());
+			
+			pstmt.setDouble(6, check.getRegHours());
+			pstmt.setDouble(7, check.getRegRate());
+			
+			pstmt.setDouble(8, check.getPtoHours());
+			pstmt.setDouble(9, check.getPtoRate());
+			
+			pstmt.setDouble(10, check.getOtHours());
+			pstmt.setDouble(11, check.getOtRate());
+			
+			pstmt.setDouble(12, check.getSalAmmnt());
+			
+			pstmt.setDouble(13, check.getAdvAmmnt());
+			
+			pstmt.setDouble(14, check.getRoyaltyAmmnt());
+			
+			pstmt.setInt(15, CHECKNUM);
+			
+			
+			System.out.println(pstmt);
+			
+			
+			int rs = pstmt.executeUpdate();
 			
 		}
 
