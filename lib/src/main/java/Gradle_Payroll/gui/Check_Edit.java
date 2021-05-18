@@ -1043,16 +1043,29 @@ public class Check_Edit {
 
 			Excel_Out.formatRowHeight(3, 36);
 			Excel_Out.formatRowHeight(4, (float)34.5);
+			Excel_Out.formatRowHeight(7, (float)16.5);
+			Excel_Out.formatRowHeight(16, (float)16.5);
+			Excel_Out.formatRowHeight(17, (float)16.5);
 			for(int i = 5; i < 37; i++) {
 					if(i==7 || i==16 || i==17)
 						continue;
 					Excel_Out.formatRowHeight(i, (float)19.5);
 			}
-			Excel_Out.formatRowHeight(7, (float)16.5);
-			Excel_Out.formatRowHeight(16, (float)16.5);
-			Excel_Out.formatRowHeight(17, (float)16.5);
+			
+
+			for(int x=0; x<12;x++) {
+				for(int y=0;y<52;y++) {
+					Excel_Out.clearCellFormat(x, y);
+				}
+			}
+			
+			//TODO: work on getting the underlining for text and borders
 			
 			
+			
+			
+			
+			/*-----------------------Top of check--------------------*/
 			Excel_Out.writeToCell(2, 6, amntSpellOut);
 			Excel_Out.writeToCell(8, 8, dateT.getText());
 			Excel_Out.writeToCell(11, 8, Double.parseDouble(amntT.getText()));
@@ -1060,6 +1073,8 @@ public class Check_Edit {
 			Excel_Out.writeToCell(2, 10, nameT.getText());
 			Excel_Out.writeToCell(2,11,addressT.getText());
 			Excel_Out.writeToCell(2,12,cityStateZipT.getText());
+			
+			
 			
 			
 			Excel_Out.writeToCell(8,20,"Current");
@@ -1072,7 +1087,6 @@ public class Check_Edit {
 			
 			Excel_Out.writeToCell(1,23,"Pay Period");
 			Excel_Out.writeToCell(3,23,periodDateT.getText());
-			
 			
 			
 			
@@ -1089,7 +1103,7 @@ public class Check_Edit {
 					
 					Excel_Out.writeToCell(10,(22+i),1/* the sum of all unseen tax tables for YTD*/);
 					
-					continue;
+					break;
 				}
 				Excel_Out.writeToCell(7,(22+i),tax.get(i).getName()/*Name of the tax*/);
 				Excel_Out.writeToCell(8,(22+i),tax.get(i).getNetAmmount()/*value of the tax on the current check*/);
@@ -1098,12 +1112,19 @@ public class Check_Edit {
 				Excel_Out.changeNumberFormat(10, (22+i));
 			}
 			
-			
+			//net pay YTD has too many decimal places
 			Excel_Out.writeToCell(7,22+i,"Net Pay");
 			Excel_Out.writeToCell(8,22+i,Double.parseDouble(netPayCurrT.getText()));
 			Excel_Out.changeNumberFormat(8, 22+i);
 			Excel_Out.writeToCell(10,22+i,Double.parseDouble(netPayYTDT.getText()));
 			Excel_Out.changeNumberFormat(10, 22+i);
+			
+			Excel_Out.setCellBorder(8, 20);
+			Excel_Out.setCellBorder(10, 20);
+			Excel_Out.setCellBorder(8, 22+i-1);
+			Excel_Out.setCellBorder(10, 22+i-1);
+			
+			
 			
 			Excel_Out.writeToCell(3,26,"Current");
 			Excel_Out.writeToCell(5,26,"YTD");
@@ -1124,17 +1145,30 @@ public class Check_Edit {
 				j++;
 			}
 			
-			j--;
-			//TODO: work on getting the underlining for text and borders
+			if(check.getSalAmmnt() != 0) {
+				Excel_Out.writeToCell(1,j,"Salary");
+				Excel_Out.writeToCell(3,j,check.getSalAmmnt());
+				Excel_Out.writeToCell(5,j,yTD_Calc.getSalAmmntYTD());
+				j++;
+			}
+			if(check.getRoyaltyAmmnt() != 0) {
+				Excel_Out.writeToCell(1,j,"Royalties");
+				Excel_Out.writeToCell(3,j,check.getRoyaltyAmmnt());
+				Excel_Out.writeToCell(5,j,yTD_Calc.getRoyaltyAmmntYTD());
+				j++;
+			}
+			if(check.getAdvAmmnt() != 0) {
+				Excel_Out.writeToCell(1,j,"Advance");
+				Excel_Out.writeToCell(3,j,check.getAdvAmmnt());
+				Excel_Out.writeToCell(5,j,yTD_Calc.getAdvAmmntYTD());
+				j++;
+			}
+			
 			Excel_Out.underlineCell(3, 26);
 			Excel_Out.underlineCell(5, 26);	
-//			Excel_Out.underlineCell(3, j);
-//			Excel_Out.underlineCell(5, j);
-			//TODO: Fix bottom border so it doesn't go everywhere
-//			Excel_Out.setCellBorder(8, 20);
-//			Excel_Out.setCellBorder(10, 20);
-//			Excel_Out.setCellBorder(8, 22);
-//			Excel_Out.setCellBorder(10, 22);
+			Excel_Out.underlineCell(3, j);
+			Excel_Out.underlineCell(5, j);
+			
 			
 			Excel_Out.writeOut();
 		}
