@@ -464,6 +464,10 @@ public class Edit_Employee {
 		
 		rs.close();
 		conn.close();
+		
+		if(i < 1) {
+			ErrorDialog.createError("No employees found. If none exist, please create a new one.");
+		}
 	}
     
     private static void sqlPullDeptListRequest() throws Exception,SQLException{

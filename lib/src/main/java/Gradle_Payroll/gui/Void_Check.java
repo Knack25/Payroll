@@ -47,6 +47,7 @@ public class Void_Check {
 	static YTD yTD_Initial,yTD_Calc;
 	static List<Tax> tax;
 	static Check check;
+	static Double YEAR;
 
 	
 	 protected static JDialog createVoidcheckMenu()  throws Exception {
@@ -227,11 +228,19 @@ public class Void_Check {
 		}
 
 		private void sqlPushYTD() {
-			sqlPushEmpYTD();
-			sqlPushTaxYTD();
+			try {
+				sqlPushEmpYTD();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				sqlPushTaxYTD();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
-		private void sqlPushEmpYTD() {
+		private void sqlPushEmpYTD() throws Exception {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
 			
@@ -299,8 +308,30 @@ public class Void_Check {
 			
 		}
 
-		private void sqlPushTaxYTD() {
-			// TODO Auto-generated method stub
+		private void sqlPushTaxYTD() throws Exception {
+			String[] SQL;
+			SQL = Config.PullSQLConfig();
+			
+			System.out.println("Pushing Tax YTD to DB");
+			
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
+			
+			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
+			
+			String updateStatement = "update tax_ytd set  " + "ammount = ? " + "WHERE employee_id = ? and name = ? and year = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+			
+			pstmt.setInt(2, EMPID);
+			pstmt.setDouble(4, YEAR);
+			
+			
+			for(int i = 0; i < tax.size();i++) {
+				pstmt.setDouble(1, tax.get(i).getFinalYTD());
+				pstmt.setString(3, tax.get(i).getName());
+				System.out.println(pstmt);
+				pstmt.executeUpdate();
+			}
 			
 		}
 
@@ -324,6 +355,8 @@ public class Void_Check {
 
 		
 			int rs = pstmt.executeUpdate();
+			
+			
 			
 		}
 	};
@@ -354,6 +387,7 @@ public class Void_Check {
 			
 			EMPID = MySQL.sqlPullEmpID(name);
 			double checkNum = 0;
+			int i = 0;
 			
 			System.out.println("Querrying DB for selected Employee");
 			
@@ -363,7 +397,7 @@ public class Void_Check {
 			
 			
 			String updateStatement = "select * " + "from checks " + 
-			"WHERE employee_id = ?";
+			"WHERE employee_id = ? and isVoid = false";
 			
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 			
@@ -375,6 +409,7 @@ public class Void_Check {
 			while(rs.next()) {
 				checkNum = rs.getDouble("checknum");
 				checkNo.addItem(checkNum);
+				i++;
 			}
 			
 			
@@ -383,7 +418,9 @@ public class Void_Check {
 			conn.close();
 			
 			
-			
+			if(i < 1) {
+				ErrorDialog.createError("No Checks exist for this employee. Please select a different employee.");
+			}
 			
 			
 			
@@ -425,6 +462,7 @@ public class Void_Check {
 			
 			checkNetAmmntT.setText(String.valueOf(rs.getDouble("netAmmt")));
 			checkDateT.setText(rs.getString("date"));
+			YEAR = rs.getDouble("year");
 			
 		}
 	};
@@ -460,10 +498,13 @@ public class Void_Check {
 		
 		rs.close();
 		conn.close();
+		
+		if(i < 0) {
+			ErrorDialog.createError("No Employees found. If no employees exist, please create one.");
+		}
 	}
 	 
 	private static void sqlPullTaxYTD() throws Exception {
-		int i  = 0;
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
 		Tax temptax = new  Tax();
@@ -509,6 +550,7 @@ public class Void_Check {
 		ResultSet rs = pstmt.executeQuery();
 		rs.next();
 		yTD_Initial.setGrossAmmntYTD(rs.getDouble("ammount"));
+		YEAR = rs.getDouble("year");
 		
 		pstmt.setString(2, "netAmmnt");
 		rs = pstmt.executeQuery();
