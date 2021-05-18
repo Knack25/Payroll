@@ -88,7 +88,7 @@ public class Excel_Out{
 		CellStyle dollarStyle=book.createCellStyle();
 		dollarStyle.setDataFormat((short) 0x2c);
 		dollarStyle.setFont(normalF);
-		
+		dollarStyle.setLocked(true);
 		sheet.getRow(row).getCell(col).setCellStyle(dollarStyle);
 		return 0;
 	}
@@ -123,7 +123,7 @@ public class Excel_Out{
 		CellStyle bottomB=book.createCellStyle();
 		bottomB.setBorderBottom(BorderStyle.THIN);
 		bottomB.setFont(normalF);
-		//sheet.getRow(row).getCell(col).getCellStyle().setBorderBottom(BorderStyle.MEDIUM);
+		bottomB.setLocked(true);
 		sheet.getRow(row).getCell(col).setCellStyle(bottomB);
 		
 		return 0;
@@ -133,6 +133,7 @@ public class Excel_Out{
 		bottomB.setBorderBottom(BorderStyle.THIN);
 		bottomB.setFont(normalF);
 		bottomB.setDataFormat((short) 0x2c);
+		bottomB.setLocked(true);
 		sheet.getRow(row).getCell(col).setCellStyle(bottomB);
 		
 		return 0;

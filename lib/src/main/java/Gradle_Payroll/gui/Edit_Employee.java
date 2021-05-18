@@ -40,7 +40,6 @@ public class Edit_Employee {
 	static Address empAddress;
 	static String fName,mName,lName,fullName,dept;
 
-	//TODO: Add location for Royalty
 	
 	 //Create a new internal frame.
     protected static JInternalFrame createFrame() throws Exception{
@@ -156,7 +155,7 @@ public class Edit_Employee {
     	frame.add(saveB,m15);
     	frame.add(employeeDataL,b2c2);
     	frame.add(taxTableB,e3);
-    	//frame.add(createCheckB,i1);
+    	//TODO: add a button that links to the YTD table
     	
     	
     	GridBagConstraints boom = new GridBagConstraints();
@@ -397,7 +396,7 @@ public class Edit_Employee {
     	frame.setVisible(true);
     	
     
-    	//TODO: add a button that links to the YTD table
+    	
         
     	
         
