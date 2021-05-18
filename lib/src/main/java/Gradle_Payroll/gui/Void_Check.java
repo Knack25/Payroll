@@ -67,15 +67,17 @@ public class Void_Check {
 		cancelB = new JButton("Cancel");
 		cancelB.addActionListener(cancelBListener);
 		
-		dialog.setSize(300, 100);
+		dialog.setSize(400, 250);
     	dialog.setLayout(new GridBagLayout());
     	
     	JLabel voidCheckL = new JLabel("<HTML><U> Void Check </U></HTML>"); 
     	
     	employee = new JComboBox<String>();
     	employee.addItemListener(employeeSel);
+    	
     	checkNo = new JComboBox<Double>();
-    	checkNo.addItemListener(checkNoListener);
+
+
     	
     	yTD_Initial = new YTD();
     	yTD_Calc = new YTD();
@@ -109,7 +111,7 @@ public class Void_Check {
     	a3.gridx = 0;
     	a3.gridy = 2;
     	
-    	sqlPullEmpListRequest();
+    	
     	
     	
     	
@@ -121,8 +123,8 @@ public class Void_Check {
     	dialog.add(voidB,a3);
     	dialog.repaint();
     	
+    	sqlPullEmpListRequest();
     	
-    	System.out.println("Created Dialog");
     	
     	dialog.setVisible(true);
 		return dialog;
@@ -329,7 +331,7 @@ public class Void_Check {
 			for(int i = 0; i < tax.size();i++) {
 				pstmt.setDouble(1, tax.get(i).getFinalYTD());
 				pstmt.setString(3, tax.get(i).getName());
-				System.out.println(pstmt);
+				
 				pstmt.executeUpdate();
 			}
 			
@@ -339,7 +341,7 @@ public class Void_Check {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
 			
-			System.out.println("Querrying DB for selected Employee");
+			
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -385,11 +387,12 @@ public class Void_Check {
 			String[] SQL;
 			SQL = Config.PullSQLConfig();
 			
+			
 			EMPID = MySQL.sqlPullEmpID(name);
 			double checkNum = 0;
 			int i = 0;
 			
-			System.out.println("Querrying DB for selected Employee");
+			
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -405,9 +408,12 @@ public class Void_Check {
 
 		
 			ResultSet rs = pstmt.executeQuery();
-			
+			//I Hate this line... It has caused me nothing but suffering... Why is there this, but it suggests removeAll before
+			//this, when that doesn't do anything in most cases. 
+			checkNo.removeAllItems();
 			while(rs.next()) {
 				checkNum = rs.getDouble("checknum");
+				System.out.println(checkNum);
 				checkNo.addItem(checkNum);
 				i++;
 			}
@@ -420,11 +426,17 @@ public class Void_Check {
 			
 			if(i < 1) {
 				ErrorDialog.createError("No Checks exist for this employee. Please select a different employee.");
+				employee.setSelectedIndex(0);
+				System.out.println("Null Checks Found");
+				voidB.setEnabled(false);
+			}
+			else {
+				voidB.setEnabled(true);
 			}
 			
 			
 			
-			dialog.repaint();
+			
 		}
 	};
 	
@@ -455,6 +467,7 @@ public class Void_Check {
 					
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 			
+			pstmt.setDouble(1, CHECKNUM);
 				
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -494,13 +507,14 @@ public class Void_Check {
 		}
 		
 		
-		System.out.println("Data Retreived Successfull for " + i + " Employee entries.");
+		
 		
 		rs.close();
 		conn.close();
 		
 		if(i < 0) {
 			ErrorDialog.createError("No Employees found. If no employees exist, please create one.");
+			System.out.println("Null Employee Selected");
 		}
 	}
 	 
