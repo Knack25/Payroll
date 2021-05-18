@@ -20,7 +20,7 @@ public class Tax {
 		this.medicareTaxeExempt = false;
 		this.localTaxExempt = false;
 		this.primaryTax = false;
-		this.YTD = 00.00;
+		this.InitYTD = 00.00;
 	}
 	
 	private String name;
@@ -35,7 +35,8 @@ public class Tax {
 	private boolean medicareTaxeExempt;
 	private boolean localTaxExempt;
 	private boolean primaryTax;
-	private double YTD;
+	private double InitYTD;
+	private double FinalYTD;
 	private int employee_id;
 	
 	public int getEmployee_id() {
@@ -44,11 +45,11 @@ public class Tax {
 	public void setEmployee_id(int employee_id) {
 		this.employee_id = employee_id;
 	}
-	public double getYTD() {
-		return YTD;
+	public double getInitYTD() {
+		return InitYTD;
 	}
-	public void setYTD(double yTD) {
-		YTD = yTD;
+	public void setInitYTD(double yTD) {
+		InitYTD = yTD;
 	}
 	public String getName() {
 		return name;
@@ -121,6 +122,12 @@ public class Tax {
 	}
 	public void setNetAmmount(double netAmmount) {
 		this.netAmmount = netAmmount;
+	}
+	public double getFinalYTD() {
+		return FinalYTD;
+	}
+	public void setFinalYTD(double finalYTD) {
+		FinalYTD = finalYTD;
 	}
 	
 }

@@ -15,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -395,6 +394,10 @@ public class Create_Check {
 			}
 			
 			System.out.println("Data Retreived Successfull for " + i + " Employee entries.");
+			
+			if(i < 1) {
+				ErrorDialog.createError("No Employees found in Database. Please create them if none exist.");
+			}
 			
 			rs.close();
 			conn.close();

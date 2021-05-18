@@ -619,7 +619,7 @@ public class Check_Edit {
 		
 		ResultSet rs = pstmt.executeQuery();
 		while(rs.next()) {
-			tax.get(i).setYTD(rs.getDouble("ammount"));
+			tax.get(i).setInitYTD(rs.getDouble("ammount"));
 		}
 		
 	}
@@ -788,6 +788,11 @@ public class Check_Edit {
 		tax.get(4).setNetAmmount(check.getMedicareGrossAmmnt() * 0.01 * tax.get(4).getAmmount());
 		tax.get(5).setNetAmmount(check.getLocalGrossAmmnt() * 0.01 * tax.get(5).getAmmount());
 		
+		for(int i = 0; i < NUMTAXAMNT;i++) {
+			tax.get(i).setFinalYTD(tax.get(i).getInitYTD() + tax.get(i).getNetAmmount());
+		}
+		
+		
 	}
 	
 	//*********************************************Print Button Listener***********************************************************
@@ -845,8 +850,9 @@ public class Check_Edit {
 			
 			
 			for(int i = 0; i < NUMTAXAMNT;i++) {
-				pstmt.setDouble(1, tax.get(i).getYTD());
+				pstmt.setDouble(1, tax.get(i).getFinalYTD());
 				pstmt.setString(3, tax.get(i).getName());
+				System.out.println(pstmt);
 				pstmt.executeUpdate();
 			}
 			
@@ -1088,7 +1094,7 @@ public class Check_Edit {
 				Excel_Out.writeToCell(7,(22+i),tax.get(i).getName()/*Name of the tax*/);
 				Excel_Out.writeToCell(8,(22+i),tax.get(i).getNetAmmount()/*value of the tax on the current check*/);
 				Excel_Out.changeNumberFormat(8, (22+i));
-				Excel_Out.writeToCell(10,(22+i),tax.get(i).getYTD()/*value of the tax for YTD*/);
+				Excel_Out.writeToCell(10,(22+i),tax.get(i).getInitYTD()/*value of the tax for YTD*/);
 				Excel_Out.changeNumberFormat(10, (22+i));
 			}
 			
