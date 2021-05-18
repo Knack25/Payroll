@@ -428,25 +428,25 @@ public class Create_Check {
 		//Year
 		pstmt.setDouble(4, currDate.getYear());
 		//regHours
-		pstmt.setDouble(4, Double.parseDouble(regHoursT.getText()));
+		pstmt.setDouble(5, Double.parseDouble(regHoursT.getText()));
 		//regRate
-		pstmt.setDouble(5, Double.parseDouble(regRateT.getText()));
+		pstmt.setDouble(6, Double.parseDouble(regRateT.getText()));
 		//ptoHours
-		pstmt.setDouble(6, Double.parseDouble(ptoHoursT.getText()));
+		pstmt.setDouble(7, Double.parseDouble(ptoHoursT.getText()));
 		//ptoRate
-		pstmt.setDouble(7, Double.parseDouble(ptoRateT.getText()));
+		pstmt.setDouble(8, Double.parseDouble(ptoRateT.getText()));
 		//otHours
-		pstmt.setDouble(8, Double.parseDouble(otHoursT.getText()));
+		pstmt.setDouble(9, Double.parseDouble(otHoursT.getText()));
 		//otRate
-		pstmt.setDouble(9, Double.parseDouble(otRateT.getText()));
+		pstmt.setDouble(10, Double.parseDouble(otRateT.getText()));
 		//salRate
-		pstmt.setDouble(10, Double.parseDouble(salpayT.getText()));
+		pstmt.setDouble(11, Double.parseDouble(salpayT.getText()));
 		//advRate
-		pstmt.setDouble(11, Double.parseDouble(advpayT.getText()));
+		pstmt.setDouble(12, Double.parseDouble(advpayT.getText()));
 		//royaltyRate
-		pstmt.setDouble(12, Double.parseDouble(royalpayT.getText()));
+		pstmt.setDouble(13, Double.parseDouble(royalpayT.getText()));
 		//employee_id
-		pstmt.setInt(13, ID);
+		pstmt.setInt(14, ID);
 		
 		pstmt.executeUpdate();
 		

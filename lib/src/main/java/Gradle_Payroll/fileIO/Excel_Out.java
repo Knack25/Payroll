@@ -2,6 +2,8 @@ package Gradle_Payroll.fileIO;
 
 
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.time.LocalDate;
@@ -142,11 +144,13 @@ public class Excel_Out{
 	public static int writeOut() throws Exception{
 		try(OutputStream fileOut = new FileOutputStream("Output.xls")){
 			book.write(fileOut);
+			Desktop.getDesktop().open(new File("Output.xls"));
 			return 0;
 		}catch(Exception e){
 			e.printStackTrace();
 			return 1;
 		}
+		
 	}
 	//TODO: Add Method to lock excel sheet so you cant tamper with already saved data
 		//in excel out, this is the line of code for it: CellStyle.setLocked(true);

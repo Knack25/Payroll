@@ -365,6 +365,7 @@ public class Check_Edit {
 		NetAmmnt = Double.toString(check.getNetAmmnt());
 		ammount = NetAmmnt.split("\\.");
 		length = ammount[1].length();
+		ammount[1].substring(0, 1);
 		whole = Integer.valueOf(ammount[0]);
 		decimal = Integer.valueOf(ammount[1]);
 		
@@ -709,13 +710,22 @@ public class Check_Edit {
 
 	//*********************************************Calculate Gross***********************************************************
 	private static void calcGross() {
-		double reg,ot,pto,salary,other;
+		double reg,ot,pto,salary,other,gross;
+		String tempGross,decimal;
+		String[] ammount;
+		
 		reg = check.getRegRate() * check.getRegHours();
 		ot = check.getOtRate() * check.getOtHours();
 		pto = check.getPtoRate() * check.getPtoHours();
 		salary =  check.getSalAmmnt();
 		other = check.getAdvAmmnt() + check.getRoyaltyRate();
-		check.setGrossAmmnt(reg + ot + pto + salary + other);
+		gross = reg + ot + pto + salary + other;
+		tempGross = String.valueOf(gross);
+		ammount = tempGross.split("\\.");
+		decimal = ammount[1].substring(0,1);
+		tempGross = ammount[0] + "." + decimal;
+		gross = Double.parseDouble(tempGross);
+		check.setGrossAmmnt(gross);
 		check.setFedGrossAmmnt(check.getGrossAmmnt());
 		check.setStateGrossAmmnt(check.getGrossAmmnt());
 		check.setState2GrossAmmnt(check.getGrossAmmnt());
@@ -730,7 +740,9 @@ public class Check_Edit {
 	//*********************************************Calculate Net***********************************************************
 	private static void calcNet() {
 		double netAmmnt = check.getGrossAmmnt();
-		
+		double net;
+		String tempNet,decimal;
+		String[] ammount;
 		//Get all of the taxes
 		for(int i = 0; i < NUMTAXAMNT; i++) {
 			netAmmnt = netAmmnt - tax.get(i).getNetAmmount();
@@ -739,6 +751,11 @@ public class Check_Edit {
 		netAmmnt = netAmmnt - check.getAddFedTax();
 		netAmmnt = netAmmnt - check.getAddStateTax();
 		
+		tempNet = String.valueOf(netAmmnt);
+		ammount = tempNet.split("\\.");
+		decimal = ammount[1].substring(0,1);
+		tempNet = ammount[0] + "." + decimal;
+		netAmmnt = Double.parseDouble(tempNet);
 		check.setNetAmmnt(netAmmnt);
 	}
 
@@ -1112,7 +1129,7 @@ public class Check_Edit {
 				Excel_Out.changeNumberFormat(10, (22+i));
 			}
 			
-			f
+			
 			Excel_Out.writeToCell(7,22+i,"Net Pay");
 			Excel_Out.writeToCell(8,22+i,Double.parseDouble(netPayCurrT.getText()));
 			Excel_Out.changeNumberFormat(8, 22+i);
