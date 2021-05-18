@@ -364,7 +364,6 @@ public class Check_Edit {
 		NetAmmnt = Double.toString(check.getNetAmmnt());
 		ammount = NetAmmnt.split("\\.");
 		length = ammount[1].length();
-		ammount[1].substring(0, 1);
 		whole = Integer.valueOf(ammount[0]);
 		decimal = Integer.valueOf(ammount[1]);
 		
@@ -709,22 +708,13 @@ public class Check_Edit {
 
 	//*********************************************Calculate Gross***********************************************************
 	private static void calcGross() {
-		double reg,ot,pto,salary,other,gross;
-		String tempGross,decimal;
-		String[] ammount;
-		
+		double reg,ot,pto,salary,other;
 		reg = check.getRegRate() * check.getRegHours();
 		ot = check.getOtRate() * check.getOtHours();
 		pto = check.getPtoRate() * check.getPtoHours();
 		salary =  check.getSalAmmnt();
 		other = check.getAdvAmmnt() + check.getRoyaltyRate();
-		gross = reg + ot + pto + salary + other;
-		tempGross = String.valueOf(gross);
-		ammount = tempGross.split("\\.");
-		decimal = ammount[1].substring(0,1);
-		tempGross = ammount[0] + "." + decimal;
-		gross = Double.parseDouble(tempGross);
-		check.setGrossAmmnt(gross);
+		check.setGrossAmmnt(reg + ot + pto + salary + other);
 		check.setFedGrossAmmnt(check.getGrossAmmnt());
 		check.setStateGrossAmmnt(check.getGrossAmmnt());
 		check.setState2GrossAmmnt(check.getGrossAmmnt());
@@ -739,9 +729,7 @@ public class Check_Edit {
 	//*********************************************Calculate Net***********************************************************
 	private static void calcNet() {
 		double netAmmnt = check.getGrossAmmnt();
-		double net;
-		String tempNet,decimal;
-		String[] ammount;
+		
 		//Get all of the taxes
 		for(int i = 0; i < NUMTAXAMNT; i++) {
 			netAmmnt = netAmmnt - tax.get(i).getNetAmmount();
@@ -750,11 +738,6 @@ public class Check_Edit {
 		netAmmnt = netAmmnt - check.getAddFedTax();
 		netAmmnt = netAmmnt - check.getAddStateTax();
 		
-		tempNet = String.valueOf(netAmmnt);
-		ammount = tempNet.split("\\.");
-		decimal = ammount[1].substring(0,1);
-		tempNet = ammount[0] + "." + decimal;
-		netAmmnt = Double.parseDouble(tempNet);
 		check.setNetAmmnt(netAmmnt);
 	}
 
@@ -1038,7 +1021,7 @@ public class Check_Edit {
 		private void formatExcel() throws Exception {
 			//static YTD yTD_Initial,yTD_Calc;
 			
-			Excel_Out.create("Test v1", 12, 52);
+			Excel_Out.create(nameT.getText(), 12, 52);
 			Excel_Out.createPrintArea(12, 52);
 			Excel_Out.formatColwidth(0, 17*262);
 			Excel_Out.formatColwidth(1, 12*265);
@@ -1074,8 +1057,6 @@ public class Check_Edit {
 					Excel_Out.clearCellFormat(x, y);
 				}
 			}
-			
-			//TODO: work on getting the underlining for text and borders
 			
 			
 			
