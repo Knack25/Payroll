@@ -9,12 +9,11 @@ import java.time.LocalDate;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.BuiltinFormats;
 
 
 public class Excel_Out{
@@ -23,7 +22,7 @@ public class Excel_Out{
 	static Sheet sheet;
 	static Row row;
 	static Font normalF,underlineF;
-	static CellStyle normalS,underlinedS;
+	static CellStyle normalS,underlinedS,bottomB;
 	
 	
 	public static void create(String sheetName,int numCol,int numRow) throws Exception {
@@ -35,8 +34,11 @@ public class Excel_Out{
 		normalS = book.createCellStyle();
 		underlinedS = book.createCellStyle();
 		normalF.setFontHeightInPoints((short) 15);
+		normalF.setFontName("ARIAL NARROW");
 		underlineF.setFontHeightInPoints((short) 15);
 		underlineF.setUnderline(Font.U_SINGLE);
+		underlineF.setFontName("ARIAL NARROW");
+		
 	}
 	
 	private static void createBook() throws Exception{
@@ -84,7 +86,8 @@ public class Excel_Out{
 	}
 	public static int changeNumberFormat(int col,int row) {
 		CellStyle dollarStyle=book.createCellStyle();
-		dollarStyle.setDataFormat((short) 7);
+		dollarStyle.setDataFormat((short) 0x2c);
+		dollarStyle.setFont(normalF);
 		sheet.getRow(row).getCell(col).setCellStyle(dollarStyle);
 		return 0;
 	}
@@ -100,11 +103,13 @@ public class Excel_Out{
 	
 	
 	public static int clearCellFormat(int col,int row) {
+		normalS.setFont(normalF);
 		sheet.getRow(row).getCell(col).setCellStyle(normalS);
 		return 0;
 	}
 	
 	public static int underlineCell(int col,int row) {
+		underlinedS.setFont(underlineF);
 		sheet.getRow(row).getCell(col).setCellStyle(underlinedS);
 		return 0;
 	}
@@ -114,7 +119,12 @@ public class Excel_Out{
 		return 0;
 	}
 	public static int setCellBorder(int col,int row) {
-		sheet.getRow(row).getCell(col).getCellStyle().setBorderBottom(BorderStyle.MEDIUM);
+		CellStyle bottomB=book.createCellStyle();
+		bottomB.setBorderBottom(BorderStyle.THIN);
+		bottomB.setFont(normalF);
+		//sheet.getRow(row).getCell(col).getCellStyle().setBorderBottom(BorderStyle.MEDIUM);
+		sheet.getRow(row).getCell(col).setCellStyle(bottomB);
+		
 		return 0;
 	}
 	
