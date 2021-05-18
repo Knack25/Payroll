@@ -76,6 +76,7 @@ public class Void_Check {
     	employee.addItemListener(employeeSel);
     	
     	checkNo = new JComboBox<Double>();
+    	checkNo.addItemListener(checkNoListener);
 
 
     	
@@ -85,6 +86,8 @@ public class Void_Check {
     	check = new Check();
     	
     	tax = new ArrayList<Tax>();
+    	
+    	sqlPullEmpListRequest();
     	
     	GridBagConstraints b1c1 = new GridBagConstraints();
     	b1c1.gridx = 1;
@@ -123,7 +126,7 @@ public class Void_Check {
     	dialog.add(voidB,a3);
     	dialog.repaint();
     	
-    	sqlPullEmpListRequest();
+    	
     	
     	
     	dialog.setVisible(true);
@@ -445,6 +448,7 @@ public class Void_Check {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			 CHECKNUM = (Double) checkNo.getSelectedItem();
+			 System.out.println("CheckNUM is: " + CHECKNUM);
 			
 			 try {
 				sqlPullCheckInfo();
