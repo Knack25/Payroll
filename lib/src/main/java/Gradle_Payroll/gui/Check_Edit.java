@@ -81,8 +81,6 @@ public class Check_Edit {
 		calcYTD();
 		createLabels();
 		drawData();
-		
-		//TODO: net pay YTD has too many decimal places
 
 
 		
@@ -190,6 +188,7 @@ public class Check_Edit {
     					break;
     				}
     			}
+    			
     			if(x==2) {
     				switch(y) {
     				case 4:
