@@ -1021,7 +1021,7 @@ public class Check_Edit {
 		private void formatExcel() throws Exception {
 			//static YTD yTD_Initial,yTD_Calc;
 			
-			Excel_Out.create("Test v1", 12, 52);
+			Excel_Out.create(nameT.getText(), 12, 52);
 			Excel_Out.createPrintArea(12, 52);
 			Excel_Out.formatColwidth(0, 17*262);
 			Excel_Out.formatColwidth(1, 12*265);
@@ -1057,8 +1057,6 @@ public class Check_Edit {
 					Excel_Out.clearCellFormat(x, y);
 				}
 			}
-			
-			//TODO: work on getting the underlining for text and borders
 			
 			
 			

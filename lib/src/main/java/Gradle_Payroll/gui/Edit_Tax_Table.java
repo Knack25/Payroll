@@ -91,6 +91,7 @@ public class Edit_Tax_Table {
 		
 		
 		//TODO: Remove check marks for the primary taxes
+			//The last boolean when pulling the taxes determines whether or not it is a primary tax. This could help.
 		
 		int autoX = 0;
 		int autoY = 0;
@@ -229,6 +230,12 @@ public class Edit_Tax_Table {
 				Ammount.add(ammnt);
 				autoX++;
 				c.gridx = autoX;
+				if(autoY < 7) {
+					autoX = 0;
+					c.gridx = autoX;
+					autoY++;
+					continue;
+				}
 				
 				//Federal Exempt
 				JCheckBox fedExempt = new JCheckBox();
