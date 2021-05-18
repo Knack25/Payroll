@@ -45,6 +45,7 @@ public class Create_Check {
 	static int empID;
 	static int checkID; 
 	static String[] selname;
+	static LocalDate currDate;
 	
 
 	
@@ -59,6 +60,7 @@ public class Create_Check {
 		 	check = new Check();
 		 	ytd = new YTD();
 		 	tax = new Tax();
+		 	currDate = LocalDate.now();
 		 	
 		 	
 		 	
@@ -351,7 +353,7 @@ public class Create_Check {
 			
 			fullName = (String) employee.getSelectedItem();
 			String[] name = fullName.split(" ");
-			LocalDate currDate = LocalDate.now();
+			
 			System.out.println("Check Creation Requested...");
 			
 			try {
@@ -412,8 +414,8 @@ public class Create_Check {
 			
 		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 		
-		String updateStatement = "Insert into checks(checknum,payrollStartDate,payrollEndDate,regHours,regRate,ptoHours,ptoRate,otHours," + 
-		"otRate,salRate,advRate,royaltyRate,employee_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String updateStatement = "Insert into checks(checknum,payrollStartDate,payrollEndDate,year,regHours,regRate,ptoHours,ptoRate,otHours," + 
+		"otRate,salRate,advRate,royaltyRate,employee_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 			
@@ -423,6 +425,8 @@ public class Create_Check {
 		pstmt.setString(2, startT.getText());
 		//Payroll End Date
 		pstmt.setString(3, endT.getText());
+		//Year
+		pstmt.setDouble(4, currDate.getYear());
 		//regHours
 		pstmt.setDouble(4, Double.parseDouble(regHoursT.getText()));
 		//regRate
