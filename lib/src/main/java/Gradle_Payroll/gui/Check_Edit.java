@@ -82,7 +82,7 @@ public class Check_Edit {
 		createLabels();
 		drawData();
 		
-		
+		//TODO: net pay YTD has too many decimal places
 
 
 		
@@ -1112,7 +1112,7 @@ public class Check_Edit {
 				Excel_Out.changeNumberFormat(10, (22+i));
 			}
 			
-			//net pay YTD has too many decimal places
+			f
 			Excel_Out.writeToCell(7,22+i,"Net Pay");
 			Excel_Out.writeToCell(8,22+i,Double.parseDouble(netPayCurrT.getText()));
 			Excel_Out.changeNumberFormat(8, 22+i);
@@ -1121,9 +1121,8 @@ public class Check_Edit {
 			
 			Excel_Out.setCellBorder(8, 20);
 			Excel_Out.setCellBorder(10, 20);
-			Excel_Out.setCellBorder(8, 22+i-1);
-			Excel_Out.setCellBorder(10, 22+i-1);
-			
+			Excel_Out.setCellDataBorder(8, 22+i-1,1);
+			Excel_Out.setCellDataBorder(10, 22+i-1,1);
 			
 			
 			Excel_Out.writeToCell(3,26,"Current");

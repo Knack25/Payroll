@@ -213,6 +213,10 @@ public class Edit_Employee {
 						boom.gridy = y;
 						frame.add(ssnL,boom);
 						break;
+					case 14:
+						boom.gridy = y;
+						frame.add(jobtitleL,boom);
+						break;
     				}
     			}
     			if(x==1) {
@@ -265,53 +269,57 @@ public class Edit_Employee {
 						boom.gridy = y;
 						frame.add(ssnT,boom);
 						break;
+					case 14:
+						boom.gridy = y;
+						frame.add(jobtitleT,boom);
+						break;
     				}
     			}
     			if(x==2) {
     				switch(y) {
 					case 2:
 						boom.gridy = y;
-						frame.add(jobtitleL,boom);
+						frame.add(dobL,boom);
 						break;
 					case 3:
 						boom.gridy = y;
-						frame.add(dobL,boom);
+						frame.add(dohL,boom);
 						break;
 					case 4:
 						boom.gridy = y;
-						frame.add(dohL,boom);
+						frame.add(dotL,boom);
 						break;
 					case 5:
 						boom.gridy = y;
-						frame.add(dotL,boom);
+						frame.add(localtaxcodeL,boom);
 						break;
 					case 6:
 						boom.gridy = y;
-						frame.add(localtaxcodeL,boom);
+						frame.add(addstatetaxL,boom);
 						break;
 					case 7:
 						boom.gridy = y;
-						frame.add(addstatetaxL,boom);
+						frame.add(addfedtaxL,boom);
 						break;
 					case 8:
 						boom.gridy = y;
-						frame.add(addfedtaxL,boom);
+						frame.add(salaryL,boom);
 						break;
 					case 9:
 						boom.gridy = y;
-						frame.add(salaryL,boom);
+						frame.add(regpayL,boom);
 						break;
 					case 10:
 						boom.gridy = y;
-						frame.add(regpayL,boom);
+						frame.add(otpayL,boom);
 						break;
 					case 11:
 						boom.gridy = y;
-						frame.add(otpayL,boom);
+						frame.add(ptopayL,boom);
 						break;
 					case 12:
 						boom.gridy = y;
-						frame.add(ptopayL,boom);
+						frame.add(royaltyL,boom);
 						break;
 					case 13:
 						boom.gridy = y;
@@ -325,49 +333,49 @@ public class Edit_Employee {
     			}
     			if(x==3) {
     				switch(y) {
-    				case 2:
-						boom.gridy = y;
-						frame.add(jobtitleT,boom);
-						break;
-					case 3:
+					case 2:
 						boom.gridy = y;
 						frame.add(dobT,boom);
 						break;
-					case 4:
+					case 3:
 						boom.gridy = y;
 						frame.add(dohT,boom);
 						break;
-					case 5:
+					case 4:
 						boom.gridy = y;
 						frame.add(dotT,boom);
 						break;
-					case 6:
+					case 5:
 						boom.gridy = y;
 						frame.add(localtaxcodeT,boom);
 						break;
-					case 7:
+					case 6:
 						boom.gridy = y;
 						frame.add(addstatetaxT,boom);
 						break;
-					case 8:
+					case 7:
 						boom.gridy = y;
 						frame.add(addfedtaxT,boom);
 						break;
-					case 9:
+					case 8:
 						boom.gridy = y;
 						frame.add(salaryT,boom);
 						break;
-					case 10:
+					case 9:
 						boom.gridy = y;
 						frame.add(regpayT,boom);
 						break;
-					case 11:
+					case 10:
 						boom.gridy = y;
 						frame.add(otpayT,boom);
 						break;
-					case 12:
+					case 11:
 						boom.gridy = y;
 						frame.add(ptopayT,boom);
+						break;
+					case 12:
+						boom.gridy = y;
+						frame.add(royaltyT,boom);
 						break;
 					case 13:
 						boom.gridy = y;

@@ -88,6 +88,7 @@ public class Excel_Out{
 		CellStyle dollarStyle=book.createCellStyle();
 		dollarStyle.setDataFormat((short) 0x2c);
 		dollarStyle.setFont(normalF);
+		
 		sheet.getRow(row).getCell(col).setCellStyle(dollarStyle);
 		return 0;
 	}
@@ -127,6 +128,15 @@ public class Excel_Out{
 		
 		return 0;
 	}
+	public static int setCellDataBorder(int col,int row,int i) {
+		CellStyle bottomB=book.createCellStyle();
+		bottomB.setBorderBottom(BorderStyle.THIN);
+		bottomB.setFont(normalF);
+		bottomB.setDataFormat((short) 0x2c);
+		sheet.getRow(row).getCell(col).setCellStyle(bottomB);
+		
+		return 0;
+	}
 	
 	
 	public static int writeOut() throws Exception{
@@ -139,4 +149,5 @@ public class Excel_Out{
 		}
 	}
 	//TODO: Add Method to lock excel sheet so you cant tamper with already saved data
+		//in excel out, this is the line of code for it: CellStyle.setLocked(true);
 }

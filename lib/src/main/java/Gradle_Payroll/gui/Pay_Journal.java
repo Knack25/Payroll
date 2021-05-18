@@ -270,7 +270,17 @@ public class Pay_Journal {
 	}
 
 	private static void calcYTD() {
-		// TODO Load in YTD Values
+		yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD() + check.getGrossAmmnt());
+		yTD_Calc.setRegHoursYTD(yTD_Initial.getRegHoursYTD() + check.getRegHours());
+		yTD_Calc.setRegAmmntYTD(yTD_Initial.getRegAmmntYTD() + check.getRegAmmnt());
+		yTD_Calc.setPtoHoursYTD(yTD_Initial.getPtoHoursYTD() + check.getPtoHours());
+		yTD_Calc.setPtoAmmntYTD(yTD_Initial.getPtoAmmntYTD() + check.getPtoAmmnt());
+		yTD_Calc.setOtHoursYTD(yTD_Initial.getOtHoursYTD() + check.getOtHours());
+		yTD_Calc.setOtAmmntYTD(yTD_Initial.getOtAmmntYTD() + check.getOtAmmnt());
+		yTD_Calc.setSalAmmntYTD(yTD_Initial.getSalAmmntYTD() + check.getSalAmmnt());
+		yTD_Calc.setAdvAmmntYTD(yTD_Initial.getAdvAmmntYTD() + check.getAdvAmmnt());
+		yTD_Calc.setRoyaltyAmmntYTD(yTD_Initial.getRoyaltyAmmntYTD() + check.getRoyaltyAmmnt());
+		yTD_Calc.setNetAmmntYTD(yTD_Initial.getNetAmmntYTD() + check.getNetAmmnt());
 		
 	}
 
@@ -514,17 +524,17 @@ public class Pay_Journal {
 	}
 
 	private static void calcNet() {
-		// TODO Calculate Net from Gross and total Taxes
-		check.setNetAmmnt(check.getGrossAmmnt());
+	double netAmmnt = check.getGrossAmmnt();
 		
 		//Get all of the taxes
 		for(int i = 0; i < NUMTAXAMNT; i++) {
-			check.setNetAmmnt(check.getNetAmmnt() - tax.get(i).getNetAmmount());
+			netAmmnt = netAmmnt - tax.get(i).getNetAmmount();
 		}
 		
-		//TODO: Subtract all extra values
-		check.setNetAmmnt(check.getNetAmmnt() - check.getAddFedTax());
-		check.setNetAmmnt(check.getNetAmmnt() - check.getAddStateTax());
+		netAmmnt = netAmmnt - check.getAddFedTax();
+		netAmmnt = netAmmnt - check.getAddStateTax();
+		
+		check.setNetAmmnt(netAmmnt);
 	}
 
 	private static void calcTaxes() {
@@ -704,13 +714,18 @@ public class Pay_Journal {
 		}
 	};
 	
-	static ActionListener cancelBListener = new ActionListener() {
+static ActionListener cancelBListener = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Dispose this screen and remove the check in progress from the database
+			frame.dispose();
+			try {
+				deleteCheck();
+				updateNextCheckNum(CHECKNUM);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			
 		}
 	};
-
 }
