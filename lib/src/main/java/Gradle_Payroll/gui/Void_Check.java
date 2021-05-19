@@ -66,15 +66,10 @@ public class Void_Check {
 		 checkDateT = new JTextField();
 		 checkDateT.setEditable(false);
 		 checkNumbers = new ArrayList<Double>();
-<<<<<<< HEAD
+
 		 
 		 taxNetAmmount = new ArrayList<Double>();
 	    	
-		 	
-=======
-		
-		 
->>>>>>> dad995b71f4b5fd6803d6ee8c0ef791972c2cc44
     	voidB = new JButton("Void");
 		voidB.addActionListener(submitBListener);
 		
