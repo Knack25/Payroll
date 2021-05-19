@@ -331,7 +331,9 @@ public class Check_Edit {
 
 	//*********************************************Calculate YTD***********************************************************
 	private static void calcYTD() {
+		System.out.println("Gross YTD Init: " + yTD_Initial.getGrossAmmntYTD());
 		yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD() + check.getGrossAmmnt());
+		System.out.println("Gross YTD Calc: " + yTD_Calc.getGrossAmmntYTD());
 		yTD_Calc.setRegHoursYTD(yTD_Initial.getRegHoursYTD() + check.getRegHours());
 		yTD_Calc.setRegAmmntYTD(yTD_Initial.getRegAmmntYTD() + check.getRegAmmnt());
 		yTD_Calc.setPtoHoursYTD(yTD_Initial.getPtoHoursYTD() + check.getPtoHours());
@@ -363,6 +365,7 @@ public class Check_Edit {
 		date = LocalDate.now();
 		NetAmmnt = Double.toString(check.getNetAmmnt());
 		ammount = NetAmmnt.split("\\.");
+		ammount[1] = ammount[1].substring(0,1);
 		length = ammount[1].length();
 		whole = Integer.valueOf(ammount[0]);
 		decimal = Integer.valueOf(ammount[1]);
@@ -592,6 +595,7 @@ public class Check_Edit {
 			tempTax.setMedicareTaxeExempt(rs.getBoolean("medicareTaxExempt"));
 			tempTax.setLocalTaxExempt(rs.getBoolean("localTaxExempt"));
 			tempTax.setPrimaryTax(rs.getBoolean("primaryTax"));
+			System.out.println("Name: " + tempTax.getName() + " | Ammount: " + tempTax.getAmmount());
 			tax.add(tempTax);
 		}
 		sqlPullTaxYTD();
@@ -611,6 +615,7 @@ public class Check_Edit {
 		
 		
 		String updateStatement = "select * " + "from tax_ytd " + "WHERE employee_id = ?";
+		
 		
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 		
@@ -715,6 +720,7 @@ public class Check_Edit {
 		salary =  check.getSalAmmnt();
 		other = check.getAdvAmmnt() + check.getRoyaltyRate();
 		check.setGrossAmmnt(reg + ot + pto + salary + other);
+		System.out.println("Check Gross: " + check.getGrossAmmnt());
 		check.setFedGrossAmmnt(check.getGrossAmmnt());
 		check.setStateGrossAmmnt(check.getGrossAmmnt());
 		check.setState2GrossAmmnt(check.getGrossAmmnt());
@@ -759,7 +765,9 @@ public class Check_Edit {
 		for(int i = 0; i < NUMTAXAMNT;i++) {
 			if(!tax.get(i).isPrimaryTax()) {
 				if(tax.get(i).isFedTaxExempt()) {
+					System.out.println("Federal Gross: " + check.getFedGrossAmmnt() + " subtracting: " + tax.get(i).getNetAmmount());
 					check.setFedGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+					System.out.println("Resulting in: " + check.getFedGrossAmmnt());
 				}
 				if(tax.get(i).isStateTaxExempt()) {
 					check.setStateGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
@@ -780,7 +788,9 @@ public class Check_Edit {
 				
 		}
 		
+		System.out.println("Federal Gross: " + check.getFedGrossAmmnt() + " mult: " + tax.get(0).getAmmount());
 		tax.get(0).setNetAmmount(check.getFedGrossAmmnt() * 0.01 * tax.get(0).getAmmount());
+		System.out.println("Resulting in: " + tax.get(0).getNetAmmount());
 		tax.get(1).setNetAmmount(check.getStateGrossAmmnt() * 0.01 * tax.get(1).getAmmount());
 		tax.get(2).setNetAmmount(check.getState2GrossAmmnt() * 0.01 * tax.get(2).getAmmount());
 		tax.get(3).setNetAmmount(check.getSscGrossAmmnt() * 0.01 * tax.get(3).getAmmount());
@@ -788,7 +798,9 @@ public class Check_Edit {
 		tax.get(5).setNetAmmount(check.getLocalGrossAmmnt() * 0.01 * tax.get(5).getAmmount());
 		
 		for(int i = 0; i < NUMTAXAMNT;i++) {
+			System.out.println("Tax Init YTD: " + tax.get(i).getInitYTD() + "Subtract: " + tax.get(i).getNetAmmount());
 			tax.get(i).setFinalYTD(tax.get(i).getInitYTD() + tax.get(i).getNetAmmount());
+			System.out.println("Resulting in: " + tax.get(i).getFinalYTD());
 		}
 		
 		
@@ -1105,7 +1117,7 @@ public class Check_Edit {
 				Excel_Out.writeToCell(7,(22+i),tax.get(i).getName()/*Name of the tax*/);
 				Excel_Out.writeToCell(8,(22+i),tax.get(i).getNetAmmount()/*value of the tax on the current check*/);
 				Excel_Out.changeNumberFormat(8, (22+i));
-				Excel_Out.writeToCell(10,(22+i),tax.get(i).getInitYTD()/*value of the tax for YTD*/);
+				Excel_Out.writeToCell(10,(22+i),tax.get(i).getFinalYTD()/*value of the tax for YTD*/);
 				Excel_Out.changeNumberFormat(10, (22+i));
 			}
 			

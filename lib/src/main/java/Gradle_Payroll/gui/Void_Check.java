@@ -164,8 +164,11 @@ public class Void_Check {
 
 		private void removeCheckVals() {
 			yTD_Calc.setAdvAmmntYTD(yTD_Initial.getAdvAmmntYTD() - check.getAdvAmmnt());
+			//System.out.println(yTD_Calc.getAdvAmmntYTD());
 			yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD() - check.getGrossAmmnt());
+			//System.out.println(yTD_Calc.getGrossAmmntYTD());
 			yTD_Calc.setNetAmmntYTD(yTD_Initial.getNetAmmntYTD() - check.getNetAmmnt());
+			//System.out.println(yTD_Calc.getNetAmmntYTD());
 			yTD_Calc.setOtAmmntYTD(yTD_Initial.getOtAmmntYTD() - check.getOtAmmnt());
 			yTD_Calc.setOtHoursYTD(yTD_Initial.getOtHoursYTD() - check.getOtHours());
 			yTD_Calc.setPtoAmmntYTD(yTD_Initial.getPtoAmmntYTD() - check.getPtoHours());
@@ -176,7 +179,9 @@ public class Void_Check {
 			yTD_Calc.setSalAmmntYTD(yTD_Initial.getSalAmmntYTD() - check.getSalAmmnt());
 			
 			for(int i = 0; i < tax.size();i++) {
+				System.out.println("Tax Init YTD: " + tax.get(i).getInitYTD());
 				tax.get(i).setFinalYTD(tax.get(i).getInitYTD() - tax.get(i).getNetAmmount());
+				System.out.println("Tax Final YTD: " + tax.get(i).getFinalYTD());
 			}
 		}
 
@@ -228,6 +233,7 @@ public class Void_Check {
 			
 			while(rs.next()) {
 				tax.get(i).setNetAmmount(rs.getDouble("netammount"));
+				System.out.println("Tax Net Ammount: " + tax.get(i).getNetAmmount());
 				i++;
 			}
 		}
@@ -416,7 +422,7 @@ public class Void_Check {
 			checkNo.removeAllItems();
 			while(rs.next()) {
 				checkNum = rs.getDouble("checknum");
-				System.out.println(checkNum);
+				System.out.println("checkNum:" + checkNum);
 				checkNo.addItem(checkNum);
 				i++;
 			}
@@ -448,7 +454,7 @@ public class Void_Check {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			 CHECKNUM = (Double) checkNo.getSelectedItem();
-			 System.out.println("CheckNUM is: " + CHECKNUM);
+			 System.out.println("CHECKNUM is: " + CHECKNUM);
 			
 			 try {
 				sqlPullCheckInfo();
@@ -543,6 +549,7 @@ public class Void_Check {
 		ResultSet rs = pstmt.executeQuery();
 		while(rs.next()) {
 			temptax.setInitYTD(rs.getDouble("ammount"));
+			System.out.println("Tax Init YTD: " + temptax.getInitYTD());
 			tax.add(temptax);
 		}
 		
@@ -568,6 +575,7 @@ public class Void_Check {
 		ResultSet rs = pstmt.executeQuery();
 		rs.next();
 		yTD_Initial.setGrossAmmntYTD(rs.getDouble("ammount"));
+		//System.out.println(yTD_Initial.getGrossAmmntYTD());
 		YEAR = rs.getDouble("year");
 		
 		pstmt.setString(2, "netAmmnt");
@@ -636,7 +644,7 @@ public class Void_Check {
 		
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
-		
+		System.out.println("CEHCKNUM: " +CHECKNUM);
 		pstmt.setDouble(1, CHECKNUM);
 		
 		
@@ -654,6 +662,9 @@ public class Void_Check {
 		check.setRoyaltyAmmnt(rs.getDouble("royaltyRate"));
 		check.setStartDate(rs.getString("payrollStartDate"));
 		check.setEndDate(rs.getString("payrollEndDate"));
+		check.setGrossAmmnt(rs.getDouble("grossAmmnt"));
+		//System.out.println(check.getGrossAmmnt());
+		check.setNetAmmnt(rs.getDouble("netAmmt"));
 	}
 	
 }
