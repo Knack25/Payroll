@@ -24,12 +24,12 @@ import Gradle_Payroll.fileIO.Config;
 
 public class Edit_YTD {
 	
-
+	//TODO: Work on getting YTD to display properly
 	/*Everything needed for the YTD
 	 * name of YTD
 	 * Amount 
 	 * tax table
-	 * */
+	 */
 	
 	static int taxNum = 0;
 

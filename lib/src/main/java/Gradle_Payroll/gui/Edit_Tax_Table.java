@@ -90,8 +90,6 @@ public class Edit_Tax_Table {
 		ID = new ArrayList<JLabel>();
 		
 		
-		//TODO: Remove check marks for the primary taxes
-			//The last boolean when pulling the taxes determines whether or not it is a primary tax. This could help.
 		
 		int autoX = 0;
 		int autoY = 0;
@@ -230,16 +228,16 @@ public class Edit_Tax_Table {
 				Ammount.add(ammnt);
 				autoX++;
 				c.gridx = autoX;
-				if(autoY < 7) {
-					autoX = 0;
-					c.gridx = autoX;
-					autoY++;
-					continue;
-				}
+				
 				
 				//Federal Exempt
 				JCheckBox fedExempt = new JCheckBox();
 				fedExempt.setSelected(rs.getBoolean("fedTaxExempt"));
+				if(autoY < 7) {
+					fedExempt.setVisible(false);
+				}else {
+					fedExempt.setVisible(true);
+				}
 				panel.add(fedExempt,c);
 				FederalExempt.add(fedExempt);
 				autoX++;
@@ -248,6 +246,11 @@ public class Edit_Tax_Table {
 				//State Exempt
 				JCheckBox stateExempt = new JCheckBox();
 				stateExempt.setSelected(rs.getBoolean("stateTaxExempt"));
+				if(autoY < 7) {
+					stateExempt.setVisible(false);
+				}else {
+					stateExempt.setVisible(true);
+				}
 				panel.add(stateExempt,c);
 				StateExempt.add(stateExempt);
 				autoX++;
@@ -256,6 +259,11 @@ public class Edit_Tax_Table {
 				//State PA Exempt
 				JCheckBox statePAExempt = new JCheckBox();
 				statePAExempt.setSelected(rs.getBoolean("state2TaxExempt"));
+				if(autoY < 7) {
+					statePAExempt.setVisible(false);
+				}else {
+					statePAExempt.setVisible(true);
+				}
 				panel.add(statePAExempt,c);
 				StatePAExempt.add(statePAExempt);
 				autoX++;
@@ -264,6 +272,11 @@ public class Edit_Tax_Table {
 				//SSC Exempt
 				JCheckBox sscExempt = new JCheckBox();
 				sscExempt.setSelected(rs.getBoolean("SSCTaxExempt"));
+				if(autoY < 7) {
+					sscExempt.setVisible(false);
+				}else {
+					sscExempt.setVisible(true);
+				}
 				panel.add(sscExempt,c);
 				SSCExempt.add(sscExempt);
 				autoX++;
@@ -272,6 +285,11 @@ public class Edit_Tax_Table {
 				//Medicare Exempt
 				JCheckBox medicareExempt = new JCheckBox();
 				medicareExempt.setSelected(rs.getBoolean("medicareTaxExempt"));
+				if(autoY < 7) {
+					medicareExempt.setVisible(false);
+				}else {
+					medicareExempt.setVisible(true);
+				}
 				panel.add(medicareExempt,c);
 				MedicareExempt.add(medicareExempt);
 				autoX++;
@@ -280,6 +298,11 @@ public class Edit_Tax_Table {
 				//Local Exempt
 				JCheckBox localExempt = new JCheckBox();
 				localExempt.setSelected(rs.getBoolean("localTaxExempt"));
+				if(autoY < 7) {
+					localExempt.setVisible(false);
+				}else {
+					localExempt.setVisible(true);
+				}
 				panel.add(localExempt,c);
 				LocalExempt.add(localExempt);
 				autoX++;
