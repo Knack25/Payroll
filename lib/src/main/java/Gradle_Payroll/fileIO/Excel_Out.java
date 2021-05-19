@@ -37,7 +37,7 @@ public class Excel_Out{
 		underlineF = book.createFont();
 		normalS = book.createCellStyle();
 		underlinedS = book.createCellStyle();
-<<<<<<< HEAD
+
 		book.setPrintArea(0, "$A$1:$M$53");
 //		book.setPrintArea(
 //		        1, //sheet index
@@ -46,8 +46,7 @@ public class Excel_Out{
 //		        0, //start row
 //		        53  //end row
 //		);
-=======
->>>>>>> 1345d02f429cf58a0a86315435af4ea99a479b0c
+
 		normalF.setFontHeightInPoints((short) 15);
 		normalF.setFontName("ARIAL NARROW");
 		underlineF.setFontHeightInPoints((short) 15);
