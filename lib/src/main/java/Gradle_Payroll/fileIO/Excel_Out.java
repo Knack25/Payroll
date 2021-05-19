@@ -11,8 +11,10 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.PrintSetup;
+import org.apache.poi.ss.usermodel.PrintOrientation;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.PageOrder;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellAddress;
 
@@ -30,18 +32,11 @@ public class Excel_Out{
 		createBook();
 		createSheet(sheetName);
 		createCells(numCol, numRow);
+		sheet.setFitToPage(false);
 		normalF = book.createFont();
 		underlineF = book.createFont();
 		normalS = book.createCellStyle();
 		underlinedS = book.createCellStyle();
-		book.setPrintArea(0, "$A$1:$M$53");
-		book.setPrintArea(
-		        1, //sheet index
-		        0, //start column
-		        12, //end column
-		        0, //start row
-		        53  //end row
-		);
 		normalF.setFontHeightInPoints((short) 15);
 		normalF.setFontName("ARIAL NARROW");
 		underlineF.setFontHeightInPoints((short) 15);
@@ -59,8 +54,18 @@ public class Excel_Out{
 	}
 	
 	public static void createPrintArea(int numCol,int numRow) throws Exception{
-		book.setPrintArea(0, 0, numCol, 0, numRow);
-		sheet.getPrintSetup().setPaperSize(PrintSetup.A4_PAPERSIZE);
+		PrintSetup ps = sheet.getPrintSetup();
+
+		sheet.setFitToPage(true);
+		sheet.setAutobreaks(true);
+		ps.setFitWidth((short) 1);
+		ps.setFitHeight((short) 1);
+		sheet.setMargin(sheet.BottomMargin, 0);
+		sheet.setMargin(sheet.FooterMargin, 0);
+		sheet.setMargin(sheet.HeaderMargin, 0);
+		sheet.setMargin(sheet.LeftMargin, 0);
+		sheet.setMargin(sheet.RightMargin, 0);
+		sheet.setMargin(sheet.TopMargin, 0);
 	}
 	
 	private static int createCells(int col,int row) {

@@ -1034,7 +1034,8 @@ public class Check_Edit {
 			//static YTD yTD_Initial,yTD_Calc;
 			
 			Excel_Out.create(nameT.getText(), 12, 52);
-			Excel_Out.createPrintArea(12, 52);
+			
+			
 			Excel_Out.formatColwidth(0, 17*262);
 			Excel_Out.formatColwidth(1, 12*265);
 			Excel_Out.formatColwidth(2, 7*265);
@@ -1171,12 +1172,15 @@ public class Check_Edit {
 				Excel_Out.writeToCell(5,j,yTD_Calc.getAdvAmmntYTD());
 				j++;
 			}
+			Excel_Out.writeToCell(11,51,"-");
+			
 			
 			Excel_Out.underlineCell(3, 26);
 			Excel_Out.underlineCell(5, 26);	
 			Excel_Out.underlineCell(3, j);
 			Excel_Out.underlineCell(5, j);
 			
+			Excel_Out.createPrintArea(12, 52);
 			
 			Excel_Out.writeOut();
 		}
