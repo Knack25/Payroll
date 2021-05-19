@@ -1101,13 +1101,24 @@ public class Check_Edit {
 			Excel_Out.changeNumberFormat(8, 21);
 			Excel_Out.writeToCell(10,21,Double.parseDouble(grossPayYTDT.getText()));
 			Excel_Out.changeNumberFormat(10, 21);
+
+			
+			//TODO: Test to see if this works.
+			double otherAmntCurr = 0,otherAmntYTD = 0;
+			if(NUMTAXAMNT > 14) {
+				for(int j = 13; j < NUMTAXAMNT; j++) {
+					otherAmntCurr += tax.get(j).getNetAmmount();
+					otherAmntYTD += tax.get(j).getFinalYTD();
+				}
+			}
+			
 			int i;
 			for(i = 0;i < NUMTAXAMNT; i++) {
-				if(i == 13) {
-					Excel_Out.writeToCell(7,(22+i),"Other");
-					Excel_Out.writeToCell(8,(22+i),1/* the sum of all unseen tax tables for current check*/);
+				if(i == 14) {
+					Excel_Out.writeToCell(7,(22+i-1),"Other");
+					Excel_Out.writeToCell(8,(22+i-1),otherAmntCurr/* the sum of all unseen tax tables for current check*/);
 					
-					Excel_Out.writeToCell(10,(22+i),1/* the sum of all unseen tax tables for YTD*/);
+					Excel_Out.writeToCell(10,(22+i-1),otherAmntYTD/* the sum of all unseen tax tables for YTD*/);
 					
 					break;
 				}
