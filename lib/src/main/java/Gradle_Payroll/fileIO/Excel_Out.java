@@ -9,12 +9,12 @@ import java.time.LocalDate;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.PrintSetup;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellAddress;
 
 
 public class Excel_Out{
@@ -25,7 +25,7 @@ public class Excel_Out{
 	static Font normalF,underlineF;
 	static CellStyle normalS,underlinedS,bottomB;
 	
-	
+	//TODO: figure out how to set up custom margins, scaling, and print area
 	public static void create(String sheetName,int numCol,int numRow) throws Exception {
 		createBook();
 		createSheet(sheetName);
@@ -34,6 +34,14 @@ public class Excel_Out{
 		underlineF = book.createFont();
 		normalS = book.createCellStyle();
 		underlinedS = book.createCellStyle();
+		book.setPrintArea(0, "$A$1:$M$53");
+		book.setPrintArea(
+		        1, //sheet index
+		        0, //start column
+		        12, //end column
+		        0, //start row
+		        53  //end row
+		);
 		normalF.setFontHeightInPoints((short) 15);
 		normalF.setFontName("ARIAL NARROW");
 		underlineF.setFontHeightInPoints((short) 15);

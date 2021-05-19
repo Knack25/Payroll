@@ -48,33 +48,7 @@ public class Edit_Employee {
 		empAddress = new Address();
 		empName = new Name();
 		
-		empNumT = new JTextField();
-		statusT  = new JTextField();
-		nameT = new JTextField();
-		addressT = new JTextField();
-		cityT = new JTextField();
-		stateT = new JTextField();
-		zipT = new JTextField();
-		emailT = new JTextField();
-		//TODO: See if there is a way to have this blanked out until you hover over it
-		ssnT = new JTextField();
-		jobtitleT = new JTextField();
-		dobT = new JTextField();
-		dohT = new JTextField();
-		dotT = new JTextField();
-		localtaxcodeT = new JTextField();
-		addstatetaxT = new JTextField();
-		addfedtaxT = new JTextField();
-		salaryT = new JTextField();
-		regpayT = new JTextField();
-		otpayT = new JTextField();
-		ptopayT = new JTextField();
-		royaltyT = new JTextField();
-		departmentT = new JTextField();
-		teleT = new JTextField();
-		sexT = new JTextField();
-		vacationAvailT = new JTextField();
-		vacationUsedT = new JTextField();
+		
 		
         frame.setVisible(true); //necessary as of 1.3
        
@@ -90,17 +64,20 @@ public class Edit_Employee {
         
         
         sqlPullDeptListRequest();
-      
+        setTextFields();
         setLabels();
        
         JButton taxTableB = new JButton("Edit Tax Table");
         taxTableB.addActionListener(taxTB);
         
-        JButton createCheckB = new JButton("Create Check");
+        //JButton createCheckB = new JButton("Create Check");
         //taxTableB.addActionListener(createCheck);
         
     	JButton saveB = new JButton("Save");
     	saveB.addActionListener(saveEmp);
+    	
+    	JButton ytdB = new JButton("View YTD");
+    	ytdB.addActionListener(ytdTB);
     	
     	JLabel name = new JLabel("Selected Employee:");
     	JLabel employeeDataL = new JLabel("<HTML><U> Employee Data </U></HTML>"); 
@@ -149,13 +126,16 @@ public class Edit_Employee {
     	GridBagConstraints e3 = new GridBagConstraints();
     	e3.gridx = 4;
     	e3.gridy = 2;
+    	GridBagConstraints e4 = new GridBagConstraints();
+    	e4.gridx = 4;
+    	e4.gridy = 3;
     	
     	frame.add(name,g1);
     	frame.add(employee,h1);
     	frame.add(saveB,m15);
     	frame.add(employeeDataL,b2c2);
     	frame.add(taxTableB,e3);
-    	//TODO: add a button that links to the YTD table
+    	frame.add(ytdB,e4);
     	
     	
     	GridBagConstraints boom = new GridBagConstraints();
@@ -395,12 +375,38 @@ public class Edit_Employee {
     	
     	frame.setVisible(true);
     	
-    
-    	
-        
-    	
         
 		return frame;
+    }
+    
+    
+    private static void setTextFields() {
+    	empNumT = new JTextField();
+		statusT  = new JTextField();
+		nameT = new JTextField();
+		addressT = new JTextField();
+		cityT = new JTextField();
+		stateT = new JTextField();
+		zipT = new JTextField();
+		emailT = new JTextField();
+		ssnT = new JTextField();
+		jobtitleT = new JTextField();
+		dobT = new JTextField();
+		dohT = new JTextField();
+		dotT = new JTextField();
+		localtaxcodeT = new JTextField();
+		addstatetaxT = new JTextField();
+		addfedtaxT = new JTextField();
+		salaryT = new JTextField();
+		regpayT = new JTextField();
+		otpayT = new JTextField();
+		ptopayT = new JTextField();
+		royaltyT = new JTextField();
+		departmentT = new JTextField();
+		teleT = new JTextField();
+		sexT = new JTextField();
+		vacationAvailT = new JTextField();
+		vacationUsedT = new JTextField();
     }
 
 	private static void setLabels() {
@@ -772,6 +778,20 @@ public class Edit_Employee {
 			try {
 				System.out.println("Edit Tax Table Pressed.");
 				Edit_Tax_Table.createDialog(emp.getID());
+			}catch (Exception taxTablePull) {
+				
+			}
+			
+		}
+		
+	};
+static ActionListener ytdTB = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				System.out.println("Edit Tax Table Pressed.");
+				Edit_YTD.createDialog(emp.getID());
 			}catch (Exception taxTablePull) {
 				
 			}
