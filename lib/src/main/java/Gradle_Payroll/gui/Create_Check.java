@@ -4,6 +4,7 @@ package Gradle_Payroll.gui;
 
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Gradle_Payroll.data.Check;
@@ -37,7 +39,9 @@ public class Create_Check {
 	static JDialog dialog;
 	static JLabel regularL,ptoL,overtimeL,salaryL,advanceL,royaltiesL,checkNoL,hoursL,rateL,dateL,fixedPayL;
 	static JTextField regHoursT,regRateT,ptoHoursT,ptoRateT,otHoursT,otRateT,salpayT,advpayT,royalpayT,checkNoT,dateT,startT,endT;
+	static JComboBox<String> stMnthD,stDayD,stYrD,endMnthD,endDayD,endYrD;
 	static String fName,mName,lName,fullName;
+	static JLabel dashL,slash1L,slash2L,slash3L,slash4L;
 	static Dimension minTextSize;
 	static Check check;
 	static YTD ytd;
@@ -46,13 +50,24 @@ public class Create_Check {
 	static int checkID; 
 	static String[] selname;
 	static LocalDate currDate;
-	
+	static JPanel payPeriodP;
 
 	
 	 protected static JDialog createCheckmenu()  throws Exception {
 		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		
 		 	employee = new JComboBox<String>();
+		 	stMnthD =new JComboBox<String>();
+	    	stDayD =new JComboBox<String>();
+	    	stYrD = new JComboBox<String>();
+	    	endMnthD =new JComboBox<String>();
+	    	endDayD = new JComboBox<String>();
+	    	endYrD = new JComboBox<String>();
+
+	    	
+		 	
+		 	
+		 	
 		 	
 		 	minTextSize = new Dimension();
 		 	minTextSize.setSize(50, 20);
@@ -99,57 +114,95 @@ public class Create_Check {
 	    	startT.setPreferredSize(minTextSize);
 	    	endT = new JTextField();
 	    	endT.setPreferredSize(minTextSize);
+	    	
 			
 			System.out.println("Creating Dialog Box");
 			
 			setLabels();
 	    	
-	    	dialog.setSize(400,400);
+	    	dialog.setSize(600,300);
 	    	dialog.setLayout(new GridBagLayout());
 	    	
 	    	/*TODO: Created all elements required to set Check Date...
 	    	need to create location on dialog to place it.
 	    	*/ 
 	    	
-	    	
+	    	//TODO: reformat so it looks more symmetrical.
 	    	GridBagConstraints c2d2 = new GridBagConstraints();
 	    	c2d2.gridx = 2;
 	    	c2d2.gridy = 1;
 	    	c2d2.gridwidth = 2;
 	    	
-	    	GridBagConstraints a6c6 = new GridBagConstraints();
-	    	a6c6.gridx = 0;
-	    	a6c6.gridy = 5;
-	    	a6c6.gridwidth = 3;
+	    	GridBagConstraints b6c6 = new GridBagConstraints();
+	    	b6c6.gridx = 1;
+	    	b6c6.gridy = 5;
+	    	b6c6.gridwidth = 1;
 	    	
 	    	GridBagConstraints b7c7 = new GridBagConstraints();
 	    	b7c7.gridx = 1;
 	    	b7c7.gridy = 6;
-	    	b7c7.gridwidth = 2;
+	    	b7c7.gridwidth = 1;
 
 	    	GridBagConstraints b8c8 = new GridBagConstraints();
 	    	b8c8.gridx = 1;
 	    	b8c8.gridy = 7;
-	    	b8c8.gridwidth = 2;
+	    	b8c8.gridwidth = 1;
 	    	
 	    	GridBagConstraints b9c9 = new GridBagConstraints();
 	    	b9c9.gridx = 1;
 	    	b9c9.gridy = 8;
-	    	b9c9.gridwidth = 2;
+	    	b9c9.gridwidth = 1;
 	  
 	    	GridBagConstraints c11 = new GridBagConstraints();
 	    	c11.gridx = 2;
 	    	c11.gridy = 10;
 	    	
-	    	dialog.add(createB,c11);
+	    	GridBagConstraints b10c10 = new GridBagConstraints();
+	    	b10c10.gridx = 1;
+	    	b10c10.gridy = 9;
+	    	b10c10.gridwidth = 1;
 	    	
+	    	
+	    	JPanel payPeriodP = new JPanel();
+	    	//payPeriodP.setLayout(new FlowLayout());
+	    
+	    	
+	    	payPeriodP.add(stMnthD);
+	    	stMnthD.setMinimumSize(minTextSize);
+	    	payPeriodP.add(slash1L);
+	    	payPeriodP.add(stDayD);
+	    	stDayD.setMinimumSize(minTextSize);
+	    	payPeriodP.add(slash2L);
+	    	payPeriodP.add(stYrD);
+	    	stYrD.setMinimumSize(minTextSize);
+	    	payPeriodP.add(dashL);
+	    	payPeriodP.add(endMnthD);
+	    	endMnthD.setMinimumSize(minTextSize);
+	    	payPeriodP.add(slash3L);
+	    	payPeriodP.add(endDayD);
+	    	endDayD.setMinimumSize(minTextSize);
+	    	payPeriodP.add(slash4L);
+	    	payPeriodP.add(endYrD);
+	    	endYrD.setMinimumSize(minTextSize);
+	    	
+	    	dialog.add(createB,c11);
 
 	    	dialog.add(rateL,c2d2);
-	    	dialog.add(fixedPayL,a6c6);
+	    	dialog.add(fixedPayL,b6c6);
 	    	dialog.add(salpayT,b7c7);
 	    	dialog.add(advpayT,b8c8);
 	    	dialog.add(royalpayT,b9c9);
-	    
+	    	dialog.add(payPeriodP,b10c10);
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
 	    	GridBagConstraints boom = new GridBagConstraints();
 	    	for(int x = 0; x < 3; x++) {
 	    		boom.gridx = x;
@@ -213,10 +266,7 @@ public class Create_Check {
 	    					boom.gridy = y;
 	    					dialog.add(otHoursT,boom);
 	    					break;
-	    				case 9:
-	    					boom.gridy = y;
-	    					dialog.add(startT,boom);
-	    					break;
+	    				
 	    				}
 	    			}
 	    			if(x==2) {
@@ -238,10 +288,7 @@ public class Create_Check {
 	    					boom.gridy = y;
 	    					dialog.add(otRateT,boom);
 	    					break;
-	    				case 9:
-	    					boom.gridy = y;
-	    					dialog.add(endT,boom);
-	    					break;
+	    				
 	    				}
 	    			}
 	    		}
@@ -341,6 +388,11 @@ public class Create_Check {
 		 rateL = new JLabel("<HTML><U> Rate </U></HTML>");
 		 fixedPayL = new JLabel("<HTML><U> Fixed Pay</U></HTML>");
 		 dateL = new JLabel("Check Date Range: ");
+		 dashL = new JLabel("-");
+		 slash1L = new JLabel("/");
+		 slash2L = new JLabel("/");
+		 slash3L = new JLabel("/");
+		 slash4L = new JLabel("/");
 		}
 	 
 	 static ActionListener createCheck = new ActionListener() {

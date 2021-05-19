@@ -38,7 +38,7 @@ public class Void_Check {
 	static JComboBox<String> employee;
 	static JComboBox<Double> checkNo;
 	static JDialog dialog;
-	static JLabel nameL,checkNoL;
+	static JLabel nameL,checkNoL,dateL,netPayL;
 	static JButton voidB,cancelB;
 	static String fName,mName,lName,fullName;
 	static Double CHECKNUM;
@@ -57,12 +57,16 @@ public class Void_Check {
 		 
 		 nameL = new JLabel("Name: ");
 		 checkNoL = new JLabel("Check No. : ");
+		 netPayL  = new JLabel("Net Pay: ");
+		 dateL  = new JLabel("Date: ");
 		 
 		 checkNetAmmntT = new JTextField();
+		 checkNetAmmntT.setEditable(false);
 		 checkDateT = new JTextField();
+		 checkDateT.setEditable(false);
 		 checkNumbers = new ArrayList<Double>();
-	    	
-		 	
+		
+		 
     	voidB = new JButton("Void");
 		voidB.addActionListener(submitBListener);
 		
@@ -73,6 +77,7 @@ public class Void_Check {
     	dialog.setLayout(new GridBagLayout());
     	
     	JLabel voidCheckL = new JLabel("<HTML><U> Void Check </U></HTML>"); 
+    	
     	
     	employee = new JComboBox<String>();
     	employee.addItemListener(employeeSel);
@@ -91,7 +96,7 @@ public class Void_Check {
     	
     	sqlPullEmpListRequest();
     	
-    	//TODO: Add text fields for Gross,Net,and Date of selected check
+    	
     	
     	GridBagConstraints b1c1 = new GridBagConstraints();
     	b1c1.gridx = 1;
@@ -117,7 +122,22 @@ public class Void_Check {
     	GridBagConstraints a3= new GridBagConstraints();
     	a3.gridx = 0;
     	a3.gridy = 2;
+
+    	GridBagConstraints b3= new GridBagConstraints();
+    	b3.gridx = 1;
+    	b3.gridy = 2;
     	
+    	GridBagConstraints c3= new GridBagConstraints();
+    	c3.gridx = 2;
+    	c3.gridy = 2;
+    	
+    	GridBagConstraints d3= new GridBagConstraints();
+    	d3.gridx = 3;
+    	d3.gridy = 2;
+    	
+    	GridBagConstraints e3= new GridBagConstraints();
+    	e3.gridx = 4;
+    	e3.gridy = 2;
     	
     	
     	
@@ -128,6 +148,10 @@ public class Void_Check {
     	dialog.add(checkNoL,c2);
     	dialog.add(checkNo,d2);
     	dialog.add(voidB,a3);
+    	dialog.add(dateL,b3);
+    	dialog.add(checkDateT,c3);
+    	dialog.add(netPayL,d3);
+    	dialog.add(checkNetAmmntT,e3);
     	dialog.repaint();
     	
     	
