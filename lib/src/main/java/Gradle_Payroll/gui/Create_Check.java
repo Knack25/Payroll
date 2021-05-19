@@ -112,7 +112,6 @@ public class Create_Check {
 	    	*/ 
 	    	
 	    	
-	    	
 	    	GridBagConstraints c2d2 = new GridBagConstraints();
 	    	c2d2.gridx = 2;
 	    	c2d2.gridy = 1;

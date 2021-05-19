@@ -48,6 +48,7 @@ public class Void_Check {
 	static List<Tax> tax;
 	static Check check;
 	static Double YEAR;
+	static List<Double> checkNumbers;
 
 	
 	 protected static JDialog createVoidcheckMenu()  throws Exception {
@@ -59,6 +60,7 @@ public class Void_Check {
 		 
 		 checkNetAmmntT = new JTextField();
 		 checkDateT = new JTextField();
+		 checkNumbers = new ArrayList<Double>();
 	    	
 		 	
     	voidB = new JButton("Void");
@@ -88,6 +90,8 @@ public class Void_Check {
     	tax = new ArrayList<Tax>();
     	
     	sqlPullEmpListRequest();
+    	
+    	//TODO: Add text fields for Gross,Net,and Date of selected check
     	
     	GridBagConstraints b1c1 = new GridBagConstraints();
     	b1c1.gridx = 1;
@@ -163,6 +167,7 @@ public class Void_Check {
 		}
 
 		private void removeCheckVals() {
+			check.setRegAmmnt(check.getRegHours() * check.getRegRate());
 			yTD_Calc.setAdvAmmntYTD(yTD_Initial.getAdvAmmntYTD() - check.getAdvAmmnt());
 			//System.out.println(yTD_Calc.getAdvAmmntYTD());
 			yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD() - check.getGrossAmmnt());
@@ -383,12 +388,13 @@ public class Void_Check {
         	String[] name = fullName.split(" ");
         	System.out.println("New Employee Selected...");
         	System.out.println("The value of fullName is: " + fullName);
-        	
+        	checkNo.removeItemListener(checkNoListener);
         	try {
         		sqlCheckNumPullRequest(name);
         	}catch (Exception SelEmpPull) {
         		SelEmpPull.printStackTrace();
         	}
+        	checkNo.addItemListener(checkNoListener);
 			
 		}
 
@@ -414,19 +420,23 @@ public class Void_Check {
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 			
 			pstmt.setInt(1, EMPID);
+			
 
 		
 			ResultSet rs = pstmt.executeQuery();
+			//checkNo.removeItemListener(checkNoListener);
 			//I Hate this line... It has caused me nothing but suffering... Why is there this, but it suggests removeAll before
 			//this, when that doesn't do anything in most cases. 
 			checkNo.removeAllItems();
+			checkNumbers.clear();
 			while(rs.next()) {
 				checkNum = rs.getDouble("checknum");
 				System.out.println("checkNum:" + checkNum);
 				checkNo.addItem(checkNum);
+				checkNumbers.add(checkNum);
 				i++;
 			}
-			
+			//checkNo.addItemListener(checkNoListener);
 			
 			
 			pstmt.close();
@@ -453,7 +463,9 @@ public class Void_Check {
 		
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			 CHECKNUM = (Double) checkNo.getSelectedItem();
+			int checkIndex;
+			 checkIndex = checkNo.getSelectedIndex();
+			 CHECKNUM = checkNumbers.get(checkIndex).doubleValue();
 			 System.out.println("CHECKNUM is: " + CHECKNUM);
 			
 			 try {
@@ -467,13 +479,15 @@ public class Void_Check {
 
 		private void sqlPullCheckInfo() throws Exception {
 			String[] SQL = Config.PullSQLConfig();
-			
+			int checkIndex;
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
 			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 			
 			
 			String updateStatement = "select * from checks where checknum = ?";
+			checkIndex = checkNo.getSelectedIndex();
+			CHECKNUM = checkNumbers.get(checkIndex);
 					
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 			
@@ -632,6 +646,7 @@ public class Void_Check {
 	private static void sqlPullCheckData() throws Exception {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
+		int checkIndex;
 		
 		System.out.println("Querrying DB for Check Data");
 		
@@ -639,12 +654,14 @@ public class Void_Check {
 		
 		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
 		
+		checkIndex = checkNo.getSelectedIndex();
+		CHECKNUM = checkNumbers.get(checkIndex);
 		
 		String updateStatement = "select * " + "from checks " + "WHERE checknum = ?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 
-		System.out.println("CEHCKNUM: " +CHECKNUM);
+		System.out.println("CEHCKNUM: " + CHECKNUM);
 		pstmt.setDouble(1, CHECKNUM);
 		
 		

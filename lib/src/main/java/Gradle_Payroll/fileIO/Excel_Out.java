@@ -35,13 +35,13 @@ public class Excel_Out{
 		normalS = book.createCellStyle();
 		underlinedS = book.createCellStyle();
 		book.setPrintArea(0, "$A$1:$M$53");
-		book.setPrintArea(
-		        1, //sheet index
-		        0, //start column
-		        12, //end column
-		        0, //start row
-		        53  //end row
-		);
+//		book.setPrintArea(
+//		        1, //sheet index
+//		        0, //start column
+//		        12, //end column
+//		        0, //start row
+//		        53  //end row
+//		);
 		normalF.setFontHeightInPoints((short) 15);
 		normalF.setFontName("ARIAL NARROW");
 		underlineF.setFontHeightInPoints((short) 15);
