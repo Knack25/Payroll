@@ -10,7 +10,7 @@ public class Tax {
 		super();
 		this.name = "Name";
 		this.ID = 0;
-		this.type = "Type";
+		this.type = 0;
 		this.ammount = 00.00;
 		this.netAmmount = 00.00;
 		this.fedTaxExempt = false;
@@ -25,7 +25,7 @@ public class Tax {
 	
 	private String name;
 	private int ID;
-	private String type;
+	private int type;
 	private double ammount;
 	private double netAmmount;
 	private boolean fedTaxExempt;
@@ -63,10 +63,10 @@ public class Tax {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	public String getType() {
+	public int getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 	public double getAmmount() {

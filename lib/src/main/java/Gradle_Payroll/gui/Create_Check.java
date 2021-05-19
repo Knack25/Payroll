@@ -283,8 +283,8 @@ public class Create_Check {
 		 @SuppressWarnings("unused")
 		 String fullname = (String) employee.getSelectedItem();
 		 String[] selname = fullname.split(" ");
-		 System.out.println(fullname);
-		 System.out.println(selname[0]);
+		 //System.out.println(fullname);
+		 //System.out.println(selname[0]);
 		 id = MySQL.sqlPullEmpID(selname);
 		
 			
@@ -296,7 +296,7 @@ public class Create_Check {
 		
 		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
 		
-		System.out.println(id);
+		//System.out.println(id);
 		
 		pstmt.setInt(1, id);
 		
@@ -305,7 +305,7 @@ public class Create_Check {
 		
 		rs.next();
 		regRateT.setText(String.valueOf(rs.getDouble("regularPay")));
-		System.out.println("Regular rate Obtained: " + regRateT.getText());
+		//System.out.println("Regular rate Obtained: " + regRateT.getText());
 		otRateT.setText(String.valueOf(rs.getDouble("otPay")));
 		ptoRateT.setText(String.valueOf(rs.getDouble("ptoPay")));
 		salpayT.setText(String.valueOf(rs.getDouble("salary")));

@@ -331,9 +331,9 @@ public class Check_Edit {
 
 	//*********************************************Calculate YTD***********************************************************
 	private static void calcYTD() {
-		System.out.println("Gross YTD Init: " + yTD_Initial.getGrossAmmntYTD());
+		//System.out.println("Gross YTD Init: " + yTD_Initial.getGrossAmmntYTD());
 		yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD() + check.getGrossAmmnt());
-		System.out.println("Gross YTD Calc: " + yTD_Calc.getGrossAmmntYTD());
+		//System.out.println("Gross YTD Calc: " + yTD_Calc.getGrossAmmntYTD());
 		yTD_Calc.setRegHoursYTD(yTD_Initial.getRegHoursYTD() + check.getRegHours());
 		yTD_Calc.setRegAmmntYTD(yTD_Initial.getRegAmmntYTD() + check.getRegAmmnt());
 		yTD_Calc.setPtoHoursYTD(yTD_Initial.getPtoHoursYTD() + check.getPtoHours());
@@ -586,7 +586,7 @@ public class Check_Edit {
 		while(rs.next()) {
 			tempTax = new  Tax();
 			tempTax.setName(rs.getString("taxname"));
-			tempTax.setType(rs.getString("taxtype"));
+			tempTax.setType(rs.getInt("taxtype"));
 			tempTax.setAmmount(rs.getDouble("ammount"));
 			tempTax.setFedTaxExempt(rs.getBoolean("fedTaxExempt"));
 			tempTax.setStateTaxExempt(rs.getBoolean("stateTaxExempt"));
@@ -595,7 +595,7 @@ public class Check_Edit {
 			tempTax.setMedicareTaxeExempt(rs.getBoolean("medicareTaxExempt"));
 			tempTax.setLocalTaxExempt(rs.getBoolean("localTaxExempt"));
 			tempTax.setPrimaryTax(rs.getBoolean("primaryTax"));
-			System.out.println("Name: " + tempTax.getName() + " | Ammount: " + tempTax.getAmmount());
+			//System.out.println("Name: " + tempTax.getName() + " | Ammount: " + tempTax.getAmmount());
 			tax.add(tempTax);
 		}
 		sqlPullTaxYTD();
@@ -720,7 +720,7 @@ public class Check_Edit {
 		salary =  check.getSalAmmnt();
 		other = check.getAdvAmmnt() + check.getRoyaltyRate();
 		check.setGrossAmmnt(reg + ot + pto + salary + other);
-		System.out.println("Check Gross: " + check.getGrossAmmnt());
+		//System.out.println("Check Gross: " + check.getGrossAmmnt());
 		check.setFedGrossAmmnt(check.getGrossAmmnt());
 		check.setStateGrossAmmnt(check.getGrossAmmnt());
 		check.setState2GrossAmmnt(check.getGrossAmmnt());
@@ -753,7 +753,7 @@ public class Check_Edit {
 		
 		
 		for(int i = 0; i < NUMTAXAMNT;i++) {
-			if(!tax.get(i).isPrimaryTax() && tax.get(i).getType() == "%") {
+			if(!tax.get(i).isPrimaryTax() && tax.get(i).getType() == 1) {
 				tax.get(i).setNetAmmount(tax.get(i).getAmmount() * 0.01 * check.getGrossAmmnt());
 			}else {
 				tax.get(i).setNetAmmount(tax.get(i).getAmmount());
@@ -765,9 +765,9 @@ public class Check_Edit {
 		for(int i = 0; i < NUMTAXAMNT;i++) {
 			if(!tax.get(i).isPrimaryTax()) {
 				if(tax.get(i).isFedTaxExempt()) {
-					System.out.println("Federal Gross: " + check.getFedGrossAmmnt() + " subtracting: " + tax.get(i).getNetAmmount());
+					//System.out.println("Federal Gross: " + check.getFedGrossAmmnt() + " subtracting: " + tax.get(i).getNetAmmount());
 					check.setFedGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
-					System.out.println("Resulting in: " + check.getFedGrossAmmnt());
+					//System.out.println("Resulting in: " + check.getFedGrossAmmnt());
 				}
 				if(tax.get(i).isStateTaxExempt()) {
 					check.setStateGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
@@ -788,9 +788,9 @@ public class Check_Edit {
 				
 		}
 		
-		System.out.println("Federal Gross: " + check.getFedGrossAmmnt() + " mult: " + tax.get(0).getAmmount());
+		//System.out.println("Federal Gross: " + check.getFedGrossAmmnt() + " mult: " + tax.get(0).getAmmount());
 		tax.get(0).setNetAmmount(check.getFedGrossAmmnt() * 0.01 * tax.get(0).getAmmount());
-		System.out.println("Resulting in: " + tax.get(0).getNetAmmount());
+		//System.out.println("Resulting in: " + tax.get(0).getNetAmmount());
 		tax.get(1).setNetAmmount(check.getStateGrossAmmnt() * 0.01 * tax.get(1).getAmmount());
 		tax.get(2).setNetAmmount(check.getState2GrossAmmnt() * 0.01 * tax.get(2).getAmmount());
 		tax.get(3).setNetAmmount(check.getSscGrossAmmnt() * 0.01 * tax.get(3).getAmmount());
@@ -798,7 +798,7 @@ public class Check_Edit {
 		tax.get(5).setNetAmmount(check.getLocalGrossAmmnt() * 0.01 * tax.get(5).getAmmount());
 		
 		for(int i = 0; i < NUMTAXAMNT;i++) {
-			System.out.println("Tax Init YTD: " + tax.get(i).getInitYTD() + "Subtract: " + tax.get(i).getNetAmmount());
+			System.out.println("Tax Init YTD: " + tax.get(i).getInitYTD() + " Add: " + tax.get(i).getNetAmmount());
 			tax.get(i).setFinalYTD(tax.get(i).getInitYTD() + tax.get(i).getNetAmmount());
 			System.out.println("Resulting in: " + tax.get(i).getFinalYTD());
 		}
@@ -891,11 +891,7 @@ public class Check_Edit {
 			for (int i = 0;i<NUMTAXAMNT;i++) {
 				pstmt.setInt(1, CHECKNUM);
 				pstmt.setString(2, tax.get(i).getName());
-				if(tax.get(i).getType() == "%") {
-					pstmt.setInt(3, 1);
-				}else {
-					pstmt.setInt(3, 0);
-				}
+				pstmt.setInt(3, tax.get(i).getType());
 				pstmt.setDouble(4, tax.get(i).getAmmount());
 				pstmt.setDouble(5, tax.get(i).getNetAmmount());
 				pstmt.setBoolean(6, tax.get(i).isFedTaxExempt());
@@ -1022,7 +1018,7 @@ public class Check_Edit {
 			pstmt.setInt(15, CHECKNUM);
 			
 			
-			System.out.println(pstmt);
+			//System.out.println(pstmt);
 			
 			
 			@SuppressWarnings("unused")

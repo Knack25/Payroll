@@ -49,6 +49,7 @@ public class Void_Check {
 	static Check check;
 	static Double YEAR;
 	static List<Double> checkNumbers;
+	static List<Double> taxNetAmmount;
 
 	
 	 protected static JDialog createVoidcheckMenu()  throws Exception {
@@ -61,6 +62,8 @@ public class Void_Check {
 		 checkNetAmmntT = new JTextField();
 		 checkDateT = new JTextField();
 		 checkNumbers = new ArrayList<Double>();
+		 
+		 taxNetAmmount = new ArrayList<Double>();
 	    	
 		 	
     	voidB = new JButton("Void");
@@ -184,8 +187,9 @@ public class Void_Check {
 			yTD_Calc.setSalAmmntYTD(yTD_Initial.getSalAmmntYTD() - check.getSalAmmnt());
 			
 			for(int i = 0; i < tax.size();i++) {
-				System.out.println("Tax Init YTD: " + tax.get(i).getInitYTD());
-				tax.get(i).setFinalYTD(tax.get(i).getInitYTD() - tax.get(i).getNetAmmount());
+				System.out.println(i);
+				System.out.println("Tax Init YTD: " + tax.get(i).getInitYTD() + " Subtract: " + taxNetAmmount.get(i));
+				tax.get(i).setFinalYTD(tax.get(i).getInitYTD() - taxNetAmmount.get(i));
 				System.out.println("Tax Final YTD: " + tax.get(i).getFinalYTD());
 			}
 		}
@@ -221,7 +225,7 @@ public class Void_Check {
 			int i = 0;
 			SQL = Config.PullSQLConfig();
 			
-			System.out.println("Pushig Check Tax to DB");
+			System.out.println("Pulling Check Tax from DB");
 			
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 			
@@ -237,8 +241,8 @@ public class Void_Check {
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				tax.get(i).setNetAmmount(rs.getDouble("netammount"));
-				System.out.println("Tax Net Ammount: " + tax.get(i).getNetAmmount());
+				taxNetAmmount.add(rs.getDouble("netammount"));
+				System.out.println("Tax Net Ammount: " + taxNetAmmount.get(i));
 				i++;
 			}
 		}
