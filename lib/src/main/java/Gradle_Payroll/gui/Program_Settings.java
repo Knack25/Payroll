@@ -2,6 +2,7 @@ package Gradle_Payroll.gui;
 
 
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -28,19 +29,17 @@ import Gradle_Payroll.fileIO.Config;
 
 public class Program_Settings {
 	
-	static JComboBox<String> employee;
+//	static JComboBox<String> employee;
 	static JComboBox<String> department;
 	static JInternalFrame frame;
-	static JLabel empNumL,statusL,nameL,addressL,cityL,stateL,zipL,emailL,ssnL,jobtitleL,dobL,dohL,dotL,localtaxcodeL,addstatetaxL,addfedtaxL,salaryL,reghourL,
-	regpayL,othourL,otpayL,ptohourL,ptopayL,departmentL,teleL,sexL,vacationAvailL,vacationUsedL;
-	static JTextField empNumT,statusT,nameT,addressT,cityT,stateT,zipT,emailT,ssnT,jobtitleT,dobT,dohT,dotT,localtaxcodeT,addstatetaxT,addfedtaxT,salaryT,reghourT,
-	regpayT,othourT,otpayT,ptohourT,ptopayT,departmentT,teleT,sexT,vacationAvailT,vacationUsedT;
 	static Employee emp;
 	static Name empName;
 	static Address empAddress;
+	static Dimension minTextSize;
 	static String fName,mName,lName,fullName,dept;
 	static JLabel settingsL,payFreqL,payPeriodL,slashL,dashL;
-	static JComboBox<String> payFreqD,startDateD,endDateD;
+	static JComboBox<String> payFreqD;
+	static JTextField startDateT,endDateT;
 
 	
 	
@@ -48,6 +47,14 @@ public class Program_Settings {
     protected static JInternalFrame createFrame() throws Exception{
         frame = new JInternalFrame();
         emp = new Employee();
+        minTextSize = new Dimension();
+	 	minTextSize.setSize(50, 20);
+        JTextField startDateT = new JTextField();
+        startDateT.setPreferredSize(minTextSize);
+        startDateT.setEditable(false);
+        JTextField  endDateT = new JTextField();
+        endDateT.setPreferredSize(minTextSize);
+        endDateT.setEditable(false);
     	JButton viewRangesB = new JButton("View Yearly Pay Ranges");
 		JButton deptB = new JButton("View/Edit Departments");
 		JButton taxTableB = new JButton("View/Edit Default Tax Table");
@@ -70,74 +77,71 @@ public class Program_Settings {
 		
 		System.out.println("Creating Edit Frame");
 		
-		frame.setSize(1300, 650);
+		frame.setSize(600, 300);
     	
     	
     	frame.setLayout(new GridBagLayout());
     	
     	
-    	frame.add(dashL);
+    	
     	   
-//    	GridBagConstraints b1 = new GridBagConstraints();
-//    	b1.gridx = 1;
-//    	b1.gridy = 0;
-//
-//    	GridBagConstraints f1 = new GridBagConstraints();
-//    	f1.gridx = 5;
-//    	f1.gridy = 0;
-//    	
-//    	GridBagConstraints a2 = new GridBagConstraints();
-//    	a2.gridx = 0;
-//    	a2.gridy = 1;
-//    	
-//    	GridBagConstraints a3 = new GridBagConstraints();
-//    	a3.gridx = 0;
-//    	a3.gridy = 2;
-//    	
-//    	GridBagConstraints a4 = new GridBagConstraints();
-//    	a4.gridx = 0;
-//    	a4.gridy = 3;
-//    	
-//    	GridBagConstraints b2 = new GridBagConstraints();
-//    	b2.gridx = 1;
-//    	b2.gridy = 1;
-//    	
-//    	GridBagConstraints b3 = new GridBagConstraints();
-//    	b3.gridx = 1;
-//    	b3.gridy = 2;
-//    	
-//    	GridBagConstraints b4 = new GridBagConstraints();
-//    	b4.gridx = 1;
-//    	b4.gridy = 3;
-//    	
-//    	GridBagConstraints c2e2 = new GridBagConstraints();
-//    	c2e2.gridx = 2;
-//    	c2e2.gridy = 1;
-//    	c2e2.gridwidth = 3;
-//    	
-//    	GridBagConstraints c3 = new GridBagConstraints();
-//    	a3.gridx = 2;
-//    	a3.gridy = 2;
-//    	GridBagConstraints d3 = new GridBagConstraints();
-//    	a3.gridx = 3;
-//    	a3.gridy = 2;
-//    	GridBagConstraints e3 = new GridBagConstraints();
-//    	a3.gridx = 4;
-//    	a3.gridy = 2;
-// 
-//    	 
-//    	 
-//    	frame.add(settingsL,b1);
-//    	frame.add(payFreqL,a2);
+    	GridBagConstraints b1 = new GridBagConstraints();
+    	b1.gridx = 1;
+    	b1.gridy = 0;
+
+    	GridBagConstraints f1 = new GridBagConstraints();
+    	f1.gridx = 5;
+    	f1.gridy = 0;
+    	
+    	GridBagConstraints a2 = new GridBagConstraints();
+    	a2.gridx = 0;
+    	a2.gridy = 1;
+    	
+    	GridBagConstraints a3 = new GridBagConstraints();
+    	a3.gridx = 0;
+    	a3.gridy = 2;
+    	
+    	GridBagConstraints b4 = new GridBagConstraints();
+    	b4.gridx = 1;
+    	b4.gridy = 3;
+    	
+    	GridBagConstraints b2 = new GridBagConstraints();
+    	b2.gridx = 1;
+    	b2.gridy = 1;
+    	
+    	GridBagConstraints b3 = new GridBagConstraints();
+    	b3.gridx = 1;
+    	b3.gridy = 2;
+    	
+    	
+    	GridBagConstraints c2e2 = new GridBagConstraints();
+    	c2e2.gridx = 2;
+    	c2e2.gridy = 1;
+    	c2e2.gridwidth = 3;
+    	
+    	GridBagConstraints c3 = new GridBagConstraints();
+    	c3.gridx = 2;
+    	c3.gridy = 2;
+    	GridBagConstraints d3 = new GridBagConstraints();
+    	d3.gridx = 3;
+    	d3.gridy = 2;
+    	GridBagConstraints e3 = new GridBagConstraints();
+    	e3.gridx = 4;
+    	e3.gridy = 2;
+ 
+    	 //TODO: Build a dialog to allow the user to view and edit the departments
+    	 //TODO: build a dialog to view the pay period for the year
+    	frame.add(settingsL,b1);
+    	frame.add(payFreqL,a2);
+    	//TODO: get the dropdown to work and get the different pay frequencies to work
 //    	frame.add(payFreqD,a3);
-//    	frame.add(viewRangesB,a4);
-//    	frame.add(payPeriodL,c2e2);
-//    	frame.add(deptB,b2);
+    	frame.add(viewRangesB,b3);
+    	frame.add(deptB,b2);
 //    	frame.add(taxTableB,b3);
-//    	frame.add(termEmpB,b4);
-//    	frame.add(startDateD,c3);
-//    	frame.add(dashL,d3);
-//    	frame.add(endDateD,e3);
+    	frame.add(payPeriodL,c2e2);
+    	frame.add(startDateT,c3);
+    	frame.add(dashL,d3);
+    	frame.add(endDateT,e3);
     	
     
     	
