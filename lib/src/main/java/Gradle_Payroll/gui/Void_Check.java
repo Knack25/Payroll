@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -47,6 +48,9 @@ public class Void_Check {
 	static List<Double> checkNumbers;
 
 	static List<BigDecimal> taxNetAmmount;
+	static List<BigDecimal> taxInitYTD;
+	static List<BigDecimal> taxFinalYTD;
+	static List<String> taxName;
 	
 	 protected static JDialog createVoidcheckMenu()  throws Exception {
 		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
@@ -65,6 +69,10 @@ public class Void_Check {
 
 		 
 		 taxNetAmmount = new ArrayList<BigDecimal>();
+		 taxInitYTD = new ArrayList<BigDecimal>();
+		 taxFinalYTD = new ArrayList<BigDecimal>();
+		 
+		 taxName = new ArrayList<String>();
 	    	
     	voidB = new JButton("Void");
 
@@ -180,26 +188,43 @@ public class Void_Check {
 
 		private void removeCheckVals() {
 			check.setRegAmmnt(check.getRegHours().multiply(check.getRegRate()));
+			check.setRegAmmnt(check.getRegAmmnt().setScale(2,RoundingMode.HALF_UP));
+			check.setPtoAmmnt(check.getPtoHours().multiply(check.getPtoRate()));
+			check.setPtoAmmnt(check.getPtoAmmnt().setScale(2,RoundingMode.HALF_UP));
+			check.setOtAmmnt(check.getOtHours().multiply(check.getOtRate()));
+			check.setOtAmmnt(check.getOtAmmnt().setScale(2,RoundingMode.HALF_UP));
 			yTD_Calc.setAdvAmmntYTD(yTD_Initial.getAdvAmmntYTD().subtract(check.getAdvAmmnt()));
+			yTD_Calc.setAdvAmmntYTD(yTD_Calc.getAdvAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 			// System.out.println(yTD_Calc.getAdvAmmntYTD());
 			yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD().subtract(check.getGrossAmmnt()));
+			yTD_Calc.setGrossAmmntYTD(yTD_Calc.getGrossAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 			// System.out.println(yTD_Calc.getGrossAmmntYTD());
 			yTD_Calc.setNetAmmntYTD(yTD_Initial.getNetAmmntYTD().subtract(check.getNetAmmnt()));
+			yTD_Calc.setNetAmmntYTD(yTD_Calc.getNetAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 			// System.out.println(yTD_Calc.getNetAmmntYTD());
 			yTD_Calc.setOtAmmntYTD(yTD_Initial.getOtAmmntYTD().subtract(check.getOtAmmnt()));
+			yTD_Calc.setOtAmmntYTD(yTD_Calc.getOtAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 			yTD_Calc.setOtHoursYTD(yTD_Initial.getOtHoursYTD().subtract(check.getOtHours()));
-			yTD_Calc.setPtoAmmntYTD(yTD_Initial.getPtoAmmntYTD().subtract(check.getPtoHours()));
+			yTD_Calc.setOtHoursYTD(yTD_Calc.getOtHoursYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setPtoAmmntYTD(yTD_Initial.getPtoAmmntYTD().subtract(check.getPtoAmmnt()));
+			yTD_Calc.setPtoAmmntYTD(yTD_Calc.getPtoAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 			yTD_Calc.setPtoHoursYTD(yTD_Initial.getPtoHoursYTD().subtract(check.getPtoHours()));
+			yTD_Calc.setPtoHoursYTD(yTD_Calc.getPtoHoursYTD().setScale(2,RoundingMode.HALF_UP));
 			yTD_Calc.setRegAmmntYTD(yTD_Initial.getRegAmmntYTD().subtract(check.getRegAmmnt()));
+			yTD_Calc.setRegAmmntYTD(yTD_Calc.getRegAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 			yTD_Calc.setRegHoursYTD(yTD_Initial.getRegHoursYTD().subtract(check.getRegHours()));
+			yTD_Calc.setRegHoursYTD(yTD_Calc.getRegHoursYTD().setScale(2,RoundingMode.HALF_UP));
 			yTD_Calc.setRoyaltyAmmntYTD(yTD_Initial.getRoyaltyAmmntYTD().subtract(check.getRoyaltyAmmnt()));
+			yTD_Calc.setRoyaltyAmmntYTD(yTD_Calc.getRoyaltyAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 			yTD_Calc.setSalAmmntYTD(yTD_Initial.getSalAmmntYTD().subtract(check.getSalAmmnt()));
+			yTD_Calc.setSalAmmntYTD(yTD_Calc.getSalAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 
-			for (int i = 0; i < tax.size(); i++) {
+			for (int i = 0; i < taxInitYTD.size(); i++) {
 				System.out.println(i);
-				System.out.println("Tax Init YTD: " + tax.get(i).getInitYTD() + " Subtract: " + taxNetAmmount.get(i));
-				tax.get(i).setFinalYTD(tax.get(i).getInitYTD().subtract(taxNetAmmount.get(i)));
-				System.out.println("Tax Final YTD: " + tax.get(i).getFinalYTD());
+				System.out.println("Tax Init YTD: " + taxInitYTD.get(i) + " Subtract: " + taxNetAmmount.get(i));
+				taxFinalYTD.add(taxInitYTD.get(i).subtract(taxNetAmmount.get(i)));
+				taxFinalYTD.set(i,taxFinalYTD.get(i).setScale(2,RoundingMode.HALF_UP));
+				System.out.println("Tax Final YTD: " + taxFinalYTD.get(i));
 			}
 		}
 
@@ -351,9 +376,9 @@ public class Void_Check {
 			pstmt.setInt(2, EMPID);
 			pstmt.setDouble(4, YEAR);
 
-			for (int i = 0; i < tax.size(); i++) {
-				pstmt.setBigDecimal(1, tax.get(i).getFinalYTD());
-				pstmt.setString(3, tax.get(i).getName());
+			for (int i = 0; i < taxFinalYTD.size(); i++) {
+				pstmt.setBigDecimal(1, taxFinalYTD.get(i));
+				pstmt.setString(3, taxName.get(i));
 
 				pstmt.executeUpdate();
 			}
@@ -539,9 +564,9 @@ public class Void_Check {
 
 		ResultSet rs = pstmt.executeQuery();
 		while (rs.next()) {
-			temptax.setInitYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
-			System.out.println("Tax Init YTD: " + temptax.getInitYTD());
-			tax.add(temptax);
+			taxInitYTD.add(BigDecimal.valueOf(rs.getDouble("ammount")));
+			taxName.add(rs.getString("name"));
+			System.out.println("Tax Init YTD: " + taxInitYTD.get(taxInitYTD.size()-1));
 		}
 
 	}

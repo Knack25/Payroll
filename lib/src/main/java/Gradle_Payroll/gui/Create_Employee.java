@@ -65,6 +65,8 @@ import Gradle_Payroll.sql.MySQL;
 		 enterFirst = new JFormattedTextField("");
 		 enterMiddle = new JFormattedTextField("");
 		 enterLast = new JFormattedTextField("");
+		 enterLast.addActionListener(CreateListener);
+		 //TODO: Add an input listener on enterLast for hiting the enter key as a form of submission
 		 
 		 enterFirst.setColumns(10);
 		 enterMiddle.setColumns(10);
@@ -84,6 +86,7 @@ import Gradle_Payroll.sql.MySQL;
 		createMenu.setVisible(true);
 			 return createMenu;
 	 }
+	
 
 	 
 	 //********************************************************Create Listener******************************************************************************
@@ -382,73 +385,6 @@ import Gradle_Payroll.sql.MySQL;
 			pstmt.setDouble(3, cal.get(Calendar.YEAR));
 			pstmt.setInt(4, ID);
 			rs =+ pstmt.executeUpdate();
-			
-		/*	pstmt.setString(1, "Federal");
-			pstmt.setDouble(2, 00.00);
-			pstmt.setDouble(3, cal.get(Calendar.YEAR));
-			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();
-			
-			pstmt.setString(1, "State");
-			pstmt.setDouble(2, 00.00);
-			pstmt.setDouble(3, cal.get(Calendar.YEAR));
-			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();
-			
-			pstmt.setString(1, "State 2");
-			pstmt.setDouble(2, 00.00);
-			pstmt.setDouble(3, cal.get(Calendar.YEAR));
-			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();
-			
-			pstmt.setString(1, "Social Security");
-			pstmt.setDouble(2, 00.00);
-			pstmt.setDouble(3, cal.get(Calendar.YEAR));
-			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();
-			
-			pstmt.setString(1, "Medicare");
-			pstmt.setDouble(2, 00.00);
-			pstmt.setDouble(3, cal.get(Calendar.YEAR));
-			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();
-			
-			pstmt.setString(1, "Local");
-			pstmt.setDouble(2, 00.00);
-			pstmt.setDouble(3, cal.get(Calendar.YEAR));
-			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();
-			
-			pstmt.setString(1, "Pension");
-			pstmt.setDouble(2, 00.00);
-			pstmt.setDouble(3, cal.get(Calendar.YEAR));
-			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();
-			
-			pstmt.setString(1, "Medical");
-			pstmt.setDouble(2, 00.00);
-			pstmt.setDouble(3, cal.get(Calendar.YEAR));
-			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();
-			
-			pstmt.setString(1, "Aflack(Exempt)");
-			pstmt.setDouble(2, 00.00);
-			pstmt.setDouble(3, cal.get(Calendar.YEAR));
-			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();
-			
-			pstmt.setString(1, "Aflack(Non-Exempt");
-			pstmt.setDouble(2, 00.00);
-			pstmt.setDouble(3, cal.get(Calendar.YEAR));
-			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();
-			
-			pstmt.setString(1, "Advance");
-			pstmt.setDouble(2, 00.00);
-			pstmt.setDouble(3, cal.get(Calendar.YEAR));
-			pstmt.setInt(4, ID);
-			rs =+ pstmt.executeUpdate();*/
-			 
 			 
 			System.out.println("Inserted " + rs + " rows into ytd table.");
 			
