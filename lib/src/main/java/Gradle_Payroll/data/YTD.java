@@ -1,5 +1,7 @@
 package Gradle_Payroll.data;
 
+import java.math.BigDecimal;
+
 public class YTD {
 
 	
@@ -9,82 +11,82 @@ public class YTD {
 	
 	
 	
-	private double grossAmmntYTD = 0;
-	private double netAmmntYTD = 0;
-	private double regHoursYTD = 0;
-	private double regAmmntYTD = 0;
-	private double ptoHoursYTD = 0;
-	private double ptoAmmntYTD = 0;
-	private double otHoursYTD = 0;
-	private double otAmmntTD = 0;
-	private double salAmmntYTD = 0;
-	private double advAmmntYTD = 0;
-	private double royaltyAmmntYTD = 0;
+	private BigDecimal grossAmmntYTD = new BigDecimal(0);
+	private BigDecimal netAmmntYTD = new BigDecimal(0);
+	private BigDecimal regHoursYTD = new BigDecimal(0);
+	private BigDecimal regAmmntYTD = new BigDecimal(0);
+	private BigDecimal ptoHoursYTD = new BigDecimal(0);
+	private BigDecimal ptoAmmntYTD = new BigDecimal(0);
+	private BigDecimal otHoursYTD = new BigDecimal(0);
+	private BigDecimal otAmmntTD = new BigDecimal(0);
+	private BigDecimal salAmmntYTD = new BigDecimal(0);
+	private BigDecimal advAmmntYTD = new BigDecimal(0);
+	private BigDecimal royaltyAmmntYTD = new BigDecimal(0);
 	
-	public double getGrossAmmntYTD() {
+	public BigDecimal getGrossAmmntYTD() {
 		return grossAmmntYTD;
 	}
-	public void setGrossAmmntYTD(double grossAmmntYTD) {
+	public void setGrossAmmntYTD(BigDecimal grossAmmntYTD) {
 		this.grossAmmntYTD = grossAmmntYTD;
 	}
-	public double getNetAmmntYTD() {
+	public BigDecimal getNetAmmntYTD() {
 		return netAmmntYTD;
 	}
-	public void setNetAmmntYTD(double netAmmntYTD) {
+	public void setNetAmmntYTD(BigDecimal netAmmntYTD) {
 		this.netAmmntYTD = netAmmntYTD;
 	}
-	public double getRegHoursYTD() {
+	public BigDecimal getRegHoursYTD() {
 		return regHoursYTD;
 	}
-	public void setRegHoursYTD(double regHoursYTD) {
+	public void setRegHoursYTD(BigDecimal regHoursYTD) {
 		this.regHoursYTD = regHoursYTD;
 	}
-	public double getRegAmmntYTD() {
+	public BigDecimal getRegAmmntYTD() {
 		return regAmmntYTD;
 	}
-	public void setRegAmmntYTD(double regAmmntYTD) {
+	public void setRegAmmntYTD(BigDecimal regAmmntYTD) {
 		this.regAmmntYTD = regAmmntYTD;
 	}
-	public double getPtoHoursYTD() {
+	public BigDecimal getPtoHoursYTD() {
 		return ptoHoursYTD;
 	}
-	public void setPtoHoursYTD(double ptoHoursYTD) {
+	public void setPtoHoursYTD(BigDecimal ptoHoursYTD) {
 		this.ptoHoursYTD = ptoHoursYTD;
 	}
-	public double getPtoAmmntYTD() {
+	public BigDecimal getPtoAmmntYTD() {
 		return ptoAmmntYTD;
 	}
-	public void setPtoAmmntYTD(double ptoAmmntYTD) {
+	public void setPtoAmmntYTD(BigDecimal ptoAmmntYTD) {
 		this.ptoAmmntYTD = ptoAmmntYTD;
 	}
-	public double getOtHoursYTD() {
+	public BigDecimal getOtHoursYTD() {
 		return otHoursYTD;
 	}
-	public void setOtHoursYTD(double otHoursYTD) {
+	public void setOtHoursYTD(BigDecimal otHoursYTD) {
 		this.otHoursYTD = otHoursYTD;
 	}
-	public double getOtAmmntYTD() {
+	public BigDecimal getOtAmmntYTD() {
 		return otAmmntTD;
 	}
-	public void setOtAmmntYTD(double otAmmntTD) {
+	public void setOtAmmntYTD(BigDecimal otAmmntTD) {
 		this.otAmmntTD = otAmmntTD;
 	}
-	public double getSalAmmntYTD() {
+	public BigDecimal getSalAmmntYTD() {
 		return salAmmntYTD;
 	}
-	public void setSalAmmntYTD(double salAmmntYTD) {
+	public void setSalAmmntYTD(BigDecimal salAmmntYTD) {
 		this.salAmmntYTD = salAmmntYTD;
 	}
-	public double getAdvAmmntYTD() {
+	public BigDecimal getAdvAmmntYTD() {
 		return advAmmntYTD;
 	}
-	public void setAdvAmmntYTD(double advAmmntYTD) {
+	public void setAdvAmmntYTD(BigDecimal advAmmntYTD) {
 		this.advAmmntYTD = advAmmntYTD;
 	}
-	public double getRoyaltyAmmntYTD() {
+	public BigDecimal getRoyaltyAmmntYTD() {
 		return royaltyAmmntYTD;
 	}
-	public void setRoyaltyAmmntYTD(double royaltyAmmntYTD) {
+	public void setRoyaltyAmmntYTD(BigDecimal royaltyAmmntYTD) {
 		this.royaltyAmmntYTD = royaltyAmmntYTD;
 	}
 	

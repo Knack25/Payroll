@@ -1,6 +1,6 @@
 package Gradle_Payroll.data;
 
-
+import java.math.BigDecimal;
 
 public class Tax {
 
@@ -11,8 +11,8 @@ public class Tax {
 		this.name = "Name";
 		this.ID = 0;
 		this.type = 0;
-		this.ammount = 00.00;
-		this.netAmmount = 00.00;
+		this.ammount = new BigDecimal(0);
+		this.netAmmount = new BigDecimal(0);
 		this.fedTaxExempt = false;
 		this.stateTaxExempt = false;
 		this.state2TaxExempt = false;
@@ -20,14 +20,14 @@ public class Tax {
 		this.medicareTaxeExempt = false;
 		this.localTaxExempt = false;
 		this.primaryTax = false;
-		this.InitYTD = 00.00;
+		this.InitYTD = new BigDecimal(0);
 	}
 	
 	private String name;
 	private int ID;
 	private int type;
-	private double ammount;
-	private double netAmmount;
+	private BigDecimal ammount;
+	private BigDecimal netAmmount;
 	private boolean fedTaxExempt;
 	private boolean stateTaxExempt;
 	private boolean state2TaxExempt;
@@ -35,8 +35,8 @@ public class Tax {
 	private boolean medicareTaxeExempt;
 	private boolean localTaxExempt;
 	private boolean primaryTax;
-	private double InitYTD;
-	private double FinalYTD;
+	private BigDecimal InitYTD;
+	private BigDecimal FinalYTD;
 	private int employee_id;
 	
 	public int getEmployee_id() {
@@ -45,10 +45,10 @@ public class Tax {
 	public void setEmployee_id(int employee_id) {
 		this.employee_id = employee_id;
 	}
-	public double getInitYTD() {
+	public BigDecimal getInitYTD() {
 		return InitYTD;
 	}
-	public void setInitYTD(double yTD) {
+	public void setInitYTD(BigDecimal yTD) {
 		InitYTD = yTD;
 	}
 	public String getName() {
@@ -69,10 +69,10 @@ public class Tax {
 	public void setType(int type) {
 		this.type = type;
 	}
-	public double getAmmount() {
+	public BigDecimal getAmmount() {
 		return ammount;
 	}
-	public void setAmmount(double ammount) {
+	public void setAmmount(BigDecimal ammount) {
 		this.ammount = ammount;
 	}
 	public boolean isFedTaxExempt() {
@@ -117,16 +117,16 @@ public class Tax {
 	public void setPrimaryTax(boolean primaryTax) {
 		this.primaryTax = primaryTax;
 	}
-	public double getNetAmmount() {
+	public BigDecimal getNetAmmount() {
 		return netAmmount;
 	}
-	public void setNetAmmount(double netAmmount) {
+	public void setNetAmmount(BigDecimal netAmmount) {
 		this.netAmmount = netAmmount;
 	}
-	public double getFinalYTD() {
+	public BigDecimal getFinalYTD() {
 		return FinalYTD;
 	}
-	public void setFinalYTD(double finalYTD) {
+	public void setFinalYTD(BigDecimal finalYTD) {
 		FinalYTD = finalYTD;
 	}
 	

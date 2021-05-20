@@ -5,6 +5,7 @@ import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -254,8 +255,8 @@ import Gradle_Payroll.sql.MySQL;
 			
 			while(rs.next()) {
 				tax.setName(rs.getString("Name"));
-				tax.setType(rs.getString("type"));
-				tax.setAmmount(rs.getDouble("ammount"));
+				tax.setType(rs.getInt("type"));
+				tax.setAmmount(BigDecimal.valueOf(rs.getDouble("ammount")) );
 				tax.setFedTaxExempt(rs.getBoolean("fedTaxExempt"));
 				tax.setStateTaxExempt(rs.getBoolean("stateTaxExempt"));
 				tax.setState2TaxExempt(rs.getBoolean("state2TaxExempt"));
@@ -271,8 +272,8 @@ import Gradle_Payroll.sql.MySQL;
 				
 				pstmt.setInt(1, tax.getEmployee_id());
 				pstmt.setString(2,tax.getName());
-				pstmt.setString(3, tax.getType());
-				pstmt.setDouble(4, tax.getAmmount());
+				pstmt.setInt(3, tax.getType());
+				pstmt.setBigDecimal(4, tax.getAmmount());
 				pstmt.setBoolean(5, tax.isFedTaxExempt());
 				pstmt.setBoolean(6, tax.isStateTaxExempt());
 				pstmt.setBoolean(7, tax.isState2TaxExempt());

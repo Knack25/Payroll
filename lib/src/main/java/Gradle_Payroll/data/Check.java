@@ -1,33 +1,35 @@
 package Gradle_Payroll.data;
 
+import java.math.BigDecimal;
+
 public class Check {
 	
 	//NOTICE: ALL tax values are handled separately in the Tax type in order to facilitate a dynamic amount of taxes for each individual person.
 	
 	private int ID = 0;
-	private double checkNum = 0;
-	private double grossAmmnt = 0;
-	private double fedGrossAmmnt = 0;
-	private double stateGrossAmmnt = 0;
-	private double state2GrossAmmnt = 0;
-	private double sscGrossAmmnt = 0;
-	private double medicareGrossAmmnt = 0;
-	private double localGrossAmmnt = 0;
-	private double netAmmnt = 0;
-	private double regHours = 0;
-	private double regRate = 0;
-	private double regAmmnt = 0;
-	private double ptoHours = 0;
-	private double ptoRate = 0;
-	private double ptoAmmnt = 0;
-	private double otHours = 0;
-	private double otRate = 0;
-	private double otAmmnt = 0;
-	private double salAmmnt =0;
-	private double advAmmnt =0;
-	private double royaltyAmmnt = 0;
-	private double AddStateTax = 0;
-	private double AddFedTax = 0;
+	private BigDecimal checkNum = new BigDecimal(0);
+	private BigDecimal grossAmmnt = new BigDecimal(0);
+	private BigDecimal fedGrossAmmnt = new BigDecimal(0);
+	private BigDecimal stateGrossAmmnt = new BigDecimal(0);
+	private BigDecimal state2GrossAmmnt = new BigDecimal(0);
+	private BigDecimal sscGrossAmmnt = new BigDecimal(0);
+	private BigDecimal medicareGrossAmmnt = new BigDecimal(0);
+	private BigDecimal localGrossAmmnt = new BigDecimal(0);
+	private BigDecimal netAmmnt = new BigDecimal(0);
+	private BigDecimal regHours = new BigDecimal(0);
+	private BigDecimal regRate = new BigDecimal(0);
+	private BigDecimal regAmmnt = new BigDecimal(0);
+	private BigDecimal ptoHours = new BigDecimal(0);
+	private BigDecimal ptoRate = new BigDecimal(0);
+	private BigDecimal ptoAmmnt = new BigDecimal(0);
+	private BigDecimal otHours = new BigDecimal(0);
+	private BigDecimal otRate = new BigDecimal(0);
+	private BigDecimal otAmmnt = new BigDecimal(0);
+	private BigDecimal salAmmnt =new BigDecimal(0);
+	private BigDecimal advAmmnt =new BigDecimal(0);
+	private BigDecimal royaltyAmmnt = new BigDecimal(0);
+	private BigDecimal AddStateTax = new BigDecimal(0);
+	private BigDecimal AddFedTax = new BigDecimal(0);
 	private String startDate ="";
 	private String endDate = "";
 	private String date = " ";
@@ -55,65 +57,65 @@ public class Check {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	public double getCheckNum() {
+	public BigDecimal getCheckNum() {
 		return checkNum;
 	}
-	public void setCheckNum(double checkNum) {
+	public void setCheckNum(BigDecimal checkNum) {
 		this.checkNum = checkNum;
 	}
-	public double getGrossAmmnt() {
+	public BigDecimal getGrossAmmnt() {
 		return grossAmmnt;
 	}
-	public void setGrossAmmnt(double grossAmmnt) {
+	public void setGrossAmmnt(BigDecimal grossAmmnt) {
 		this.grossAmmnt = grossAmmnt;
 	}
-	public double getNetAmmnt() {
+	public BigDecimal getNetAmmnt() {
 		return netAmmnt;
 	}
-	public void setNetAmmnt(double netAmmnt) {
+	public void setNetAmmnt(BigDecimal netAmmnt) {
 		this.netAmmnt = netAmmnt;
 	}
-	public double getRegHours() {
+	public BigDecimal getRegHours() {
 		return regHours;
 	}
-	public void setRegHours(double regHours) {
+	public void setRegHours(BigDecimal regHours) {
 		this.regHours = regHours;
 	}
-	public double getRegRate() {
+	public BigDecimal getRegRate() {
 		return regRate;
 	}
-	public void setRegRate(double regRate) {
+	public void setRegRate(BigDecimal regRate) {
 		this.regRate = regRate;
 	}
-	public double getPtoHours() {
+	public BigDecimal getPtoHours() {
 		return ptoHours;
 	}
-	public void setPtoHours(double ptoHours) {
+	public void setPtoHours(BigDecimal ptoHours) {
 		this.ptoHours = ptoHours;
 	}
-	public double getPtoRate() {
+	public BigDecimal getPtoRate() {
 		return ptoRate;
 	}
-	public void setPtoRate(double ptoRate) {
+	public void setPtoRate(BigDecimal ptoRate) {
 		this.ptoRate = ptoRate;
 	}
-	public double getOtHours() {
+	public BigDecimal getOtHours() {
 		return otHours;
 	}
-	public void setOtHours(double otHours) {
+	public void setOtHours(BigDecimal otHours) {
 		this.otHours = otHours;
 	}
-	public double getOtRate() {
+	public BigDecimal getOtRate() {
 		return otRate;
 	}
-	public void setOtRate(double otRate) {
+	public void setOtRate(BigDecimal otRate) {
 		this.otRate = otRate;
 	}
 	
-	public double getRoyaltyRate() {
+	public BigDecimal getRoyaltyRate() {
 		return royaltyAmmnt;
 	}
-	public void setRoyaltyRate(double royaltyRate) {
+	public void setRoyaltyRate(BigDecimal royaltyRate) {
 		this.royaltyAmmnt = royaltyRate;
 	}
 	public Name getName() {
@@ -134,88 +136,88 @@ public class Check {
 	public void setYtd(YTD ytd) {
 		this.ytd = ytd;
 	}
-	public double getAddStateTax() {
+	public BigDecimal getAddStateTax() {
 		return AddStateTax;
 	}
-	public void setAddStateTax(double addStateTax) {
+	public void setAddStateTax(BigDecimal addStateTax) {
 		AddStateTax = addStateTax;
 	}
-	public double getAddFedTax() {
+	public BigDecimal getAddFedTax() {
 		return AddFedTax;
 	}
-	public void setAddFedTax(double addFedTax) {
+	public void setAddFedTax(BigDecimal addFedTax) {
 		AddFedTax = addFedTax;
 	}
-	public double getFedGrossAmmnt() {
+	public BigDecimal getFedGrossAmmnt() {
 		return fedGrossAmmnt;
 	}
-	public void setFedGrossAmmnt(double fedGrossAmmnt) {
+	public void setFedGrossAmmnt(BigDecimal fedGrossAmmnt) {
 		this.fedGrossAmmnt = fedGrossAmmnt;
 	}
-	public double getStateGrossAmmnt() {
+	public BigDecimal getStateGrossAmmnt() {
 		return stateGrossAmmnt;
 	}
-	public void setStateGrossAmmnt(double stateGrossAmmnt) {
+	public void setStateGrossAmmnt(BigDecimal stateGrossAmmnt) {
 		this.stateGrossAmmnt = stateGrossAmmnt;
 	}
-	public double getState2GrossAmmnt() {
+	public BigDecimal getState2GrossAmmnt() {
 		return state2GrossAmmnt;
 	}
-	public void setState2GrossAmmnt(double state2GrossAmmnt) {
+	public void setState2GrossAmmnt(BigDecimal state2GrossAmmnt) {
 		this.state2GrossAmmnt = state2GrossAmmnt;
 	}
-	public double getSscGrossAmmnt() {
+	public BigDecimal getSscGrossAmmnt() {
 		return sscGrossAmmnt;
 	}
-	public void setSscGrossAmmnt(double sscGrossAmmnt) {
+	public void setSscGrossAmmnt(BigDecimal sscGrossAmmnt) {
 		this.sscGrossAmmnt = sscGrossAmmnt;
 	}
-	public double getMedicareGrossAmmnt() {
+	public BigDecimal getMedicareGrossAmmnt() {
 		return medicareGrossAmmnt;
 	}
-	public void setMedicareGrossAmmnt(double medicareGrossAmmnt) {
+	public void setMedicareGrossAmmnt(BigDecimal medicareGrossAmmnt) {
 		this.medicareGrossAmmnt = medicareGrossAmmnt;
 	}
-	public double getLocalGrossAmmnt() {
+	public BigDecimal getLocalGrossAmmnt() {
 		return localGrossAmmnt;
 	}
-	public void setLocalGrossAmmnt(double localGrossAmmnt) {
+	public void setLocalGrossAmmnt(BigDecimal localGrossAmmnt) {
 		this.localGrossAmmnt = localGrossAmmnt;
 	}
-	public double getRegAmmnt() {
+	public BigDecimal getRegAmmnt() {
 		return regAmmnt;
 	}
-	public void setRegAmmnt(double regAmmnt) {
+	public void setRegAmmnt(BigDecimal regAmmnt) {
 		this.regAmmnt = regAmmnt;
 	}
-	public double getPtoAmmnt() {
+	public BigDecimal getPtoAmmnt() {
 		return ptoAmmnt;
 	}
-	public void setPtoAmmnt(double ptoAmmnt) {
+	public void setPtoAmmnt(BigDecimal ptoAmmnt) {
 		this.ptoAmmnt = ptoAmmnt;
 	}
-	public double getOtAmmnt() {
+	public BigDecimal getOtAmmnt() {
 		return otAmmnt;
 	}
-	public void setOtAmmnt(double otAmmnt) {
+	public void setOtAmmnt(BigDecimal otAmmnt) {
 		this.otAmmnt = otAmmnt;
 	}
-	public double getSalAmmnt() {
+	public BigDecimal getSalAmmnt() {
 		return salAmmnt;
 	}
-	public void setSalAmmnt(double salAmmnt) {
+	public void setSalAmmnt(BigDecimal salAmmnt) {
 		this.salAmmnt = salAmmnt;
 	}
-	public double getAdvAmmnt() {
+	public BigDecimal getAdvAmmnt() {
 		return advAmmnt;
 	}
-	public void setAdvAmmnt(double advAmmnt) {
+	public void setAdvAmmnt(BigDecimal advAmmnt) {
 		this.advAmmnt = advAmmnt;
 	}
-	public double getRoyaltyAmmnt() {
+	public BigDecimal getRoyaltyAmmnt() {
 		return royaltyAmmnt;
 	}
-	public void setRoyaltyAmmnt(double royaltyAmmnt) {
+	public void setRoyaltyAmmnt(BigDecimal royaltyAmmnt) {
 		this.royaltyAmmnt = royaltyAmmnt;
 	}
 	public String getDate() {

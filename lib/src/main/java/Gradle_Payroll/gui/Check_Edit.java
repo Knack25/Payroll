@@ -4,6 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -267,20 +269,23 @@ public class Check_Edit {
 	//*********************************************Update Data***********************************************************
 	private static void updateData() {
 		
-		check.setGrossAmmnt(Double.parseDouble(grossPayCurrT.getText()));
-		check.setRegHours(Double.parseDouble(regularHrsCurrT.getText()));
-		check.setRegRate(Double.parseDouble(hourRateT.getText()));
-		double reg = check.getRegRate() * check.getRegHours();
-		check.setOtHours(Double.parseDouble(otHrsCurrT.getText()));
-		check.setOtRate(Double.parseDouble(hourRateT.getText()));
-		double ot = check.getOtRate() * check.getOtHours();
-		check.setPtoHours(Double.parseDouble(ptoHrsCurrT.getText()));
-		check.setPtoRate(Double.parseDouble(hourRateT.getText()));
-		double pto = check.getPtoRate() * check.getPtoHours();
-		check.setSalAmmnt(Double.parseDouble(salaryCurrT.getText()));
-		check.setAdvAmmnt(Double.parseDouble(advAmmntT.getText()));
-		check.setRoyaltyAmmnt(Double.parseDouble(royalAmmntT.getText()));
-		check.setNetAmmnt(Double.parseDouble(netPayCurrT.getText()));
+		check.setGrossAmmnt(BigDecimal.valueOf(Double.parseDouble(grossPayCurrT.getText())));
+		check.setRegHours(BigDecimal.valueOf(Double.parseDouble(regularHrsCurrT.getText())));
+		check.setRegRate(BigDecimal.valueOf(Double.parseDouble(hourRateT.getText())));
+		BigDecimal reg = check.getRegRate().multiply(check.getRegHours());
+		reg = reg.setScale(2,RoundingMode.HALF_UP);
+		check.setOtHours(BigDecimal.valueOf(Double.parseDouble(otHrsCurrT.getText())));
+		check.setOtRate(BigDecimal.valueOf(Double.parseDouble(hourRateT.getText())));
+		BigDecimal ot = check.getOtRate().multiply(check.getOtHours());
+		ot = ot.setScale(2,RoundingMode.HALF_UP);
+		check.setPtoHours(BigDecimal.valueOf(Double.parseDouble(ptoHrsCurrT.getText())));
+		check.setPtoRate(BigDecimal.valueOf(Double.parseDouble(hourRateT.getText())));
+		BigDecimal pto = check.getPtoRate().multiply(check.getPtoHours());
+		pto = pto.setScale(2,RoundingMode.HALF_UP);
+		check.setSalAmmnt(BigDecimal.valueOf(Double.parseDouble(salaryCurrT.getText())));
+		check.setAdvAmmnt(BigDecimal.valueOf(Double.parseDouble(advAmmntT.getText())));
+		check.setRoyaltyAmmnt(BigDecimal.valueOf(Double.parseDouble(royalAmmntT.getText())));
+		check.setNetAmmnt(BigDecimal.valueOf(Double.parseDouble(netPayCurrT.getText())));
 		
 		check.setRegAmmnt(reg);
 		check.setOtAmmnt(ot);
@@ -332,18 +337,18 @@ public class Check_Edit {
 	//*********************************************Calculate YTD***********************************************************
 	private static void calcYTD() {
 		//System.out.println("Gross YTD Init: " + yTD_Initial.getGrossAmmntYTD());
-		yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD() + check.getGrossAmmnt());
+		yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD().add( check.getGrossAmmnt()));
 		//System.out.println("Gross YTD Calc: " + yTD_Calc.getGrossAmmntYTD());
-		yTD_Calc.setRegHoursYTD(yTD_Initial.getRegHoursYTD() + check.getRegHours());
-		yTD_Calc.setRegAmmntYTD(yTD_Initial.getRegAmmntYTD() + check.getRegAmmnt());
-		yTD_Calc.setPtoHoursYTD(yTD_Initial.getPtoHoursYTD() + check.getPtoHours());
-		yTD_Calc.setPtoAmmntYTD(yTD_Initial.getPtoAmmntYTD() + check.getPtoAmmnt());
-		yTD_Calc.setOtHoursYTD(yTD_Initial.getOtHoursYTD() + check.getOtHours());
-		yTD_Calc.setOtAmmntYTD(yTD_Initial.getOtAmmntYTD() + check.getOtAmmnt());
-		yTD_Calc.setSalAmmntYTD(yTD_Initial.getSalAmmntYTD() + check.getSalAmmnt());
-		yTD_Calc.setAdvAmmntYTD(yTD_Initial.getAdvAmmntYTD() + check.getAdvAmmnt());
-		yTD_Calc.setRoyaltyAmmntYTD(yTD_Initial.getRoyaltyAmmntYTD() + check.getRoyaltyAmmnt());
-		yTD_Calc.setNetAmmntYTD(yTD_Initial.getNetAmmntYTD() + check.getNetAmmnt());
+		yTD_Calc.setRegHoursYTD(yTD_Initial.getRegHoursYTD().add(check.getRegHours()));
+		yTD_Calc.setRegAmmntYTD(yTD_Initial.getRegAmmntYTD().add(check.getRegAmmnt()));
+		yTD_Calc.setPtoHoursYTD(yTD_Initial.getPtoHoursYTD().add(check.getPtoHours()));
+		yTD_Calc.setPtoAmmntYTD(yTD_Initial.getPtoAmmntYTD().add(check.getPtoAmmnt()));
+		yTD_Calc.setOtHoursYTD(yTD_Initial.getOtHoursYTD().add(check.getOtHours()));
+		yTD_Calc.setOtAmmntYTD(yTD_Initial.getOtAmmntYTD().add(check.getOtAmmnt()));
+		yTD_Calc.setSalAmmntYTD(yTD_Initial.getSalAmmntYTD().add(check.getSalAmmnt()));
+		yTD_Calc.setAdvAmmntYTD(yTD_Initial.getAdvAmmntYTD().add(check.getAdvAmmnt()));
+		yTD_Calc.setRoyaltyAmmntYTD(yTD_Initial.getRoyaltyAmmntYTD().add(check.getRoyaltyAmmnt()));
+		yTD_Calc.setNetAmmntYTD(yTD_Initial.getNetAmmntYTD().add(check.getNetAmmnt()));
 		
 	}
 
@@ -363,7 +368,7 @@ public class Check_Edit {
 		address = check.getAddress().getStreet();
 		cityStateZip = check.getAddress().getCity() + " " + check.getAddress().getState() + " " + check.getAddress().getZip();
 		date = LocalDate.now();
-		NetAmmnt = Double.toString(check.getNetAmmnt());
+		NetAmmnt = check.getNetAmmnt().toString();
 		ammount = NetAmmnt.split("\\.");
 		ammount[1] = ammount[1].substring(0,1);
 		length = ammount[1].length();
@@ -509,57 +514,68 @@ public class Check_Edit {
 		
 		ResultSet rs = pstmt.executeQuery();
 		rs.next();
-		yTD_Initial.setGrossAmmntYTD(rs.getDouble("ammount"));
+		yTD_Initial.setGrossAmmntYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+		yTD_Initial.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 		
 		pstmt.setString(2, "netAmmnt");
 		rs = pstmt.executeQuery();
 		rs.next();
-		yTD_Initial.setNetAmmntYTD(rs.getDouble("ammount"));
+		yTD_Initial.setNetAmmntYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+		yTD_Initial.setNetAmmntYTD(yTD_Initial.getNetAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 		
 		pstmt.setString(2, "regHours");
 		rs = pstmt.executeQuery();
 		rs.next();
-		yTD_Initial.setRegHoursYTD(rs.getDouble("ammount"));
+		yTD_Initial.setRegHoursYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+		yTD_Initial.setRegHoursYTD(yTD_Initial.getRegHoursYTD().setScale(2,RoundingMode.HALF_UP));
 		
 		pstmt.setString(2, "regAmmnt");
 		rs = pstmt.executeQuery();
 		rs.next();
-		yTD_Initial.setRegAmmntYTD(rs.getDouble("ammount"));
+		yTD_Initial.setRegAmmntYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+		yTD_Initial.setRegAmmntYTD(yTD_Initial.getRegAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 		
 		pstmt.setString(2, "ptoHours");
 		rs = pstmt.executeQuery();
 		rs.next();
-		yTD_Initial.setPtoHoursYTD(rs.getDouble("ammount"));
+		yTD_Initial.setPtoHoursYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+		yTD_Initial.setPtoHoursYTD(yTD_Initial.getPtoHoursYTD().setScale(2,RoundingMode.HALF_UP));
 		
 		pstmt.setString(2, "ptoAmmnt");
 		rs = pstmt.executeQuery();
 		rs.next();
-		yTD_Initial.setPtoAmmntYTD(rs.getDouble("ammount"));
+		yTD_Initial.setPtoAmmntYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+		yTD_Initial.setPtoAmmntYTD(yTD_Initial.getPtoAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 		
 		pstmt.setString(2, "otHours");
 		rs = pstmt.executeQuery();
 		rs.next();
-		yTD_Initial.setOtHoursYTD(rs.getDouble("ammount"));
+		yTD_Initial.setOtHoursYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+		yTD_Initial.setOtHoursYTD(yTD_Initial.getOtHoursYTD().setScale(2,RoundingMode.HALF_UP));
 		
 		pstmt.setString(2, "otAmmnt");
 		rs = pstmt.executeQuery();
 		rs.next();
-		yTD_Initial.setOtAmmntYTD(rs.getDouble("ammount"));
+		yTD_Initial.setOtAmmntYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+		yTD_Initial.setOtAmmntYTD(yTD_Initial.getOtAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 		
 		pstmt.setString(2, "salAmmnt");
 		rs = pstmt.executeQuery();
 		rs.next();
-		yTD_Initial.setSalAmmntYTD(rs.getDouble("ammount"));
+		yTD_Initial.setSalAmmntYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+		yTD_Initial.setSalAmmntYTD(yTD_Initial.getSalAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 		
 		pstmt.setString(2, "advAmmnt");
 		rs = pstmt.executeQuery();
 		rs.next();
-		yTD_Initial.setAdvAmmntYTD(rs.getDouble("ammount"));
+		yTD_Initial.setAdvAmmntYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+		yTD_Initial.setAdvAmmntYTD(yTD_Initial.getAdvAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 		
 		pstmt.setString(2, "royaltyAmmnt");
 		rs = pstmt.executeQuery();
 		rs.next();
-		yTD_Initial.setRoyaltyAmmntYTD(rs.getDouble("ammount"));
+		yTD_Initial.setRoyaltyAmmntYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+		yTD_Initial.setRoyaltyAmmntYTD(yTD_Initial.getRoyaltyAmmntYTD().setScale(2,RoundingMode.HALF_UP));
 	}
 
 	//*********************************************SQL Pull Tax Data***********************************************************
@@ -587,7 +603,7 @@ public class Check_Edit {
 			tempTax = new  Tax();
 			tempTax.setName(rs.getString("taxname"));
 			tempTax.setType(rs.getInt("taxtype"));
-			tempTax.setAmmount(rs.getDouble("ammount"));
+			tempTax.setAmmount(BigDecimal.valueOf(rs.getDouble("ammount")));
 			tempTax.setFedTaxExempt(rs.getBoolean("fedTaxExempt"));
 			tempTax.setStateTaxExempt(rs.getBoolean("stateTaxExempt"));
 			tempTax.setState2TaxExempt(rs.getBoolean("state2TaxExempt"));
@@ -623,7 +639,8 @@ public class Check_Edit {
 		
 		ResultSet rs = pstmt.executeQuery();
 		while(rs.next()) {
-			tax.get(i).setInitYTD(rs.getDouble("ammount"));
+			tax.get(i).setInitYTD(BigDecimal.valueOf(rs.getDouble("ammount")));
+			i++;
 		}
 		
 	}
@@ -665,8 +682,8 @@ public class Check_Edit {
 		addr.setZip(rs.getString("zip"));
 		
 		check.setID(rs.getInt("id"));
-		check.setAddStateTax(rs.getDouble("addStateTax"));
-		check.setAddFedTax(rs.getDouble("addFedTax"));
+		check.setAddStateTax(BigDecimal.valueOf(rs.getDouble("addStateTax")));
+		check.setAddFedTax(BigDecimal.valueOf(rs.getDouble("addFedTax")));
 		check.setName(name);
 		check.setAddress(addr);
 		
@@ -698,28 +715,30 @@ public class Check_Edit {
 		ResultSet rs = pstmt.executeQuery();
 		rs.next();
 		EMPID = rs.getInt("employee_id");
-		check.setRegHours(rs.getDouble("regHours"));
-		check.setRegRate(rs.getDouble("regRate"));
-		check.setPtoHours(rs.getDouble("ptoHours"));
-		check.setPtoRate(rs.getDouble("ptoRate"));
-		check.setOtHours(rs.getDouble("otHours"));
-		check.setOtRate(rs.getDouble("otRate"));
-		check.setSalAmmnt(rs.getDouble("salRate"));
-		check.setAdvAmmnt(rs.getDouble("advRate"));
-		check.setRoyaltyAmmnt(rs.getDouble("royaltyRate"));
+		check.setRegHours(BigDecimal.valueOf(rs.getDouble("regHours")));
+		check.setRegRate(BigDecimal.valueOf(rs.getDouble("regRate")));
+		check.setPtoHours(BigDecimal.valueOf(rs.getDouble("ptoHours")));
+		check.setPtoRate(BigDecimal.valueOf(rs.getDouble("ptoRate")));
+		check.setOtHours(BigDecimal.valueOf(rs.getDouble("otHours")));
+		check.setOtRate(BigDecimal.valueOf(rs.getDouble("otRate")));
+		check.setSalAmmnt(BigDecimal.valueOf(rs.getDouble("salRate")));
+		check.setAdvAmmnt(BigDecimal.valueOf(rs.getDouble("advRate")));
+		check.setRoyaltyAmmnt(BigDecimal.valueOf(rs.getDouble("royaltyRate")));
 		check.setStartDate(rs.getString("payrollStartDate"));
 		check.setEndDate(rs.getString("payrollEndDate"));
 	}
 
 	//*********************************************Calculate Gross***********************************************************
 	private static void calcGross() {
-		double reg,ot,pto,salary,other;
-		reg = check.getRegRate() * check.getRegHours();
-		ot = check.getOtRate() * check.getOtHours();
-		pto = check.getPtoRate() * check.getPtoHours();
-		salary =  check.getSalAmmnt();
-		other = check.getAdvAmmnt() + check.getRoyaltyRate();
-		check.setGrossAmmnt(reg + ot + pto + salary + other);
+		BigDecimal reg,ot,pto,salary,other;
+		reg = check.getRegRate().multiply(check.getRegHours());
+		ot = check.getOtRate().multiply(check.getOtHours());
+		pto =check.getPtoRate().multiply(check.getPtoHours());
+		salary = check.getSalAmmnt();
+		other =check.getAdvAmmnt().add(check.getRoyaltyRate());
+		check.setGrossAmmnt(reg.add(ot).add(pto).add(salary).add(other));
+		check.setGrossAmmnt(check.getGrossAmmnt().setScale(2,RoundingMode.HALF_UP));
+			
 		//System.out.println("Check Gross: " + check.getGrossAmmnt());
 		check.setFedGrossAmmnt(check.getGrossAmmnt());
 		check.setStateGrossAmmnt(check.getGrossAmmnt());
@@ -731,18 +750,34 @@ public class Check_Edit {
 		check.setOtAmmnt(ot);
 		check.setPtoAmmnt(pto);
 	}
+	
+	private static double cut(double input) {
+		double output = 0;
+		String temp;
+		String[] array;
+		
+		temp = String.valueOf(input);
+		array = temp.split("\\.");
+		array[1] = array[1].substring(0,1);
+		temp = array[0] + "." + array[1];
+		output = Double.parseDouble(temp);
+		
+		
+		return output;
+	}
 
 	//*********************************************Calculate Net***********************************************************
 	private static void calcNet() {
-		double netAmmnt = check.getGrossAmmnt();
-		
+		BigDecimal netAmmnt = check.getGrossAmmnt();
+		System.out.println(netAmmnt);
 		//Get all of the taxes
 		for(int i = 0; i < NUMTAXAMNT; i++) {
-			netAmmnt = netAmmnt - tax.get(i).getNetAmmount();
+			netAmmnt =netAmmnt.subtract(tax.get(i).getNetAmmount());
 		}
 		
-		netAmmnt = netAmmnt - check.getAddFedTax();
-		netAmmnt = netAmmnt - check.getAddStateTax();
+		netAmmnt =netAmmnt.subtract(check.getAddFedTax());
+		netAmmnt =netAmmnt.subtract(check.getAddStateTax());
+		netAmmnt = netAmmnt.setScale(2,RoundingMode.HALF_UP);
 		
 		check.setNetAmmnt(netAmmnt);
 	}
@@ -750,14 +785,16 @@ public class Check_Edit {
 	//*********************************************Calclate Taxes***********************************************************
 	private static void calcTaxes() {
 		
-		
+		BigDecimal scalar = new BigDecimal(100);
 		
 		for(int i = 0; i < NUMTAXAMNT;i++) {
 			if(!tax.get(i).isPrimaryTax() && tax.get(i).getType() == 1) {
-				tax.get(i).setNetAmmount(tax.get(i).getAmmount() * 0.01 * check.getGrossAmmnt());
+				tax.get(i).setNetAmmount(tax.get(i).getAmmount().multiply(check.getGrossAmmnt()).divide(scalar));
+					
 			}else {
 				tax.get(i).setNetAmmount(tax.get(i).getAmmount());
 			}
+			
 		}
 		
 		
@@ -766,40 +803,45 @@ public class Check_Edit {
 			if(!tax.get(i).isPrimaryTax()) {
 				if(tax.get(i).isFedTaxExempt()) {
 					//System.out.println("Federal Gross: " + check.getFedGrossAmmnt() + " subtracting: " + tax.get(i).getNetAmmount());
-					check.setFedGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+					check.setFedGrossAmmnt(check.getGrossAmmnt().subtract(tax.get(i).getNetAmmount()));
 					//System.out.println("Resulting in: " + check.getFedGrossAmmnt());
 				}
 				if(tax.get(i).isStateTaxExempt()) {
-					check.setStateGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+					check.setStateGrossAmmnt(check.getGrossAmmnt().subtract(tax.get(i).getNetAmmount()));
 				}
 				if(tax.get(i).isState2TaxExempt()) {
-					check.setState2GrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+					check.setState2GrossAmmnt(check.getGrossAmmnt().subtract(tax.get(i).getNetAmmount()));
 				}
 				if(tax.get(i).isSscTaxExempt()) {
-					check.setSscGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+					check.setSscGrossAmmnt(check.getGrossAmmnt().subtract(tax.get(i).getNetAmmount()));
 				}
 				if(tax.get(i).isMedicareTaxeExempt()) {
-					check.setMedicareGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+					check.setMedicareGrossAmmnt(check.getGrossAmmnt().subtract(tax.get(i).getNetAmmount()));
 				}
 				if(tax.get(i).isLocalTaxExempt()) {
-					check.setLocalGrossAmmnt(check.getGrossAmmnt() - tax.get(i).getNetAmmount());
+					check.setLocalGrossAmmnt(check.getGrossAmmnt().subtract(tax.get(i).getNetAmmount()));
 				}
 			}
 				
 		}
 		
 		//System.out.println("Federal Gross: " + check.getFedGrossAmmnt() + " mult: " + tax.get(0).getAmmount());
-		tax.get(0).setNetAmmount(check.getFedGrossAmmnt() * 0.01 * tax.get(0).getAmmount());
+		tax.get(0).setNetAmmount(check.getFedGrossAmmnt().multiply(tax.get(0).getAmmount()).divide(scalar));
 		//System.out.println("Resulting in: " + tax.get(0).getNetAmmount());
-		tax.get(1).setNetAmmount(check.getStateGrossAmmnt() * 0.01 * tax.get(1).getAmmount());
-		tax.get(2).setNetAmmount(check.getState2GrossAmmnt() * 0.01 * tax.get(2).getAmmount());
-		tax.get(3).setNetAmmount(check.getSscGrossAmmnt() * 0.01 * tax.get(3).getAmmount());
-		tax.get(4).setNetAmmount(check.getMedicareGrossAmmnt() * 0.01 * tax.get(4).getAmmount());
-		tax.get(5).setNetAmmount(check.getLocalGrossAmmnt() * 0.01 * tax.get(5).getAmmount());
+		tax.get(1).setNetAmmount(check.getStateGrossAmmnt().multiply(tax.get(1).getAmmount()).divide(scalar));
+		tax.get(2).setNetAmmount(check.getState2GrossAmmnt().multiply(tax.get(2).getAmmount()).divide(scalar));
+		tax.get(3).setNetAmmount(check.getSscGrossAmmnt().multiply(tax.get(3).getAmmount()).divide(scalar));
+		tax.get(4).setNetAmmount(check.getMedicareGrossAmmnt().multiply(tax.get(4).getAmmount()).divide(scalar));
+		tax.get(5).setNetAmmount(check.getLocalGrossAmmnt().multiply(tax.get(5).getAmmount()).divide(scalar));
+		
+		for(int i = 0; i < NUMTAXAMNT;i++) {
+			tax.get(i).setNetAmmount(tax.get(i).getNetAmmount().setScale(2,RoundingMode.HALF_UP));
+		}
 		
 		for(int i = 0; i < NUMTAXAMNT;i++) {
 			System.out.println("Tax Init YTD: " + tax.get(i).getInitYTD() + " Add: " + tax.get(i).getNetAmmount());
-			tax.get(i).setFinalYTD(tax.get(i).getInitYTD() + tax.get(i).getNetAmmount());
+			tax.get(i).setFinalYTD(tax.get(i).getInitYTD().add(tax.get(i).getNetAmmount()));
+			tax.get(i).setFinalYTD(tax.get(i).getFinalYTD().setScale(2,RoundingMode.HALF_UP));
 			System.out.println("Resulting in: " + tax.get(i).getFinalYTD());
 		}
 		
@@ -861,7 +903,7 @@ public class Check_Edit {
 			
 			
 			for(int i = 0; i < NUMTAXAMNT;i++) {
-				pstmt.setDouble(1, tax.get(i).getFinalYTD());
+				pstmt.setBigDecimal(1, tax.get(i).getFinalYTD());
 				pstmt.setString(3, tax.get(i).getName());
 				System.out.println(pstmt);
 				pstmt.executeUpdate();
@@ -892,8 +934,8 @@ public class Check_Edit {
 				pstmt.setInt(1, CHECKNUM);
 				pstmt.setString(2, tax.get(i).getName());
 				pstmt.setInt(3, tax.get(i).getType());
-				pstmt.setDouble(4, tax.get(i).getAmmount());
-				pstmt.setDouble(5, tax.get(i).getNetAmmount());
+				pstmt.setBigDecimal(4, tax.get(i).getAmmount());
+				pstmt.setBigDecimal(5, tax.get(i).getNetAmmount());
 				pstmt.setBoolean(6, tax.get(i).isFedTaxExempt());
 				pstmt.setBoolean(7, tax.get(i).isStateTaxExempt());
 				pstmt.setBoolean(8, tax.get(i).isState2TaxExempt());
@@ -926,48 +968,48 @@ public class Check_Edit {
 			pstmt.setDouble(4, YEAR);
 	
 			
-			pstmt.setDouble(1, yTD_Calc.getGrossAmmntYTD());
+			pstmt.setBigDecimal(1, yTD_Calc.getGrossAmmntYTD());
 			pstmt.setString(3, "grossAmmnt");
 			@SuppressWarnings("unused")
 			int rs = pstmt.executeUpdate();
 			
-			pstmt.setDouble(1, yTD_Calc.getNetAmmntYTD());
+			pstmt.setBigDecimal(1, yTD_Calc.getNetAmmntYTD());
 			pstmt.setString(3, "netAmmnt");
 			rs = pstmt.executeUpdate();
 			
-			pstmt.setDouble(1,yTD_Calc.getRegHoursYTD());
+			pstmt.setBigDecimal(1,yTD_Calc.getRegHoursYTD());
 			pstmt.setString(3, "regHours");
 			rs = pstmt.executeUpdate();
 			
-			pstmt.setDouble(1, yTD_Calc.getRegAmmntYTD());
+			pstmt.setBigDecimal(1, yTD_Calc.getRegAmmntYTD());
 			pstmt.setString(3, "regAmmnt");
 			rs = pstmt.executeUpdate();
 			
-			pstmt.setDouble(1, yTD_Calc.getPtoHoursYTD());
+			pstmt.setBigDecimal(1, yTD_Calc.getPtoHoursYTD());
 			pstmt.setString(3, "ptoHours");
 			rs = pstmt.executeUpdate();
 			
-			pstmt.setDouble(1, yTD_Calc.getPtoAmmntYTD());
+			pstmt.setBigDecimal(1, yTD_Calc.getPtoAmmntYTD());
 			pstmt.setString(3, "ptoAmmnt");
 			rs = pstmt.executeUpdate();
 			
-			pstmt.setDouble(1, yTD_Calc.getOtHoursYTD());
+			pstmt.setBigDecimal(1, yTD_Calc.getOtHoursYTD());
 			pstmt.setString(3, "otHours");
 			rs = pstmt.executeUpdate();
 			
-			pstmt.setDouble(1, yTD_Calc.getOtAmmntYTD());
+			pstmt.setBigDecimal(1, yTD_Calc.getOtAmmntYTD());
 			pstmt.setString(3, "otAmmnt");
 			rs = pstmt.executeUpdate();
 			
-			pstmt.setDouble(1, yTD_Calc.getSalAmmntYTD());
+			pstmt.setBigDecimal(1, yTD_Calc.getSalAmmntYTD());
 			pstmt.setString(3, "salAmmnt");
 			rs = pstmt.executeUpdate();
 			
-			pstmt.setDouble(1, yTD_Calc.getAdvAmmntYTD());
+			pstmt.setBigDecimal(1, yTD_Calc.getAdvAmmntYTD());
 			pstmt.setString(3, "advAmmnt");
 			rs = pstmt.executeUpdate();
 			
-			pstmt.setDouble(1, yTD_Calc.getRoyaltyAmmntYTD());
+			pstmt.setBigDecimal(1, yTD_Calc.getRoyaltyAmmntYTD());
 			pstmt.setString(3, "royaltyAmmnt");
 			rs = pstmt.executeUpdate();
 	
@@ -997,23 +1039,23 @@ public class Check_Edit {
 			pstmt.setString(2, check.getEndDate());
 			pstmt.setString(3, check.getDate());
 			
-			pstmt.setDouble(4, check.getGrossAmmnt());
-			pstmt.setDouble(5, check.getNetAmmnt());
+			pstmt.setBigDecimal(4, check.getGrossAmmnt());
+			pstmt.setBigDecimal(5, check.getNetAmmnt());
 			
-			pstmt.setDouble(6, check.getRegHours());
-			pstmt.setDouble(7, check.getRegRate());
+			pstmt.setBigDecimal(6, check.getRegHours());
+			pstmt.setBigDecimal(7, check.getRegRate());
 			
-			pstmt.setDouble(8, check.getPtoHours());
-			pstmt.setDouble(9, check.getPtoRate());
+			pstmt.setBigDecimal(8, check.getPtoHours());
+			pstmt.setBigDecimal(9, check.getPtoRate());
 			
-			pstmt.setDouble(10, check.getOtHours());
-			pstmt.setDouble(11, check.getOtRate());
+			pstmt.setBigDecimal(10, check.getOtHours());
+			pstmt.setBigDecimal(11, check.getOtRate());
 			
-			pstmt.setDouble(12, check.getSalAmmnt());
+			pstmt.setBigDecimal(12, check.getSalAmmnt());
 			
-			pstmt.setDouble(13, check.getAdvAmmnt());
+			pstmt.setBigDecimal(13, check.getAdvAmmnt());
 			
-			pstmt.setDouble(14, check.getRoyaltyAmmnt());
+			pstmt.setBigDecimal(14, check.getRoyaltyAmmnt());
 			
 			pstmt.setInt(15, CHECKNUM);
 			
@@ -1089,7 +1131,7 @@ public class Check_Edit {
 			Excel_Out.writeToCell(3, 21, dateT.getText());
 			
 			Excel_Out.writeToCell(8,21,Double.parseDouble(amntT.getText()));
-			Excel_Out.writeToCell(10,21, yTD_Calc.getGrossAmmntYTD());
+			Excel_Out.writeToCell(10,21, yTD_Calc.getGrossAmmntYTD().doubleValue());
 			
 			Excel_Out.writeToCell(1,23,"Pay Period");
 			Excel_Out.writeToCell(3,23,periodDateT.getText());
@@ -1107,8 +1149,8 @@ public class Check_Edit {
 			double otherAmntCurr = 0,otherAmntYTD = 0;
 			if(NUMTAXAMNT > 14) {
 				for(int j = 13; j < NUMTAXAMNT; j++) {
-					otherAmntCurr += tax.get(j).getNetAmmount();
-					otherAmntYTD += tax.get(j).getFinalYTD();
+					otherAmntCurr += tax.get(j).getNetAmmount().doubleValue();
+					otherAmntYTD += tax.get(j).getFinalYTD().doubleValue();
 				}
 			}
 			
@@ -1123,9 +1165,9 @@ public class Check_Edit {
 					break;
 				}
 				Excel_Out.writeToCell(7,(22+i),tax.get(i).getName()/*Name of the tax*/);
-				Excel_Out.writeToCell(8,(22+i),tax.get(i).getNetAmmount()/*value of the tax on the current check*/);
+				Excel_Out.writeToCell(8,(22+i),tax.get(i).getNetAmmount().doubleValue()/*value of the tax on the current check*/);
 				Excel_Out.changeNumberFormat(8, (22+i));
-				Excel_Out.writeToCell(10,(22+i),tax.get(i).getFinalYTD()/*value of the tax for YTD*/);
+				Excel_Out.writeToCell(10,(22+i),tax.get(i).getFinalYTD().doubleValue()/*value of the tax for YTD*/);
 				Excel_Out.changeNumberFormat(10, (22+i));
 			}
 			
@@ -1146,37 +1188,37 @@ public class Check_Edit {
 			Excel_Out.writeToCell(5,26,"YTD");
 			
 			Excel_Out.writeToCell(1,27,"Regular");
-			Excel_Out.writeToCell(3,27, check.getRegHours());
-			Excel_Out.writeToCell(5,27,yTD_Calc.getRegHoursYTD() /*YTD hours worked*/);
+			Excel_Out.writeToCell(3,27, check.getRegHours().doubleValue());
+			Excel_Out.writeToCell(5,27,yTD_Calc.getRegHoursYTD().doubleValue() /*YTD hours worked*/);
 			
 			int j = 29;
 			Excel_Out.writeToCell(1,28,"PTO");
-			Excel_Out.writeToCell(3,28,check.getPtoHours());
-			Excel_Out.writeToCell(5,28,yTD_Calc.getPtoHoursYTD()/* Total YTD PTO hours used*/);
+			Excel_Out.writeToCell(3,28,check.getPtoHours().doubleValue());
+			Excel_Out.writeToCell(5,28,yTD_Calc.getPtoHoursYTD().doubleValue()/* Total YTD PTO hours used*/);
 			
-			if(check.getOtHours() != 0) {
+			if(check.getOtHours().doubleValue() != 0) {
 				Excel_Out.writeToCell(1,j,"Overtime");
-				Excel_Out.writeToCell(3,j,check.getOtHours());
-				Excel_Out.writeToCell(5,j,yTD_Calc.getOtHoursYTD()/* Total YTD PTO hours used*/);
+				Excel_Out.writeToCell(3,j,check.getOtHours().doubleValue());
+				Excel_Out.writeToCell(5,j,yTD_Calc.getOtHoursYTD().doubleValue()/* Total YTD PTO hours used*/);
 				j++;
 			}
 			
-			if(check.getSalAmmnt() != 0) {
+			if(check.getSalAmmnt().doubleValue() != 0) {
 				Excel_Out.writeToCell(1,j,"Salary");
-				Excel_Out.writeToCell(3,j,check.getSalAmmnt());
-				Excel_Out.writeToCell(5,j,yTD_Calc.getSalAmmntYTD());
+				Excel_Out.writeToCell(3,j,check.getSalAmmnt().doubleValue());
+				Excel_Out.writeToCell(5,j,yTD_Calc.getSalAmmntYTD().doubleValue());
 				j++;
 			}
-			if(check.getRoyaltyAmmnt() != 0) {
+			if(check.getRoyaltyAmmnt().doubleValue() != 0) {
 				Excel_Out.writeToCell(1,j,"Royalties");
-				Excel_Out.writeToCell(3,j,check.getRoyaltyAmmnt());
-				Excel_Out.writeToCell(5,j,yTD_Calc.getRoyaltyAmmntYTD());
+				Excel_Out.writeToCell(3,j,check.getRoyaltyAmmnt().doubleValue());
+				Excel_Out.writeToCell(5,j,yTD_Calc.getRoyaltyAmmntYTD().doubleValue());
 				j++;
 			}
-			if(check.getAdvAmmnt() != 0) {
+			if(check.getAdvAmmnt().doubleValue() != 0) {
 				Excel_Out.writeToCell(1,j,"Advance");
-				Excel_Out.writeToCell(3,j,check.getAdvAmmnt());
-				Excel_Out.writeToCell(5,j,yTD_Calc.getAdvAmmntYTD());
+				Excel_Out.writeToCell(3,j,check.getAdvAmmnt().doubleValue());
+				Excel_Out.writeToCell(5,j,yTD_Calc.getAdvAmmntYTD().doubleValue());
 				j++;
 			}
 			Excel_Out.writeToCell(11,51,"-");
@@ -1265,4 +1307,31 @@ public class Check_Edit {
 			updateData();
 		}
 	};
+	
+	private static double add(double a,double b) {
+		double c = 0;
+		BigDecimal _a = new BigDecimal(a);
+		BigDecimal _b = new BigDecimal(b);
+		BigDecimal _c = _a.add(_b);
+		c = _c.doubleValue();
+		return c;
+	}
+	
+	private static double multiply(double a, double b) {
+		double c = 0;
+		BigDecimal _a = new BigDecimal(a);
+		BigDecimal _b = new BigDecimal(b);
+		BigDecimal _c = _a.multiply(_b);
+		c = _c.doubleValue();
+		return c;
+	}
+	
+	private static double subtract(double a, double b) {
+		double c = 0;
+		BigDecimal _a = new BigDecimal(a);
+		BigDecimal _b = new BigDecimal(b);
+		BigDecimal _c = _a.subtract(_b);
+		c = _c.doubleValue();
+		return c;
+	}
 }
