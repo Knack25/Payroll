@@ -29,9 +29,7 @@ import Gradle_Payroll.sql.MySQL;
  
  public class Create_Employee extends JDialog{
 	 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 4810663888408123313L;
 	static String[] Name;
 	static List<Tax> Taxes;
@@ -47,7 +45,7 @@ import Gradle_Payroll.sql.MySQL;
 		 createMenu = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		 createMenu.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		 createMenu.setSize(400, 150);	
-		 
+		 createMenu.setLocation(70, 70);
 		 tax = new Tax();
 		 Name = new String[3];
 		 Taxes = new ArrayList<Tax>();
@@ -99,6 +97,7 @@ import Gradle_Payroll.sql.MySQL;
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
+			
 		}
 		//********************************************************SQL Push Request*****************************************************************
 		private void sqlPushRequest() throws Exception, SQLException {
@@ -294,7 +293,6 @@ import Gradle_Payroll.sql.MySQL;
 			return;
 		}
 		
-		//TODO: Create default fields for YTD Values
 		private void sqlNewYTD(int ID) throws Exception {
 			String[] SQL;
 			int rs = 0;

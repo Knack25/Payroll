@@ -35,7 +35,7 @@ public class Terminate_Employee {
 	    	
 		 	dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 	    	dialog.addWindowListener(DialogListener);
-	    	
+	    	dialog.setLocation(80, 120);
 	    	employee = new JComboBox<String>();
 	    	employee.setPreferredSize(new Dimension(150,30));
 	    	JButton submitB = new JButton("Submit");

@@ -17,6 +17,7 @@ public class ErrorDialog {
 	
 	protected static JDialog createError(String errorMessage)  throws Exception {
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
+		dialog.setLocation(80, 120);
 		confirmB = new JButton("OK");
 		confirmB.addActionListener(confirmBListener);
 		message = new JLabel(errorMessage);
@@ -30,7 +31,7 @@ public class ErrorDialog {
 		dialog.add(south,BorderLayout.SOUTH);
 		
 		
-		dialog.setSize(400,200);
+		dialog.setSize(600,125);
 		dialog.setVisible(true);
 		 return dialog;
 	}

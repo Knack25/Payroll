@@ -4,6 +4,7 @@ package Gradle_Payroll.fileIO;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -25,6 +26,8 @@ public class Excel_Out{
 	static Sheet sheet;
 	static Row row;
 	static Font normalF,underlineF;
+	static LocalDate date;
+	static SimpleDateFormat dateFormat;
 	static CellStyle normalS,underlinedS,bottomB;
 	
 
@@ -37,7 +40,7 @@ public class Excel_Out{
 		underlineF = book.createFont();
 		normalS = book.createCellStyle();
 		underlinedS = book.createCellStyle();
-
+		sheet.protectSheet("1234");
 		normalF.setFontHeightInPoints((short) 15);
 		normalF.setFontName("ARIAL NARROW");
 		underlineF.setFontHeightInPoints((short) 15);
@@ -157,7 +160,8 @@ public class Excel_Out{
 	
 	
 	public static int writeOut() throws Exception{
-		try(OutputStream fileOut = new FileOutputStream("Output.xls")){
+		date = LocalDate.now();
+		try(OutputStream fileOut = new FileOutputStream(date+".xls")){
 			book.write(fileOut);
 			return 0;
 		}catch(Exception e){
@@ -165,6 +169,5 @@ public class Excel_Out{
 			return 1;
 		}
 	}
-	//TODO: Add Method to lock excel sheet so you cant tamper with already saved data
-		//in excel out, this is the line of code for it: CellStyle.setLocked(true);
+	
 }

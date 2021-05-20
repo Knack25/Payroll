@@ -55,7 +55,7 @@ public class Void_Check {
 	 protected static JDialog createVoidcheckMenu()  throws Exception {
 		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		 //dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		 
+		 dialog.setLocation(80, 120);
 		 nameL = new JLabel("Name: ");
 		 checkNoL = new JLabel("Check No. : ");
 		 netPayL  = new JLabel("Net Pay: ");
