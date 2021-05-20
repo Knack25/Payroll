@@ -47,28 +47,6 @@ public class Void_Check {
 	static List<Double> checkNumbers;
 
 	static List<BigDecimal> taxNetAmmount;
-
-	protected static JDialog createVoidcheckMenu() throws Exception {
-		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
-		// dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-		nameL = new JLabel("Name: ");
-		checkNoL = new JLabel("Check No. : ");
-		netPayL = new JLabel("Net Pay: ");
-		dateL = new JLabel("Date: ");
-
-		checkNetAmmntT = new JTextField();
-		checkNetAmmntT.setEditable(false);
-		checkDateT = new JTextField();
-		checkDateT.setEditable(false);
-		checkNumbers = new ArrayList<Double>();
-
-		taxNetAmmount = new ArrayList<BigDecimal>();
-
-		voidB = new JButton("Void");
-
-	static List<Double> taxNetAmmount;
-
 	
 	 protected static JDialog createVoidcheckMenu()  throws Exception {
 		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
@@ -86,7 +64,7 @@ public class Void_Check {
 		 checkNumbers = new ArrayList<Double>();
 
 		 
-		 taxNetAmmount = new ArrayList<Double>();
+		 taxNetAmmount = new ArrayList<BigDecimal>();
 	    	
     	voidB = new JButton("Void");
 

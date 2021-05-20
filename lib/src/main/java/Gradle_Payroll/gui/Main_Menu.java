@@ -249,7 +249,8 @@ public class Main_Menu extends JFrame implements ActionListener{
 	}
 	private void programSettingsWindow() {
 		try {
-			Program_Settings.createFrame();
+			JInternalFrame programSettings =  Program_Settings.createFrame();
+			MainMenu.add(programSettings);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

@@ -53,7 +53,7 @@ public class Program_Settings {
 		JButton taxTableB = new JButton("View/Edit Default Tax Table");
 		JButton termEmpB = new JButton("View/Edit Terminated Employees ");
 		
-        frame.setVisible(true); //necessary as of 1.3
+       // frame.setVisible(true); //necessary as of 1.3
        
         try {
         	frame.setSelected(true);
