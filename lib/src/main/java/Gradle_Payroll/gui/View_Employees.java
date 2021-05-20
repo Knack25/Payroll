@@ -44,7 +44,7 @@ public class View_Employees {
 	 protected static JDialog createViewemployeeMenu()  throws Exception {
 		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		 dialog.addWindowListener(DialogListener);
-		 
+		 dialog.setLocation(80, 120);
 		 deptD = new JComboBox<String>();
 		 deptD.addItem("*");
 		 titleD = new JComboBox<String>();

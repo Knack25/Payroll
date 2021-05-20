@@ -35,7 +35,7 @@ public class Reinstate_Employee {
 	 protected static JDialog createEmployeeReinsateDialog()  throws Exception {
 		 	dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 	    	dialog.addWindowListener(DialogListener);
-	    	
+	    	dialog.setLocation(80, 120);
 	    	employee = new JComboBox<String>();
 	    	employee.setPreferredSize(new Dimension(150,30));
 	    	

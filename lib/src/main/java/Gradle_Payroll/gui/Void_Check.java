@@ -45,6 +45,7 @@ public class Void_Check {
 	static Check check;
 	static Double YEAR;
 	static List<Double> checkNumbers;
+<<<<<<< HEAD
 	static List<BigDecimal> taxNetAmmount;
 
 	protected static JDialog createVoidcheckMenu() throws Exception {
@@ -65,6 +66,30 @@ public class Void_Check {
 		taxNetAmmount = new ArrayList<BigDecimal>();
 
 		voidB = new JButton("Void");
+=======
+	static List<Double> taxNetAmmount;
+
+	
+	 protected static JDialog createVoidcheckMenu()  throws Exception {
+		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
+		 //dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		 dialog.setLocation(80, 120);
+		 nameL = new JLabel("Name: ");
+		 checkNoL = new JLabel("Check No. : ");
+		 netPayL  = new JLabel("Net Pay: ");
+		 dateL  = new JLabel("Date: ");
+		 
+		 checkNetAmmntT = new JTextField();
+		 checkNetAmmntT.setEditable(false);
+		 checkDateT = new JTextField();
+		 checkDateT.setEditable(false);
+		 checkNumbers = new ArrayList<Double>();
+
+		 
+		 taxNetAmmount = new ArrayList<Double>();
+	    	
+    	voidB = new JButton("Void");
+>>>>>>> b047686b0adee697dad1b0cab6855f81e228bab3
 		voidB.addActionListener(submitBListener);
 
 		cancelB = new JButton("Cancel");

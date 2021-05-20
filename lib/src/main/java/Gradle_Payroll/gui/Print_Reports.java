@@ -37,7 +37,8 @@ public class Print_Reports {
 	
 		 
 		// dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		 dialog.setSize(400, 150);	
+		 dialog.setSize(420, 125);
+		 dialog.setLocation(50, 50);
 		
 		JButton RegisterB = new JButton("Register");
 		//addB.addActionListener(addBListener);
