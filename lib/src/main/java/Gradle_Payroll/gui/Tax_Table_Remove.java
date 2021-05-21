@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import Gradle_Payroll.fileIO.Config;
 
 public class Tax_Table_Remove extends JDialog {
-	
+
 	/**
 	 * 
 	 */
@@ -30,40 +30,38 @@ public class Tax_Table_Remove extends JDialog {
 	static List<String> ComboList;
 
 	public static JDialog createDialog(int empID) {
-		dialog = new JDialog(null,Dialog.ModalityType.APPLICATION_MODAL);
+		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		dialog.setSize(350, 120);
 		JPanel comboPanel, buttonPanel;
 		comboPanel = new JPanel();
 		buttonPanel = new JPanel();
-		
+
 		EMPID = empID;
 		Name = new JComboBox<String>();
 		ComboList = new ArrayList<String>();
-		
-		
+
 		JButton submitB = new JButton("Submit");
 		submitB.addActionListener(submitBListener);
-		
+
 		JButton cancelB = new JButton("Cancel");
 		cancelB.addActionListener(cancelBListener);
-		
+
 		try {
 			SQLPullTaxes(EMPID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		comboPanel.add(Name);
-		buttonPanel.add(submitB,BorderLayout.WEST);
-		buttonPanel.add(cancelB,BorderLayout.EAST);
-		
-		dialog.add(comboPanel,BorderLayout.NORTH);
-		dialog.add(buttonPanel,BorderLayout.SOUTH);
-		
+		buttonPanel.add(submitB, BorderLayout.WEST);
+		buttonPanel.add(cancelB, BorderLayout.EAST);
+
+		dialog.add(comboPanel, BorderLayout.NORTH);
+		dialog.add(buttonPanel, BorderLayout.SOUTH);
+
 		dialog.setVisible(true);
-		
-		
+
 		return dialog;
 	}
 
@@ -73,35 +71,35 @@ public class Tax_Table_Remove extends JDialog {
 		String name;
 		int id;
 		String output;
-		
+
 		System.out.println("Querrying DB for selected Employee");
-		
+
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-		
-		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-		
+
+		Connection conn = DriverManager.getConnection(DATABASE_URL, SQL[3], SQL[4]);
+
 		String insertStatement = "Select * from tax where employee_id = ? and primaryTax = false";
-		
+
 		PreparedStatement pstmt = conn.prepareStatement(insertStatement);
-		
+
 		pstmt.setInt(1, eMPID2);
-		
+
 		ResultSet rs = pstmt.executeQuery();
-		
-		while(rs.next()) {
+
+		while (rs.next()) {
 			name = rs.getString("taxname");
 			id = rs.getInt("id");
-			output = id +": " + name;
+			output = id + ": " + name;
 			ComboList.add(output);
 			Name.addItem(output);
 		}
-		
+
 		conn.close();
-		
+
 	}
-	
+
 	static ActionListener submitBListener = new ActionListener() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
@@ -110,7 +108,7 @@ public class Tax_Table_Remove extends JDialog {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			
+
 		}
 
 		private void Update() throws Exception {
@@ -120,46 +118,42 @@ public class Tax_Table_Remove extends JDialog {
 			String name = ComboList.get(sel);
 			String[] temp = name.split(":");
 			int id = Integer.valueOf(temp[0]);
-			
+
 			System.out.println("Querrying DB for selected Employee");
-			
+
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-			
-			Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-			
-			
+
+			Connection conn = DriverManager.getConnection(DATABASE_URL, SQL[3], SQL[4]);
+
 			String insertStatement = "Delete from tax where id = ?";
-			
+
 			PreparedStatement pstmt = conn.prepareStatement(insertStatement);
-			
+
 			pstmt.setInt(1, id);
-			
+
 			int rs = pstmt.executeUpdate();
-			
+
 			System.out.println("Deleted " + rs + " entry with id: " + id + ".");
-			
-			
-			
-			//Delete from tax_ytd
-			Connection conn2 = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-			
-			
+
+			// Delete from tax_ytd
+			Connection conn2 = DriverManager.getConnection(DATABASE_URL, SQL[3], SQL[4]);
+
 			String insertStatement2 = "Delete from tax_ytd where id = ?";
-			
+
 			PreparedStatement pstmt2 = conn.prepareStatement(insertStatement2);
-			
+
 			pstmt2.setInt(1, id);
-			
+
 			int rs2 = pstmt2.executeUpdate();
 		}
 	};
-	
+
 	static ActionListener cancelBListener = new ActionListener() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			dialog.dispose();
 		}
 	};
-	
+
 }

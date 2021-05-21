@@ -51,30 +51,29 @@ public class Void_Check {
 	static List<BigDecimal> taxInitYTD;
 	static List<BigDecimal> taxFinalYTD;
 	static List<String> taxName;
-	
-	 protected static JDialog createVoidcheckMenu()  throws Exception {
-		 dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
-		 //dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		 dialog.setLocation(80, 120);
-		 nameL = new JLabel("Name: ");
-		 checkNoL = new JLabel("Check No. : ");
-		 netPayL  = new JLabel("Net Pay: ");
-		 dateL  = new JLabel("Date: ");
-		 
-		 checkNetAmmntT = new JTextField();
-		 checkNetAmmntT.setEditable(false);
-		 checkDateT = new JTextField();
-		 checkDateT.setEditable(false);
-		 checkNumbers = new ArrayList<Double>();
 
-		 
-		 taxNetAmmount = new ArrayList<BigDecimal>();
-		 taxInitYTD = new ArrayList<BigDecimal>();
-		 taxFinalYTD = new ArrayList<BigDecimal>();
-		 
-		 taxName = new ArrayList<String>();
-	    	
-    	voidB = new JButton("Void");
+	protected static JDialog createVoidcheckMenu() throws Exception {
+		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
+		// dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		dialog.setLocation(80, 120);
+		nameL = new JLabel("Name: ");
+		checkNoL = new JLabel("Check No. : ");
+		netPayL = new JLabel("Net Pay: ");
+		dateL = new JLabel("Date: ");
+
+		checkNetAmmntT = new JTextField();
+		checkNetAmmntT.setEditable(false);
+		checkDateT = new JTextField();
+		checkDateT.setEditable(false);
+		checkNumbers = new ArrayList<Double>();
+
+		taxNetAmmount = new ArrayList<BigDecimal>();
+		taxInitYTD = new ArrayList<BigDecimal>();
+		taxFinalYTD = new ArrayList<BigDecimal>();
+
+		taxName = new ArrayList<String>();
+
+		voidB = new JButton("Void");
 
 		voidB.addActionListener(submitBListener);
 
@@ -188,42 +187,42 @@ public class Void_Check {
 
 		private void removeCheckVals() {
 			check.setRegAmmnt(check.getRegHours().multiply(check.getRegRate()));
-			check.setRegAmmnt(check.getRegAmmnt().setScale(2,RoundingMode.HALF_UP));
+			check.setRegAmmnt(check.getRegAmmnt().setScale(2, RoundingMode.HALF_UP));
 			check.setPtoAmmnt(check.getPtoHours().multiply(check.getPtoRate()));
-			check.setPtoAmmnt(check.getPtoAmmnt().setScale(2,RoundingMode.HALF_UP));
+			check.setPtoAmmnt(check.getPtoAmmnt().setScale(2, RoundingMode.HALF_UP));
 			check.setOtAmmnt(check.getOtHours().multiply(check.getOtRate()));
-			check.setOtAmmnt(check.getOtAmmnt().setScale(2,RoundingMode.HALF_UP));
+			check.setOtAmmnt(check.getOtAmmnt().setScale(2, RoundingMode.HALF_UP));
 			yTD_Calc.setAdvAmmntYTD(yTD_Initial.getAdvAmmntYTD().subtract(check.getAdvAmmnt()));
-			yTD_Calc.setAdvAmmntYTD(yTD_Calc.getAdvAmmntYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setAdvAmmntYTD(yTD_Calc.getAdvAmmntYTD().setScale(2, RoundingMode.HALF_UP));
 			// System.out.println(yTD_Calc.getAdvAmmntYTD());
 			yTD_Calc.setGrossAmmntYTD(yTD_Initial.getGrossAmmntYTD().subtract(check.getGrossAmmnt()));
-			yTD_Calc.setGrossAmmntYTD(yTD_Calc.getGrossAmmntYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setGrossAmmntYTD(yTD_Calc.getGrossAmmntYTD().setScale(2, RoundingMode.HALF_UP));
 			// System.out.println(yTD_Calc.getGrossAmmntYTD());
 			yTD_Calc.setNetAmmntYTD(yTD_Initial.getNetAmmntYTD().subtract(check.getNetAmmnt()));
-			yTD_Calc.setNetAmmntYTD(yTD_Calc.getNetAmmntYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setNetAmmntYTD(yTD_Calc.getNetAmmntYTD().setScale(2, RoundingMode.HALF_UP));
 			// System.out.println(yTD_Calc.getNetAmmntYTD());
 			yTD_Calc.setOtAmmntYTD(yTD_Initial.getOtAmmntYTD().subtract(check.getOtAmmnt()));
-			yTD_Calc.setOtAmmntYTD(yTD_Calc.getOtAmmntYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setOtAmmntYTD(yTD_Calc.getOtAmmntYTD().setScale(2, RoundingMode.HALF_UP));
 			yTD_Calc.setOtHoursYTD(yTD_Initial.getOtHoursYTD().subtract(check.getOtHours()));
-			yTD_Calc.setOtHoursYTD(yTD_Calc.getOtHoursYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setOtHoursYTD(yTD_Calc.getOtHoursYTD().setScale(2, RoundingMode.HALF_UP));
 			yTD_Calc.setPtoAmmntYTD(yTD_Initial.getPtoAmmntYTD().subtract(check.getPtoAmmnt()));
-			yTD_Calc.setPtoAmmntYTD(yTD_Calc.getPtoAmmntYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setPtoAmmntYTD(yTD_Calc.getPtoAmmntYTD().setScale(2, RoundingMode.HALF_UP));
 			yTD_Calc.setPtoHoursYTD(yTD_Initial.getPtoHoursYTD().subtract(check.getPtoHours()));
-			yTD_Calc.setPtoHoursYTD(yTD_Calc.getPtoHoursYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setPtoHoursYTD(yTD_Calc.getPtoHoursYTD().setScale(2, RoundingMode.HALF_UP));
 			yTD_Calc.setRegAmmntYTD(yTD_Initial.getRegAmmntYTD().subtract(check.getRegAmmnt()));
-			yTD_Calc.setRegAmmntYTD(yTD_Calc.getRegAmmntYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setRegAmmntYTD(yTD_Calc.getRegAmmntYTD().setScale(2, RoundingMode.HALF_UP));
 			yTD_Calc.setRegHoursYTD(yTD_Initial.getRegHoursYTD().subtract(check.getRegHours()));
-			yTD_Calc.setRegHoursYTD(yTD_Calc.getRegHoursYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setRegHoursYTD(yTD_Calc.getRegHoursYTD().setScale(2, RoundingMode.HALF_UP));
 			yTD_Calc.setRoyaltyAmmntYTD(yTD_Initial.getRoyaltyAmmntYTD().subtract(check.getRoyaltyAmmnt()));
-			yTD_Calc.setRoyaltyAmmntYTD(yTD_Calc.getRoyaltyAmmntYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setRoyaltyAmmntYTD(yTD_Calc.getRoyaltyAmmntYTD().setScale(2, RoundingMode.HALF_UP));
 			yTD_Calc.setSalAmmntYTD(yTD_Initial.getSalAmmntYTD().subtract(check.getSalAmmnt()));
-			yTD_Calc.setSalAmmntYTD(yTD_Calc.getSalAmmntYTD().setScale(2,RoundingMode.HALF_UP));
+			yTD_Calc.setSalAmmntYTD(yTD_Calc.getSalAmmntYTD().setScale(2, RoundingMode.HALF_UP));
 
 			for (int i = 0; i < taxInitYTD.size(); i++) {
 				System.out.println(i);
 				System.out.println("Tax Init YTD: " + taxInitYTD.get(i) + " Subtract: " + taxNetAmmount.get(i));
 				taxFinalYTD.add(taxInitYTD.get(i).subtract(taxNetAmmount.get(i)));
-				taxFinalYTD.set(i,taxFinalYTD.get(i).setScale(2,RoundingMode.HALF_UP));
+				taxFinalYTD.set(i, taxFinalYTD.get(i).setScale(2, RoundingMode.HALF_UP));
 				System.out.println("Tax Final YTD: " + taxFinalYTD.get(i));
 			}
 		}
@@ -274,7 +273,7 @@ public class Void_Check {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				taxNetAmmount.add(BigDecimal.valueOf(rs.getDouble("netammount")) );
+				taxNetAmmount.add(BigDecimal.valueOf(rs.getDouble("netammount")));
 				System.out.println("Tax Net Ammount: " + taxNetAmmount.get(i));
 				i++;
 			}
@@ -566,7 +565,7 @@ public class Void_Check {
 		while (rs.next()) {
 			taxInitYTD.add(BigDecimal.valueOf(rs.getDouble("ammount")));
 			taxName.add(rs.getString("name"));
-			System.out.println("Tax Init YTD: " + taxInitYTD.get(taxInitYTD.size()-1));
+			System.out.println("Tax Init YTD: " + taxInitYTD.get(taxInitYTD.size() - 1));
 		}
 
 	}

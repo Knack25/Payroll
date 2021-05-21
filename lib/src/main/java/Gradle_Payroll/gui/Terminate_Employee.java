@@ -1,7 +1,5 @@
 package Gradle_Payroll.gui;
 
-
-
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -28,63 +26,55 @@ public class Terminate_Employee {
 	static JComboBox<String> employee;
 	static JDialog dialog;
 
-	static String fName,mName,lName,fullName;
-	
-	
-	 protected static JDialog createEmployeeTerminateDialog()  throws Exception {
-	    	
-		 	dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
-	    	dialog.addWindowListener(DialogListener);
-	    	dialog.setLocation(80, 120);
-	    	employee = new JComboBox<String>();
-	    	employee.setPreferredSize(new Dimension(150,30));
-	    	JButton submitB = new JButton("Submit");
-	    	//submitB.setActionCommand("TermSubmit");
-			submitB.addActionListener(submit);
-	    	JLabel name = new JLabel("Employee To Remove");
-	    	
-	    	System.out.println("Querrying DB...");
-	    	
-	    	sqlPullRequest();
-			System.out.println("Creating Dialog Box");
-	    	
-	    	dialog.setSize(400, 100);
-	    	dialog.setLayout(new FlowLayout());
-	    	dialog.add(name);
-	    	dialog.add(employee);
-	    	dialog.add(submitB);
-	    	dialog.repaint();
-	    	dialog.setVisible(true);
-	    	
-	    	//for the submit button, should we have a warning before terminating the employee?
-	    	
-	  
-	    	 
-	    	 
-	    	 
-	    	System.out.println("Created Dialog");
-	    	
-			return dialog;
-	    }
+	static String fName, mName, lName, fullName;
+
+	protected static JDialog createEmployeeTerminateDialog() throws Exception {
+
+		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
+		dialog.addWindowListener(DialogListener);
+		dialog.setLocation(80, 120);
+		employee = new JComboBox<String>();
+		employee.setPreferredSize(new Dimension(150, 30));
+		JButton submitB = new JButton("Submit");
+		// submitB.setActionCommand("TermSubmit");
+		submitB.addActionListener(submit);
+		JLabel name = new JLabel("Employee To Remove");
+
+		System.out.println("Querrying DB...");
+
+		sqlPullRequest();
+		System.out.println("Creating Dialog Box");
+
+		dialog.setSize(400, 100);
+		dialog.setLayout(new FlowLayout());
+		dialog.add(name);
+		dialog.add(employee);
+		dialog.add(submitB);
+		dialog.repaint();
+		dialog.setVisible(true);
+
+		// for the submit button, should we have a warning before terminating the
+		// employee?
+
+		System.out.println("Created Dialog");
+
+		return dialog;
+	}
 
 	private static void sqlPullRequest() throws Exception, SQLException {
 		String[] SQL = Config.PullSQLConfig();
-		
+
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-		
-		Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-		
-		
+
+		Connection conn = DriverManager.getConnection(DATABASE_URL, SQL[3], SQL[4]);
+
 		Statement stmt = conn.createStatement();
-			
+
 		ResultSet rs = stmt.executeQuery("select * from employee where enabled = true");
-		
-		
-		
+
 		int i = 0;
-		
-		
-		while(rs.next()) {
+
+		while (rs.next()) {
 			fName = rs.getString("firstname");
 			mName = rs.getString("middlename");
 			lName = rs.getString("lastname");
@@ -92,104 +82,102 @@ public class Terminate_Employee {
 			employee.addItem(fullName);
 			i++;
 		}
-		
-		
+
 		System.out.println("Data Retreived Successfull for " + i + " entries.");
-		
+
 		rs.close();
 		conn.close();
 	}
 
-	 static ActionListener submit = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Connect to SQL and save new column in employee
-	        	
-	        	fullName = (String) employee.getSelectedItem();
-	        	String[] name = fullName.split(" ");
-	        	System.out.println("The value of fullName is: " + fullName);
-	        	
-	        
-				try {
-					sqlPushRequest(name);
-					
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-		    	
-				System.out.println("Disposing of Dialog box");
-				dialog.setVisible(false);
-				dialog.dispose();
+	static ActionListener submit = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// Connect to SQL and save new column in employee
+
+			fullName = (String) employee.getSelectedItem();
+			String[] name = fullName.split(" ");
+			System.out.println("The value of fullName is: " + fullName);
+
+			try {
+				sqlPushRequest(name);
+
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
 
-			private void sqlPushRequest(String[] name) throws Exception, SQLException {
-				String[] SQL;
-				SQL = Config.PullSQLConfig();
-				
-				final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-				
-				Connection conn = DriverManager.getConnection(DATABASE_URL,SQL[3],SQL[4]);
-				
-				
-				String updateStatement = "update employee " + "set enabled = false "+ "WHERE firstname = ? AND lastname = ?";
-				
-				PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+			System.out.println("Disposing of Dialog box");
+			dialog.setVisible(false);
+			dialog.dispose();
+		}
 
-				if(name.length == 3) {
-					pstmt.setString(1,name[0]);
-					pstmt.setString(2, name[2]);
-				}
-				if(name.length == 2) {
-					pstmt.setString(1,name[0]);
-					pstmt.setString(2, name[1]);
-				}
-				
-				int output = pstmt.executeUpdate();
+		private void sqlPushRequest(String[] name) throws Exception, SQLException {
+			String[] SQL;
+			SQL = Config.PullSQLConfig();
 
-				System.out.println("Affected " + output + " rows.");
-				
-				pstmt.close();
-				conn.close();
-			}
-		};
+			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 
-		static WindowListener DialogListener = new WindowListener() {
-			
-			@Override
-			public void windowOpened(WindowEvent e) {
-				
+			Connection conn = DriverManager.getConnection(DATABASE_URL, SQL[3], SQL[4]);
+
+			String updateStatement = "update employee " + "set enabled = false "
+					+ "WHERE firstname = ? AND lastname = ?";
+
+			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
+
+			if (name.length == 3) {
+				pstmt.setString(1, name[0]);
+				pstmt.setString(2, name[2]);
 			}
-			
-			@Override
-			public void windowIconified(WindowEvent e) {
-				
+			if (name.length == 2) {
+				pstmt.setString(1, name[0]);
+				pstmt.setString(2, name[1]);
 			}
-			
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				
-			}
-			
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				dialog.setVisible(false);
-				dialog.dispose();
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				
-			}
-			
-			@Override
-			public void windowActivated(WindowEvent e) {
-				
-			}
-		};
+
+			int output = pstmt.executeUpdate();
+
+			System.out.println("Affected " + output + " rows.");
+
+			pstmt.close();
+			conn.close();
+		}
+	};
+
+	static WindowListener DialogListener = new WindowListener() {
+
+		@Override
+		public void windowOpened(WindowEvent e) {
+
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+
+		}
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			dialog.setVisible(false);
+			dialog.dispose();
+		}
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+
+		}
+
+		@Override
+		public void windowActivated(WindowEvent e) {
+
+		}
+	};
 }
