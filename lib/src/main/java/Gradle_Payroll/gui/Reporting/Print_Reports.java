@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Reporting;
 
 import java.awt.Dialog;
 import java.awt.FlowLayout;
@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 public class Print_Reports {
 	static JDialog dialog;
 
-	protected static JDialog createFrame() throws Exception {
+	public static JDialog createFrame() throws Exception {
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 
 		// dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

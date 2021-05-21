@@ -32,5 +32,7 @@ implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.23'
     // https://mvnrepository.com/artifact/org.apache.poi/poi
 implementation group: 'org.apache.poi', name: 'poi', version: '5.0.0'
     
+    // https://mvnrepository.com/artifact/com.github.lgooddatepicker/LGoodDatePicker
+implementation group: 'com.github.lgooddatepicker', name: 'LGoodDatePicker', version: '11.2.1'
     
 }

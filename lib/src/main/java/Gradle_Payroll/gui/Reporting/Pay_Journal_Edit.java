@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Reporting;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

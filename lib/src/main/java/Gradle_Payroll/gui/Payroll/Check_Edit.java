@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Payroll;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -53,7 +53,7 @@ public class Check_Edit {
 	static YTD yTD_Initial, yTD_Calc;
 	static int YEAR;
 
-	protected static JInternalFrame createDialog(int checkNum, int year) {
+	public static JInternalFrame createDialog(int checkNum, int year) {
 		frame = new JInternalFrame();
 		frame.setSize(400, 400);
 		frame.setLayout(new GridBagLayout());

@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Reporting;
 
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
@@ -26,7 +26,7 @@ public class Payroll_History {
 	static String fName, mName, lName, fullName;
 	static JCheckBox nameSelect, dateSelect, checkSelect;
 
-	protected static JDialog createFrame() throws Exception {
+	public static JDialog createFrame() throws Exception {
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 
 		System.out.println("Creating Dialog Box");

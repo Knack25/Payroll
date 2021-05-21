@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Payroll;
 
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,41 +22,24 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.github.lgooddatepicker.components.DatePicker;
+
 import Gradle_Payroll.data.Check;
 import Gradle_Payroll.data.Tax;
 import Gradle_Payroll.data.YTD;
 import Gradle_Payroll.fileIO.Config;
+import Gradle_Payroll.gui.ErrorDialog;
+import Gradle_Payroll.gui.Main_Menu;
 import Gradle_Payroll.sql.MySQL;
 
-//TODO: Need to add the new elements for pay journal
-/*new pay types:
- * commission
- * tips
- * other
- * benefits:
- * fica
- * futa
- * suta
- * any deductions
- * any withholdings
- * check No.
- * employee No.
- * pay period.
- * dept.
- * */
-
-//should allow user to filter my employee and pay periods
-
-public class Create_Pay_Journal {
+public class Create_Check {
 
 	static JComboBox<String> employee;
 	static JDialog dialog;
 	static JLabel regularL, ptoL, overtimeL, salaryL, advanceL, royaltiesL, checkNoL, hoursL, rateL, dateL, fixedPayL;
 	static JTextField regHoursT, regRateT, ptoHoursT, ptoRateT, otHoursT, otRateT, salpayT, advpayT, royalpayT,
 			checkNoT, dateT, startT, endT;
-	static JComboBox<String> stMnthD, stDayD, stYrD, endMnthD, endDayD, endYrD;
 	static String fName, mName, lName, fullName;
-	static JLabel dashL, slash1L, slash2L, slash3L, slash4L;
 	static Dimension minTextSize;
 	static Check check;
 	static YTD ytd;
@@ -65,17 +49,17 @@ public class Create_Pay_Journal {
 	static String[] selname;
 	static LocalDate currDate;
 	static JPanel payPeriodP, regPayP, ptoPayP, otPayP, labelsP, checkP;
+	static DatePicker startDate,endDate;
 
-	protected static JDialog createCheckmenu() throws Exception {
+
+	public static JDialog createCheckmenu() throws Exception {
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
-
+		dialog.setLocation(80, 120);
 		employee = new JComboBox<String>();
-		stMnthD = new JComboBox<String>();
-		stDayD = new JComboBox<String>();
-		stYrD = new JComboBox<String>();
-		endMnthD = new JComboBox<String>();
-		endDayD = new JComboBox<String>();
-		endYrD = new JComboBox<String>();
+		startDate = new DatePicker();
+		endDate = new DatePicker();
+		
+		
 
 		minTextSize = new Dimension();
 		minTextSize.setSize(50, 20);
@@ -163,23 +147,8 @@ public class Create_Pay_Journal {
 		JPanel ptoPayP = new JPanel();
 		JPanel otPayP = new JPanel();
 
-		payPeriodP.add(stMnthD);
-		stMnthD.setMinimumSize(minTextSize);
-		payPeriodP.add(slash1L);
-		payPeriodP.add(stDayD);
-		stDayD.setMinimumSize(minTextSize);
-		payPeriodP.add(slash2L);
-		payPeriodP.add(stYrD);
-		stYrD.setMinimumSize(minTextSize);
-		payPeriodP.add(dashL);
-		payPeriodP.add(endMnthD);
-		endMnthD.setMinimumSize(minTextSize);
-		payPeriodP.add(slash3L);
-		payPeriodP.add(endDayD);
-		endDayD.setMinimumSize(minTextSize);
-		payPeriodP.add(slash4L);
-		payPeriodP.add(endYrD);
-		endYrD.setMinimumSize(minTextSize);
+		payPeriodP.add(startDate);
+		payPeriodP.add(endDate);
 
 		labelsP.add(hoursL);
 		labelsP.add(rateL);
@@ -359,11 +328,6 @@ public class Create_Pay_Journal {
 		rateL = new JLabel("<HTML><U> Rate </U></HTML>");
 		fixedPayL = new JLabel("<HTML><U> Fixed Pay</U></HTML>");
 		dateL = new JLabel("Check Date Range: ");
-		dashL = new JLabel("-");
-		slash1L = new JLabel("/");
-		slash2L = new JLabel("/");
-		slash3L = new JLabel("/");
-		slash4L = new JLabel("/");
 	}
 
 	static ActionListener createCheck = new ActionListener() {
@@ -441,9 +405,9 @@ public class Create_Pay_Journal {
 		// checkNum
 		pstmt.setDouble(1, checkID);
 		// Payroll Start Date
-		pstmt.setString(2, startT.getText());
+		pstmt.setString(2, startDate.getDateStringOrEmptyString());
 		// Payroll End Date
-		pstmt.setString(3, endT.getText());
+		pstmt.setString(3, endDate.getDateStringOrEmptyString());
 		// Year
 		pstmt.setDouble(4, currDate.getYear());
 		// regHours

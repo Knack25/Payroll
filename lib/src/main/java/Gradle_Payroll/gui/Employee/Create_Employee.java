@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Employee;
 
 import java.awt.Dialog;
 import java.awt.FlowLayout;
@@ -60,8 +60,7 @@ public class Create_Employee extends JDialog {
 		enterMiddle = new JFormattedTextField("");
 		enterLast = new JFormattedTextField("");
 		enterLast.addActionListener(CreateListener);
-		// TODO: Add an input listener on enterLast for hiting the enter key as a form
-		// of submission
+		
 
 		enterFirst.setColumns(10);
 		enterMiddle.setColumns(10);

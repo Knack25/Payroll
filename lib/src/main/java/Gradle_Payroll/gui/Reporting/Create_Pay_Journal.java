@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Reporting;
 
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -25,9 +25,29 @@ import Gradle_Payroll.data.Check;
 import Gradle_Payroll.data.Tax;
 import Gradle_Payroll.data.YTD;
 import Gradle_Payroll.fileIO.Config;
+import Gradle_Payroll.gui.Main_Menu;
 import Gradle_Payroll.sql.MySQL;
 
-public class Create_Check {
+//TODO: Need to add the new elements for pay journal
+/*new pay types:
+ * commission
+ * tips
+ * other
+ * benefits:
+ * fica
+ * futa
+ * suta
+ * any deductions
+ * any withholdings
+ * check No.
+ * employee No.
+ * pay period.
+ * dept.
+ * */
+
+//should allow user to filter my employee and pay periods
+
+public class Create_Pay_Journal {
 
 	static JComboBox<String> employee;
 	static JDialog dialog;
@@ -49,7 +69,7 @@ public class Create_Check {
 
 	protected static JDialog createCheckmenu() throws Exception {
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
-		dialog.setLocation(80, 120);
+
 		employee = new JComboBox<String>();
 		stMnthD = new JComboBox<String>();
 		stDayD = new JComboBox<String>();

@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Employee;
 
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
@@ -60,7 +60,7 @@ public class Edit_YTD {
 
 		Ammount = new ArrayList<JTextField>();
 		Name = new ArrayList<JTextField>();
-		TaxType = new ArrayList<JComboBox<String>>();
+		taxType = new ArrayList<JComboBox<String>>();
 		ID = new ArrayList<JLabel>();
 
 		int autoX = 0;
@@ -182,7 +182,7 @@ public class Edit_YTD {
 				System.out.println(Name.get(i).getText());
 				pstmt.setString(1, Name.get(i).getText());
 				// Tax Type
-				pstmt.setInt(2, TaxType.get(i).getSelectedIndex());
+				pstmt.setInt(2, taxType.get(i).getSelectedIndex());
 				// Tax Amount
 				pstmt.setDouble(3, Double.parseDouble(Ammount.get(i).getText()));
 				// Tax ID

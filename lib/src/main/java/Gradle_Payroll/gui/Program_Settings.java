@@ -1,5 +1,7 @@
 package Gradle_Payroll.gui;
 
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +24,7 @@ import Gradle_Payroll.data.Address;
 import Gradle_Payroll.data.Employee;
 import Gradle_Payroll.data.Name;
 import Gradle_Payroll.fileIO.Config;
+import Gradle_Payroll.gui.Employee.Edit_Tax_Table;
 
 public class Program_Settings {
 
@@ -40,24 +43,6 @@ public class Program_Settings {
 	static String fName, mName, lName, fullName, dept;
 	static JLabel settingsL, payFreqL, payPeriodL, slashL, dashL;
 	static JComboBox<String> payFreqD, startDateD, endDateD;
-
-	// Create a new internal frame.
-	protected static JInternalFrame createFrame() throws Exception {
-		frame = new JInternalFrame();
-		emp = new Employee();
-		JButton viewRangesB = new JButton("View Yearly Pay Ranges");
-=======
-	
-//	static JComboBox<String> employee;
-	static JComboBox<String> department;
-	static JInternalFrame frame;
-	static Employee emp;
-	static Name empName;
-	static Address empAddress;
-	static Dimension minTextSize;
-	static String fName,mName,lName,fullName,dept;
-	static JLabel settingsL,payFreqL,payPeriodL,slashL,dashL;
-	static JComboBox<String> payFreqD;
 	static JTextField startDateT,endDateT;
 
 	
@@ -75,7 +60,7 @@ public class Program_Settings {
         endDateT.setPreferredSize(minTextSize);
         endDateT.setEditable(false);
     	JButton viewRangesB = new JButton("View Yearly Pay Ranges");
->>>>>>> 650b0f8d136812a7b75bc9ac70fdfa5d356e852c
+
 		JButton deptB = new JButton("View/Edit Departments");
 		JButton taxTableB = new JButton("View/Edit Default Tax Table");
 		JButton termEmpB = new JButton("View/Edit Terminated Employees ");
@@ -152,7 +137,6 @@ public class Program_Settings {
 //    	 
 //    	frame.add(settingsL,b1);
 //    	frame.add(payFreqL,a2);
-=======
 		
 		frame.setSize(600, 300);
     	
@@ -211,12 +195,12 @@ public class Program_Settings {
     	frame.add(settingsL,b1);
     	frame.add(payFreqL,a2);
     	//TODO: get the dropdown to work and get the different pay frequencies to work
->>>>>>> 650b0f8d136812a7b75bc9ac70fdfa5d356e852c
+
 //    	frame.add(payFreqD,a3);
     	frame.add(viewRangesB,b3);
     	frame.add(deptB,b2);
 //    	frame.add(taxTableB,b3);
-<<<<<<< HEAD
+
 //    	frame.add(termEmpB,b4);
 //    	frame.add(startDateD,c3);
 //    	frame.add(dashL,d3);
@@ -228,7 +212,7 @@ public class Program_Settings {
 
 		frame.setVisible(true);
 
-=======
+
     	frame.add(payPeriodL,c2e2);
     	frame.add(startDateT,c3);
     	frame.add(dashL,d3);
@@ -246,7 +230,7 @@ public class Program_Settings {
         
     	
         
->>>>>>> 650b0f8d136812a7b75bc9ac70fdfa5d356e852c
+
 		return frame;
 	}
 

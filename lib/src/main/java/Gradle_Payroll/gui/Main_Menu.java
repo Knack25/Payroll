@@ -12,6 +12,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import Gradle_Payroll.gui.Employee.Create_Employee;
+import Gradle_Payroll.gui.Employee.Edit_Employee;
+import Gradle_Payroll.gui.Employee.Reinstate_Employee;
+import Gradle_Payroll.gui.Employee.Terminate_Employee;
+import Gradle_Payroll.gui.Employee.View_Employees;
+import Gradle_Payroll.gui.Payroll.Check_Edit;
+import Gradle_Payroll.gui.Payroll.Create_Check;
+import Gradle_Payroll.gui.Reporting.Payroll_History;
+import Gradle_Payroll.gui.Reporting.Print_Reports;
+
 public class Main_Menu extends JFrame implements ActionListener {
 
 	/**
@@ -20,8 +30,8 @@ public class Main_Menu extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -8356941478722720686L;
 
 	static JDesktopPane MainMenu;
-	static int CheckNum;
-	static int year;
+	public static int CheckNum;
+	public static int year;
 
 	public Main_Menu() {
 

@@ -15,7 +15,7 @@ public class ErrorDialog {
 	static JButton confirmB;
 	static JLabel message;
 
-	protected static JDialog createError(String errorMessage) throws Exception {
+	public static JDialog createError(String errorMessage) throws Exception {
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		dialog.setLocation(80, 120);
 		confirmB = new JButton("OK");

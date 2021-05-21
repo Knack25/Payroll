@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Employee;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,6 +22,8 @@ import Gradle_Payroll.data.Address;
 import Gradle_Payroll.data.Employee;
 import Gradle_Payroll.data.Name;
 import Gradle_Payroll.fileIO.Config;
+import Gradle_Payroll.gui.AutoSelectingTextField;
+import Gradle_Payroll.gui.ErrorDialog;
 
 public class Edit_Employee {
 
@@ -40,7 +42,7 @@ public class Edit_Employee {
 	static String fName, mName, lName, fullName, dept;
 
 	// Create a new internal frame.
-	protected static JInternalFrame createFrame() throws Exception {
+	public static JInternalFrame createFrame() throws Exception {
 		frame = new JInternalFrame();
 		emp = new Employee();
 		empAddress = new Address();

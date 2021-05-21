@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Employee;
 
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
@@ -37,7 +37,7 @@ public class View_Employees {
 	static JLabel deptL, jobtitleL, sexL, stateL, enabledL;
 	static JButton searchB, loadB;
 
-	protected static JDialog createViewemployeeMenu() throws Exception {
+	public static JDialog createViewemployeeMenu() throws Exception {
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		dialog.addWindowListener(DialogListener);
 		dialog.setLocation(80, 120);

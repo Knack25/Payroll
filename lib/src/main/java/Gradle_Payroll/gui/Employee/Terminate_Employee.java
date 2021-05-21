@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Employee;
 
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -21,47 +21,47 @@ import javax.swing.JLabel;
 
 import Gradle_Payroll.fileIO.Config;
 
-public class Reinstate_Employee {
+public class Terminate_Employee {
 
 	static JComboBox<String> employee;
 	static JDialog dialog;
+
 	static String fName, mName, lName, fullName;
 
-	protected static JDialog createEmployeeReinsateDialog() throws Exception {
+	public static JDialog createEmployeeTerminateDialog() throws Exception {
+
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		dialog.addWindowListener(DialogListener);
 		dialog.setLocation(80, 120);
 		employee = new JComboBox<String>();
 		employee.setPreferredSize(new Dimension(150, 30));
-
 		JButton submitB = new JButton("Submit");
 		// submitB.setActionCommand("TermSubmit");
 		submitB.addActionListener(submit);
-		JLabel name = new JLabel("Employee To Reinstate");
+		JLabel name = new JLabel("Employee To Remove");
 
 		System.out.println("Querrying DB...");
 
-		int i = sqlPullRequest();
-
-		System.out.println("Data Retreived Successfull for " + i + " entries.");
-
+		sqlPullRequest();
 		System.out.println("Creating Dialog Box");
 
-		dialog.setSize(400, 90);
+		dialog.setSize(400, 100);
 		dialog.setLayout(new FlowLayout());
 		dialog.add(name);
 		dialog.add(employee);
 		dialog.add(submitB);
 		dialog.repaint();
+		dialog.setVisible(true);
+
+		// for the submit button, should we have a warning before terminating the
+		// employee?
 
 		System.out.println("Created Dialog");
-
-		dialog.setVisible(true);
 
 		return dialog;
 	}
 
-	private static int sqlPullRequest() throws Exception, SQLException {
+	private static void sqlPullRequest() throws Exception, SQLException {
 		String[] SQL = Config.PullSQLConfig();
 
 		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
@@ -70,7 +70,7 @@ public class Reinstate_Employee {
 
 		Statement stmt = conn.createStatement();
 
-		ResultSet rs = stmt.executeQuery("select * from employee where enabled = false");
+		ResultSet rs = stmt.executeQuery("select * from employee where enabled = true");
 
 		int i = 0;
 
@@ -83,9 +83,10 @@ public class Reinstate_Employee {
 			i++;
 		}
 
-		stmt.close();
+		System.out.println("Data Retreived Successfull for " + i + " entries.");
+
+		rs.close();
 		conn.close();
-		return i;
 	}
 
 	static ActionListener submit = new ActionListener() {
@@ -95,32 +96,30 @@ public class Reinstate_Employee {
 			// Connect to SQL and save new column in employee
 
 			fullName = (String) employee.getSelectedItem();
-			System.out.println("The value of fullName is: " + fullName);
 			String[] name = fullName.split(" ");
-			for (int i = 0; i < name.length; i++) {
-				System.out.println(name[i]);
-			}
+			System.out.println("The value of fullName is: " + fullName);
 
 			try {
 				sqlPushRequest(name);
+
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
+
+			System.out.println("Disposing of Dialog box");
 			dialog.setVisible(false);
 			dialog.dispose();
 		}
 
 		private void sqlPushRequest(String[] name) throws Exception, SQLException {
 			String[] SQL;
-			System.out.println("Executing Update");
-
 			SQL = Config.PullSQLConfig();
 
 			final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
 
 			Connection conn = DriverManager.getConnection(DATABASE_URL, SQL[3], SQL[4]);
 
-			String updateStatement = "update employee " + "set enabled = true "
+			String updateStatement = "update employee " + "set enabled = false "
 					+ "WHERE firstname = ? AND lastname = ?";
 
 			PreparedStatement pstmt = conn.prepareStatement(updateStatement);
