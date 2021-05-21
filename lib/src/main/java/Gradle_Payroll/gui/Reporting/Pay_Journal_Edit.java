@@ -51,7 +51,7 @@ public class Pay_Journal_Edit {
 	static YTD yTD_Initial, yTD_Calc;
 	static int YEAR;
 
-	protected static JInternalFrame createDialog(int checkNum, int year) {
+	protected static JInternalFrame createDialog() {
 		frame = new JInternalFrame();
 		frame.setSize(400, 400);
 		frame.setLayout(new GridBagLayout());

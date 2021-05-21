@@ -1,4 +1,4 @@
-package Gradle_Payroll.gui;
+package Gradle_Payroll.gui.Payroll;
 
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
@@ -28,6 +28,7 @@ import Gradle_Payroll.data.Check;
 import Gradle_Payroll.data.Tax;
 import Gradle_Payroll.data.YTD;
 import Gradle_Payroll.fileIO.Config;
+import Gradle_Payroll.gui.ErrorDialog;
 import Gradle_Payroll.sql.MySQL;
 
 public class Void_Check {
@@ -52,7 +53,7 @@ public class Void_Check {
 	static List<BigDecimal> taxFinalYTD;
 	static List<String> taxName;
 
-	protected static JDialog createVoidcheckMenu() throws Exception {
+	public static JDialog createVoidcheckMenu() throws Exception {
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 		// dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		dialog.setLocation(80, 120);
@@ -547,7 +548,7 @@ public class Void_Check {
 	private static void sqlPullTaxYTD() throws Exception {
 		String[] SQL;
 		SQL = Config.PullSQLConfig();
-		Tax temptax = new Tax();
+		Tax s = new Tax();
 
 		System.out.println("Querrying DB for Tax YTD Data");
 

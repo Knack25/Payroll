@@ -21,10 +21,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+
 import Gradle_Payroll.data.Check;
 import Gradle_Payroll.data.Tax;
 import Gradle_Payroll.data.YTD;
 import Gradle_Payroll.fileIO.Config;
+import Gradle_Payroll.gui.ErrorDialog;
 import Gradle_Payroll.gui.Main_Menu;
 import Gradle_Payroll.sql.MySQL;
 
@@ -52,9 +56,7 @@ public class Create_Pay_Journal {
 	static JComboBox<String> employee;
 	static JDialog dialog;
 	static JLabel regularL, ptoL, overtimeL, salaryL, advanceL, royaltiesL, checkNoL, hoursL, rateL, dateL, fixedPayL;
-	static JTextField regHoursT, regRateT, ptoHoursT, ptoRateT, otHoursT, otRateT, salpayT, advpayT, royalpayT,
-			checkNoT, dateT, startT, endT;
-	static JComboBox<String> stMnthD, stDayD, stYrD, endMnthD, endDayD, endYrD;
+
 	static String fName, mName, lName, fullName;
 	static JLabel dashL, slash1L, slash2L, slash3L, slash4L;
 	static Dimension minTextSize;
@@ -65,18 +67,14 @@ public class Create_Pay_Journal {
 	static int checkID;
 	static String[] selname;
 	static LocalDate currDate;
-	static JPanel payPeriodP, regPayP, ptoPayP, otPayP, labelsP, checkP;
+	static JPanel payPeriodP, labelsP, checkP;
+	static DatePicker startDate, endDate;
+	static DatePickerSettings dateSettings;
 
-	protected static JDialog createCheckmenu() throws Exception {
+	protected static JDialog createJournalmenu() throws Exception {
 		dialog = new JDialog(null, Dialog.ModalityType.APPLICATION_MODAL);
 
 		employee = new JComboBox<String>();
-		stMnthD = new JComboBox<String>();
-		stDayD = new JComboBox<String>();
-		stYrD = new JComboBox<String>();
-		endMnthD = new JComboBox<String>();
-		endDayD = new JComboBox<String>();
-		endYrD = new JComboBox<String>();
 
 		minTextSize = new Dimension();
 		minTextSize.setSize(50, 20);
@@ -86,39 +84,10 @@ public class Create_Pay_Journal {
 		tax = new Tax();
 		currDate = LocalDate.now();
 
-		sqlPullEmpListRequest();
-
 		JButton createB = new JButton("Create");
-		createB.addActionListener(createCheck);
+		createB.addActionListener(createReport);
 		// loadB.setActionCommand("TermSubmit");
 		// createB.addActionListener(submit);
-		regHoursT = new JTextField();
-		regHoursT.setPreferredSize(minTextSize);
-		regRateT = new JTextField();
-		regRateT.setPreferredSize(minTextSize);
-		ptoHoursT = new JTextField();
-		ptoHoursT.setPreferredSize(minTextSize);
-		ptoRateT = new JTextField();
-		ptoRateT.setPreferredSize(minTextSize);
-		otHoursT = new JTextField();
-		otHoursT.setPreferredSize(minTextSize);
-		otRateT = new JTextField();
-		otRateT.setPreferredSize(minTextSize);
-		salpayT = new JTextField();
-		salpayT.setPreferredSize(minTextSize);
-		advpayT = new JTextField();
-		advpayT.setPreferredSize(minTextSize);
-		royalpayT = new JTextField();
-		royalpayT.setPreferredSize(minTextSize);
-		checkNoT = new JTextField();
-		checkNoT.setPreferredSize(minTextSize);
-		checkNoT.setSize(minTextSize);
-		dateT = new JTextField();
-		dateT.setPreferredSize(minTextSize);
-		startT = new JTextField();
-		startT.setPreferredSize(minTextSize);
-		endT = new JTextField();
-		endT.setPreferredSize(minTextSize);
 
 		JPanel labelsP = new JPanel();
 		JPanel payPeriodP = new JPanel();
@@ -126,8 +95,6 @@ public class Create_Pay_Journal {
 		JPanel checkP = new JPanel();
 
 		System.out.println("Creating Dialog Box");
-
-		setLabels();
 
 		dialog.setSize(550, 350);
 		dialog.setLayout(new GridBagLayout());
@@ -164,45 +131,13 @@ public class Create_Pay_Journal {
 		JPanel ptoPayP = new JPanel();
 		JPanel otPayP = new JPanel();
 
-		payPeriodP.add(stMnthD);
-		stMnthD.setMinimumSize(minTextSize);
-		payPeriodP.add(slash1L);
-		payPeriodP.add(stDayD);
-		stDayD.setMinimumSize(minTextSize);
-		payPeriodP.add(slash2L);
-		payPeriodP.add(stYrD);
-		stYrD.setMinimumSize(minTextSize);
-		payPeriodP.add(dashL);
-		payPeriodP.add(endMnthD);
-		endMnthD.setMinimumSize(minTextSize);
-		payPeriodP.add(slash3L);
-		payPeriodP.add(endDayD);
-		endDayD.setMinimumSize(minTextSize);
-		payPeriodP.add(slash4L);
-		payPeriodP.add(endYrD);
-		endYrD.setMinimumSize(minTextSize);
-
 		labelsP.add(hoursL);
 		labelsP.add(rateL);
-
-		regPayP.add(regHoursT);
-		regPayP.add(regRateT);
-
-		ptoPayP.add(ptoHoursT);
-		ptoPayP.add(ptoRateT);
-
-		otPayP.add(otHoursT);
-		otPayP.add(otRateT);
-
-		checkP.add(checkNoL);
-		checkP.add(checkNoT);
 
 		dialog.add(createB, c11);
 
 		dialog.add(fixedPayL, b6c6);
-		dialog.add(salpayT, b7c7);
-		dialog.add(advpayT, b8c8);
-		dialog.add(royalpayT, b9c9);
+
 		dialog.add(payPeriodP, b10c10);
 
 		GridBagConstraints boom = new GridBagConstraints();
@@ -274,9 +209,6 @@ public class Create_Pay_Journal {
 			}
 		}
 
-		setCheckNum();
-
-		preLoadData();
 		employee.addActionListener(selUpdateListener);
 
 		dialog.repaint();
@@ -293,207 +225,19 @@ public class Create_Pay_Journal {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				preLoadData();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
 	};
 
-	private static void preLoadData() throws Exception {
-		String[] SQL = Config.PullSQLConfig();
-		int id = 0;
-		@SuppressWarnings("unused")
-		String fullname = (String) employee.getSelectedItem();
-		String[] selname = fullname.split(" ");
-		// System.out.println(fullname);
-		// System.out.println(selname[0]);
-		id = MySQL.sqlPullEmpID(selname);
-
-		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-
-		Connection conn = DriverManager.getConnection(DATABASE_URL, SQL[3], SQL[4]);
-
-		String updateStatement = "select * " + "from employee " + "WHERE id = ?";
-
-		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
-
-		// System.out.println(id);
-
-		pstmt.setInt(1, id);
-
-		ResultSet rs = pstmt.executeQuery();
-
-		rs.next();
-		regRateT.setText(String.valueOf(rs.getDouble("regularPay")));
-		// System.out.println("Regular rate Obtained: " + regRateT.getText());
-		otRateT.setText(String.valueOf(rs.getDouble("otPay")));
-		ptoRateT.setText(String.valueOf(rs.getDouble("ptoPay")));
-		salpayT.setText(String.valueOf(rs.getDouble("salary")));
-		royalpayT.setText(String.valueOf(rs.getDouble("royalty")));
-
-	}
-
-	private static void setCheckNum() throws Exception {
-		String[] SQL = Config.PullSQLConfig();
-
-		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-
-		Connection conn = DriverManager.getConnection(DATABASE_URL, SQL[3], SQL[4]);
-
-		Statement stmt = conn.createStatement();
-
-		ResultSet rs = stmt.executeQuery("select * from generalconfig where id = 1");
-		rs.next();
-		checkNoT.setText(String.valueOf(rs.getInt("nextCheckNum")));
-	}
-
-	private static void setLabels() {
-		regularL = new JLabel("Regular: ");
-		ptoL = new JLabel("P.T.O: ");
-		overtimeL = new JLabel("Overtime: ");
-		salaryL = new JLabel("Salary: ");
-		advanceL = new JLabel("Advance: ");
-		royaltiesL = new JLabel("Royalties: ");
-		checkNoL = new JLabel("Check #: ");
-		hoursL = new JLabel("<HTML><U> Hours </U></HTML>");
-		rateL = new JLabel("<HTML><U> Rate </U></HTML>");
-		fixedPayL = new JLabel("<HTML><U> Fixed Pay</U></HTML>");
-		dateL = new JLabel("Check Date Range: ");
-		dashL = new JLabel("-");
-		slash1L = new JLabel("/");
-		slash2L = new JLabel("/");
-		slash3L = new JLabel("/");
-		slash4L = new JLabel("/");
-	}
-
-	static ActionListener createCheck = new ActionListener() {
+	static ActionListener createReport = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
-			fullName = (String) employee.getSelectedItem();
-			String[] name = fullName.split(" ");
-
-			System.out.println("Check Creation Requested...");
-
-			try {
-				empID = MySQL.sqlPullEmpID(name);
-				checkID = sqlPushCheckInitRequest(empID);
-				dialog.dispose();
-				System.out.println(checkID);
-				Main_Menu.CheckNum = checkID;
-				Main_Menu.year = currDate.getYear();
-				Main_Menu.processPayrollEdit();
-
-			} catch (Exception PushCheckInitRequest) {
-				PushCheckInitRequest.printStackTrace();
-			}
+			// TODO Auto-generated method stub
 
 		}
 	};
 
-	private static void sqlPullEmpListRequest() throws Exception, SQLException {
-		String[] SQL = Config.PullSQLConfig();
-
-		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-
-		Connection conn = DriverManager.getConnection(DATABASE_URL, SQL[3], SQL[4]);
-
-		Statement stmt = conn.createStatement();
-
-		ResultSet rs = stmt.executeQuery("select * from employee where enabled = true");
-
-		int i = 0;
-
-		while (rs.next()) {
-			fName = rs.getString("firstname");
-			mName = rs.getString("middlename");
-			lName = rs.getString("lastname");
-			fullName = fName + " " + mName + " " + lName;
-			employee.addItem(fullName);
-			i++;
-		}
-
-		System.out.println("Data Retreived Successfull for " + i + " Employee entries.");
-
-		if (i < 1) {
-			ErrorDialog.createError("No Employees found in Database. Please create them if none exist.");
-		}
-
-		rs.close();
-		conn.close();
-	}
-
-	private static int sqlPushCheckInitRequest(int ID) throws Exception, SQLException {
-		String[] SQL = Config.PullSQLConfig();
-		int checkID = 0;
-		checkID = Integer.parseInt(checkNoT.getText());
-
-		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-
-		Connection conn = DriverManager.getConnection(DATABASE_URL, SQL[3], SQL[4]);
-
-		String updateStatement = "Insert into checks(checknum,payrollStartDate,payrollEndDate,year,regHours,regRate,ptoHours,ptoRate,otHours,"
-				+ "otRate,salRate,advRate,royaltyRate,employee_id) Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
-
-		// checkNum
-		pstmt.setDouble(1, checkID);
-		// Payroll Start Date
-		pstmt.setString(2, startT.getText());
-		// Payroll End Date
-		pstmt.setString(3, endT.getText());
-		// Year
-		pstmt.setDouble(4, currDate.getYear());
-		// regHours
-		pstmt.setDouble(5, Double.parseDouble(regHoursT.getText()));
-		// regRate
-		pstmt.setDouble(6, Double.parseDouble(regRateT.getText()));
-		// ptoHours
-		pstmt.setDouble(7, Double.parseDouble(ptoHoursT.getText()));
-		// ptoRate
-		pstmt.setDouble(8, Double.parseDouble(ptoRateT.getText()));
-		// otHours
-		pstmt.setDouble(9, Double.parseDouble(otHoursT.getText()));
-		// otRate
-		pstmt.setDouble(10, Double.parseDouble(otRateT.getText()));
-		// salRate
-		pstmt.setDouble(11, Double.parseDouble(salpayT.getText()));
-		// advRate
-		pstmt.setDouble(12, Double.parseDouble(advpayT.getText()));
-		// royaltyRate
-		pstmt.setDouble(13, Double.parseDouble(royalpayT.getText()));
-		// employee_id
-		pstmt.setInt(14, ID);
-
-		pstmt.executeUpdate();
-
-		conn.close();
-
-		updateNextCheckNum(checkID);
-
-		return checkID;
-	}
-
-	private static void updateNextCheckNum(int checkID) throws Exception {
-		String[] SQL = Config.PullSQLConfig();
-		checkID = checkID + 1;
-
-		final String DATABASE_URL = "jdbc:mysql://" + SQL[1] + "/" + SQL[2];
-
-		Connection conn = DriverManager.getConnection(DATABASE_URL, SQL[3], SQL[4]);
-
-		String updateStatement = "update generalconfig set nextCheckNum = ? where id = 1";
-
-		PreparedStatement pstmt = conn.prepareStatement(updateStatement);
-
-		// checkNum
-		pstmt.setInt(1, checkID);
-
-		pstmt.executeUpdate();
-
-	}
-
-};
+}

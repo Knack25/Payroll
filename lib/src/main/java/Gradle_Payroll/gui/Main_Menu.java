@@ -19,6 +19,7 @@ import Gradle_Payroll.gui.Employee.Terminate_Employee;
 import Gradle_Payroll.gui.Employee.View_Employees;
 import Gradle_Payroll.gui.Payroll.Check_Edit;
 import Gradle_Payroll.gui.Payroll.Create_Check;
+import Gradle_Payroll.gui.Payroll.Void_Check;
 import Gradle_Payroll.gui.Reporting.Payroll_History;
 import Gradle_Payroll.gui.Reporting.Print_Reports;
 

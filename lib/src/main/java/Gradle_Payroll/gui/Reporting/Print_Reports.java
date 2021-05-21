@@ -2,6 +2,8 @@ package Gradle_Payroll.gui.Reporting;
 
 import java.awt.Dialog;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -25,7 +27,7 @@ public class Print_Reports {
 		// addB.addActionListener(addBListener);
 
 		JButton payJournalB = new JButton("Pay Journal & Tax Summary");
-		// addB.addActionListener(addBListener);
+		payJournalB.addActionListener(payJournalBListener);
 
 		dialog.setLayout(new FlowLayout());
 
@@ -48,5 +50,17 @@ public class Print_Reports {
 
 		return dialog;
 	}
+
+	static ActionListener payJournalBListener = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				Create_Pay_Journal.createJournalmenu();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	};
 
 };
