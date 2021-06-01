@@ -25,10 +25,10 @@ public class Excel_Out{
 	static Workbook book;
 	static Sheet sheet;
 	static Row row;
-	static Font normalF,underlineF;
+	static Font normalF,underlineF,boldF;
 	static LocalDate date;
 	static SimpleDateFormat dateFormat;
-	static CellStyle normalS,underlinedS,bottomB;
+	static CellStyle normalS,underlinedS,bottomB,boldS;
 	
 
 	public static void create(String sheetName,int numCol,int numRow) throws Exception {
@@ -40,19 +40,39 @@ public class Excel_Out{
 		underlineF = book.createFont();
 		normalS = book.createCellStyle();
 		underlinedS = book.createCellStyle();
-		sheet.protectSheet("1234");
-		normalF.setFontHeightInPoints((short) 15);
+		boldS = book.createCellStyle();
+		//sheet.protectSheet("1234");
 		normalF.setFontName("ARIAL NARROW");
-		underlineF.setFontHeightInPoints((short) 15);
 		underlineF.setUnderline(Font.U_SINGLE);
 		underlineF.setFontName("ARIAL NARROW");
-		
+		boldF = book.createFont();
+		boldF.setFontName("ARIAL NARROW");
+		boldF.setBold(true);
 	}
 	
 	private static void createBook() throws Exception{
 		book = new HSSFWorkbook();
 	}
-	
+	public static void useFontSize15() throws Exception{
+		normalF.setFontHeightInPoints((short) 15);
+		underlineF.setFontHeightInPoints((short) 15);
+	}
+	public static void useFontSize16() throws Exception{
+		normalF.setFontHeightInPoints((short) 16);
+		underlineF.setFontHeightInPoints((short) 16);
+	}
+	public static void useFontSize24() throws Exception{
+		normalF.setFontHeightInPoints((short) 24);
+		underlineF.setFontHeightInPoints((short) 24);
+	}
+	public static void useFontSize18() throws Exception{
+		normalF.setFontHeightInPoints((short) 18);
+		underlineF.setFontHeightInPoints((short) 18);
+	}
+	public static void useFontSize14() throws Exception{
+		normalF.setFontHeightInPoints((short) 14);
+		underlineF.setFontHeightInPoints((short) 14);
+	}
 	public static void createSheet(String sheetName) {
 		sheet = book.createSheet(sheetName);
 	}
@@ -87,22 +107,27 @@ public class Excel_Out{
 		sheet.getRow(row).getCell(col).setCellValue(input);
 		return 0;
 	}
+	
 	public static int writeToCell(int col,int row, LocalDate date) {
 		sheet.getRow(row).getCell(col).setCellValue(date);
 		return 0;
 	}
+	
 	public static int writeToCell(int col,int row, int input) {
 		sheet.getRow(row).getCell(col).setCellValue(input);
 		return 0;
 	}
+	
 	public static int writeToCell(int col,int row, boolean input) {
 		sheet.getRow(row).getCell(col).setCellValue(input);
 		return 0;
 	}
+	
 	public static int writeToCell(int col,int row,double input) {
 		sheet.getRow(row).getCell(col).setCellValue(input);
 		return 0;
 	}
+	
 	public static int changeNumberFormat(int col,int row) {
 		CellStyle dollarStyle=book.createCellStyle();
 		dollarStyle.setDataFormat((short) 0x2c);
@@ -111,6 +136,7 @@ public class Excel_Out{
 		sheet.getRow(row).getCell(col).setCellStyle(dollarStyle);
 		return 0;
 	}
+	
 	public static int formatRowHeight(int row,float height) {
 		sheet.getRow(row).setHeightInPoints(height);
 		return 0;
@@ -121,6 +147,10 @@ public class Excel_Out{
 		return 0;
 	}
 	
+	public static int insertFormulaIntoCell(int col, int row, String formula) {
+		sheet.getRow(row).getCell(col).setCellFormula(formula);
+		return 0;
+	}
 	
 	public static int clearCellFormat(int col,int row) {
 		normalS.setFont(normalF);
@@ -134,10 +164,17 @@ public class Excel_Out{
 		return 0;
 	}
 	
+	public static int boldCell(int col,int row) {
+		boldS.setFont(boldF);
+		sheet.getRow(row).getCell(col).setCellStyle(boldS);
+		return 0;
+	}
+	
 	public static int clearCellBorder(int col,int row) {
 		sheet.getRow(row).getCell(col).getCellStyle().setBorderBottom(BorderStyle.NONE);
 		return 0;
 	}
+	
 	public static int setCellBorder(int col,int row) {
 		CellStyle bottomB=book.createCellStyle();
 		bottomB.setBorderBottom(BorderStyle.THIN);

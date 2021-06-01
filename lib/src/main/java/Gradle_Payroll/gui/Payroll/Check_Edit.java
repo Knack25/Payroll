@@ -1043,6 +1043,7 @@ public class Check_Edit {
 			// static YTD yTD_Initial,yTD_Calc;
 
 			Excel_Out.create(nameT.getText(), 12, 52);
+			Excel_Out.useFontSize15();
 
 			Excel_Out.formatColwidth(0, 17 * 262);
 			Excel_Out.formatColwidth(1, 12 * 265);

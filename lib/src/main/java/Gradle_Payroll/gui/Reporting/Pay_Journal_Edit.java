@@ -80,177 +80,21 @@ public class Pay_Journal_Edit {
 		calcYTD();
 		createLabels();
 		drawData();
+		
 
-		GridBagConstraints pos = new GridBagConstraints();
-		for (int x = 0; x < 13; x++) {
-			pos.gridx = x;
-			for (int y = 1; y < 40; y++) {
-				if (x == 0) {
-					switch (y) {
-					case 0:
-						pos.gridy = y;
-						frame.add(chkNumL, pos);
-						break;
-					case 1:
-						pos.gridy = y;
-						frame.add(chkDateL, pos);
-						break;
-					case 2:
-						pos.gridy = y;
-						frame.add(payPeriodL, pos);
-						break;
-					case 3:
-						pos.gridy = y;
-						frame.add(hourRateL, pos);
-						break;
-					case 5:
-						pos.gridy = y;
-						frame.add(regHrsL, pos);
-						break;
-					case 6:
-						pos.gridy = y;
-						frame.add(ptoHrsL, pos);
-						break;
-					case 7:
-						pos.gridy = y;
-						frame.add(otHrsL, pos);
-						break;
-					case 8:
-						pos.gridy = y;
-						frame.add(salaryL, pos);
-						break;
-					case 9:
-						pos.gridy = y;
-						frame.add(grossPayL, pos);
-						break;
-					case 10:
-						pos.gridy = y;
-						frame.add(netPayL, pos);
-						break;
-					}
-				}
-				if (x == 1) {
-					switch (y) {
-					case 0:
-						pos.gridy = y;
-						frame.add(null/* check number */, pos);
-						break;
-					case 1:
-						pos.gridy = y;
-						frame.add(dateT, pos);
-						break;
-					case 2:
-						pos.gridy = y;
-						frame.add(periodDateT, pos);
-						break;
-					case 3:
-						pos.gridy = y;
-						frame.add(hourRateT, pos);
-						hourRateT.setEditable(false);
-						break;
-					case 4:
-						pos.gridy = y;
-						frame.add(currentL, pos);
-						break;
-					case 5:
-						pos.gridy = y;
-						frame.add(regularHrsCurrT, pos);
-						regularHrsCurrT.setEditable(false);
-						break;
-					case 6:
-						pos.gridy = y;
-						frame.add(ptoHrsCurrT, pos);
-						ptoHrsCurrT.setEditable(false);
-						break;
-					case 7:
-						pos.gridy = y;
-						frame.add(otHrsCurrT, pos);
-						otHrsCurrT.setEditable(false);
-						break;
-					case 8:
-						pos.gridy = y;
-						frame.add(salaryCurrT, pos);
-						salaryCurrT.setEditable(false);
-						break;
-					case 9:
-						pos.gridy = y;
-						frame.add(grossPayCurrT, pos);
-						grossPayCurrT.setEditable(false);
-						break;
-					case 10:
-						pos.gridy = y;
-						frame.add(netPayCurrT, pos);
-						netPayCurrT.setEditable(false);
-						break;
-					}
-				}
-
-				if (x == 2) {
-					switch (y) {
-					case 4:
-						pos.gridy = y;
-						frame.add(YTDL, pos);
-						break;
-					case 5:
-						pos.gridy = y;
-						frame.add(regularHrsYTDT, pos);
-						regularHrsYTDT.setEditable(false);
-						break;
-					case 6:
-						pos.gridy = y;
-						frame.add(ptoHrsYTDT, pos);
-						ptoHrsYTDT.setEditable(false);
-						break;
-					case 7:
-						pos.gridy = y;
-						frame.add(otHrsYTDT, pos);
-						otHrsYTDT.setEditable(false);
-						break;
-					case 8:
-						pos.gridy = y;
-						frame.add(salaryYTDT, pos);
-						salaryYTDT.setEditable(false);
-						break;
-					case 9:
-						pos.gridy = y;
-						frame.add(grossPayYTDT, pos);
-						grossPayYTDT.setEditable(false);
-						break;
-					case 10:
-						pos.gridy = y;
-						frame.add(netPayYTDT, pos);
-						netPayYTDT.setEditable(false);
-						break;
-					}
-				}
-				if (x == 3) {
-					switch (y) {
-					case 5:
-						pos.gridy = y;
-						frame.add(regCalcT, pos);
-						regCalcT.setEditable(false);
-						break;
-					case 6:
-						pos.gridy = y;
-						frame.add(ptoCalcT, pos);
-						ptoCalcT.setEditable(false);
-						break;
-					case 7:
-						pos.gridy = y;
-						frame.add(otCalcT, pos);
-						otCalcT.setEditable(false);
-						break;
-					case 8:
-						pos.gridy = y;
-						frame.add(salCalcT, pos);
-						salCalcT.setEditable(false);
-						break;
-
-					}
-				}
-			}
-		}
-
+		
+		/*going to need the following:
+		 * emp. name & no.
+		 * pay range
+		 * check date & no.
+		 * gross pay
+		 * net pay
+		 * withholdings
+		 * company benefits
+		 * dept.
+		 */
+		
+		
 		frame.add(cancelB);
 		frame.add(printB);
 
@@ -1021,150 +865,177 @@ public class Pay_Journal_Edit {
 		private void formatExcel() throws Exception {
 			// static YTD yTD_Initial,yTD_Calc;
 
-			Excel_Out.create(nameT.getText(), 12, 52);
+			Excel_Out.create(nameT.getText(), 14, 52);
 
-			Excel_Out.formatColwidth(0, 17 * 262);
-			Excel_Out.formatColwidth(1, 12 * 265);
-			Excel_Out.formatColwidth(2, 7 * 265);
-			Excel_Out.formatColwidth(3, 13 * 265);
-			Excel_Out.formatColwidth(4, 3 * 265);
-			Excel_Out.formatColwidth(5, 13 * 265);
-			Excel_Out.formatColwidth(6, 10 * 265);
-			Excel_Out.formatColwidth(7, 18 * 265);
+			Excel_Out.formatColwidth(0, 16 * 262);
+			Excel_Out.formatColwidth(1, 14 * 265);
+			Excel_Out.formatColwidth(2, 9 * 265);
+			Excel_Out.formatColwidth(3, 14 * 265);
+			Excel_Out.formatColwidth(4, 1 * 265);
+			Excel_Out.formatColwidth(5, 16 * 265);
+			Excel_Out.formatColwidth(6, 11 * 265);
+			Excel_Out.formatColwidth(7, 1 * 265);
 			Excel_Out.formatColwidth(8, 16 * 265);
-			Excel_Out.formatColwidth(9, 8 * 265);
-			Excel_Out.formatColwidth(10, 16 * 265);
-			Excel_Out.formatColwidth(11, 15 * 265);
+			Excel_Out.formatColwidth(9, 11 * 265);
+			Excel_Out.formatColwidth(10, 8 * 265);
+			Excel_Out.formatColwidth(11, 7 * 265);
+			Excel_Out.formatColwidth(12, 10 * 265);
+			Excel_Out.formatColwidth(13, 9 * 265);
 
 			for (int i = 0; i < 52; i++)
-				Excel_Out.formatRowHeight(i, (float) 17.25);
+				Excel_Out.formatRowHeight(i, (float) 21);
 
-			Excel_Out.formatRowHeight(3, 36);
-			Excel_Out.formatRowHeight(4, (float) 34.5);
-			Excel_Out.formatRowHeight(7, (float) 16.5);
-			Excel_Out.formatRowHeight(16, (float) 16.5);
-			Excel_Out.formatRowHeight(17, (float) 16.5);
-			for (int i = 5; i < 37; i++) {
-				if (i == 7 || i == 16 || i == 17)
-					continue;
-				Excel_Out.formatRowHeight(i, (float) 19.5);
-			}
+			Excel_Out.formatRowHeight(0, 30);
+			Excel_Out.formatRowHeight(3, (float) 23.25);
 
-			for (int x = 0; x < 12; x++) {
+
+
+			for (int x = 0; x < 14; x++) {
 				for (int y = 0; y < 52; y++) {
 					Excel_Out.clearCellFormat(x, y);
 				}
 			}
 
-			/*-----------------------Top of check--------------------*/
-			Excel_Out.writeToCell(2, 6, amntSpellOut);
-			Excel_Out.writeToCell(8, 8, dateT.getText());
-			Excel_Out.writeToCell(11, 8, Double.parseDouble(amntT.getText()));
-			Excel_Out.changeNumberFormat(11, 8);
-			Excel_Out.writeToCell(2, 10, nameT.getText());
-			Excel_Out.writeToCell(2, 11, addressT.getText());
-			Excel_Out.writeToCell(2, 12, cityStateZipT.getText());
+			/*-----------------------Top Section--------------------*/
+			
+			Excel_Out.useFontSize24();
+			Excel_Out.boldCell(8, 0);
+			Excel_Out.writeToCell(8, 0, "Anatomical Concepts Inc.");
+			
+			Excel_Out.useFontSize18();
+			Excel_Out.writeToCell(8, 3, "***PAYROLL JOURNAL***");
+			
+			Excel_Out.useFontSize16();
+			Excel_Out.insertFormulaIntoCell(0, 0, "=NOW()");
+			
+			Excel_Out.writeToCell(12, 1, "Department:");
+			Excel_Out.writeToCell(13, 1, null/*department*/);
+			
+			Excel_Out.writeToCell(0, 3, "Period:");
+			Excel_Out.writeToCell(1, 3, "Department:");
+			Excel_Out.writeToCell(2, 3, "-");
+			Excel_Out.writeToCell(3, 3, null);
+			
+			Excel_Out.writeToCell(0, 4, "Employee:");
+			Excel_Out.writeToCell(1, 4, null/*start employee number*/);
+			Excel_Out.writeToCell(2, 4, "-");
+			Excel_Out.writeToCell(3, 4, null/*end employee number*/);
+			
+			Excel_Out.writeToCell(5, 8, "Withholdings");
+			
+			for(int x = 0; x < 14; x++)
+				Excel_Out.setCellBorder(x, 8);
+			
+			
+			//on the excel sheet, payroll journal can only show 16 withholdings
+			//for row looping, start at row 9 and add 16 when starting a new section
+			
+//			Excel_Out.writeToCell(11, 8, Double.parseDouble(amntT.getText()));
+//			Excel_Out.changeNumberFormat(11, 8);
+//			Excel_Out.writeToCell(2, 10, nameT.getText());
+//			Excel_Out.writeToCell(2, 11, addressT.getText());
+//			Excel_Out.writeToCell(2, 12, cityStateZipT.getText());
+//
+//			Excel_Out.writeToCell(8, 20, "Current");
+//			Excel_Out.writeToCell(10, 20, "YTD");
+//			Excel_Out.writeToCell(1, 21, "Check Date");
+//			Excel_Out.writeToCell(3, 21, dateT.getText());
+//
+//			Excel_Out.writeToCell(8, 21, Double.parseDouble(amntT.getText()));
+//			Excel_Out.writeToCell(10, 21, yTD_Calc.getGrossAmmntYTD());
+//
+//			Excel_Out.writeToCell(1, 23, "Pay Period");
+//			Excel_Out.writeToCell(3, 23, periodDateT.getText());
+//
+//			Excel_Out.writeToCell(7, 21, "Gross Pay");
+//			Excel_Out.writeToCell(8, 21, Double.parseDouble(grossPayCurrT.getText()));
+//			Excel_Out.changeNumberFormat(8, 21);
+//			Excel_Out.writeToCell(10, 21, Double.parseDouble(grossPayYTDT.getText()));
+//			Excel_Out.changeNumberFormat(10, 21);
+//
+//			double otherAmntCurr = 0, otherAmntYTD = 0;
+//			if (NUMTAXAMNT > 14) {
+//				for (int j = 13; j < NUMTAXAMNT; j++) {
+//					otherAmntCurr += tax.get(j).getNetAmmount();
+//					otherAmntYTD += tax.get(j).getFinalYTD();
+//				}
+//			}
+//
+//			int i;
+//			for (i = 0; i < NUMTAXAMNT; i++) {
+//				if (i == 14) {
+//					Excel_Out.writeToCell(7, (22 + i - 1), "Other");
+//					Excel_Out.writeToCell(8, (22 + i - 1),
+//							otherAmntCurr/* the sum of all unseen tax tables for current check */);
+//
+//					Excel_Out.writeToCell(10, (22 + i - 1), otherAmntYTD/* the sum of all unseen tax tables for YTD */);
+//
+//					break;
+//				}
+//				Excel_Out.writeToCell(7, (22 + i), tax.get(i).getName()/* Name of the tax */);
+//				Excel_Out.writeToCell(8, (22 + i),
+//						tax.get(i).getNetAmmount()/* value of the tax on the current check */);
+//				Excel_Out.changeNumberFormat(8, (22 + i));
+//				Excel_Out.writeToCell(10, (22 + i), tax.get(i).getFinalYTD()/* value of the tax for YTD */);
+//				Excel_Out.changeNumberFormat(10, (22 + i));
+//			}
+//
+//			Excel_Out.writeToCell(7, 22 + i, "Net Pay");
+//			Excel_Out.writeToCell(8, 22 + i, Double.parseDouble(netPayCurrT.getText()));
+//			Excel_Out.changeNumberFormat(8, 22 + i);
+//			Excel_Out.writeToCell(10, 22 + i, Double.parseDouble(netPayYTDT.getText()));
+//			Excel_Out.changeNumberFormat(10, 22 + i);
+//
+//			Excel_Out.setCellBorder(8, 20);
+//			Excel_Out.setCellBorder(10, 20);
+//			Excel_Out.setCellDataBorder(8, 22 + i - 1, 1);
+//			Excel_Out.setCellDataBorder(10, 22 + i - 1, 1);
+//
+//			Excel_Out.writeToCell(3, 26, "Current");
+//			Excel_Out.writeToCell(5, 26, "YTD");
+//
+//			Excel_Out.writeToCell(1, 27, "Regular");
+//			Excel_Out.writeToCell(3, 27, check.getRegHours());
+//			Excel_Out.writeToCell(5, 27, yTD_Calc.getRegHoursYTD() /* YTD hours worked */);
+//
+//			int j = 29;
+//			Excel_Out.writeToCell(1, 28, "PTO");
+//			Excel_Out.writeToCell(3, 28, check.getPtoHours());
+//			Excel_Out.writeToCell(5, 28, yTD_Calc.getPtoHoursYTD()/* Total YTD PTO hours used */);
+//
+//			if (check.getOtHours() != 0) {
+//				Excel_Out.writeToCell(1, j, "Overtime");
+//				Excel_Out.writeToCell(3, j, check.getOtHours());
+//				Excel_Out.writeToCell(5, j, yTD_Calc.getOtHoursYTD()/* Total YTD PTO hours used */);
+//				j++;
+//			}
+//
+//			if (check.getSalAmmnt() != 0) {
+//				Excel_Out.writeToCell(1, j, "Salary");
+//				Excel_Out.writeToCell(3, j, check.getSalAmmnt());
+//				Excel_Out.writeToCell(5, j, yTD_Calc.getSalAmmntYTD());
+//				j++;
+//			}
+//			if (check.getRoyaltyAmmnt() != 0) {
+//				Excel_Out.writeToCell(1, j, "Royalties");
+//				Excel_Out.writeToCell(3, j, check.getRoyaltyAmmnt());
+//				Excel_Out.writeToCell(5, j, yTD_Calc.getRoyaltyAmmntYTD());
+//				j++;
+//			}
+//			if (check.getAdvAmmnt() != 0) {
+//				Excel_Out.writeToCell(1, j, "Advance");
+//				Excel_Out.writeToCell(3, j, check.getAdvAmmnt());
+//				Excel_Out.writeToCell(5, j, yTD_Calc.getAdvAmmntYTD());
+//				j++;
+//			}
+//			Excel_Out.writeToCell(11, 51, "-");
+//
+//			Excel_Out.underlineCell(3, 26);
+//			Excel_Out.underlineCell(5, 26);
+//			Excel_Out.underlineCell(3, j);
+//			Excel_Out.underlineCell(5, j);
 
-			Excel_Out.writeToCell(8, 20, "Current");
-			Excel_Out.writeToCell(10, 20, "YTD");
-			Excel_Out.writeToCell(1, 21, "Check Date");
-			Excel_Out.writeToCell(3, 21, dateT.getText());
-
-			Excel_Out.writeToCell(8, 21, Double.parseDouble(amntT.getText()));
-			Excel_Out.writeToCell(10, 21, yTD_Calc.getGrossAmmntYTD());
-
-			Excel_Out.writeToCell(1, 23, "Pay Period");
-			Excel_Out.writeToCell(3, 23, periodDateT.getText());
-
-			Excel_Out.writeToCell(7, 21, "Gross Pay");
-			Excel_Out.writeToCell(8, 21, Double.parseDouble(grossPayCurrT.getText()));
-			Excel_Out.changeNumberFormat(8, 21);
-			Excel_Out.writeToCell(10, 21, Double.parseDouble(grossPayYTDT.getText()));
-			Excel_Out.changeNumberFormat(10, 21);
-
-			double otherAmntCurr = 0, otherAmntYTD = 0;
-			if (NUMTAXAMNT > 14) {
-				for (int j = 13; j < NUMTAXAMNT; j++) {
-					otherAmntCurr += tax.get(j).getNetAmmount();
-					otherAmntYTD += tax.get(j).getFinalYTD();
-				}
-			}
-
-			int i;
-			for (i = 0; i < NUMTAXAMNT; i++) {
-				if (i == 14) {
-					Excel_Out.writeToCell(7, (22 + i - 1), "Other");
-					Excel_Out.writeToCell(8, (22 + i - 1),
-							otherAmntCurr/* the sum of all unseen tax tables for current check */);
-
-					Excel_Out.writeToCell(10, (22 + i - 1), otherAmntYTD/* the sum of all unseen tax tables for YTD */);
-
-					break;
-				}
-				Excel_Out.writeToCell(7, (22 + i), tax.get(i).getName()/* Name of the tax */);
-				Excel_Out.writeToCell(8, (22 + i),
-						tax.get(i).getNetAmmount()/* value of the tax on the current check */);
-				Excel_Out.changeNumberFormat(8, (22 + i));
-				Excel_Out.writeToCell(10, (22 + i), tax.get(i).getFinalYTD()/* value of the tax for YTD */);
-				Excel_Out.changeNumberFormat(10, (22 + i));
-			}
-
-			Excel_Out.writeToCell(7, 22 + i, "Net Pay");
-			Excel_Out.writeToCell(8, 22 + i, Double.parseDouble(netPayCurrT.getText()));
-			Excel_Out.changeNumberFormat(8, 22 + i);
-			Excel_Out.writeToCell(10, 22 + i, Double.parseDouble(netPayYTDT.getText()));
-			Excel_Out.changeNumberFormat(10, 22 + i);
-
-			Excel_Out.setCellBorder(8, 20);
-			Excel_Out.setCellBorder(10, 20);
-			Excel_Out.setCellDataBorder(8, 22 + i - 1, 1);
-			Excel_Out.setCellDataBorder(10, 22 + i - 1, 1);
-
-			Excel_Out.writeToCell(3, 26, "Current");
-			Excel_Out.writeToCell(5, 26, "YTD");
-
-			Excel_Out.writeToCell(1, 27, "Regular");
-			Excel_Out.writeToCell(3, 27, check.getRegHours());
-			Excel_Out.writeToCell(5, 27, yTD_Calc.getRegHoursYTD() /* YTD hours worked */);
-
-			int j = 29;
-			Excel_Out.writeToCell(1, 28, "PTO");
-			Excel_Out.writeToCell(3, 28, check.getPtoHours());
-			Excel_Out.writeToCell(5, 28, yTD_Calc.getPtoHoursYTD()/* Total YTD PTO hours used */);
-
-			if (check.getOtHours() != 0) {
-				Excel_Out.writeToCell(1, j, "Overtime");
-				Excel_Out.writeToCell(3, j, check.getOtHours());
-				Excel_Out.writeToCell(5, j, yTD_Calc.getOtHoursYTD()/* Total YTD PTO hours used */);
-				j++;
-			}
-
-			if (check.getSalAmmnt() != 0) {
-				Excel_Out.writeToCell(1, j, "Salary");
-				Excel_Out.writeToCell(3, j, check.getSalAmmnt());
-				Excel_Out.writeToCell(5, j, yTD_Calc.getSalAmmntYTD());
-				j++;
-			}
-			if (check.getRoyaltyAmmnt() != 0) {
-				Excel_Out.writeToCell(1, j, "Royalties");
-				Excel_Out.writeToCell(3, j, check.getRoyaltyAmmnt());
-				Excel_Out.writeToCell(5, j, yTD_Calc.getRoyaltyAmmntYTD());
-				j++;
-			}
-			if (check.getAdvAmmnt() != 0) {
-				Excel_Out.writeToCell(1, j, "Advance");
-				Excel_Out.writeToCell(3, j, check.getAdvAmmnt());
-				Excel_Out.writeToCell(5, j, yTD_Calc.getAdvAmmntYTD());
-				j++;
-			}
-			Excel_Out.writeToCell(11, 51, "-");
-
-			Excel_Out.underlineCell(3, 26);
-			Excel_Out.underlineCell(5, 26);
-			Excel_Out.underlineCell(3, j);
-			Excel_Out.underlineCell(5, j);
-
-			Excel_Out.createPrintArea(12, 52);
+			Excel_Out.createPrintArea(14, 52);
 
 			Excel_Out.writeOut();
 		}
