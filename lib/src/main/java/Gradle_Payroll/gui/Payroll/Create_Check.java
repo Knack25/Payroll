@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -112,7 +111,7 @@ public class Create_Check {
 
 		setLabels();
 
-		dialog.setSize(550, 350);
+		dialog.setSize(650, 375);
 		dialog.setLayout(new GridBagLayout());
 
 		GridBagConstraints b6c6 = new GridBagConstraints();

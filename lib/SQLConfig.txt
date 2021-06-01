@@ -1,5 +1,5 @@
 org.gjt.mm.mysql.Driver
-localhost
+192.168.0.58
 payroll
 Crew
 Lattia27Kaunis

@@ -4,6 +4,7 @@ package Gradle_Payroll.fileIO;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
@@ -198,7 +199,8 @@ public class Excel_Out{
 	
 	public static int writeOut() throws Exception{
 		date = LocalDate.now();
-		try(OutputStream fileOut = new FileOutputStream(date+".xls")){
+		try(OutputStream fileOut = new FileOutputStream(/*%userprofile%\documents\*/date+".xls")){
+			
 			book.write(fileOut);
 			return 0;
 		}catch(Exception e){

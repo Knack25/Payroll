@@ -1,5 +1,6 @@
 package Gradle_Payroll.gui.Reporting;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -14,9 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import com.github.lgooddatepicker.components.DatePicker;
 
 import Gradle_Payroll.data.Address;
 import Gradle_Payroll.data.Check;
@@ -50,6 +55,18 @@ public class Pay_Journal_Edit {
 	static SimpleDateFormat dateFormat;
 	static YTD yTD_Initial, yTD_Calc;
 	static int YEAR;
+	static JComboBox<String> employee;
+	static JDialog dialog;
+	static JLabel rangeL, employeeL;
+	static JTextField startempT, endempT, startdateT, enddateT;
+	static String fName, mName, lName;
+	static Dimension minTextSize;
+	static YTD ytd;
+	static int empID;
+	static int checkID;
+	static String[] selname;
+	static LocalDate currDate;
+	static DatePicker startDate,endDate;
 
 	protected static JInternalFrame createDialog() {
 		frame = new JInternalFrame();
@@ -62,6 +79,17 @@ public class Pay_Journal_Edit {
 		cancelB = new JButton("Cancel");
 		cancelB.addActionListener(cancelBListener);
 
+		
+		startdateT = new JTextField();
+		startdateT.setPreferredSize(minTextSize);
+		enddateT = new JTextField();
+		enddateT.setPreferredSize(minTextSize);
+		startempT = new JTextField();
+		startempT.setPreferredSize(minTextSize);
+		endempT = new JTextField();
+		endempT.setPreferredSize(minTextSize);
+		
+		
 		addr = new Address();
 		name = new Name();
 		check = new Check();
@@ -94,6 +122,36 @@ public class Pay_Journal_Edit {
 		 * dept.
 		 */
 		
+		
+		
+		
+
+
+		System.out.println("Creating Dialog Box");
+
+		setLabels();
+
+		dialog.setSize(550, 350);
+		dialog.setLayout(new GridBagLayout());
+
+		GridBagConstraints c11 = new GridBagConstraints();
+		c11.gridx = 2;
+		c11.gridy = 10;
+
+	
+
+
+
+
+		
+
+
+	
+		//setCheckNum();
+
+
+		dialog.repaint();
+
 		
 		frame.add(cancelB);
 		frame.add(printB);
@@ -135,6 +193,12 @@ public class Pay_Journal_Edit {
 
 		updateFields();
 
+	}
+	
+	private static void setLabels() {
+		rangeL  = new JLabel("Range: ");
+		employeeL = new JLabel("Employee: ");
+		
 	}
 
 	// *********************************************Update
