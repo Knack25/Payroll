@@ -125,6 +125,7 @@ public class Check_Edit {
 						pos.gridy = y;
 						frame.add(grossPayL, pos);
 						break;
+				
 					case 10:
 						pos.gridy = y;
 						frame.add(netPayL, pos);

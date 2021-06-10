@@ -110,8 +110,7 @@ public class Pay_Journal_Edit {
 		drawData();
 		
 
-		
-		/*going to need the following:
+		/*TODO: going to need the following:
 		 * emp. name & no.
 		 * pay range
 		 * check date & no.
@@ -121,6 +120,7 @@ public class Pay_Journal_Edit {
 		 * company benefits
 		 * dept.
 		 */
+		
 		
 		
 		

@@ -81,7 +81,7 @@ public class Void_Check {
 		cancelB = new JButton("Cancel");
 		cancelB.addActionListener(cancelBListener);
 
-		dialog.setSize(400, 250);
+		dialog.setSize(500, 250);
 		dialog.setLayout(new GridBagLayout());
 
 		JLabel voidCheckL = new JLabel("<HTML><U> Void Check </U></HTML>");
