@@ -22,6 +22,7 @@ import Gradle_Payroll.gui.Payroll.Create_Check;
 import Gradle_Payroll.gui.Payroll.Void_Check;
 import Gradle_Payroll.gui.Reporting.Payroll_History;
 import Gradle_Payroll.gui.Reporting.Print_Reports;
+import Gradle_Payroll.sql.YTD_Lookup;
 
 public class Main_Menu extends JFrame implements ActionListener {
 
@@ -120,6 +121,12 @@ public class Main_Menu extends JFrame implements ActionListener {
 		menuItem.setActionCommand("sql_settings");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
+		
+		
+		menuItem = new JMenuItem("Pay Period Table");
+		menuItem.setActionCommand("pay_table");
+		menuItem.addActionListener(this);
+		menu.add(menuItem);
 		menuBar.add(menu);
 
 		return menuBar;
@@ -165,8 +172,18 @@ public class Main_Menu extends JFrame implements ActionListener {
 		case ("sql_settings"):
 			developerModeWindow();
 			break;
+		case ("pay_table"):
+			payTableCreate();
 		default:
 			quit();
+		}
+	}
+
+	private void payTableCreate() {
+		try {
+			YTD_Lookup.createTable();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

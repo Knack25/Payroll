@@ -35,7 +35,7 @@ public class Edit_YTD {
 
 	static JDialog dialog;
 	static JLabel NameL, IDL, amountL;
-	static JComboBox<String> taxType;
+	static ArrayList<JComboBox<String>> taxType;
 	static JPanel panel;
 	static Tax tax;
 	static ResultSet rs;
